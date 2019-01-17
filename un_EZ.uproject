@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "4.21",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "un_EZ",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
