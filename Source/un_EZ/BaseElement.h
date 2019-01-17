@@ -23,6 +23,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	bool isActive;
+
 	// Ability 1 variables.
 	void ability1();
 
@@ -48,6 +50,8 @@ public:
 		int maxAmmo2;
 	UPROPERTY(EditAnywhere)
 		int ammo2;
+
+	
 
 
 

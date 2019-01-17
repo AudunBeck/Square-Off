@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Engine/Classes/Components/ChildActorComponent.h"
+#include "BaseElement.h"
 #include "Tori.generated.h"
 
 UCLASS()
@@ -28,5 +30,16 @@ public:
 
 	void move_X(float axisValue);
 	void move_Y(float axisValue);
+
+	void ability_1();
+	void ability_2();
+
+	UPROPERTY(EditAnywhere, Category = "Elements")
+		int activeElement = 1;
+
+	UPROPERTY(EditAnywhere, Category = "Elements")
+		ABaseElement* element_1;
+	UPROPERTY(EditAnywhere, Category = "Elements")
+		ABaseElement* element_2;
 
 };
