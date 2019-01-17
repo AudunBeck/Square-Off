@@ -29,7 +29,7 @@ public:
 	bool isActive;
 
 	// Setting Owner
-	void setOwner(class ATori* newOwner);
+	void setPlayer(class ATori* newOwner);
 
 	UPROPERTY(EditAnywhere)
 		class ATori* myOwner;

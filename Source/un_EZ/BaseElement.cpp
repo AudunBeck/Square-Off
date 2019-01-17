@@ -25,7 +25,7 @@ void ABaseElement::Tick(float DeltaTime)
 
 }
 
-void ABaseElement::setOwner(class ATori * newOwner)
+void ABaseElement::setPlayer(class ATori * newOwner)
 {
 	myOwner = newOwner;
 }

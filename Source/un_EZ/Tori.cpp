@@ -93,13 +93,13 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 		{
 			element_1->Destroy();
 			element_1 = newElement;
-			element_1->setOwner(this);
+			element_1->setPlayer(this);
 		}
 		else if (activeElement == 2)
 		{
 			element_2->Destroy();
 			element_2 = newElement;
-			element_2->setOwner(this);
+			element_2->setPlayer(this);
 			
 		}
 	}
