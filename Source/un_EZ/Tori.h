@@ -35,7 +35,7 @@ public:
 	void ability_2();
 
 	UPROPERTY(EditAnywhere, Category = "Elements")
-		int activeElement = 1;
+		int activeElement = 0;
 
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		ABaseElement* element_1;

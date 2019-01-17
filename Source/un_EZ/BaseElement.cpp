@@ -24,11 +24,18 @@ void ABaseElement::Tick(float DeltaTime)
 
 }
 
+void ABaseElement::setOwner(ATori * newOwner)
+{
+	owner = newOwner;
+}
+
 void ABaseElement::ability1()
 {
+	UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 1 firing"));
 }
 
 void ABaseElement::ability2()
 {
+	UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 2 firing"));
 }
 

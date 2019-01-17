@@ -67,18 +67,17 @@ void ATori::move_Y(float axisValue)
 
 void ATori::ability_1()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Ability 1 firing"));
-	if (activeElement == 1)
+	if (activeElement == 1 && element_1 != nullptr)
 		element_1->ability1();
-	else if (activeElement == 2)
+	else if (activeElement == 2 && element_2 != nullptr)
 		element_2->ability1();
 }
 
 void ATori::ability_2()
 {
-	if (activeElement == 1)
+	if (activeElement == 1 && element_1 != nullptr)
 		element_1->ability2();
-	else if (activeElement == 2)
+	else if (activeElement == 2 && element_2 != nullptr)
 		element_2->ability2();
 }
 

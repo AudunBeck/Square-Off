@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Tori.h"
 #include "BaseElement.generated.h"
 
 UCLASS()
@@ -25,8 +26,12 @@ public:
 
 	bool isActive;
 
+	// Setting Owner
+	void setOwner(ATori* newOwner);
+	ATori* owner;
+
 	// Ability 1 variables.
-	void ability1();
+	virtual void ability1();
 
 	UPROPERTY(EditAnywhere)
 		float maxCooldownAbility1;
@@ -40,7 +45,7 @@ public:
 
 
 	// Ability 2 variables.
-	void ability2();
+	virtual void ability2();
 
 	UPROPERTY(EditAnywhere)
 		float maxCooldownAbility2;
