@@ -18,6 +18,7 @@ ATori::ATori()
 
 
 
+
 }
 
 // Called when the game starts or when spawned
@@ -31,11 +32,12 @@ void ATori::BeginPlay()
 void ATori::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("Controllers's Rotation is %s"),
-		*GetControlRotation().ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("Controllers's Rotation is %s"),
+	//	*GetControlRotation().ToString());
 
-	UE_LOG(LogTemp, Warning, TEXT("MyCharacter's ForwardVector is %s"),
-		*GetActorForwardVector().ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("MyCharacter's ForwardVector is %s"),
+	//	*GetActorForwardVector().ToString());
+
 
 }
 
@@ -47,43 +49,69 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
 
+	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
+	InputComponent->BindAction("Ability_2", IE_Pressed, this, &ATori::ability_2);
+
+	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
+
 
 }
 
 void ATori::move_X(float axisValue)
 {
-	/*
-	if ((GetController() != NULL) && (axisValue != 0.0f))
-	{
-		// find out which way is forward
-		const FRotator Rotation = GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0); 
-		//found this easier than other methods since it just adds a float value, and can be changed into any direction.
-
-		// get forward vector
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		AddMovementInput(Direction, axisValue);
-		
-	}	
-	*/
 	AddMovementInput(FVector(1, 0.f, 0.f), axisValue);
 }
 
 void ATori::move_Y(float axisValue)
 {
-	/*
-	if ((GetController() != NULL) && (axisValue != 0.0f))
-	{
-		// find out which way is right
-		const FRotator Rotation = GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-		// get right vector 
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		// add movement in that direction
-		AddMovementInput(Direction, axisValue);
-		
-	}
-	*/
 	AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
+}
+
+void ATori::ability_1()
+{
+	if (activeElement == 1 && element_1 != nullptr)
+		element_1->ability1();
+	else if (activeElement == 2 && element_2 != nullptr)
+		element_2->ability1();
+}
+
+void ATori::ability_2()
+{
+	if (activeElement == 1 && element_1 != nullptr)
+		element_1->ability2();
+	else if (activeElement == 2 && element_2 != nullptr)
+		element_2->ability2();
+}
+
+bool ATori::pickUpElement(ABaseElement * newElement)
+{
+	if (newElement->elementType == element_1->elementType || newElement->elementType == element_2->elementType)
+		return false;
+	else
+	{
+		if (activeElement == 1)
+		{
+			element_1->Destroy();
+			element_1 = newElement;
+			element_1->setPlayer(this);
+		}
+		else if (activeElement == 2)
+		{
+			element_2->Destroy();
+			element_2 = newElement;
+			element_2->setPlayer(this);
+			
+		}
+	}
+	return true;
+}
+
+void ATori::switchElement()
+{
+	if (activeElement == 1)
+		activeElement = 2;
+	else if (activeElement == 2)
+		activeElement = 1;
+	UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 }
 

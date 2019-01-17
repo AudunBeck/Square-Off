@@ -21,14 +21,22 @@ void ABaseElement::BeginPlay()
 void ABaseElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 
+}
+
+void ABaseElement::setPlayer(class ATori * newOwner)
+{
+	myOwner = newOwner;
 }
 
 void ABaseElement::ability1()
 {
+	UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 1 firing"));
 }
 
 void ABaseElement::ability2()
 {
+	UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 2 firing"));
 }
 

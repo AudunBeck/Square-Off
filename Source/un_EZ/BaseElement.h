@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Tori.h"
 #include "BaseElement.generated.h"
 
 UCLASS()
@@ -23,8 +24,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	int elementType = 0;
+
+	bool isActive;
+
+	// Setting Owner
+	void setPlayer(class ATori* newOwner);
+
+	UPROPERTY(EditAnywhere)
+		class ATori* myOwner;
+
 	// Ability 1 variables.
-	void ability1();
+	virtual void ability1();
 
 	UPROPERTY(EditAnywhere)
 		float maxCooldownAbility1;
@@ -38,7 +49,7 @@ public:
 
 
 	// Ability 2 variables.
-	void ability2();
+	virtual void ability2();
 
 	UPROPERTY(EditAnywhere)
 		float maxCooldownAbility2;
@@ -48,6 +59,8 @@ public:
 		int maxAmmo2;
 	UPROPERTY(EditAnywhere)
 		int ammo2;
+
+	
 
 
 
