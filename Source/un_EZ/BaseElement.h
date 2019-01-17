@@ -24,11 +24,15 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	int elementType = 0;
+
 	bool isActive;
 
 	// Setting Owner
-	void setOwner(ATori* newOwner);
-	ATori* owner;
+	void setOwner(class ATori* newOwner);
+
+	UPROPERTY(EditAnywhere)
+		class ATori* myOwner;
 
 	// Ability 1 variables.
 	virtual void ability1();

@@ -52,6 +52,8 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_2", IE_Pressed, this, &ATori::ability_2);
 
+	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
+
 
 }
 
@@ -79,5 +81,37 @@ void ATori::ability_2()
 		element_1->ability2();
 	else if (activeElement == 2 && element_2 != nullptr)
 		element_2->ability2();
+}
+
+bool ATori::pickUpElement(ABaseElement * newElement)
+{
+	if (newElement->elementType == element_1->elementType || newElement->elementType == element_2->elementType)
+		return false;
+	else
+	{
+		if (activeElement == 1)
+		{
+			element_1->Destroy();
+			element_1 = newElement;
+			element_1->setOwner(this);
+		}
+		else if (activeElement == 2)
+		{
+			element_2->Destroy();
+			element_2 = newElement;
+			element_2->setOwner(this);
+			
+		}
+	}
+	return true;
+}
+
+void ATori::switchElement()
+{
+	if (activeElement == 1)
+		activeElement = 2;
+	else if (activeElement == 2)
+		activeElement = 1;
+	UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 }
 

@@ -34,12 +34,16 @@ public:
 	void ability_1();
 	void ability_2();
 
-	UPROPERTY(EditAnywhere, Category = "Elements")
-		int activeElement = 0;
+	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
+	bool pickUpElement(class ABaseElement* newElement);
 
 	UPROPERTY(EditAnywhere, Category = "Elements")
-		ABaseElement* element_1;
+		int activeElement = 1;
+	void switchElement();
+
 	UPROPERTY(EditAnywhere, Category = "Elements")
-		ABaseElement* element_2;
+		class ABaseElement* element_1;
+	UPROPERTY(EditAnywhere, Category = "Elements")
+		class ABaseElement* element_2;
 
 };

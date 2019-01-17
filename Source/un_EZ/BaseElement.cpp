@@ -21,12 +21,13 @@ void ABaseElement::BeginPlay()
 void ABaseElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 
 }
 
-void ABaseElement::setOwner(ATori * newOwner)
+void ABaseElement::setOwner(class ATori * newOwner)
 {
-	owner = newOwner;
+	myOwner = newOwner;
 }
 
 void ABaseElement::ability1()
