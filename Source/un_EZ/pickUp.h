@@ -24,10 +24,13 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	USphereComponent* collider;
+	
+	UPROPERTY(EditAnywhere)
+		USphereComponent* collider;
 
 	UPROPERTY(EditAnywhere, Category = "Element")
 		TSubclassOf<class ABaseElement> ElementBlueprint;
 
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

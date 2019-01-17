@@ -22,7 +22,8 @@ void ABaseElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-
+	if (myOwner != nullptr)
+		SetActorLocation(myOwner->GetActorLocation());
 }
 
 void ABaseElement::setPlayer(class ATori * newOwner)
