@@ -83,6 +83,11 @@ void ATori::ability_2()
 		element_2->ability2();
 }
 
+void ATori::recieveDamage(float damage)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Player_%i, was struck."), 1) // Find a way to find the player-number, instead of 1
+}
+
 bool ATori::pickUpElement(ABaseElement * newElement)
 {
 	// Checking for nullptrs are smart

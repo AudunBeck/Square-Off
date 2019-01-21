@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BaseElement.h"
+#include "RockElementAbility1.h"
 #include "RockElement.generated.h"
 
 /**
@@ -19,5 +20,16 @@ public:
 
 	virtual void ability1()override;
 	virtual void ability2()override;
+
+
+	// Holds the pointers for element abilities
+	UPROPERTY(EditAnywhere, Category = "Abilities")
+		TSubclassOf<class ARockElementAbility1> RockElementAbility1_BP;
+
+	/*UPROPERTY(EditAnywhere, Category = "Abilities")
+		TSubclassOf<class ARockElementAbility2> RockAbility2_BP;*/
+
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1lifeSpan = 0.1f;
 	
 };
