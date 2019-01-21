@@ -27,8 +27,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class ARockElementAbility1> RockElementAbility1_BP;
 
-	/*UPROPERTY(EditAnywhere, Category = "Abilities")
-		TSubclassOf<class ARockElementAbility2> RockAbility2_BP;*/
+	UPROPERTY(EditAnywhere, Category = "Abilities")
+		TSubclassOf<class ARockElementAbility2> RockElementAbility2_BP;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.1f;
@@ -42,8 +42,7 @@ public:
 	
 
 
-	UPROPERTY(EditAnywhere, Category = "Abilities")
-		TSubclassOf<class ARockElementAbility2> wallBlueprint;
+	
 
 	
 };

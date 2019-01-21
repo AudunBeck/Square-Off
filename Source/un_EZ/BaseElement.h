@@ -38,13 +38,13 @@ public:
 	// Ability 1 variables.
 	virtual void ability1();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCooldownAbility1;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float cooldownAbility1;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		int maxAmmo1;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		int ammo1;
 
 
@@ -52,13 +52,13 @@ public:
 	// Ability 2 variables.
 	virtual void ability2();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float maxCooldownAbility2;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float cooldownAbility2;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		int maxAmmo2;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		int ammo2;
 
 	

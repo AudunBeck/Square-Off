@@ -32,6 +32,12 @@ void ARockElementAbility2::Tick(float DeltaTime)
 
 }
 
+void ARockElementAbility2::setupAttack(FVector scale, float lifeSpan)
+{
+	SetActorScale3D(scale);
+	SetLifeSpan(lifeSpan);
+}
+
 void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	if (moving)

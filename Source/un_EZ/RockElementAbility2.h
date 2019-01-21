@@ -27,6 +27,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Owner of the attack
+	void setupAttack(FVector scale, float lifeSpan);
+
 	UPROPERTY(EditAnywhere)
 		bool moving = false;
 

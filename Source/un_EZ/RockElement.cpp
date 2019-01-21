@@ -19,7 +19,7 @@ void ARockElement::ability2()
 	const FVector newVec = (forwardVec * ability2Range) + playerVec;
 
 	UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
-	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(wallBlueprint, newVec, playerRot);
-	temp->SetActorScale3D(ability2Scale);
-	temp->SetLifeSpan(ability2Lifespan);
+	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot);
+	temp->setupAttack(ability2Scale, ability2Lifespan);
+	
 }
