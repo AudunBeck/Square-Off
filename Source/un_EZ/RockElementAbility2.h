@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Tori.h"
+#include "RockElementAbility1.h"
 #include "Engine/Classes/Components/BoxComponent.h"
 #include "RockElementAbility2.generated.h"
 
@@ -15,7 +17,7 @@ class UN_EZ_API ARockElementAbility2 : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ARockElementAbility2();
-
+	
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* boxCollider;
 
@@ -23,18 +25,31 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Owner of the attack
-	void setupAttack(FVector scale, float lifeSpan);
+	void setupAttack(ATori * newOwner, FVector scale, float lifeSpan);
 
 	UPROPERTY(EditAnywhere)
 		bool moving = false;
 
+	UPROPERTY(EditAnywhere)
+		bool shouldMove = false;
+
+	UPROPERTY(EditAnywhere)
+		float speed = 300.f;
+
+	FVector punchPos;
+	FVector wallPos;
+
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		class ATori* myOwner;
+
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
+	
+	void moveWall(AActor* OtherActor);
 
 };

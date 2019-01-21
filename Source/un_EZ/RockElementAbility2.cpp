@@ -28,17 +28,24 @@ void ARockElementAbility2::BeginPlay()
 // Called every frame
 void ARockElementAbility2::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);	
-
+	Super::Tick(DeltaTime);
+	if (shouldMove)
+	{
+		FVector NewLocation = GetActorLocation();
+		NewLocation += GetActorForwardVector() * speed * DeltaTime;
+		SetActorLocation(NewLocation);
+	}
 }
 
-void ARockElementAbility2::setupAttack(FVector scale, float lifeSpan)
+void ARockElementAbility2::setupAttack(ATori * newOwner, FVector scale, float lifeSpan)
 {
+	myOwner = newOwner;
 	SetActorScale3D(scale);
 	SetLifeSpan(lifeSpan);
 }
 
-void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
+	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	if (moving)
 	{
@@ -49,6 +56,19 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 
 		}
 	}
+	if (OtherActor->IsA(ARockElementAbility1::StaticClass()))
+	{
+		moveWall(OtherActor);
+		shouldMove = true;
+	}
 }
 
+void ARockElementAbility2::moveWall(AActor* OtherActor)
+{
+	/// Can update this function to "slowly" turn the wall towards the correct rotation
+	punchPos = myOwner->GetActorLocation();
+	wallPos = this->GetActorLocation();
+	FRotator temp = (wallPos - punchPos).Rotation();
+	this->SetActorRotation(temp);
+}
 

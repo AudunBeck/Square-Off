@@ -34,9 +34,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		USphereComponent* collider;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float myLifeSpan;
-
 	// Add a description here
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, 
