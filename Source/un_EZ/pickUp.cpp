@@ -22,7 +22,6 @@ ApickUp::ApickUp()
 void ApickUp::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
