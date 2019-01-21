@@ -2,6 +2,7 @@
 
 #include "RockElement.h"
 
+
 void ARockElement::ability1()
 {
 	UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
@@ -12,5 +13,13 @@ void ARockElement::ability1()
 
 void ARockElement::ability2()
 {
+	FVector forwardVec = myOwner->GetActorForwardVector();
+	FVector playerVec = myOwner->GetActorLocation();
+	FRotator playerRot = myOwner->GetActorRotation();
+	const FVector newVec = (forwardVec * ability2Range) + playerVec;
+
 	UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
+	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(wallBlueprint, newVec, playerRot);
+	temp->SetActorScale3D(ability2Scale);
+	temp->SetLifeSpan(ability2Lifespan);
 }
