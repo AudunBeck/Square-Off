@@ -85,22 +85,30 @@ void ATori::ability_2()
 
 bool ATori::pickUpElement(ABaseElement * newElement)
 {
-	if (newElement->elementType == element_1->elementType || newElement->elementType == element_2->elementType)
-		return false;
+	// Checking for nullptrs are smart
+	if (element_1 == nullptr)
+		element_1 = newElement;
+	else if (element_2 == nullptr)
+		element_2 = newElement;
+	// If it does not fill any empty spaces.
 	else
 	{
-		if (activeElement == 1)
+		if (newElement->elementType == element_1->elementType || newElement->elementType == element_2->elementType)
+			return false;
+		else
 		{
-			element_1->Destroy();
-			element_1 = newElement;
-			element_1->setPlayer(this);
-		}
-		else if (activeElement == 2)
-		{
-			element_2->Destroy();
-			element_2 = newElement;
-			element_2->setPlayer(this);
-			
+			if (activeElement == 1)
+			{
+				element_1->Destroy();
+				element_1 = newElement;
+				element_1->setPlayer(this);
+			}
+			else if (activeElement == 2)
+			{
+				element_2->Destroy();
+				element_2 = newElement;
+				element_2->setPlayer(this);
+			}
 		}
 	}
 	return true;
