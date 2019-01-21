@@ -4,11 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "BaseElement.h"
-<<<<<<< HEAD
 #include "RockElementAbility1.h"
-=======
 #include "RockElementAbility2.h"
->>>>>>> AudunRockElementMerge
 #include "RockElement.generated.h"
 
 /**
@@ -24,7 +21,7 @@ public:
 	virtual void ability1()override;
 	virtual void ability2()override;
 
-<<<<<<< HEAD
+
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
@@ -35,7 +32,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.1f;
-=======
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
@@ -45,8 +42,8 @@ public:
 	
 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class ARockElementAbility2> wallBlueprint;
->>>>>>> AudunRockElementMerge
+
 	
 };
