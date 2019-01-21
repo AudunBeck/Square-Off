@@ -3,6 +3,8 @@
 #include "Tori.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Engine/Classes/Engine/LocalPlayer.h"
+#include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/GameEngine.h"
 
 // Sets default values
@@ -85,7 +87,15 @@ void ATori::ability_2()
 
 void ATori::recieveDamage(float damage)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Player_%i, was struck."), 1) // Find a way to find the player-number, instead of 1
+	// Might be something like this.
+	//int playerNum = Cast<APlayerController>(GetController())->GetLocalPlayer()->GetControllerId();
+
+	UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+	hitPoints -= damage;
+	if (hitPoints <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+	}
 }
 
 bool ATori::pickUpElement(ABaseElement * newElement)
@@ -93,7 +103,7 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	// Checking for nullptrs are smart
 	if (element_1 == nullptr)
 		element_1 = newElement;
-	else if (element_2 == nullptr)
+	else if (element_2 == nullptr && newElement->elementType != element_1->elementType)
 		element_2 = newElement;
 	// If it does not fill any empty spaces.
 	else

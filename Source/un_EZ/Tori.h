@@ -36,6 +36,9 @@ public:
 	void ability_1();
 	void ability_2();
 
+	UPROPERTY(EditAnywhere, Category = "HitPoints")
+		float hitPoints = 100;
+
 	// Recieve damage
 	void recieveDamage(float damage);
 
