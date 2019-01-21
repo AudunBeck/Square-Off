@@ -40,7 +40,10 @@ void ApickUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AA
 		ATori* player = Cast<ATori>(OtherActor);
 		ABaseElement* temp = GetWorld()->SpawnActor<ABaseElement>(ElementBlueprint);
 		if (player->pickUpElement(temp))
+		{
+			temp->myOwner = player;
 			Destroy();
+		}
 		else
 		{
 			temp->Destroy();
