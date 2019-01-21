@@ -36,6 +36,10 @@ public:
 	void ability_1();
 	void ability_2();
 
+	// Recieve damage
+	void recieveDamage(float damage);
+
+
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
 	bool pickUpElement(class ABaseElement* newElement);
 	

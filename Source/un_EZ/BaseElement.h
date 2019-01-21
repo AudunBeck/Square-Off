@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Tori.h"
+#include "Engine/World.h"
 #include "BaseElement.generated.h"
 
 UCLASS()

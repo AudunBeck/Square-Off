@@ -5,17 +5,17 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Engine/Classes/Components/SphereComponent.h"
-#include "BaseElement.h"
-#include "pickUp.generated.h"
+#include "Tori.h"
+#include "RockElementAbility1.generated.h"
 
 UCLASS()
-class UN_EZ_API ApickUp : public AActor
+class UN_EZ_API ARockElementAbility1 : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ApickUp();
+	ARockElementAbility1();
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,14 +24,21 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
-	UPROPERTY(EditAnywhere)
+
+	// Owner of the attack
+	void setupAttack(ATori* newOwner, float lifeSpan);
+
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		class ATori* myOwner;
+
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		USphereComponent* collider;
 
-	UPROPERTY(EditAnywhere, Category = "Element")
-		TSubclassOf<class ABaseElement> ElementBlueprint;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float myLifeSpan;
 
+	// Add a description here
 	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, 
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
