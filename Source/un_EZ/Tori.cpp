@@ -18,9 +18,6 @@ ATori::ATori()
 	bUseControllerRotationRoll = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
-
-
-
 }
 
 // Called when the game starts or when spawned
@@ -41,8 +38,10 @@ void ATori::Tick(float DeltaTime)
 
 	//UE_LOG(LogTemp, Warning, TEXT("MyCharacter's ForwardVector is %s"),
 	//	*GetActorForwardVector().ToString());
+	if (shouldDash)
+	{
 
-
+	}
 }
 
 // Called to bind functionality to input
@@ -133,6 +132,11 @@ void ATori::recieveDamage(float damage)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
 	}
+}
+
+void ATori::fireDash(float fireDash)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Attempting to dash."));
 }
 
 bool ATori::pickUpElement(ABaseElement * newElement)

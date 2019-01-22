@@ -8,9 +8,6 @@
 #include "RockElementAbility2.h"
 #include "RockElement.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class UN_EZ_API ARockElement : public ABaseElement
 {
