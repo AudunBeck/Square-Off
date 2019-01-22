@@ -23,11 +23,13 @@ void AFireElementAbility2::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Sets the hitbox ahead of the player while flying forward
-	this->SetActorLocation(myOwner->GetActorForwardVector() * 100.f + myOwner->GetActorLocation());
+	this->SetActorLocation(myOwner->GetActorForwardVector() * attackRange + myOwner->GetActorLocation());
+	this->SetActorRotation(myOwner->GetActorRotation());
 }
 
-void AFireElementAbility2::setupAttack(ATori * newOwner, float lifeSpan)
+void AFireElementAbility2::setupAttack(ATori * newOwner, float lifeSpan, float range)
 {
 	myOwner = newOwner;
 	SetLifeSpan(lifeSpan);
+	attackRange = range;
 }

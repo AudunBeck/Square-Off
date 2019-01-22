@@ -26,6 +26,9 @@ public:
 		TSubclassOf<class AFireElementAbility2> FireElementAbility2_BP;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1Range;
+
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.3f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")

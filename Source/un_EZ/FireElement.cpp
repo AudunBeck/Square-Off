@@ -12,9 +12,9 @@ void AFireElement::ability1()
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
 		AFireElementAbility1* temp;
 		temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
-			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * 100.f, myOwner->GetActorRotation());
+			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation());
 
-		temp->setupAttack(myOwner, ability1lifeSpan);
+		temp->setupAttack(myOwner, ability1lifeSpan, ability1Range);
 	}
 	Super::ability1();
 }
@@ -29,9 +29,11 @@ void AFireElement::ability2()
 
 		AFireElementAbility2* temp;
 		temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
-			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * 100.f, myOwner->GetActorRotation());
+			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation());
 
-		temp->setupAttack(myOwner, ability1lifeSpan);
+		temp->setupAttack(myOwner, ability1lifeSpan, ability2Range);
+
+		// Refills ammo1 as mentioned in design doc
 		ammo1 += ammo1Refill;
 		if (ammo1 > maxAmmo1)
 			ammo1 = maxAmmo1;
