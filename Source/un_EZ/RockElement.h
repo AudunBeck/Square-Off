@@ -45,6 +45,8 @@ public:
 		float maxCharge = 2;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float chargeFloat;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float chargeSpeed;
 
 
 

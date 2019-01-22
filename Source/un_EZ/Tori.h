@@ -33,6 +33,7 @@ public:
 	void move_Y(float axisValue);
 
 	void setMoveSpeed(float newMoveSpeed);
+	void setRotationRate(float newRotationSpeed);
 
 	void dodge();
 
@@ -66,5 +67,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float moveSpeed = 600;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float rotationRate = 720;
 
 };

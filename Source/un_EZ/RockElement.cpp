@@ -36,6 +36,7 @@ void ARockElement::ability1End()
 		temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation());
 		temp->setupAttack(myOwner, ability1lifeSpan);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
+		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * chargeSpeed, false, true);
 		chargeFloat = 0;
 	}
 }
