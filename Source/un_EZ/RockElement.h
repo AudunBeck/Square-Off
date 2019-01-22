@@ -46,7 +46,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float chargeFloat;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float chargeSpeed;
+		float rockPunch;
 
 
 
