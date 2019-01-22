@@ -4,42 +4,45 @@
 
 #include "CoreMinimal.h"
 #include "BaseElement.h"
-#include "RockElementAbility1.h"
-#include "RockElementAbility2.h"
-#include "RockElement.generated.h"
+#include "FireElementAbility1.h"
+#include "FireElementAbility2.h"
+#include "GameFramework/Actor.h"
+#include "FireElement.generated.h"
 
 UCLASS()
-class UN_EZ_API ARockElement : public ABaseElement
+class UN_EZ_API AFireElement : public ABaseElement
 {
 	GENERATED_BODY()
+	
+public:	
 
-public:
-
+	virtual void Tick(float DeltaTime)override;
 	virtual void ability1()override;
 	virtual void ability2()override;
 
+	float currentTime;
+	float attackTime;
+	float dashTime;
+	bool shouldDash = false;
 
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
-		TSubclassOf<class ARockElementAbility1> RockElementAbility1_BP;
+		TSubclassOf<class AFireElementAbility1> FireElementAbility1_BP;
 
 	UPROPERTY(EditAnywhere, Category = "Abilities")
-		TSubclassOf<class ARockElementAbility2> RockElementAbility2_BP;
+		TSubclassOf<class AFireElementAbility2> FireElementAbility2_BP;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.1f;
 
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float fireDash = 50;
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		FVector ability2Scale;
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Lifespan = 2;
-	
 
-
-	
-
-	
 };

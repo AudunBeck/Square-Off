@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Engine/Classes/Components/ChildActorComponent.h"
+#include "FireElement.h"
 #include "BaseElement.h"
 #include "Tori.generated.h"
 
@@ -41,6 +42,9 @@ public:
 
 	// Recieve damage
 	void recieveDamage(float damage);
+	void fireDash(float fireDash);
+	bool shouldDash = false;
+
 
 
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
