@@ -26,15 +26,18 @@ public:
 		TSubclassOf<class AFireElementAbility2> FireElementAbility2_BP;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ability1lifeSpan = 0.1f;
+		float ability1lifeSpan = 0.3f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float fireDash = 3000;
+		float firePunch = 3000;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
 
+	/// Add a function that reads how long the dash lasts, and constantly update the lifespan accordingly
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Lifespan = 2;
 
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float fireKick = 6000;
 };

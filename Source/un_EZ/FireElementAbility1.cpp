@@ -25,6 +25,7 @@ void AFireElementAbility1::BeginPlay()
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	this->SetActorLocation(myOwner->GetActorForwardVector() * 100.f + myOwner->GetActorLocation());
 }
 
 void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan)
