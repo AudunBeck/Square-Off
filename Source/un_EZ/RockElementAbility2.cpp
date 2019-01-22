@@ -56,17 +56,15 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 
 		}
 	}
-	if (OtherActor->IsA(ARockElementAbility1::StaticClass()))
-	{
-		moveWall(OtherActor);
-		shouldMove = true;
-	}
+
 }
 
-void ARockElementAbility2::moveWall(AActor* OtherActor)
+void ARockElementAbility2::moveWall(FVector playerLoc)
 {
+	shouldMove = true;
 	/// Can update this function to "slowly" turn the wall towards the correct rotation
-	punchPos = myOwner->GetActorLocation();
+
+	punchPos = playerLoc;
 	wallPos = this->GetActorLocation();
 	FRotator temp = (wallPos - punchPos).Rotation();
 	this->SetActorRotation(temp);

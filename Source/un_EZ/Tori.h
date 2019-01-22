@@ -32,15 +32,26 @@ public:
 	void move_X(float axisValue);
 	void move_Y(float axisValue);
 
+	void setMoveSpeed(float newMoveSpeed);
+	void setRotationRate(float newRotationSpeed);
+
+	void dodge();
+
 	// Runs abilities, sends to the element it has equipped currently.
 	void ability_1();
+	void ability1End();
+
 	void ability_2();
+	void ability2End();
 
 	UPROPERTY(EditAnywhere, Category = "HitPoints")
 		float hitPoints = 100;
 
 	// Recieve damage
 	void recieveDamage(float damage);
+	void fireDash(float fireDash);
+	bool shouldDash = false;
+
 
 
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
@@ -56,5 +67,10 @@ public:
 		class ABaseElement* element_1;
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		class ABaseElement* element_2;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float moveSpeed = 600;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float rotationRate = 720;
 
 };

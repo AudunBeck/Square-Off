@@ -44,12 +44,13 @@ public:
 	FVector punchPos;
 	FVector wallPos;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		class ATori* myOwner;
 
 	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
-	void moveWall(AActor* OtherActor);
+	void moveWall(FVector playerLoc);
 
 };

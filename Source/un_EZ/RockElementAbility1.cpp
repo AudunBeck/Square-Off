@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "RockElementAbility1.h"
+#include "RockElementAbility2.h"
 
 // Sets default values
 ARockElementAbility1::ARockElementAbility1()
@@ -25,12 +26,15 @@ void ARockElementAbility1::BeginPlay()
 void ARockElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	this->SetActorLocation(myOwner->GetActorForwardVector() * attackRange + myOwner->GetActorLocation());
 }
 
-void ARockElementAbility1::setupAttack(ATori * newOwner, float lifeSpan)
+void ARockElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, float chargeFloat)
 {
 	myOwner = newOwner;
 	SetLifeSpan(lifeSpan);
+	attackRange = range;
+	chargedHit = chargeFloat;
 }
 
 void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
@@ -40,8 +44,17 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
+			// Make the target take damage	
+			Cast<ATori>(OtherActor)->recieveDamage(30.f * chargedHit);	// float value is temporary
+		}
+
+		if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
+		{
+			FVector temp(0,0,0);
+			if (myOwner != nullptr)
+				temp= FVector(myOwner->GetActorLocation());
+			Cast<ARockElementAbility2>(OtherActor)->moveWall(temp);
 		}
 	}
+
 }
