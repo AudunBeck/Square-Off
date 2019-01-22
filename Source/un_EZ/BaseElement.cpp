@@ -14,6 +14,11 @@ ABaseElement::ABaseElement()
 void ABaseElement::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ammo1 = maxAmmo1;
+	ammo2 = maxAmmo2;
+	cooldownAbility1 = maxCooldownAbility1;
+	cooldownAbility2 = maxCooldownAbility2;
 	
 }
 
@@ -24,6 +29,36 @@ void ABaseElement::Tick(float DeltaTime)
 	
 	if (myOwner != nullptr)
 		SetActorLocation(myOwner->GetActorLocation());
+
+	if (ammo1 < maxAmmo1)
+	{
+		cooldownAbility1 -= DeltaTime;
+		if (cooldownAbility1 <= 0)
+		{
+			ammo1 += ammoPerCd1;
+			if (ammo1 > maxAmmo1)
+				ammo1 = maxAmmo1;
+
+			UE_LOG(LogTemp, Warning, TEXT("Ammo1 is %i now"), ammo1);
+
+			cooldownAbility1 = maxCooldownAbility2;
+		}
+	}
+
+	if (ammo2 < maxAmmo2)
+	{
+		cooldownAbility2 -= DeltaTime;
+		if (cooldownAbility2 <= 0)
+		{
+			ammo2 += ammoPerCd2;
+			if (ammo2 > maxAmmo2)
+				ammo2 = maxAmmo2;
+
+			UE_LOG(LogTemp, Warning, TEXT("Ammo2 is %i now"), ammo2);
+			cooldownAbility2 = maxCooldownAbility2;
+		}
+
+	}		
 }
 
 void ABaseElement::setPlayer(class ATori * newOwner)
@@ -33,11 +68,15 @@ void ABaseElement::setPlayer(class ATori * newOwner)
 
 void ABaseElement::ability1()
 {
-	UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 1 firing"));
+	if (ammo1 > 0)
+		ammo1 -= 1;
+	//UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 1 firing"));
 }
 
 void ABaseElement::ability2()
 {
-	UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 2 firing"));
+	if (ammo2 > 0)
+		ammo2 -= 1;
+	//UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 2 firing"));
 }
 

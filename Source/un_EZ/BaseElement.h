@@ -46,6 +46,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		int maxAmmo1;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
+		int ammoPerCd1;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		int ammo1;
 
 
@@ -59,6 +61,8 @@ public:
 		float cooldownAbility2;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		int maxAmmo2;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		int ammoPerCd2;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		int ammo2;
 
