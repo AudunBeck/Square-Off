@@ -26,15 +26,19 @@ void ARockElementAbility1::BeginPlay()
 void ARockElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (myOwner != nullptr)
 	this->SetActorLocation(myOwner->GetActorForwardVector() * attackRange + myOwner->GetActorLocation());
 }
 
 void ARockElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, float chargeFloat)
 {
 	myOwner = newOwner;
+	ownerPos = myOwner->GetActorLocation();
+	UE_LOG(LogTemp, Warning, TEXT("Owner position: %f , %f , %f"), myOwner->GetActorLocation().X, myOwner->GetActorLocation().Y, myOwner->GetActorLocation().Z);
 	SetLifeSpan(lifeSpan);
 	attackRange = range;
-	chargedHit = chargeFloat;
+	chargedHit = chargeFloat; 
+	
 }
 
 void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
@@ -50,10 +54,17 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 
 		if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
 		{
-			FVector temp(0,0,0);
+			
 			if (myOwner != nullptr)
-				temp= FVector(myOwner->GetActorLocation());
-			Cast<ARockElementAbility2>(OtherActor)->moveWall(temp);
+			{
+				FVector temp = FVector(myOwner->GetActorLocation());
+				Cast<ARockElementAbility2>(OtherActor)->moveWall(temp);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Punch did not find myOwner"));
+				Cast<ARockElementAbility2>(OtherActor)->moveWall(GetActorLocation());
+			}
 		}
 	}
 

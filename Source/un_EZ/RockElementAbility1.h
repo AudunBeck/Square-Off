@@ -35,6 +35,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		USphereComponent* collider;
+	
+	FVector ownerPos;
 
 	// Add a description here
 	UFUNCTION()
