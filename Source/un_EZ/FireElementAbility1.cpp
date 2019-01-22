@@ -37,12 +37,31 @@ void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan)
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor != myOwner)
+	if (buffed)
 	{
-		if (OtherActor->IsA(ATori::StaticClass()))
+		if (OtherActor != myOwner)
 		{
-			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
+			if (OtherActor->IsA(ATori::StaticClass()))
+			{
+				// Make the target take damage
+				Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
+
+				/// Change this to its own effect-class
+				// Do some crazy shit
+			}
 		}
 	}
+	if (!buffed)
+	{
+		if (OtherActor != myOwner)
+		{
+			if (OtherActor->IsA(ATori::StaticClass()))
+			{
+				// Make the target take damage
+				Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
+			}
+		}
+	}
+
+
 }
