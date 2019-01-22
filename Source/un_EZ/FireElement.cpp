@@ -2,40 +2,12 @@
 
 #include "FireElement.h"
 
-void AFireElement::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	currentTime += DeltaTime;
-
-	if (shouldDash)
-	{
-		if ((attackTime + dashTime) < currentTime)
-		{
-			FVector newLocation = myOwner->GetActorLocation();
-			newLocation += myOwner->GetActorForwardVector() * fireDash;
-			myOwner->SetActorLocation(newLocation);
-		}
-		else
-		{
-			shouldDash = false;
-		}
-		
-	}
-}
-
 void AFireElement::ability1()
 {
 	UE_LOG(LogTemp, Warning, TEXT("FireElement Ability 1 firing"));
 
 	// Dash part of the attack
-
-	//FVector NewLocation = GetActorLocation();
-	//NewLocation += myOwner->GetActorForwardVector() * fireDash;
-	//myOwner->SetActorLocation(NewLocation);
-	
-	shouldDash = true;
-	dashTime = 0.5;
-	attackTime = currentTime;
+	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireDash, false, true);
 
 	AFireElementAbility1* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP, myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * 100.f, myOwner->GetActorRotation());

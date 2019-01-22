@@ -6,7 +6,6 @@
 #include "BaseElement.h"
 #include "FireElementAbility1.h"
 #include "FireElementAbility2.h"
-#include "GameFramework/Actor.h"
 #include "FireElement.generated.h"
 
 UCLASS()
@@ -16,15 +15,8 @@ class UN_EZ_API AFireElement : public ABaseElement
 	
 public:	
 
-	virtual void Tick(float DeltaTime)override;
 	virtual void ability1()override;
 	virtual void ability2()override;
-
-	float currentTime;
-	float attackTime;
-	float dashTime;
-	bool shouldDash = false;
-
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
@@ -37,7 +29,7 @@ public:
 		float ability1lifeSpan = 0.1f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float fireDash = 50;
+		float fireDash = 3000;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
