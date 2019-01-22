@@ -2,17 +2,42 @@
 
 #include "RockElement.h"
 
+void ARockElement::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+	if (charging)
+	{
+		chargeFloat += DeltaTime;
+		if (chargeFloat >= maxCharge)
+			ability1End();
+	}
+
+}
 
 void ARockElement::ability1()
 {
 	if (ammo1 > 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
-		ARockElementAbility1* temp;
-		temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * 100.f, myOwner->GetActorRotation());
-		temp->setupAttack(myOwner, ability1lifeSpan);
+		charging = true;
+		myOwner->setMoveSpeed(0.f);
 	}
 	Super::ability1();
+}
+
+void ARockElement::ability1End()
+{
+	if (charging)
+	{
+		charging = false;
+
+		ARockElementAbility1* temp;
+		temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation());
+		temp->setupAttack(myOwner, ability1lifeSpan);
+		myOwner->setMoveSpeed(myOwner->moveSpeed);
+		chargeFloat = 0;
+	}
 }
 
 void ARockElement::ability2()

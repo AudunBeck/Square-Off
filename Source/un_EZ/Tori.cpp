@@ -27,6 +27,7 @@ ATori::ATori()
 void ATori::BeginPlay()
 {
 	Super::BeginPlay();
+	GetCharacterMovement()->MaxWalkSpeed = moveSpeed;
 	
 }
 
@@ -72,6 +73,11 @@ void ATori::move_X(float axisValue)
 void ATori::move_Y(float axisValue)
 {
 	AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
+}
+
+void ATori::setMoveSpeed (float newMoveSpeed)
+{
+	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
 }
 
 void ATori::dodge()

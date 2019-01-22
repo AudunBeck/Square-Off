@@ -18,7 +18,12 @@ class UN_EZ_API ARockElement : public ABaseElement
 
 public:
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 	virtual void ability1()override;
+	virtual void ability1End()override;
+
 	virtual void ability2()override;
 
 
@@ -32,6 +37,16 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.1f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1Range = 100.f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		bool charging;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float maxCharge = 2;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float chargeFloat;
+
+
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;

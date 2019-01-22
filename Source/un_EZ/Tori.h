@@ -32,6 +32,8 @@ public:
 	void move_X(float axisValue);
 	void move_Y(float axisValue);
 
+	void setMoveSpeed(float newMoveSpeed);
+
 	void dodge();
 
 	// Runs abilities, sends to the element it has equipped currently.
@@ -61,5 +63,8 @@ public:
 		class ABaseElement* element_1;
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		class ABaseElement* element_2;
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float moveSpeed = 600;
 
 };
