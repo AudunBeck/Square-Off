@@ -7,23 +7,34 @@ void AFireElement::ability1()
 	//UE_LOG(LogTemp, Warning, TEXT("FireElement Ability 1 firing"));
 
 	// Dash part of the attack
-	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
-	AFireElementAbility1* temp;
-	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
-		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * 100.f, myOwner->GetActorRotation());
+	if (ammo1 > 0)
+	{
+		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
+		AFireElementAbility1* temp;
+		temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
+			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * 100.f, myOwner->GetActorRotation());
 
-	temp->setupAttack(myOwner, ability1lifeSpan);
+		temp->setupAttack(myOwner, ability1lifeSpan);
+	}
+	Super::ability1();
 }
 
 void AFireElement::ability2()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("FireElement Ability 2 firing"));
-	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
+	if (ammo2)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("FireElement Ability 2 firing"));
+		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
 
-	
-	AFireElementAbility2* temp;
-	temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
-		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * 100.f, myOwner->GetActorRotation());
 
-	temp->setupAttack(myOwner, ability1lifeSpan);
+		AFireElementAbility2* temp;
+		temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
+			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * 100.f, myOwner->GetActorRotation());
+
+		temp->setupAttack(myOwner, ability1lifeSpan);
+		ammo1 += ammo1Refill;
+		if (ammo1 > maxAmmo1)
+			ammo1 = maxAmmo1;
+	}
+	Super::ability2();
 }

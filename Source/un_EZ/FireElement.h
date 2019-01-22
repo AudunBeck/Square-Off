@@ -33,6 +33,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		int ammo1Refill = 2;
 
 	/// Add a function that reads how long the dash lasts, and constantly update the lifespan accordingly
 	UPROPERTY(EditAnywhere, Category = "Ability2")
