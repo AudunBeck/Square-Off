@@ -32,9 +32,14 @@ public:
 	void move_X(float axisValue);
 	void move_Y(float axisValue);
 
+	void dodge();
+
 	// Runs abilities, sends to the element it has equipped currently.
 	void ability_1();
+	void ability1End();
+
 	void ability_2();
+	void ability2End();
 
 	UPROPERTY(EditAnywhere, Category = "HitPoints")
 		float hitPoints = 100;

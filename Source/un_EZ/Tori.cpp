@@ -50,11 +50,16 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
+	InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
+	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
+
 	InputComponent->BindAction("Ability_2", IE_Pressed, this, &ATori::ability_2);
+	InputComponent->BindAction("Ability_2", IE_Released, this, &ATori::ability2End);
 
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
+
 
 
 }
@@ -69,6 +74,10 @@ void ATori::move_Y(float axisValue)
 	AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
 }
 
+void ATori::dodge()
+{
+}
+
 void ATori::ability_1()
 {
 	if (activeElement == 1 && element_1 != nullptr)
@@ -77,12 +86,28 @@ void ATori::ability_1()
 		element_2->ability1();
 }
 
+void ATori::ability1End()
+{
+	if (activeElement == 1 && element_1 != nullptr)
+		element_1->ability1End();
+	else if (activeElement == 2 && element_2 != nullptr)
+		element_2->ability1End();
+}
+
 void ATori::ability_2()
 {
 	if (activeElement == 1 && element_1 != nullptr)
 		element_1->ability2();
 	else if (activeElement == 2 && element_2 != nullptr)
 		element_2->ability2();
+}
+
+void ATori::ability2End()
+{
+	if (activeElement == 1 && element_1 != nullptr)
+		element_1->ability2End();
+	else if (activeElement == 2 && element_2 != nullptr)
+		element_2->ability2End();
 }
 
 void ATori::recieveDamage(float damage)
