@@ -53,6 +53,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		{
 			ATori* player = Cast<ATori>(OtherActor);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER IS TOUCHING ME!"));
+			player->recieveDamage(10.f, 5000, GetActorLocation());
 
 		}
 	}
@@ -67,5 +68,6 @@ void ARockElementAbility2::moveWall(FVector playerLoc)
 	wallPos = this->GetActorLocation();
 	FRotator temp = (wallPos - punchPos).Rotation();
 	this->SetActorRotation(temp);
+	moving = true;
 }
 

@@ -178,6 +178,23 @@ void ATori::recieveDamage(float damage)
 	}
 }
 
+void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
+{
+	if (iTime <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+		hitPoints -= damage;
+		if (hitPoints <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		}
+		FVector delta = GetActorLocation() - knockbackPoint;
+		delta.Normalize();
+		FVector knockForce = delta * knockback;
+		LaunchCharacter(knockForce, false, true);
+	}
+}
+
 
 bool ATori::pickUpElement(ABaseElement * newElement)
 {
