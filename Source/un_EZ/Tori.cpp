@@ -27,6 +27,8 @@ void ATori::BeginPlay()
 	setMoveSpeed(moveSpeed);
 	setRotationRate(rotationRate);
 	
+	dodgeAmmo = dodgeMaxAmmo;
+	dodgeCooldown = dodgeMaxCooldown;
 }
 
 // Called every frame
@@ -38,9 +40,24 @@ void ATori::Tick(float DeltaTime)
 
 	//UE_LOG(LogTemp, Warning, TEXT("MyCharacter's ForwardVector is %s"),
 	//	*GetActorForwardVector().ToString());
-	if (shouldDash)
-	{
+	if (locked >= 0)
+		locked -= DeltaTime;
+	if (iTime >= 0)
+		iTime -= DeltaTime;
 
+	if (dodgeAmmo < dodgeMaxAmmo)
+	{
+		dodgeCooldown -= DeltaTime;
+		if (dodgeCooldown <= 0)
+		{
+			dodgeAmmo += 1;
+			if (dodgeAmmo > dodgeMaxAmmo)
+				dodgeAmmo = dodgeMaxAmmo;
+
+			UE_LOG(LogTemp, Warning, TEXT("DodgeAmmo is %i now"), dodgeAmmo);
+
+			dodgeCooldown = dodgeMaxCooldown;
+		}
 	}
 }
 
@@ -87,57 +104,80 @@ void ATori::setRotationRate(float newRotationRate)
 
 void ATori::dodge()
 {
+	if (locked <= 0)
+	{
+		if (dodgeAmmo > 0)
+		{
+			locked = 0.5f;
+			iTime = 0.3f;
+			FVector launchVector;
+			launchVector = GetActorForwardVector() * dodgeRange;
+			LaunchCharacter(launchVector, false, true);
+			dodgeAmmo -= 1;
+		}
+	}
+
 }
 
 void ATori::ability_1()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability1();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability1();
+	if (locked <= 0)
+	{
+		if (activeElement == 1 && element_1 != nullptr)
+			element_1->ability1();
+		else if (activeElement == 2 && element_2 != nullptr)
+			element_2->ability1();
+	}
 }
 
 void ATori::ability1End()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability1End();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability1End();
+	if (locked <= 0)
+	{
+		if (activeElement == 1 && element_1 != nullptr)
+			element_1->ability1End();
+		else if (activeElement == 2 && element_2 != nullptr)
+			element_2->ability1End();
+	}
 }
 
 void ATori::ability_2()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability2();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability2();
+	if (locked <= 0)
+	{
+		if (activeElement == 1 && element_1 != nullptr)
+			element_1->ability2();
+		else if (activeElement == 2 && element_2 != nullptr)
+			element_2->ability2();
+	}
 }
 
 void ATori::ability2End()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability2End();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability2End();
+	if (locked <= 0)
+	{
+		if (activeElement == 1 && element_1 != nullptr)
+			element_1->ability2End();
+		else if (activeElement == 2 && element_2 != nullptr)
+			element_2->ability2End();
+	}
 }
 
 void ATori::recieveDamage(float damage)
 {
 	// Might be something like this.
 	//int playerNum = Cast<APlayerController>(GetController())->GetLocalPlayer()->GetControllerId();
-
-	UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
-	hitPoints -= damage;
-	if (hitPoints <= 0)
+	if (iTime <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+		hitPoints -= damage;
+		if (hitPoints <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		}
 	}
 }
 
-void ATori::fireDash(float fireDash)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Attempting to dash."));
-}
 
 bool ATori::pickUpElement(ABaseElement * newElement)
 {

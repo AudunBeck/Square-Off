@@ -49,10 +49,6 @@ public:
 
 	// Recieve damage
 	void recieveDamage(float damage);
-	void fireDash(float fireDash);
-	bool shouldDash = false;
-
-
 
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
 	bool pickUpElement(class ABaseElement* newElement);
@@ -68,9 +64,25 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		class ABaseElement* element_2;
 
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float locked; // How long the control of the character is locked.
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float moveSpeed = 600;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float rotationRate = 720;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		int dodgeMaxAmmo = 2;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		int dodgeAmmo;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float dodgeMaxCooldown = 10;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float dodgeCooldown;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float dodgeRange;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float iTime; // How long the character is invunrable to damage.
+
 
 };
