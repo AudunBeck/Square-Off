@@ -10,7 +10,7 @@
 // Sets default values
 ATori::ATori()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	bUseControllerRotationPitch = false;
@@ -26,7 +26,7 @@ void ATori::BeginPlay()
 	Super::BeginPlay();
 	setMoveSpeed(moveSpeed);
 	setRotationRate(rotationRate);
-	
+
 	dodgeAmmo = dodgeMaxAmmo;
 	dodgeCooldown = dodgeMaxCooldown;
 }
@@ -40,7 +40,6 @@ void ATori::Tick(float DeltaTime)
 
 	//UE_LOG(LogTemp, Warning, TEXT("MyCharacter's ForwardVector is %s"),
 	//	*GetActorForwardVector().ToString());
-<<<<<<< HEAD
 
 	/// Find better comment
 	// Slow stuff
@@ -58,7 +57,12 @@ void ATori::Tick(float DeltaTime)
 	if (stunDur > 0)
 	{
 		stunDur -= DeltaTime;
-=======
+	}
+
+	if (stunDur <= 0)
+	{
+		setMoveSpeed(moveSpeed);
+	}
 	if (locked >= 0)
 		locked -= DeltaTime;
 	if (iTime >= 0)
@@ -77,12 +81,6 @@ void ATori::Tick(float DeltaTime)
 
 			dodgeCooldown = dodgeMaxCooldown;
 		}
->>>>>>> Merge
-	}
-
-	if (stunDur <= 0)
-	{
-		setMoveSpeed(moveSpeed);
 	}
 
 }
@@ -118,7 +116,7 @@ void ATori::move_Y(float axisValue)
 	AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
 }
 
-void ATori::setMoveSpeed (float newMoveSpeed)
+void ATori::setMoveSpeed(float newMoveSpeed)
 {
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
 }
@@ -204,28 +202,23 @@ void ATori::recieveDamage(float damage)
 	}
 }
 
-<<<<<<< HEAD
 void ATori::recieveDamage(float damage, float slow, float ccDur, int type)
 {
 	// Type 0 is slow
 	if (type == 0)
-=======
-void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
-{
-	if (iTime <= 0)
->>>>>>> Merge
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
-		hitPoints -= damage;
-		if (hitPoints <= 0)
+		if (iTime <= 0)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
-		}
-<<<<<<< HEAD
+			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+			hitPoints -= damage;
+			if (hitPoints <= 0)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+			}
 
-		slowDur = ccDur;
-		setMoveSpeed(moveSpeed *((100 - slow)*0.01));
-	}
+
+			slowDur = ccDur;
+			setMoveSpeed(moveSpeed *((100 - slow)*0.01));
+		}
 
 	// Type 1 is stun
 	if (type == 1)
@@ -239,14 +232,19 @@ void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 
 		stunDur = ccDur;
 		/// Incert effect of stun
-
-=======
-		FVector delta = GetActorLocation() - knockbackPoint;
-		delta.Normalize();
-		FVector knockForce = delta * knockback;
-		LaunchCharacter(knockForce, false, true);
->>>>>>> Merge
 	}
+}
+void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
+{
+
+
+
+	FVector delta = GetActorLocation() - knockbackPoint;
+	delta.Normalize();
+	FVector knockForce = delta * knockback;
+	LaunchCharacter(knockForce, false, true);
+
+
 }
 
 

@@ -53,6 +53,7 @@ public:
 	void recieveDamage(float damage);
 	void recieveDamage(float damage, float slow, float ccDur, int type);		//Int type defines effect, 0 = slow, 1 = stunn
 	void recieveDamage(float damage, float knockback, FVector knockbackPoint);
+	
 
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
 	bool pickUpElement(class ABaseElement* newElement);
