@@ -25,10 +25,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void setupAttack(ATori* newOwner, float lifeSpan, float boltSpeed);
+	// slow is set in %, where 25.5 = 25.5% slow
+	void setupAttack(ATori* newOwner, float lifeSpan, float boltSpeedIn, float ccDurIn, float slowIn);
 	float attackRange;
 	float chargedHit;
-	float myBoltSpeed;
+	float boltSpeed;
+	float ccDur;
+	float slow;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		class ATori* myOwner;

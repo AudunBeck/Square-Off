@@ -52,6 +52,12 @@ public:
 		float windUpTime;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxWindUpTime = 0.3f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float damage = 30.f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ccDur = 1.5f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float slow = 20.f;
 
 
 

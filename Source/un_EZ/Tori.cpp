@@ -61,7 +61,7 @@ void ATori::Tick(float DeltaTime)
 
 	if (stunDur <= 0)
 	{
-		setMoveSpeed(moveSpeed);
+		//setMoveSpeed(moveSpeed);
 	}
 	if (locked >= 0)
 		locked -= DeltaTime;
@@ -202,22 +202,22 @@ void ATori::recieveDamage(float damage)
 	}
 }
 
-void ATori::recieveDamage(float damage, float slow, float ccDur, int type)
+void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 {
 	// Type 0 is slow
 	if (type == 0)
 		if (iTime <= 0)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+			//UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
 			hitPoints -= damage;
 			if (hitPoints <= 0)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
 			}
 
-
-			slowDur = ccDur;
-			setMoveSpeed(moveSpeed *((100 - slow)*0.01));
+			UE_LOG(LogTemp, Warning, TEXT("I am slowed!"));
+			slowDur = ccDur; //moveSpeed *((100 - slow)*0.01)
+			setMoveSpeed(moveSpeed/2);
 		}
 
 	// Type 1 is stun
