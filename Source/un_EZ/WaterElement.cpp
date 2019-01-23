@@ -14,13 +14,15 @@ AWaterElement::AWaterElement()
 void AWaterElement::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	maxBuffDur = ability2lifeSpan;
 }
 
 // Called every frame
 void AWaterElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// Ability 1
 	if (windUpTime > 0)
 		windUpTime -= DeltaTime;
 
@@ -40,6 +42,19 @@ void AWaterElement::Tick(float DeltaTime)
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		charging = false;
 	}
+
+	// Ability 2
+	if (buffDur > 0)
+	{
+		myOwner->locked = 1.f;
+		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
+		buffDur -= DeltaTime;
+	}
+	if (buffDur <= 0)
+	{
+		myOwner->locked = 0.f;
+		myOwner->setMoveSpeed(myOwner->moveSpeed);
+	}
 }
 
 void AWaterElement::ability1()
@@ -57,9 +72,16 @@ void AWaterElement::ability1()
 
 void AWaterElement::ability2()
 {
-	UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 fired"));
-	buffActive = true;
-	AWaterElementAbility2* temp;
-	temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
-	temp->setupAttack(this, buffDur, dashDist);
+	if (ammo2 > 0)
+	{
+		buffDur = maxBuffDur;
+		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 is fired"));
+		AWaterElementAbility2* temp;
+		temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
+		temp->setupAttack(this, ability2lifeSpan, dashDist, ability2CcDur, ability2Slow, ability2Damage);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has no ammo"));
+	}
 }

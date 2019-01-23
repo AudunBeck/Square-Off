@@ -47,8 +47,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float boltSpeedBuffed = 2200.0f;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		bool charging;
+	bool charging;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
 	// Charge that starts when you press attack, and fires the bolt when reaching 0
@@ -76,12 +75,18 @@ public:
 
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float buffDur = 2.f;
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float maxbuffDur;
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		bool buffActive = false;
+		float ability2lifeSpan = 2.f;
+	float buffDur;
+	float maxBuffDur;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float dashDist = 3000;
+
+	// Damage properties
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Damage = 0.f;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2CcDur = 0.5f;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Slow = 30.f;
 
 };

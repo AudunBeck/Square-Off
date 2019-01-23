@@ -24,7 +24,7 @@ void ARockElement::ability1()
 {
 	if (ammo1 > 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
+		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
 		charging = true;
 		myOwner->setMoveSpeed(0.f);
 		chargeFloat = 0;
@@ -56,7 +56,7 @@ void ARockElement::ability2()
 		FRotator playerRot = myOwner->GetActorRotation();
 		const FVector newVec = (forwardVec * ability2Range) + playerVec;
 
-		UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
+		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
 		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot);
 		temp->setupAttack(myOwner, ability2Scale, ability2Lifespan);
 	}

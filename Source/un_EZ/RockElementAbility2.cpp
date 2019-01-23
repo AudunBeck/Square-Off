@@ -52,7 +52,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			ATori* player = Cast<ATori>(OtherActor);
-			UE_LOG(LogTemp, Warning, TEXT("PLAYER IS TOUCHING ME!"));
+			//UE_LOG(LogTemp, Warning, TEXT("PLAYER IS TOUCHING ME!"));
 			player->recieveDamage(10.f, 5000, GetActorLocation());
 
 		}

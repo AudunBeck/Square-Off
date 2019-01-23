@@ -34,7 +34,7 @@ void ARockElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float ra
 {
 	myOwner = newOwner;
 	ownerPos = myOwner->GetActorLocation();
-	UE_LOG(LogTemp, Warning, TEXT("Owner position: %f , %f , %f"), myOwner->GetActorLocation().X, myOwner->GetActorLocation().Y, myOwner->GetActorLocation().Z);
+	//UE_LOG(LogTemp, Warning, TEXT("Owner position: %f , %f , %f"), myOwner->GetActorLocation().X, myOwner->GetActorLocation().Y, myOwner->GetActorLocation().Z);
 	SetLifeSpan(lifeSpan);
 	attackRange = range;
 	chargedHit = chargeFloat; 
@@ -62,7 +62,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			}
 			else
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Punch did not find myOwner"));
+				//UE_LOG(LogTemp, Warning, TEXT("Punch did not find myOwner"));
 				Cast<ARockElementAbility2>(OtherActor)->moveWall(GetActorLocation());
 			}
 		}

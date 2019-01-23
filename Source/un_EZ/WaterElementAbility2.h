@@ -26,9 +26,12 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	void setupAttack(AWaterElement* myElementIn, float buffDurIn, float dashDistIn);
-	float buffDur;
+	void setupAttack(AWaterElement* myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn);
+	float currBuffDur;
 	float dashDist;
+	float ccDur;
+	float slow;
+	float damage;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		class AWaterElement* myElement;

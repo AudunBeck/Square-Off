@@ -26,23 +26,16 @@ void AWaterElementAbility2::BeginPlay()
 void AWaterElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (buffDur > 0)
-	{
-		buffDur -= DeltaTime;
-	}
-
-	if (buffDur <= 0)
-	{
-		myElement->buffActive = false;
-		this->Destroy();
-	}
 }
 
-void AWaterElementAbility2::setupAttack(AWaterElement* myElementIn, float buffDurIn, float dashDistIn)
+void AWaterElementAbility2::setupAttack(AWaterElement* myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn)
 {
-	buffDur = buffDurIn;
 	myElement = myElementIn;
+	SetLifeSpan(lifeSpan);
 	dashDist = dashDistIn;
+	ccDur = ccDurIn;
+	slow = slowIn;
+	damage = damageIn;
 }
 void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
@@ -52,9 +45,10 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 			if (OtherActor != myElement)
 				if (OtherActor->IsA(ABaseAbility::StaticClass()))
 				{
+					UE_LOG(LogTemp, Warning, TEXT("Countered an attack!"));
 					ATori* Enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
 					myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * dashDist, false, true);
-					/// Enemy->recieveDamage(30.f); <---- Do stuff with enemy
+					Enemy->recieveDamage(damage, ccDur, slow, 0);
 					myElement->counter = 3;
 				}
 }
