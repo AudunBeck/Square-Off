@@ -50,7 +50,7 @@ void ATori::Tick(float DeltaTime)
 
 	if (slowDur <= 0)
 	{
-		setMoveSpeed(moveSpeed);
+		//setMoveSpeed(moveSpeed); // Needs to be redone;
 	}
 
 	// Stun stuff
@@ -61,7 +61,7 @@ void ATori::Tick(float DeltaTime)
 
 	if (stunDur <= 0)
 	{
-		setMoveSpeed(moveSpeed);
+		//setMoveSpeed(moveSpeed); // Needs to be redone;
 	}
 	if (locked >= 0)
 		locked -= DeltaTime;
@@ -119,6 +119,8 @@ void ATori::move_Y(float axisValue)
 void ATori::setMoveSpeed(float newMoveSpeed)
 {
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
+	UE_LOG(LogTemp, Warning, TEXT("Speed is now"), newMoveSpeed);
+	
 }
 
 void ATori::setRotationRate(float newRotationRate)

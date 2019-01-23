@@ -53,7 +53,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		{
 			ATori* player = Cast<ATori>(OtherActor);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER IS TOUCHING ME!"));
-			player->recieveDamage(10.f, 20 * speed, GetActorLocation());
+			player->recieveDamage(10.f, 2 * speed, GetActorLocation());
 		}
 	}
 
