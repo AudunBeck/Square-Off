@@ -33,10 +33,10 @@ public:
 	void setupAttack(ATori * newOwner, FVector scale, float lifeSpan);
 
 	UPROPERTY(EditAnywhere)
-		bool moving = false;
+		float movingTime;
 
 	UPROPERTY(EditAnywhere)
-		bool shouldMove = false;
+		float maxMovingTime = 0.5f;
 
 	UPROPERTY(EditAnywhere)
 		float speed = 300.f;
