@@ -27,7 +27,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Owner of the attack
-	void setupAttack(ATori* newOwner, float lifeSpan);
+	void setupAttack(ATori* newOwner, float lifeSpan, float range);
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		class ATori* myOwner;
@@ -35,11 +35,13 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		USphereComponent* collider;
 
+
 	// Add a description here
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	bool buffed = false;
+	float attackRange = 100;
 
 };

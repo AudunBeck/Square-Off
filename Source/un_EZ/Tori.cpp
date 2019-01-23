@@ -27,6 +27,8 @@ void ATori::BeginPlay()
 	setMoveSpeed(moveSpeed);
 	setRotationRate(rotationRate);
 	
+	dodgeAmmo = dodgeMaxAmmo;
+	dodgeCooldown = dodgeMaxCooldown;
 }
 
 // Called every frame
@@ -38,6 +40,7 @@ void ATori::Tick(float DeltaTime)
 
 	//UE_LOG(LogTemp, Warning, TEXT("MyCharacter's ForwardVector is %s"),
 	//	*GetActorForwardVector().ToString());
+<<<<<<< HEAD
 
 	/// Find better comment
 	// Slow stuff
@@ -55,6 +58,26 @@ void ATori::Tick(float DeltaTime)
 	if (stunDur > 0)
 	{
 		stunDur -= DeltaTime;
+=======
+	if (locked >= 0)
+		locked -= DeltaTime;
+	if (iTime >= 0)
+		iTime -= DeltaTime;
+
+	if (dodgeAmmo < dodgeMaxAmmo)
+	{
+		dodgeCooldown -= DeltaTime;
+		if (dodgeCooldown <= 0)
+		{
+			dodgeAmmo += 1;
+			if (dodgeAmmo > dodgeMaxAmmo)
+				dodgeAmmo = dodgeMaxAmmo;
+
+			UE_LOG(LogTemp, Warning, TEXT("DodgeAmmo is %i now"), dodgeAmmo);
+
+			dodgeCooldown = dodgeMaxCooldown;
+		}
+>>>>>>> Merge
 	}
 
 	if (stunDur <= 0)
@@ -107,57 +130,70 @@ void ATori::setRotationRate(float newRotationRate)
 
 void ATori::dodge()
 {
+	if (locked <= 0)
+	{
+		if (dodgeAmmo > 0)
+		{
+			locked = 0.5f;
+			iTime = 0.3f;
+			FVector launchVector;
+			launchVector = GetActorForwardVector() * dodgeRange;
+			LaunchCharacter(launchVector, false, true);
+			dodgeAmmo -= 1;
+		}
+	}
+
 }
 
 void ATori::ability_1()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability1();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability1();
+	if (locked <= 0)
+	{
+		if (activeElement == 1 && element_1 != nullptr)
+			element_1->ability1();
+		else if (activeElement == 2 && element_2 != nullptr)
+			element_2->ability1();
+	}
 }
 
 void ATori::ability1End()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability1End();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability1End();
+	if (locked <= 0)
+	{
+		if (activeElement == 1 && element_1 != nullptr)
+			element_1->ability1End();
+		else if (activeElement == 2 && element_2 != nullptr)
+			element_2->ability1End();
+	}
 }
 
 void ATori::ability_2()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability2();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability2();
+	if (locked <= 0)
+	{
+		if (activeElement == 1 && element_1 != nullptr)
+			element_1->ability2();
+		else if (activeElement == 2 && element_2 != nullptr)
+			element_2->ability2();
+	}
 }
 
 void ATori::ability2End()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability2End();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability2End();
+	if (locked <= 0)
+	{
+		if (activeElement == 1 && element_1 != nullptr)
+			element_1->ability2End();
+		else if (activeElement == 2 && element_2 != nullptr)
+			element_2->ability2End();
+	}
 }
 
 void ATori::recieveDamage(float damage)
 {
 	// Might be something like this.
 	//int playerNum = Cast<APlayerController>(GetController())->GetLocalPlayer()->GetControllerId();
-
-	UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
-	hitPoints -= damage;
-	if (hitPoints <= 0)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
-	}
-}
-
-void ATori::recieveDamage(float damage, float slow, float ccDur, int type)
-{
-	// Type 0 is slow
-	if (type == 0)
+	if (iTime <= 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
 		hitPoints -= damage;
@@ -165,6 +201,27 @@ void ATori::recieveDamage(float damage, float slow, float ccDur, int type)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
 		}
+	}
+}
+
+<<<<<<< HEAD
+void ATori::recieveDamage(float damage, float slow, float ccDur, int type)
+{
+	// Type 0 is slow
+	if (type == 0)
+=======
+void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
+{
+	if (iTime <= 0)
+>>>>>>> Merge
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+		hitPoints -= damage;
+		if (hitPoints <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		}
+<<<<<<< HEAD
 
 		slowDur = ccDur;
 		setMoveSpeed(moveSpeed *((100 - slow)*0.01));
@@ -183,8 +240,15 @@ void ATori::recieveDamage(float damage, float slow, float ccDur, int type)
 		stunDur = ccDur;
 		/// Incert effect of stun
 
+=======
+		FVector delta = GetActorLocation() - knockbackPoint;
+		delta.Normalize();
+		FVector knockForce = delta * knockback;
+		LaunchCharacter(knockForce, false, true);
+>>>>>>> Merge
 	}
 }
+
 
 bool ATori::pickUpElement(ABaseElement * newElement)
 {

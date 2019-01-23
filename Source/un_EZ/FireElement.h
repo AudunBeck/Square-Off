@@ -26,6 +26,9 @@ public:
 		TSubclassOf<class AFireElementAbility2> FireElementAbility2_BP;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1Range;
+
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.3f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
@@ -33,6 +36,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		int ammo1Refill = 2;
 
 	/// Add a function that reads how long the dash lasts, and constantly update the lifespan accordingly
 	UPROPERTY(EditAnywhere, Category = "Ability2")

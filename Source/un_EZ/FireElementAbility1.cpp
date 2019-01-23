@@ -25,13 +25,15 @@ void AFireElementAbility1::BeginPlay()
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	this->SetActorLocation(myOwner->GetActorForwardVector() * 100.f + myOwner->GetActorLocation());
+	this->SetActorLocation(myOwner->GetActorForwardVector() * attackRange + myOwner->GetActorLocation());
+	this->SetActorRotation(myOwner->GetActorRotation());
 }
 
-void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan)
+void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range)
 {
 	myOwner = newOwner;
 	SetLifeSpan(lifeSpan);
+	attackRange = range;
 }
 
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,

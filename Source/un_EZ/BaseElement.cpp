@@ -41,7 +41,7 @@ void ABaseElement::Tick(float DeltaTime)
 
 			UE_LOG(LogTemp, Warning, TEXT("Ammo1 is %i now"), ammo1);
 
-			cooldownAbility1 = maxCooldownAbility2;
+			cooldownAbility1 = maxCooldownAbility1;
 		}
 	}
 

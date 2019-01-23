@@ -36,10 +36,9 @@ void ARockElement::ability1End()
 {
 	if (charging)
 	{
-		
-
 		ARockElementAbility1* temp;
-		temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation());
+		temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+			myOwner->GetActorRotation());
 		temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, chargeFloat);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
