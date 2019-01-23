@@ -58,12 +58,12 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			if (myOwner != nullptr)
 			{
 				FVector temp = FVector(myOwner->GetActorLocation());
-				Cast<ARockElementAbility2>(OtherActor)->moveWall(temp);
+				Cast<ARockElementAbility2>(OtherActor)->moveWall(temp, chargedHit);
 			}
 			else
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Punch did not find myOwner"));
-				Cast<ARockElementAbility2>(OtherActor)->moveWall(GetActorLocation());
+				Cast<ARockElementAbility2>(OtherActor)->moveWall(GetActorLocation(), chargedHit);
 			}
 		}
 	}
