@@ -209,7 +209,7 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 		if (iTime <= 0)
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
-			hitPoints -= damage;
+			hitPoints -= damage * damageMultiplier;
 			if (hitPoints <= 0)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
@@ -236,15 +236,10 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 }
 void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 {
-
-
-
 	FVector delta = GetActorLocation() - knockbackPoint;
 	delta.Normalize();
 	FVector knockForce = delta * knockback;
 	LaunchCharacter(knockForce, false, true);
-
-
 }
 
 

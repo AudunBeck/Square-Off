@@ -3,8 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/Classes/Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "WaterElementAbility2.generated.h"
+
+class AWaterElement;
 
 UCLASS()
 class UN_EZ_API AWaterElementAbility2 : public AActor
@@ -22,5 +25,13 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void setupAttack(AWaterElement* myElementIn, float buffDurIn);
+	float buffDur;
 
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		class AWaterElement* myElement;
+
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

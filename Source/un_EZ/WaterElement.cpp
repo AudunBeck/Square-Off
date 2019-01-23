@@ -30,7 +30,11 @@ void AWaterElement::Tick(float DeltaTime)
 		AWaterElementAbility1* temp;
 		/// Under "myOwner->GetActorLocation() + myOwner->GetActorFowardVector()," add spawnpoint to socket in the hand
 		temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP, myOwner->GetActorLocation() + ability1Range * myOwner->GetActorForwardVector(), myOwner->GetActorRotation());
-		temp->setupAttack(myOwner, ability1lifeSpan, boltSpeed, ccDur, slow);
+		
+		if (counter > 0)
+			temp->setupAttack(myOwner, ability1lifeSpan, boltSpeedBuffed, ccDurBuffed, slowBuffed, damageBuffed);
+		else
+			temp->setupAttack(myOwner, ability1lifeSpan, boltSpeed, ccDur, slow, damage);
 		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 fired"));
 		myOwner->setRotationRate(myOwner->rotationRate);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
@@ -53,5 +57,8 @@ void AWaterElement::ability1()
 
 void AWaterElement::ability2()
 {
-
+	buffActive = true;
+	AWaterElementAbility2* temp;
+	temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
+	temp->setupAttack(this, buffDur);
 }

@@ -41,32 +41,46 @@ public:
 		float ability1lifeSpan = 5.0f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
+	
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float boltSpeed = 1200.0f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float boltSpeedBuffed = 2200.0f;
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		bool charging;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
 	// Charge that starts when you press attack, and fires the bolt when reaching 0
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float windUpTime;
+	float windUpTime;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxWindUpTime = 0.3f;
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float damage = 30.f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ccDur = 1.5f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float slow = 20.f;
+		float damageBuffed = 60.f;
 
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ccDur = 0.5f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ccDurBuffed = 1.5f;
+
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float slow = 15.f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float slowBuffed = 30.f;
+	
+	int counter = 0;
 
 
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Range;
+		float buffDur = 2.f;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		FVector ability2Scale;
+		float maxbuffDur;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Lifespan = 2;
+		bool buffActive = false;
+
 
 };
