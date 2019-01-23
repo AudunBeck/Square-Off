@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseAbility.h"
 #include "GameFramework/Actor.h"
 #include "Tori.h"
 #include "RockElementAbility1.h"
@@ -10,16 +11,13 @@
 #include "RockElementAbility2.generated.h"
 
 UCLASS()
-class UN_EZ_API ARockElementAbility2 : public AActor
+class UN_EZ_API ARockElementAbility2 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
 	ARockElementAbility2();
-	
-	UPROPERTY(EditAnywhere)
-		UBoxComponent* boxCollider;
 
 protected:
 	// Called when the game starts or when spawned
@@ -44,8 +42,8 @@ public:
 	FVector punchPos;
 	FVector wallPos;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		class ATori* myOwner;
+	UPROPERTY(EditAnywhere)
+		UBoxComponent* boxCollider;
 
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,

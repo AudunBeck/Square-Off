@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseAbility.h"
 #include "GameFramework/Actor.h"
 #include "Tori.h"
 #include "Engine/Classes/Components/BoxComponent.h"
 #include "FireElementAbility2.generated.h"
 
 UCLASS()
-class UN_EZ_API AFireElementAbility2 : public AActor
+class UN_EZ_API AFireElementAbility2 : public ABaseAbility
 {
 	GENERATED_BODY()
 	

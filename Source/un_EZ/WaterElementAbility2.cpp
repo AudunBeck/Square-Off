@@ -8,14 +8,18 @@ AWaterElementAbility2::AWaterElementAbility2()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
+	RootComponent = collider;
+	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
+	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility2::OnOverlapBegin);
 }
 
 // Called when the game starts or when spawned
 void AWaterElementAbility2::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -34,13 +38,23 @@ void AWaterElementAbility2::Tick(float DeltaTime)
 	}
 }
 
-void AWaterElementAbility2::setupAttack(AWaterElement* myElementIn, float buffDurIn)
+void AWaterElementAbility2::setupAttack(AWaterElement* myElementIn, float buffDurIn, float dashDistIn)
 {
 	buffDur = buffDurIn;
 	myElement = myElementIn;
+	dashDist = dashDistIn;
 }
 void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-
+	if (myOwner != nullptr)
+		if (myElement != nullptr)
+			if (OtherActor != myElement)
+				if (OtherActor->IsA(ABaseAbility::StaticClass()))
+				{
+					ATori* Enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
+					myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * dashDist, false, true);
+					/// Enemy->recieveDamage(30.f); <---- Do stuff with enemy
+					myElement->counter = 3;
+				}
 }

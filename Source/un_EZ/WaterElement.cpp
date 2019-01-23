@@ -57,8 +57,9 @@ void AWaterElement::ability1()
 
 void AWaterElement::ability2()
 {
+	UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 fired"));
 	buffActive = true;
 	AWaterElementAbility2* temp;
 	temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
-	temp->setupAttack(this, buffDur);
+	temp->setupAttack(this, buffDur, dashDist);
 }

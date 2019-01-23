@@ -81,6 +81,7 @@ public:
 		float maxbuffDur;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		bool buffActive = false;
-
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float dashDist = 3000;
 
 };
