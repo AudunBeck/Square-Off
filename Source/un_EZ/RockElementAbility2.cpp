@@ -9,10 +9,11 @@ ARockElementAbility2::ARockElementAbility2()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	boxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
-	RootComponent = boxCollider;
+	boxCollider->SetupAttachment(RootComponent);
 
-	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
+	Cast<UShapeComponent>(boxCollider)->SetGenerateOverlapEvents(true);
 	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);
 
 }
@@ -40,7 +41,7 @@ void ARockElementAbility2::Tick(float DeltaTime)
 void ARockElementAbility2::setupAttack(ATori * newOwner, FVector scale, float lifeSpan, float wallSpeed)
 {
 	myOwner = newOwner;
-	SetActorScale3D(scale);
+	//SetActorScale3D(scale);
 	SetLifeSpan(lifeSpan);
 	speed = wallSpeed;
 
@@ -55,7 +56,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		{
 			ATori* player = Cast<ATori>(OtherActor);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER IS TOUCHING ME!"));
-			player->recieveDamage(10.f, 2 * speed, GetActorLocation());
+			player->recieveDamage(10.f, 5 * speed, GetActorLocation());
 		}
 	}
 
