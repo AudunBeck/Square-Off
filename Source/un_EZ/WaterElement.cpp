@@ -54,6 +54,7 @@ void AWaterElement::Tick(float DeltaTime)
 	{
 		myOwner->locked = 0.f;
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
+		myOwner->damageMultiplier = 1;
 	}
 }
 
@@ -74,11 +75,12 @@ void AWaterElement::ability2()
 {
 	if (ammo2 > 0)
 	{
+		myOwner->damageMultiplier = 0;
 		buffDur = maxBuffDur;
 		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 is fired"));
 		AWaterElementAbility2* temp;
 		temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
-		temp->setupAttack(this, ability2lifeSpan, dashDist, ability2CcDur, ability2Slow, ability2Damage);
+		temp->setupAttack(myOwner, this, ability2lifeSpan, dashDist, ability2CcDur, ability2Slow, ability2Damage);
 	}
 	else
 	{

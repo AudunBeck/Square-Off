@@ -26,7 +26,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	void setupAttack(AWaterElement* myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn);
+	void setupAttack(ATori* newOwner, AWaterElement* myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn);
 	float currBuffDur;
 	float dashDist;
 	float ccDur;

@@ -70,12 +70,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float slowBuffed = 30.f;
 	
-	int counter = 0;
-
-
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2lifeSpan = 2.f;
+		float ability2lifeSpan = 2.5f;
 	float buffDur;
 	float maxBuffDur;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
@@ -88,5 +85,5 @@ public:
 		float ability2CcDur = 0.5f;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Slow = 30.f;
-
+	int counter = 0;
 };

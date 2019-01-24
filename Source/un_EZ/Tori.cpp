@@ -50,7 +50,7 @@ void ATori::Tick(float DeltaTime)
 
 	if (slowDur <= 0)
 	{
-		setMoveSpeed(moveSpeed);
+		//setMoveSpeed(moveSpeed);
 	}
 
 	// Stun stuff

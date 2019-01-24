@@ -26,10 +26,15 @@ void AWaterElementAbility2::BeginPlay()
 void AWaterElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if(myOwner)
+		this->SetActorLocation(myOwner->GetActorLocation());
+	if (myElement == nullptr)
+		UE_LOG(LogTemp, Error, TEXT("MyElement is nullptr - Check WaterElementAbilit2.cpp - setupAttack()"))
 }
 
-void AWaterElementAbility2::setupAttack(AWaterElement* myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn)
+void AWaterElementAbility2::setupAttack(ATori * newOwner, AWaterElement* myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn)
 {
+	myOwner = newOwner;
 	myElement = myElementIn;
 	SetLifeSpan(lifeSpan);
 	dashDist = dashDistIn;
@@ -40,15 +45,29 @@ void AWaterElementAbility2::setupAttack(AWaterElement* myElementIn, float lifeSp
 void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (myOwner != nullptr)
-		if (myElement != nullptr)
-			if (OtherActor != myElement)
-				if (OtherActor->IsA(ABaseAbility::StaticClass()))
+	UE_LOG(LogTemp, Error, TEXT("Counter attack"));
+	if (OtherActor->IsA(ABaseAbility::StaticClass()))
+	{
+		UE_LOG(LogTemp, Error, TEXT("OtherActor is baseability"));
+		if (OtherActor != myElement)
+		{
+			UE_LOG(LogTemp, Error, TEXT("OtherActor != myElement"));
+			if (myElement != nullptr)
+			{
+				UE_LOG(LogTemp, Error, TEXT("MyElement != nullptr"));
+				if (myOwner != nullptr)
 				{
 					UE_LOG(LogTemp, Warning, TEXT("Countered an attack!"));
 					ATori* Enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
 					myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * dashDist, false, true);
 					Enemy->recieveDamage(damage, ccDur, slow, 0);
 					myElement->counter = 3;
+					myElement->buffDur = 0.f;
 				}
+			}
+				
+		}
+			
+	}
+		
 }
