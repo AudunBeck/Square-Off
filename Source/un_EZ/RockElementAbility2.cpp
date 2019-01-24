@@ -37,11 +37,13 @@ void ARockElementAbility2::Tick(float DeltaTime)
 	}
 }
 
-void ARockElementAbility2::setupAttack(ATori * newOwner, FVector scale, float lifeSpan)
+void ARockElementAbility2::setupAttack(ATori * newOwner, FVector scale, float lifeSpan, float wallSpeed)
 {
 	myOwner = newOwner;
 	SetActorScale3D(scale);
 	SetLifeSpan(lifeSpan);
+	speed = wallSpeed;
+
 }
 
 void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,

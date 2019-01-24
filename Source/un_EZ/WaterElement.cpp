@@ -47,7 +47,7 @@ void AWaterElement::Tick(float DeltaTime)
 	if (buffDur > 0)
 	{
 		myOwner->SetActorEnableCollision(false);
-		myOwner->locked = 1.f;
+		
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		buffDur -= DeltaTime;
 	}
