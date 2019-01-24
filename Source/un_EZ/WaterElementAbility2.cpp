@@ -45,32 +45,30 @@ void AWaterElementAbility2::setupAttack(ATori * newOwner, AWaterElement* myEleme
 void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	UE_LOG(LogTemp, Error, TEXT("Counter attack"));
-	if (OtherActor->IsA(ABaseAbility::StaticClass()))
+	if (!OtherActor->IsA(AWaterElementAbility2::StaticClass()))
 	{
-		UE_LOG(LogTemp, Error, TEXT("OtherActor is baseability"));
-		if (OtherActor != myElement)
+		if (OtherActor->IsA(ABaseAbility::StaticClass()))
 		{
-			UE_LOG(LogTemp, Error, TEXT("OtherActor != myElement"));
 			if (myElement != nullptr)
 			{
-				UE_LOG(LogTemp, Error, TEXT("MyElement != nullptr"));
 				if (myOwner != nullptr)
 				{
-					ATori* enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
-					FVector enemyLocation = enemy->GetActorLocation();
-					FVector ownerLocation = myOwner->GetActorLocation();
-					FVector launchDirection = enemyLocation - ownerLocation;
-					UE_LOG(LogTemp, Warning, TEXT("Countered an attack!"));
-					myOwner->LaunchCharacter(launchDirection * dashDist, false, false);
-					enemy->recieveDamage(damage, ccDur, slow, 0);
-					myElement->counter = 3;
 					myElement->buffDur = 0.f;
+					if (myElement->buffDur == 0.f)
+					{
+						ATori* enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
+						FVector enemyLocation = enemy->GetActorLocation();
+						FVector ownerLocation = myOwner->GetActorLocation();
+						FVector launchDirection = enemyLocation - ownerLocation;
+						UE_LOG(LogTemp, Warning, TEXT("Countered an attack!"));
+						myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * dashDist, true, true);
+						enemy->recieveDamage(damage, ccDur, slow, 0);
+						myOwner->locked = 0.f;
+						
+						myElement->counter = 3;
+					}
 				}
 			}
-				
 		}
-			
 	}
-		
 }

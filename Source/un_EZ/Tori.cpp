@@ -43,9 +43,9 @@ void ATori::Tick(float DeltaTime)
 		slowCheck(DeltaTime);
 	}
 
-	if (locked >= 0)
+	if (locked > 0)
 		locked -= DeltaTime;
-	if (iTime >= 0)
+	if (iTime > 0)
 		iTime -= DeltaTime;
 
 	if (dodgeAmmo < dodgeMaxAmmo)
@@ -96,8 +96,7 @@ void ATori::move_Y(float axisValue)
 void ATori::setMoveSpeed(float newMoveSpeed)
 {
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
-	currentSpeed = newMoveSpeed;
-	UE_LOG(LogTemp, Warning, TEXT("Speed is now %f"), newMoveSpeed);
+	//UE_LOG(LogTemp, Warning, TEXT("Speed is now %f"), newMoveSpeed);
 }
 
 void ATori::setRotationRate(float newRotationRate)
@@ -158,6 +157,10 @@ void ATori::ability_1()
 		else if (activeElement == 2 && element_2 != nullptr)
 			element_2->ability1();
 	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Tori currently locked down due to ability 1."));
+	}
 }
 
 void ATori::ability1End()
@@ -179,6 +182,10 @@ void ATori::ability_2()
 			element_1->ability2();
 		else if (activeElement == 2 && element_2 != nullptr)
 			element_2->ability2();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Tori currently locked down due to ability 2."));
 	}
 }
 

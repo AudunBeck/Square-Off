@@ -86,4 +86,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Slow = 30.f;
 	int counter = 0;
+
+	float tempTimer;
+
 };
