@@ -165,13 +165,12 @@ void ATori::ability_1()
 
 void ATori::ability1End()
 {
-	if (locked <= 0)
-	{
-		if (activeElement == 1 && element_1 != nullptr)
-			element_1->ability1End();
-		else if (activeElement == 2 && element_2 != nullptr)
-			element_2->ability1End();
-	}
+
+	if (activeElement == 1 && element_1 != nullptr)
+		element_1->ability1End();
+	else if (activeElement == 2 && element_2 != nullptr)
+		element_2->ability1End();
+
 }
 
 void ATori::ability_2()
@@ -191,13 +190,12 @@ void ATori::ability_2()
 
 void ATori::ability2End()
 {
-	if (locked <= 0)
-	{
-		if (activeElement == 1 && element_1 != nullptr)
-			element_1->ability2End();
-		else if (activeElement == 2 && element_2 != nullptr)
-			element_2->ability2End();
-	}
+
+	if (activeElement == 1 && element_1 != nullptr)
+		element_1->ability2End();
+	else if (activeElement == 2 && element_2 != nullptr)
+		element_2->ability2End();
+
 }
 
 void ATori::recieveDamage(float damage)
@@ -287,9 +285,12 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 
 void ATori::switchElement()
 {
-	if (activeElement == 1)
-		activeElement = 2;
-	else if (activeElement == 2)
-		activeElement = 1;
-	UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
+	if (locked <= 0)
+	{
+		if (activeElement == 1)
+			activeElement = 2;
+		else if (activeElement == 2)
+			activeElement = 1;
+		UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
+	}
 }

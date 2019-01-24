@@ -46,12 +46,8 @@ void AWaterElement::Tick(float DeltaTime)
 	// Ability 2
 	if (buffDur >= 0)
 	{
-<<<<<<< HEAD
 		myOwner->SetActorEnableCollision(false);
-		
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
-=======
->>>>>>> AudunMerge
 		buffDur -= DeltaTime;
 		if (buffDur <= 0)
 		{

@@ -29,6 +29,7 @@ void ARockElement::ability1()
 		myOwner->setMoveSpeed(0.f);
 		myOwner->currentSpeed = 0;
 		chargeFloat = 0;
+		myOwner->locked = maxCharge;
 	}
 	Super::ability1();
 }
@@ -44,6 +45,7 @@ void ARockElement::ability1End()
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		myOwner->currentSpeed = myOwner->moveSpeed;
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
+		myOwner->locked = 0;
 	}
 	charging = false;
 	
