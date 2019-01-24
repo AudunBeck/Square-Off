@@ -57,10 +57,13 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 				UE_LOG(LogTemp, Error, TEXT("MyElement != nullptr"));
 				if (myOwner != nullptr)
 				{
+					ATori* enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
+					FVector enemyLocation = enemy->GetActorLocation();
+					FVector ownerLocation = myOwner->GetActorLocation();
+					FVector launchDirection = enemyLocation - ownerLocation;
 					UE_LOG(LogTemp, Warning, TEXT("Countered an attack!"));
-					ATori* Enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
-					myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * dashDist, false, true);
-					Enemy->recieveDamage(damage, ccDur, slow, 0);
+					myOwner->LaunchCharacter(launchDirection * dashDist, false, false);
+					enemy->recieveDamage(damage, ccDur, slow, 0);
 					myElement->counter = 3;
 					myElement->buffDur = 0.f;
 				}
