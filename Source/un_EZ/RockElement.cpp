@@ -27,6 +27,7 @@ void ARockElement::ability1()
 		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
 		charging = true;
 		myOwner->setMoveSpeed(0.f);
+		myOwner->currentSpeed = 0;
 		chargeFloat = 0;
 	}
 	Super::ability1();
@@ -41,6 +42,7 @@ void ARockElement::ability1End()
 			myOwner->GetActorRotation());
 		temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, chargeFloat);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
+		myOwner->currentSpeed = myOwner->moveSpeed;
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
 	}
 	charging = false;
@@ -58,7 +60,7 @@ void ARockElement::ability2()
 
 		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
 		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot);
-		temp->setupAttack(myOwner, ability2Scale, ability2Lifespan);
+		temp->setupAttack(myOwner, ability2Scale, ability2Lifespan, ability2Speed);
 	}
 
 	Super::ability2();
