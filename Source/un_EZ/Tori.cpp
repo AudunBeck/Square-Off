@@ -26,7 +26,7 @@ void ATori::BeginPlay()
 	Super::BeginPlay();
 	setMoveSpeed(moveSpeed);
 	setRotationRate(rotationRate);
-
+	maxSlow = moveSpeed;
 	dodgeAmmo = dodgeMaxAmmo;
 	dodgeCooldown = dodgeMaxCooldown;
 }
@@ -35,34 +35,14 @@ void ATori::BeginPlay()
 void ATori::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//UE_LOG(LogTemp, Warning, TEXT("Controllers's Rotation is %s"),
-	//	*GetControlRotation().ToString());
-
-	//UE_LOG(LogTemp, Warning, TEXT("MyCharacter's ForwardVector is %s"),
-	//	*GetActorForwardVector().ToString());
 
 	/// Find better comment
 	// Slow stuff
-	if (slowDur > 0)
+	if (slowDur.Num() > 0)
 	{
-		slowDur -= DeltaTime;
+		slowCheck(DeltaTime);
 	}
 
-	if (slowDur <= 0)
-	{
-		//setMoveSpeed(moveSpeed); // Needs to be redone;
-	}
-
-	// Stun stuff
-	if (stunDur > 0)
-	{
-		stunDur -= DeltaTime;
-	}
-
-	if (stunDur <= 0)
-	{
-		//setMoveSpeed(moveSpeed); // Needs to be redone;
-	}
 	if (locked >= 0)
 		locked -= DeltaTime;
 	if (iTime >= 0)
@@ -82,7 +62,6 @@ void ATori::Tick(float DeltaTime)
 			dodgeCooldown = dodgeMaxCooldown;
 		}
 	}
-
 }
 
 // Called to bind functionality to input
@@ -102,8 +81,6 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
 
-
-
 }
 
 void ATori::move_X(float axisValue)
@@ -119,13 +96,41 @@ void ATori::move_Y(float axisValue)
 void ATori::setMoveSpeed(float newMoveSpeed)
 {
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
-	UE_LOG(LogTemp, Warning, TEXT("Speed is now"), newMoveSpeed);
-	
+	currentSpeed = newMoveSpeed;
+	UE_LOG(LogTemp, Warning, TEXT("Speed is now %f"), newMoveSpeed);
 }
 
 void ATori::setRotationRate(float newRotationRate)
 {
 	GetCharacterMovement()->RotationRate = FRotator(0.f, newRotationRate, 0.f);
+}
+
+void ATori::slowCheck(float DeltaTime)
+{
+	for (int i = 0; i < slowDur.Num(); i++)
+	{
+		slowDur[i] -= DeltaTime;
+		if (slowAmount[i] < maxSlow)
+		{
+			maxSlow = slowAmount[i];
+		}
+		if (currentSpeed > maxSlow)
+		{
+			setMoveSpeed(maxSlow);
+		}
+		if (slowDur[i] <= 0)
+		{
+			slowDur.RemoveAt(i);
+			slowAmount.RemoveAt(i);
+			//UE_LOG(LogTemp, Warning, TEXT("Removing slow num: %i"), i);
+			if (slowDur.Num() == 0)
+			{
+				setMoveSpeed(moveSpeed);
+				maxSlow = moveSpeed;
+				//UE_LOG(LogTemp, Warning, TEXT("Normal speed"));
+			}
+		}
+	}
 }
 
 void ATori::dodge()
@@ -142,7 +147,6 @@ void ATori::dodge()
 			dodgeAmmo -= 1;
 		}
 	}
-
 }
 
 void ATori::ability_1()
@@ -217,9 +221,9 @@ void ATori::recieveDamage(float damage, float slow, float ccDur, int type)
 				UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
 			}
 
-
-			slowDur = ccDur;
-			setMoveSpeed(moveSpeed *((100 - slow)*0.01));
+			slowDur.Push(ccDur);
+			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
+			UE_LOG(LogTemp, Warning, TEXT("There are now %i slows"), slowDur.Num());
 		}
 
 	// Type 1 is stun
@@ -231,22 +235,15 @@ void ATori::recieveDamage(float damage, float slow, float ccDur, int type)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
 		}
-
-		stunDur = ccDur;
 		/// Incert effect of stun
 	}
 }
 void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 {
-
-
-
 	FVector delta = GetActorLocation() - knockbackPoint;
 	delta.Normalize();
 	FVector knockForce = delta * knockback;
 	LaunchCharacter(knockForce, false, true);
-
-
 }
 
 

@@ -33,7 +33,9 @@ public:
 
 	void setMoveSpeed(float newMoveSpeed);
 	void setRotationRate(float newRotationSpeed);
-
+	float currentSpeed;
+	float maxSlow;
+	void slowCheck(float DeltaTime);
 	void dodge();
 
 	// Runs abilities, sends to the element it has equipped currently.
@@ -46,12 +48,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = "HitPoints")
 		float hitPoints = 100;
 
-	float slowDur;
-	float stunDur;
+	TArray<float> slowDur;
+	TArray<float> slowAmount;
 
 	// Recieve damage
 	void recieveDamage(float damage);
-	void recieveDamage(float damage, float slow, float ccDur, int type);		//Int type defines effect, 0 = slow, 1 = stunn
+	void recieveDamage(float damage, float slow, float ccDur, int type);		//Int type defines effect, 0 = slow, 1 = stun
 	void recieveDamage(float damage, float knockback, FVector knockbackPoint);
 	
 
