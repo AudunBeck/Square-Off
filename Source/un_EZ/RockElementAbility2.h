@@ -31,13 +31,13 @@ public:
 	void setupAttack(ATori * newOwner, FVector scale, float lifeSpan);
 
 	UPROPERTY(EditAnywhere)
-		bool moving = false;
+		float movingTime;
 
 	UPROPERTY(EditAnywhere)
-		bool shouldMove = false;
+		float maxMovingTime = 1.f;
 
 	UPROPERTY(EditAnywhere)
-		float speed = 300.f;
+		float speed = 500.f;
 
 	FVector punchPos;
 	FVector wallPos;
@@ -49,6 +49,6 @@ public:
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
-	void moveWall(FVector playerLoc);
+	void moveWall(FVector playerLoc, float punchSpeed);
 
 };

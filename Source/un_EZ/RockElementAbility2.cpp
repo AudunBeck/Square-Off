@@ -13,7 +13,6 @@ ARockElementAbility2::ARockElementAbility2()
 	RootComponent = boxCollider;
 
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
-
 	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);
 
 }
@@ -29,11 +28,12 @@ void ARockElementAbility2::BeginPlay()
 void ARockElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (shouldMove)
+	if (movingTime > 0)
 	{
 		FVector NewLocation = GetActorLocation();
 		NewLocation += GetActorForwardVector() * speed * DeltaTime;
 		SetActorLocation(NewLocation);
+		movingTime -= DeltaTime;
 	}
 }
 
@@ -47,27 +47,25 @@ void ARockElementAbility2::setupAttack(ATori * newOwner, FVector scale, float li
 void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (moving)
+	if (movingTime > 0)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			ATori* player = Cast<ATori>(OtherActor);
-			//UE_LOG(LogTemp, Warning, TEXT("PLAYER IS TOUCHING ME!"));
-			player->recieveDamage(10.f, 5000, GetActorLocation());
-
+			UE_LOG(LogTemp, Warning, TEXT("PLAYER IS TOUCHING ME!"));
+			player->recieveDamage(10.f, 2 * speed, GetActorLocation());
 		}
 	}
 
 }
 
-void ARockElementAbility2::moveWall(FVector playerLoc)
+void ARockElementAbility2::moveWall(FVector playerLoc, float punchSpeed)
 {
-	shouldMove = true;
 	/// Can update this function to "slowly" turn the wall towards the correct rotation
 	punchPos = playerLoc;
 	wallPos = this->GetActorLocation();
 	FRotator temp = (wallPos - punchPos).Rotation();
 	this->SetActorRotation(temp);
-	moving = true;
+	movingTime = maxMovingTime;
+	speed *= punchSpeed;
 }
-
