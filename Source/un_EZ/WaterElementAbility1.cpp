@@ -54,7 +54,6 @@ void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 		{
 			// Make the target take damage
 			Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);	// float value 0 is slow
-			/// Add slow to target - Thinking making a "get slowed" function that takes in duration and severity of slow
 		}
 	}
 }
