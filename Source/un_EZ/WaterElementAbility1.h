@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseAbility.h"
 #include "Engine/Classes/Components/SphereComponent.h"
 #include "Tori.h"
 #include "GameFramework/Actor.h"
 #include "WaterElementAbility1.generated.h"
 
 UCLASS()
-class UN_EZ_API AWaterElementAbility1 : public AActor
+class UN_EZ_API AWaterElementAbility1 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
@@ -25,16 +26,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void setupAttack(ATori* newOwner, float lifeSpan, float boltSpeed);
+	// slow is set in %, where 25.5 = 25.5% slow
+	void setupAttack(ATori* newOwner, float lifeSpan, float boltSpeedIn, float ccDurIn, float slowIn, float damageIn);
 	float attackRange;
 	float chargedHit;
-	float myBoltSpeed;
+	float boltSpeed;
+	float ccDur;
+	float slow;
+	float damage;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		class ATori* myOwner;
-
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		USphereComponent* collider;
+	USphereComponent* collider;
 
 	// Add a description here
 	UFUNCTION()

@@ -39,7 +39,7 @@ void ABaseElement::Tick(float DeltaTime)
 			if (ammo1 > maxAmmo1)
 				ammo1 = maxAmmo1;
 
-			UE_LOG(LogTemp, Warning, TEXT("Ammo1 is %i now"), ammo1);
+			//UE_LOG(LogTemp, Warning, TEXT("Ammo1 is %i now"), ammo1);
 
 			cooldownAbility1 = maxCooldownAbility1;
 		}
@@ -54,7 +54,7 @@ void ABaseElement::Tick(float DeltaTime)
 			if (ammo2 > maxAmmo2)
 				ammo2 = maxAmmo2;
 
-			UE_LOG(LogTemp, Warning, TEXT("Ammo2 is %i now"), ammo2);
+			//UE_LOG(LogTemp, Warning, TEXT("Ammo2 is %i now"), ammo2);
 			cooldownAbility2 = maxCooldownAbility2;
 		}
 

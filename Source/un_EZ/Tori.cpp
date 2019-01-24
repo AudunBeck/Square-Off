@@ -208,14 +208,14 @@ void ATori::recieveDamage(float damage)
 	}
 }
 
-void ATori::recieveDamage(float damage, float slow, float ccDur, int type)
+void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 {
 	// Type 0 is slow
 	if (type == 0)
 		if (iTime <= 0)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
-			hitPoints -= damage;
+			//UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+			hitPoints -= damage * damageMultiplier;
 			if (hitPoints <= 0)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
@@ -286,4 +286,3 @@ void ATori::switchElement()
 		activeElement = 1;
 	UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 }
-

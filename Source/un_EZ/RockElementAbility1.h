@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseAbility.h"
 #include "GameFramework/Actor.h"
 #include "Engine/Classes/Components/SphereComponent.h"
 #include "Tori.h"
 #include "RockElementAbility1.generated.h"
 
 UCLASS()
-class UN_EZ_API ARockElementAbility1 : public AActor
+class UN_EZ_API ARockElementAbility1 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
@@ -30,11 +31,7 @@ public:
 	float attackRange;
 	float chargedHit;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		class ATori* myOwner;
-
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		USphereComponent* collider;
+	USphereComponent* collider;
 	
 	FVector ownerPos;
 

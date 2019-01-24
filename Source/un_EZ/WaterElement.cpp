@@ -14,13 +14,15 @@ AWaterElement::AWaterElement()
 void AWaterElement::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	maxBuffDur = ability2lifeSpan;
 }
 
 // Called every frame
 void AWaterElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// Ability 1
 	if (windUpTime > 0)
 		windUpTime -= DeltaTime;
 
@@ -30,12 +32,31 @@ void AWaterElement::Tick(float DeltaTime)
 		AWaterElementAbility1* temp;
 		/// Under "myOwner->GetActorLocation() + myOwner->GetActorFowardVector()," add spawnpoint to socket in the hand
 		temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP, myOwner->GetActorLocation() + ability1Range * myOwner->GetActorForwardVector(), myOwner->GetActorRotation());
-		temp->setupAttack(myOwner, ability1lifeSpan, boltSpeed);
-
+		
+		if (counter > 0)
+			temp->setupAttack(myOwner, ability1lifeSpan, boltSpeedBuffed, ccDurBuffed, slowBuffed, damageBuffed);
+		else
+			temp->setupAttack(myOwner, ability1lifeSpan, boltSpeed, ccDur, slow, damage);
 		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 fired"));
 		myOwner->setRotationRate(myOwner->rotationRate);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		charging = false;
+	}
+
+	// Ability 2
+	if (buffDur > 0)
+	{
+		myOwner->SetActorEnableCollision(false);
+		myOwner->locked = 1.f;
+		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
+		buffDur -= DeltaTime;
+	}
+	if (buffDur <= 0)
+	{
+		myOwner->SetActorEnableCollision(true);
+		myOwner->locked = 0.f;
+		myOwner->setMoveSpeed(myOwner->moveSpeed);
+		myOwner->damageMultiplier = 1;
 	}
 }
 
@@ -54,5 +75,17 @@ void AWaterElement::ability1()
 
 void AWaterElement::ability2()
 {
-
+	if (ammo2 > 0)
+	{
+		myOwner->damageMultiplier = 0;
+		buffDur = maxBuffDur;
+		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 is fired"));
+		AWaterElementAbility2* temp;
+		temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
+		temp->setupAttack(myOwner, this, ability2lifeSpan, dashDist, ability2CcDur, ability2Slow, ability2Damage);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has no ammo"));
+	}
 }

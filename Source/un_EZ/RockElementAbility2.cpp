@@ -69,4 +69,3 @@ void ARockElementAbility2::moveWall(FVector playerLoc, float punchSpeed)
 	movingTime = maxMovingTime;
 	speed *= punchSpeed;
 }
-

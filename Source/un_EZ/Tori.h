@@ -52,6 +52,7 @@ public:
 	TArray<float> slowAmount;
 
 	// Recieve damage
+	float damageMultiplier = 1.f;
 	void recieveDamage(float damage);
 	void recieveDamage(float damage, float slow, float ccDur, int type);		//Int type defines effect, 0 = slow, 1 = stun
 	void recieveDamage(float damage, float knockback, FVector knockbackPoint);
