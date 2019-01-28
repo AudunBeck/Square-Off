@@ -62,12 +62,13 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 
 }
 
-void ARockElementAbility2::moveWall(FVector playerLoc, float punchSpeed)
+void ARockElementAbility2::moveWall(FRotator playerRot, float punchSpeed)
 {
 	/// Can update this function to "slowly" turn the wall towards the correct rotation
-	punchPos = playerLoc;
-	wallPos = this->GetActorLocation();
-	FRotator temp = (wallPos - punchPos).Rotation();
+	//punchPos = playerLoc;
+	//wallPos = this->GetActorLocation();
+	//FRotator temp = (wallPos - punchPos).Rotation();
+	FRotator temp = playerRot;
 	this->SetActorRotation(temp);
 	movingTime = maxMovingTime;
 	speed *= punchSpeed;

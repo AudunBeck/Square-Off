@@ -28,7 +28,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Owner of the attack
-	void setupAttack(ATori* newOwner, float lifeSpan, float range);
+	void setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale);
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		class ATori* myOwner;

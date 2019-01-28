@@ -43,6 +43,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Lifespan = 2;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float fireKick = 6000;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float maxFireChi = 2;
+
+	float fireChi;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		FVector boostedAbility1Scale;
+	
 };

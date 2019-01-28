@@ -29,11 +29,12 @@ void AFireElementAbility1::Tick(float DeltaTime)
 	this->SetActorRotation(myOwner->GetActorRotation());
 }
 
-void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range)
+void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale)
 {
 	myOwner = newOwner;
 	SetLifeSpan(lifeSpan);
 	attackRange = range;
+	SetActorScale3D(scale);
 }
 
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
