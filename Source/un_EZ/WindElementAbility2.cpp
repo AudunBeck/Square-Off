@@ -12,6 +12,7 @@ AWindElementAbility2::AWindElementAbility2()
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility2::OnOverlapBegin);
+	
 }
 
 void AWindElementAbility2::BeginPlay()
@@ -25,19 +26,46 @@ void AWindElementAbility2::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AWindElementAbility2::setupAttack(ATori * newOwner, AWindElement * myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn)
+void AWindElementAbility2::setupAttack(ATori * newOwner, AWindElement * myElementIn, float lifeSpan, float damageIn, float innerRadiusIn, float outerRadiusIn)
 {
 	myOwner = newOwner;
 	myElement = myElementIn;
 	SetLifeSpan(lifeSpan);
-	dashDist = dashDistIn;
-	ccDur = ccDurIn;
-	slow = slowIn;
 	damage = damageIn;
+	innerRadius = innerRadiusIn;
+	outerRadius = outerRadiusIn;
+	collider->SetSphereRadius(outerRadius);
 }
 
-void AWindElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void AWindElementAbility2::checkForEnemy()
 {
+	enemyReference = nullptr;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATori::StaticClass(), enemy);
+	numOfEnemy = enemy.Num();
+	if (numOfEnemy > 0)
+	{
+		for (int i = 1; i <= numOfEnemy; i++)
+		{
+			playerLocation = myOwner->GetActorLocation();
+			enemyReference = Cast<ATori>(enemy[i]);
+			enemyLocation = enemyReference->GetActorLocation();
+			RadiusToEnemy = sqrt(pow((enemyLocation.X - playerLocation.X), 2) + pow((enemyLocation.Y - playerLocation.Y), 2));
+			if (RadiusToEnemy < outerRadius)
+			{
+				// Do stuff
+			}
+		}
+	}
+
+
+}
+
+void AWindElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
+	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+
+	// if(counter == 3) --> PushBack i tillegg, type "enemy->LaunchCharacter"
+
 	if (!OtherActor->IsA(AWindElementAbility2::StaticClass()))
 	{
 		if (OtherActor->IsA(ABaseAbility::StaticClass()))
@@ -59,7 +87,7 @@ void AWindElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 				//		myOwner->locked = 0.f;
 
 				//	}
-				//}
+				}
 			}
 		}
 	}

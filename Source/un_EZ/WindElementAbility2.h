@@ -3,12 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "BaseAbility.h"
 #include "Engine/Classes/Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "WindElementAbility2.generated.h"
 
 class AWindElement;
+class ATori;
 
 UCLASS()
 class UN_EZ_API AWindElementAbility2 : public ABaseAbility
@@ -26,15 +28,26 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	void setupAttack(ATori* newOwner, AWindElement* myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn);
+	void setupAttack(ATori* newOwner, AWindElement* myElementIn, float lifeSpan, float damageIn, float innerRadiusIn, float outerRadiusIn);
 	float currBuffDur;
-	float dashDist;
-	float ccDur;
-	float slow;
 	float damage;
+	float outerRadius;
+	float innerRadius;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		class AWindElement* myElement;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		class ATori* enemyReference;
+	UPROPERTY(EditAnywhere)
+		float RadiusToEnemy;
+
+	TArray <AActor*> enemy;
+	int numOfEnemy;
+	FVector playerLocation;
+	FVector enemyLocation;
+
+	void checkForEnemy();
+
 
 	USphereComponent* collider;
 

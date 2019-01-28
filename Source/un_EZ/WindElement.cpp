@@ -11,7 +11,7 @@ AWindElement::AWindElement()
 void AWindElement::BeginPlay()
 {
 	Super::BeginPlay();
-//	maxBuffDur = ability2lifeSpan;
+	maxBuffDur = ability2lifeSpan;
 }
 
 void AWindElement::Tick(float DeltaTime)
@@ -36,25 +36,30 @@ void AWindElement::Tick(float DeltaTime)
 		charging = false;
 	}
 
-	//// Ability 2
-	//if (buffDur >= 0)
-	//{
-	//	myOwner->SetActorEnableCollision(false);
-	//	myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
-	//	buffDur -= DeltaTime;
-	//	if (buffDur <= 0)
-	//	{
-	//		myOwner->setMoveSpeed(myOwner->moveSpeed);
-	//		myOwner->damageMultiplier = 1;
-	//		tempTimer = 0.2f;	// Delay after ability2 register an attack and the time it takes to dash
-	//	}
-	//}
-	//if (tempTimer > 0)
-	//{
-	//	tempTimer -= DeltaTime;
-	//	if (tempTimer <= 0.f)
-	//		myOwner->SetActorEnableCollision(true);
-	//}
+	// Ability 2
+	if (buffDur > 0)
+	{
+		buffDur -= DeltaTime;
+		if (buffDur <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("WindElementAbility 2 buffduration is 0."));
+			counter = 1;
+			myOwner->setMoveSpeed(myOwner->moveSpeed);
+			tempTimer = 0.2f;	// Delay after ability2 register an attack and the time it takes to dash
+		}
+	}
+
+	
+
+
+
+
+
+	// Drit i dette
+	if (tempTimer > 0)
+	{
+		tempTimer -= DeltaTime;
+	}
 }
 
 
@@ -73,4 +78,30 @@ void AWindElement::ability1()
 
 void AWindElement::ability2()
 {
+	if (ammo2 > 0 && counter < 4)
+	{
+		buffDur = maxBuffDur;
+		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has: %i, counters."), counter);
+
+		AWindElementAbility2* temp;
+		temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
+		
+		if (counter == 1)
+			//temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, radius1Count);
+		if (counter == 2)
+			//temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, radius2Count);
+		if (counter == 3)
+			//temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, radius3Count);
+
+		counter++;
+		Super::ability2();
+	}
+	else if (counter > 3)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has 3 stacks"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has no ammo"));
+	}
 }

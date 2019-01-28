@@ -60,13 +60,20 @@ public:
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float radius1Count = 30.0f;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float radius2Count = 60.0f;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float radius3Count = 90.0f;
 	float buffDur;
 	float maxBuffDur;
 
 	// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage = 0.f;
-	int counter = 0;
+	
+	int counter = 1;
 
 	float tempTimer;
 };
