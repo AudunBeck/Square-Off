@@ -62,6 +62,14 @@ void ATori::Tick(float DeltaTime)
 			dodgeCooldown = dodgeMaxCooldown;
 		}
 	}
+	if (currentGlobalCooldown > 0)
+	{
+		currentGlobalCooldown -= DeltaTime;
+		if (currentGlobalCooldown <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldown finished"));
+		}
+	}
 }
 
 // Called to bind functionality to input
@@ -152,14 +160,16 @@ void ATori::ability_1()
 {
 	if (locked <= 0)
 	{
-		if (activeElement == 1 && element_1 != nullptr)
-			element_1->ability1();
-		else if (activeElement == 2 && element_2 != nullptr)
-			element_2->ability1();
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Tori currently locked down due to ability 1."));
+		if (currentGlobalCooldown <= 0)
+		{
+			if (activeElement == 1 && element_1 != nullptr)
+				element_1->ability1();
+			else if (activeElement == 2 && element_2 != nullptr)
+				element_2->ability1();
+			currentGlobalCooldown = globalCooldown;
+		}
+		else
+			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldonw: %f"), currentGlobalCooldown);
 	}
 }
 
@@ -177,14 +187,15 @@ void ATori::ability_2()
 {
 	if (locked <= 0)
 	{
-		if (activeElement == 1 && element_1 != nullptr)
-			element_1->ability2();
-		else if (activeElement == 2 && element_2 != nullptr)
-			element_2->ability2();
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Tori currently locked down due to ability 2."));
+		if (currentGlobalCooldown <= 0)
+		{
+			if (activeElement == 1 && element_1 != nullptr)
+				element_1->ability2();
+			else if (activeElement == 2 && element_2 != nullptr)
+				element_2->ability2();
+			currentGlobalCooldown = globalCooldown;
+
+		}
 	}
 }
 

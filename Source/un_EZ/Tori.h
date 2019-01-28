@@ -71,6 +71,9 @@ public:
 		class ABaseElement* element_1;
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		class ABaseElement* element_2;
+	UPROPERTY(EditAnywhere, Category = "Elements")
+		float globalCooldown;
+	float currentGlobalCooldown;
 
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
