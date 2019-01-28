@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "BaseAbility.h"
 #include "GameFramework/Actor.h"
-#include "Tori.h"
+#include "FireElement.h"
 #include "Engine/Classes/Components/BoxComponent.h"
 #include "FireElementAbility2.generated.h"
 
@@ -31,6 +31,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		class ATori* myPlayer;
+	class AFireElement* myElement;
 
 	float attackRange;
 };

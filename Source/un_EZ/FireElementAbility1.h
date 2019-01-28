@@ -6,7 +6,7 @@
 #include "BaseAbility.h"
 #include "GameFramework/Actor.h"
 #include "Engine/Classes/Components/SphereComponent.h"
-#include "RockElementAbility2.h"
+#include "FireElement.h"
 #include "Tori.h"
 #include "FireElementAbility1.generated.h"
 
@@ -32,6 +32,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		class ATori* myPlayer;
+	class AFireElement* myElement;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		USphereComponent* collider;

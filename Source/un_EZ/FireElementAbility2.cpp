@@ -14,7 +14,10 @@ AFireElementAbility2::AFireElementAbility2()
 void AFireElementAbility2::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	myElement = Cast<AFireElement>(GetOwner());
+	myPlayer = myElement->myOwner;
+	SetLifeSpan(myElement->ability2Lifespan);
+	attackRange = myElement->ability2Range;
 }
 
 // Called every frame
@@ -30,6 +33,5 @@ void AFireElementAbility2::Tick(float DeltaTime)
 void AFireElementAbility2::setupAttack(ATori * newOwner, float lifeSpan, float range)
 {
 	myPlayer = newOwner;
-	SetLifeSpan(lifeSpan);
-	attackRange = range;
+	
 }

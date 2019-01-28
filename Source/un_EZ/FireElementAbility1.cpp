@@ -19,6 +19,13 @@ AFireElementAbility1::AFireElementAbility1()
 void AFireElementAbility1::BeginPlay()
 {
 	Super::BeginPlay();
+	myElement = Cast<AFireElement>(GetOwner());
+	myPlayer = myElement->myOwner;
+	SetLifeSpan(myElement->ability1lifeSpan);
+	attackRange = myElement->ability1Range;
+	if(myElement->fireChi > 0)
+		SetActorScale3D(myElement->boostedAbility1Scale);
+
 }
 
 // Called every frame
@@ -31,10 +38,7 @@ void AFireElementAbility1::Tick(float DeltaTime)
 
 void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale)
 {
-	myPlayer = newOwner;
-	SetLifeSpan(lifeSpan);
-	attackRange = range;
-	SetActorScale3D(scale);
+
 }
 
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,

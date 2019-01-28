@@ -10,17 +10,19 @@ void AFireElement::ability1()
 	if (ammo1 > 0)
 	{
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
 		AFireElementAbility1* temp;
 		temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
-			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation());
+			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(),tempParam);
 		if (fireChi > 0)
 		{
-			temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, boostedAbility1Scale);
+			//temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, boostedAbility1Scale);
 			fireChi -= 1;
 		}
 		else
 		{
-			temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, FVector(1, 1, 1));
+			//temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, FVector(1, 1, 1));
 		}
 	}
 	Super::ability1();
@@ -34,12 +36,13 @@ void AFireElement::ability2()
 		//UE_LOG(LogTemp, Warning, TEXT("FireElement Ability 2 firing"));
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
 
-
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
 		AFireElementAbility2* temp;
 		temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
-			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation());
+			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
 
-		temp->setupAttack(myOwner, ability1lifeSpan, ability2Range);
+		//temp->setupAttack(myOwner, ability1lifeSpan, ability2Range);
 
 		// Refills ammo1 as mentioned in design doc
 		ammo1 += ammo1Refill;
