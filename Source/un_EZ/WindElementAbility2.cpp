@@ -24,6 +24,8 @@ void AWindElementAbility2::BeginPlay()
 void AWindElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	currentTime += DeltaTime;
+	checkForEnemy();
 }
 
 void AWindElementAbility2::setupAttack(ATori * newOwner, AWindElement * myElementIn, float lifeSpan, float damageIn, float innerRadiusIn, float outerRadiusIn)
@@ -41,18 +43,25 @@ void AWindElementAbility2::checkForEnemy()
 {
 	enemyReference = nullptr;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATori::StaticClass(), enemy);
-	numOfEnemy = enemy.Num();
+	numOfEnemy = enemy.Num() -1;
 	if (numOfEnemy > 0)
 	{
-		for (int i = 1; i <= numOfEnemy; i++)
+		for (int i = 0; i <= numOfEnemy; i++)
 		{
 			playerLocation = myOwner->GetActorLocation();
 			enemyReference = Cast<ATori>(enemy[i]);
 			enemyLocation = enemyReference->GetActorLocation();
 			RadiusToEnemy = sqrt(pow((enemyLocation.X - playerLocation.X), 2) + pow((enemyLocation.Y - playerLocation.Y), 2));
-			if (RadiusToEnemy < outerRadius)
+			if (RadiusToEnemy < outerRadius && RadiusToEnemy > innerRadius)
 			{
-				// Do stuff
+				UE_LOG(LogTemp, Error, TEXT("Enemy velocity is: %s"), *enemyReference->GetVelocity().ToString());
+				pushDirection = (enemyLocation - playerLocation);
+				//FVector NewLocation = enemyReference->GetActorLocation();
+				//NewLocation = (enemyReference->GetVelocity() + pushDirection);
+				//FVector pushDirection = enemyLocation - playerLocation;
+				//enemyReference->AddMovementInput(pushDirection, pushForce);
+				//enemyReference->SetActorLocation((enemyReference->GetVelocity() + pushDirection) * currentTime);
+				//enemyReference->LaunchCharacter(pushDirection * pushForce, true, true);
 			}
 		}
 	}

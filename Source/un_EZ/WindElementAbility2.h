@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
 #include "BaseAbility.h"
 #include "Engine/Classes/Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
@@ -33,13 +34,17 @@ public:
 	float damage;
 	float outerRadius;
 	float innerRadius;
+	float pushForce = 2.0f;
+	float currentTime;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		class AWindElement* myElement;
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(BlueprintReadWrite)
 		class ATori* enemyReference;
 	UPROPERTY(EditAnywhere)
 		float RadiusToEnemy;
+	UPROPERTY(EditAnywhere)
+		FVector pushDirection;
 
 	TArray <AActor*> enemy;
 	int numOfEnemy;

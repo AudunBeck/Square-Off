@@ -49,13 +49,7 @@ void AWindElement::Tick(float DeltaTime)
 		}
 	}
 
-	
-
-
-
-
-
-	// Drit i dette
+	// 
 	if (tempTimer > 0)
 	{
 		tempTimer -= DeltaTime;
@@ -80,18 +74,19 @@ void AWindElement::ability2()
 {
 	if (ammo2 > 0 && counter < 4)
 	{
+		myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3); /// Add this to UPROPERTY if we decide to keep the slow effect while ability2 is active. Remove if not.
 		buffDur = maxBuffDur;
 		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has: %i, counters."), counter);
 
 		AWindElementAbility2* temp;
 		temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
-		
+
 		if (counter == 1)
-			//temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, radius1Count);
+			temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, innerRadius, outerRadius1Count);
 		if (counter == 2)
-			//temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, radius2Count);
+			temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, innerRadius, outerRadius2Count);
 		if (counter == 3)
-			//temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, radius3Count);
+			temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, innerRadius, outerRadius3Count);
 
 		counter++;
 		Super::ability2();
