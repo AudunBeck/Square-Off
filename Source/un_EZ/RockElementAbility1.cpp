@@ -25,9 +25,10 @@ void ARockElementAbility1::BeginPlay()
 		myElement = Cast<ARockElement>(GetOwner());
 	if (myElement != nullptr)
 		myPlayer = myElement->getMyOwner();
-	SetLifeSpan(myElement->ability1lifeSpan);
-	attackRange = myElement->ability1Range;
 	chargedHit = myElement->chargeFloat;
+	SetLifeSpan((myElement->ability1lifeSpan) * chargedHit);
+	attackRange = myElement->ability1Range;
+	
 }
 
 // Called every frame
@@ -36,17 +37,6 @@ void ARockElementAbility1::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (myPlayer != nullptr)
 	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
-}
-
-void ARockElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, float chargeFloat)
-{
-	//myPlayer = newOwner;
-	//ownerPos = myPlayer->GetActorLocation();
-	////UE_LOG(LogTemp, Warning, TEXT("Owner position: %f , %f , %f"), myPlayer->GetActorLocation().X, myPlayer->GetActorLocation().Y, myPlayer->GetActorLocation().Z);
-	//SetLifeSpan(lifeSpan);
-	//attackRange = range;
-	//chargedHit = chargeFloat;
-
 }
 
 void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,

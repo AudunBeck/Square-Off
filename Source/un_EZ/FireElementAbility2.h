@@ -26,9 +26,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Owner of the attack
-	void setupAttack(ATori * newOwner, float lifeSpan, float range);
-
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		class ATori* myPlayer;
 	class AFireElement* myElement;

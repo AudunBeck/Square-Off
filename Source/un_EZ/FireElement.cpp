@@ -17,12 +17,7 @@ void AFireElement::ability1()
 			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(),tempParam);
 		if (fireChi > 0)
 		{
-			//temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, boostedAbility1Scale);
 			fireChi -= 1;
-		}
-		else
-		{
-			//temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, FVector(1, 1, 1));
 		}
 	}
 	Super::ability1();

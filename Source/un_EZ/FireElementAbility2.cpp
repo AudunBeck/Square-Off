@@ -30,8 +30,3 @@ void AFireElementAbility2::Tick(float DeltaTime)
 	this->SetActorRotation(myPlayer->GetActorRotation());
 }
 
-void AFireElementAbility2::setupAttack(ATori * newOwner, float lifeSpan, float range)
-{
-	myPlayer = newOwner;
-	
-}
