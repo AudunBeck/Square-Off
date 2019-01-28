@@ -62,7 +62,7 @@ void ARockElement::ability2()
 
 		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
 		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot);
-		temp->setupAttack(myOwner, ability2Scale, ability2Lifespan, ability2Speed);
+		temp->setupAttack(myOwner, ability2Scale, ability2Lifespan, ability2Speed, ability2KnockbackMulti);
 	}
 
 	Super::ability2();

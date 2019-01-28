@@ -28,7 +28,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Owner of the attack
-	void setupAttack(ATori * newOwner, FVector scale, float lifeSpan, float wallSpeed);
+	void setupAttack(ATori * newOwner, FVector scale, float lifeSpan, float wallSpeed, float knockbackMultiplier);
 
 	UPROPERTY(EditAnywhere)
 		float movingTime;
@@ -38,6 +38,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float speed = 500.f;
+
+	UPROPERTY(EditAnywhere)
+		float playerKnockback;
 
 	FVector punchPos;
 	FVector wallPos;

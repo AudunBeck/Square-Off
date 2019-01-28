@@ -38,13 +38,13 @@ void ARockElementAbility2::Tick(float DeltaTime)
 	}
 }
 
-void ARockElementAbility2::setupAttack(ATori * newOwner, FVector scale, float lifeSpan, float wallSpeed)
+void ARockElementAbility2::setupAttack(ATori * newOwner, FVector scale, float lifeSpan, float wallSpeed, float knockbackMultiplier)
 {
 	myOwner = newOwner;
 	//SetActorScale3D(scale);
 	SetLifeSpan(lifeSpan);
 	speed = wallSpeed;
-
+	playerKnockback = knockbackMultiplier;
 }
 
 void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
@@ -56,7 +56,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		{
 			ATori* player = Cast<ATori>(OtherActor);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYESR IS TOUCHING ME!"));
-			player->recieveDamage(10.f, 5 * speed, GetActorLocation());
+			player->recieveDamage(10.f, playerKnockback * speed, GetActorLocation());
 		}
 	}
 
