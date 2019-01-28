@@ -29,6 +29,9 @@ void ATori::BeginPlay()
 	maxSlow = moveSpeed;
 	dodgeAmmo = dodgeMaxAmmo;
 	dodgeCooldown = dodgeMaxCooldown;
+	hitPoints = maxHitPoints;
+	hitPointPercentage = hitPoints / maxHitPoints;
+
 }
 
 // Called every frame
@@ -215,13 +218,14 @@ void ATori::recieveDamage(float damage)
 	//int playerNum = Cast<APlayerController>(GetController())->GetLocalPlayer()->GetControllerId();
 	if (iTime <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+		UE_LOG(LogTemp, Warning, TEXT("Player has %f hitpoints left"), hitPoints); // Find a way to find the player-number, instead of 1
 		hitPoints -= damage;
 		if (hitPoints <= 0)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
 		}
 	}
+	hitPointPercentage = hitPoints / maxHitPoints;
 }
 
 void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
@@ -253,6 +257,7 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 		}
 		/// Incert effect of stun
 	}
+	hitPointPercentage = hitPoints / maxHitPoints;
 }
 void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 {
@@ -260,6 +265,7 @@ void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 	delta.Normalize();
 	FVector knockForce = delta * knockback;
 	LaunchCharacter(knockForce, false, true);
+	hitPointPercentage = hitPoints / maxHitPoints;
 }
 
 

@@ -46,7 +46,12 @@ public:
 	void ability2End();
 
 	UPROPERTY(EditAnywhere, Category = "HitPoints")
-		float hitPoints = 100;
+		float maxHitPoints = 100;
+	float hitPoints;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "HitPoints")
+		float hitPointPercentage;
+	
 
 	TArray<float> slowDur;
 	TArray<float> slowAmount;
