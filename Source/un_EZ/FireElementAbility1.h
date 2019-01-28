@@ -31,7 +31,7 @@ public:
 	void setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale);
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		class ATori* myOwner;
+		class ATori* myPlayer;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		USphereComponent* collider;

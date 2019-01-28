@@ -30,7 +30,7 @@ public:
 	void setupAttack(ATori * newOwner, float lifeSpan, float range);
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		class ATori* myOwner;
+		class ATori* myPlayer;
 
 	float attackRange;
 };

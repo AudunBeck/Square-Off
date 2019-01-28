@@ -42,6 +42,8 @@ public:
 	UPROPERTY(EditAnywhere)
 		float playerKnockback;
 
+	class ARockElement* myElement;
+
 	FVector punchPos;
 	FVector wallPos;
 

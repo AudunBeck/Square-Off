@@ -22,7 +22,12 @@ ARockElementAbility2::ARockElementAbility2()
 void ARockElementAbility2::BeginPlay()
 {
 	Super::BeginPlay();
-
+	myElement = Cast<ARockElement>(GetOwner());
+	myPlayer = myElement->myOwner;
+	//SetActorScale3D(scale);
+	SetLifeSpan(myElement->ability2Lifespan);
+	speed = myElement->ability2Speed;
+	playerKnockback = myElement->ability2KnockbackMulti;
 }
 
 // Called every frame
@@ -40,11 +45,11 @@ void ARockElementAbility2::Tick(float DeltaTime)
 
 void ARockElementAbility2::setupAttack(ATori * newOwner, FVector scale, float lifeSpan, float wallSpeed, float knockbackMultiplier)
 {
-	myOwner = newOwner;
+	//myPlayer = newOwner;
 	//SetActorScale3D(scale);
-	SetLifeSpan(lifeSpan);
-	speed = wallSpeed;
-	playerKnockback = knockbackMultiplier;
+	//SetLifeSpan(lifeSpan);
+	//speed = wallSpeed;
+	//playerKnockback = knockbackMultiplier;
 }
 
 void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,

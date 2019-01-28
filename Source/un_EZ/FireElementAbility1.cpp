@@ -25,13 +25,13 @@ void AFireElementAbility1::BeginPlay()
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	this->SetActorLocation(myOwner->GetActorForwardVector() * attackRange + myOwner->GetActorLocation());
-	this->SetActorRotation(myOwner->GetActorRotation());
+	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
+	this->SetActorRotation(myPlayer->GetActorRotation());
 }
 
 void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale)
 {
-	myOwner = newOwner;
+	myPlayer = newOwner;
 	SetLifeSpan(lifeSpan);
 	attackRange = range;
 	SetActorScale3D(scale);
@@ -42,7 +42,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 {
 	if (buffed)
 	{
-		if (OtherActor != myOwner)
+		if (OtherActor != myPlayer)
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
@@ -56,7 +56,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 	}
 	if (!buffed)
 	{
-		if (OtherActor != myOwner)
+		if (OtherActor != myPlayer)
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
