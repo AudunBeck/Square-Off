@@ -26,6 +26,6 @@ void ABaseAbility::Tick(float DeltaTime)
 
 ATori* ABaseAbility::getMyOwner()
 {
-	return myOwner;
+	return myPlayer;
 }
 

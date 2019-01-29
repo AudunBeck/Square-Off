@@ -19,21 +19,26 @@ AFireElementAbility1::AFireElementAbility1()
 void AFireElementAbility1::BeginPlay()
 {
 	Super::BeginPlay();
+	myElement = Cast<AFireElement>(GetOwner());
+	myPlayer = myElement->myOwner;
+	SetLifeSpan(myElement->ability1lifeSpan);
+	attackRange = myElement->ability1Range;
+	if(myElement->fireChi > 0)
+		SetActorScale3D(myElement->boostedAbility1Scale);
+
 }
 
 // Called every frame
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	this->SetActorLocation(myOwner->GetActorForwardVector() * attackRange + myOwner->GetActorLocation());
-	this->SetActorRotation(myOwner->GetActorRotation());
+	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
+	this->SetActorRotation(myPlayer->GetActorRotation());
 }
 
-void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range)
+void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale)
 {
-	myOwner = newOwner;
-	SetLifeSpan(lifeSpan);
-	attackRange = range;
+
 }
 
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
@@ -41,7 +46,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 {
 	if (buffed)
 	{
-		if (OtherActor != myOwner)
+		if (OtherActor != myPlayer)
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
@@ -55,7 +60,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 	}
 	if (!buffed)
 	{
-		if (OtherActor != myOwner)
+		if (OtherActor != myPlayer)
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{

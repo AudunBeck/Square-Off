@@ -14,7 +14,10 @@ AFireElementAbility2::AFireElementAbility2()
 void AFireElementAbility2::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	myElement = Cast<AFireElement>(GetOwner());
+	myPlayer = myElement->myOwner;
+	SetLifeSpan(myElement->ability2Lifespan);
+	attackRange = myElement->ability2Range;
 }
 
 // Called every frame
@@ -23,13 +26,7 @@ void AFireElementAbility2::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Sets the hitbox ahead of the player while flying forward
-	this->SetActorLocation(myOwner->GetActorForwardVector() * attackRange + myOwner->GetActorLocation());
-	this->SetActorRotation(myOwner->GetActorRotation());
+	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
+	this->SetActorRotation(myPlayer->GetActorRotation());
 }
 
-void AFireElementAbility2::setupAttack(ATori * newOwner, float lifeSpan, float range)
-{
-	myOwner = newOwner;
-	SetLifeSpan(lifeSpan);
-	attackRange = range;
-}

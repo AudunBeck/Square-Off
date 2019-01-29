@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Tori.h"
+#include "BaseElement.h"
 #include "GameFramework/Actor.h"
 #include "BaseAbility.generated.h"
 
@@ -25,6 +26,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual ATori* getMyOwner();
 
-	class ATori* myOwner;
+	class ATori* myPlayer;
 
 };

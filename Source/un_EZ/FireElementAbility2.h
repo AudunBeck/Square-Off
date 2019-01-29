@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "BaseAbility.h"
 #include "GameFramework/Actor.h"
-#include "Tori.h"
+#include "FireElement.h"
 #include "Engine/Classes/Components/BoxComponent.h"
 #include "FireElementAbility2.generated.h"
 
@@ -26,11 +26,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Owner of the attack
-	void setupAttack(ATori * newOwner, float lifeSpan, float range);
-
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		class ATori* myOwner;
+		class ATori* myPlayer;
+	class AFireElement* myElement;
 
 	float attackRange;
 };

@@ -26,15 +26,15 @@ void AWaterElementAbility2::BeginPlay()
 void AWaterElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if(myOwner)
-		this->SetActorLocation(myOwner->GetActorLocation());
+	if(myPlayer)
+		this->SetActorLocation(myPlayer->GetActorLocation());
 	if (myElement == nullptr)
 		UE_LOG(LogTemp, Error, TEXT("MyElement is nullptr - Check WaterElementAbilit2.cpp - setupAttack()"))
 }
 
 void AWaterElementAbility2::setupAttack(ATori * newOwner, AWaterElement* myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn)
 {
-	myOwner = newOwner;
+	myPlayer = newOwner;
 	myElement = myElementIn;
 	SetLifeSpan(lifeSpan);
 	dashDist = dashDistIn;
@@ -51,19 +51,20 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 		{
 			if (myElement != nullptr)
 			{
-				if (myOwner != nullptr)
+				if (myPlayer != nullptr)
 				{
 					myElement->buffDur = 0.f;
 					if (myElement->buffDur == 0.f)
 					{
 						ATori* enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
 						FVector enemyLocation = enemy->GetActorLocation();
-						FVector ownerLocation = myOwner->GetActorLocation();
+						FVector ownerLocation = myPlayer->GetActorLocation();
 						FVector launchDirection = enemyLocation - ownerLocation;
 						UE_LOG(LogTemp, Warning, TEXT("Countered an attack!"));
-						myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * dashDist, true, true);
+						myPlayer->LaunchCharacter(myPlayer->GetActorForwardVector() * dashDist, true, true);
 						enemy->recieveDamage(damage, ccDur, slow, 0);
-						myOwner->locked = 0.f;
+						myPlayer->locked = 0.f;
+
 						myElement->counter = 3;
 					}
 				}

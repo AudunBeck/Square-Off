@@ -29,6 +29,9 @@ void ATori::BeginPlay()
 	maxSlow = moveSpeed;
 	dodgeAmmo = dodgeMaxAmmo;
 	dodgeCooldown = dodgeMaxCooldown;
+	hitPoints = maxHitPoints;
+	hitPointPercentage = hitPoints / maxHitPoints;
+
 }
 
 // Called every frame
@@ -58,6 +61,14 @@ void ATori::Tick(float DeltaTime)
 			UE_LOG(LogTemp, Warning, TEXT("DodgeAmmo is %i now"), dodgeAmmo);
 
 			dodgeCooldown = dodgeMaxCooldown;
+		}
+	}
+	if (currentGlobalCooldown > 0)
+	{
+		currentGlobalCooldown -= DeltaTime;
+		if (currentGlobalCooldown <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldown finished"));
 		}
 	}
 }
@@ -155,14 +166,16 @@ void ATori::ability_1()
 {
 	if (locked <= 0)
 	{
-		if (activeElement == 1 && element_1 != nullptr)
-			element_1->ability1();
-		else if (activeElement == 2 && element_2 != nullptr)
-			element_2->ability1();
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Tori currently locked down due to ability 1."));
+		if (currentGlobalCooldown <= 0)
+		{
+			if (activeElement == 1 && element_1 != nullptr)
+				element_1->ability1();
+			else if (activeElement == 2 && element_2 != nullptr)
+				element_2->ability1();
+			currentGlobalCooldown = globalCooldown;
+		}
+		else
+			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldonw: %f"), currentGlobalCooldown);
 	}
 }
 
@@ -180,14 +193,15 @@ void ATori::ability_2()
 {
 	if (locked <= 0)
 	{
-		if (activeElement == 1 && element_1 != nullptr)
-			element_1->ability2();
-		else if (activeElement == 2 && element_2 != nullptr)
-			element_2->ability2();
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Tori currently locked down due to ability 2."));
+		if (currentGlobalCooldown <= 0)
+		{
+			if (activeElement == 1 && element_1 != nullptr)
+				element_1->ability2();
+			else if (activeElement == 2 && element_2 != nullptr)
+				element_2->ability2();
+			currentGlobalCooldown = globalCooldown;
+
+		}
 	}
 }
 
@@ -207,13 +221,14 @@ void ATori::recieveDamage(float damage)
 	//int playerNum = Cast<APlayerController>(GetController())->GetLocalPlayer()->GetControllerId();
 	if (iTime <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+		UE_LOG(LogTemp, Warning, TEXT("Player has %f hitpoints left"), hitPoints); // Find a way to find the player-number, instead of 1
 		hitPoints -= damage;
 		if (hitPoints <= 0)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
 		}
 	}
+	hitPointPercentage = hitPoints / maxHitPoints;
 }
 
 void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
@@ -245,6 +260,7 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 		}
 		/// Incert effect of stun
 	}
+	hitPointPercentage = hitPoints / maxHitPoints;
 }
 void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 {
@@ -252,6 +268,7 @@ void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 	delta.Normalize();
 	FVector knockForce = delta * knockback;
 	LaunchCharacter(knockForce, false, true);
+	hitPointPercentage = hitPoints / maxHitPoints;
 }
 
 
@@ -273,13 +290,13 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 			{
 				element_1->Destroy();
 				element_1 = newElement;
-				element_1->setPlayer(this);
+				//element_1->setPlayer(this);
 			}
 			else if (activeElement == 2)
 			{
 				element_2->Destroy();
 				element_2 = newElement;
-				element_2->setPlayer(this);
+				//element_2->setPlayer(this);
 			}
 		}
 	}

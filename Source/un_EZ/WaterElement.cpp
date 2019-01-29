@@ -30,7 +30,7 @@ void AWaterElement::Tick(float DeltaTime)
 	{
 		//Cast waterbolt
 		AWaterElementAbility1* temp;
-		/// Under "myOwner->GetActorLocation() + myOwner->GetActorFowardVector()," add spawnpoint to socket in the hand
+		/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
 		temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP, myOwner->GetActorLocation() + ability1Range * myOwner->GetActorForwardVector(), myOwner->GetActorRotation());
 		
 		if (counter > 0)
