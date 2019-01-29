@@ -13,11 +13,8 @@ void ARockElement::Tick(float DeltaTime)
 		{
 			chargeFloat = maxCharge;
 			ability1End();
-
 		}
-
 	}
-
 }
 
 void ARockElement::ability1()
