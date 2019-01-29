@@ -17,7 +17,7 @@ ATori::ATori()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-
+	
 }
 
 // Called when the game starts or when spawned
@@ -37,8 +37,6 @@ void ATori::BeginPlay()
 // Called every frame
 void ATori::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
-
 	/// Find better comment
 	// Slow stuff
 	if (slowDur.Num() > 0)
@@ -92,6 +90,11 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
 
+}
+
+void ATori::addForce(FVector pushDirection)
+{
+	myPushVector = pushDirection;
 }
 
 void ATori::move_X(float axisValue)

@@ -27,6 +27,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void addForce(FVector pushDirection);
+
 	// Runs movement for the character.
 	void move_X(float axisValue);
 	void move_Y(float axisValue);
@@ -37,6 +39,8 @@ public:
 	float maxSlow;
 	void slowCheck(float DeltaTime);
 	void dodge();
+
+	FVector myPushVector;
 
 	// Runs abilities, sends to the element it has equipped currently.
 	void ability_1();

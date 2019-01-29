@@ -4,54 +4,51 @@
 
 #include "CoreMinimal.h"
 #include "BaseElement.h"
-#include "WaterElementAbility1.h"
-#include "WaterElementAbility2.h"
+#include "WindElementAbility1.h"
+#include "WindElementAbility2.h"
 #include "GameFramework/Actor.h"
-#include "WaterElement.generated.h"
+#include "WindElement.generated.h"
 
 UCLASS()
-class UN_EZ_API AWaterElement : public ABaseElement
+class UN_EZ_API AWindElement : public ABaseElement
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
-	AWaterElement();
+	AWindElement();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
 	virtual void ability1()override;
 	virtual void ability2()override;
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
-		TSubclassOf<class AWaterElementAbility1> WaterElementAbility1_BP;
+		TSubclassOf<class AWindElementAbility1> WindElementAbility1_BP;
 
 	UPROPERTY(EditAnywhere, Category = "Abilities")
-		TSubclassOf<class AWaterElementAbility2> WaterElementAbility2_BP;
+		TSubclassOf<class AWindElementAbility2> WindElementAbility2_BP;
 
-	// Ability 1
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 5.0f;
 
 	// How far ahead of Tori the ability spawns
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
-	
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float boltSpeed = 1200.0f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float boltSpeedBuffed = 2200.0f;
 
 	bool charging;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
+	
 	// Charge that starts when you press attack, and fires the bolt when reaching 0
 	float windUpTime;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
@@ -59,36 +56,32 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float damage = 30.f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float damageBuffed = 60.f;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ccDur = 0.5f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ccDurBuffed = 1.5f;
-
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float slow = 15.f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float slowBuffed = 30.f;
-	
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;
+	
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float innerRadius = 60.0f;
+	
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float outerRadius1Count = 600.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float outerRadius2Count = 900.0f;
+	
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float outerRadius3Count = 1200.0f;
+
+
 	float buffDur;
 	float maxBuffDur;
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float dashDist = 3000;
 
 	// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage = 0.f;
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2CcDur = 0.5f;
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Slow = 30.f;
-	int counter = 0;
+	
+	int counter = 1;
 
 	float tempTimer;
-
 };

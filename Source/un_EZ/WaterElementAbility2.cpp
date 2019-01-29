@@ -64,7 +64,7 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 						myPlayer->LaunchCharacter(myPlayer->GetActorForwardVector() * dashDist, true, true);
 						enemy->recieveDamage(damage, ccDur, slow, 0);
 						myPlayer->locked = 0.f;
-						
+
 						myElement->counter = 3;
 					}
 				}
