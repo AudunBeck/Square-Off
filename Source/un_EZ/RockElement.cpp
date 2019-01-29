@@ -13,11 +13,8 @@ void ARockElement::Tick(float DeltaTime)
 		{
 			chargeFloat = maxCharge;
 			ability1End();
-
 		}
-
 	}
-
 }
 
 void ARockElement::ability1()
@@ -39,9 +36,10 @@ void ARockElement::ability1End()
 	if (charging)
 	{
 		ARockElementAbility1* temp;
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
 		temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
-			myOwner->GetActorRotation());
-		temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, chargeFloat);
+			myOwner->GetActorRotation(), tempParam);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		myOwner->currentSpeed = myOwner->moveSpeed;
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
@@ -61,8 +59,9 @@ void ARockElement::ability2()
 		const FVector newVec = (forwardVec * ability2Range) + playerVec;
 
 		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
-		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot);
-		temp->setupAttack(myOwner, ability2Scale, ability2Lifespan, ability2Speed);
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
+		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
 	}
 
 	Super::ability2();

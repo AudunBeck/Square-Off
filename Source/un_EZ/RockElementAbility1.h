@@ -6,6 +6,7 @@
 #include "BaseAbility.h"
 #include "GameFramework/Actor.h"
 #include "Engine/Classes/Components/SphereComponent.h"
+#include "RockElement.h"
 #include "Tori.h"
 #include "RockElementAbility1.generated.h"
 
@@ -27,11 +28,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Owner of the attack
-	void setupAttack(ATori* newOwner, float lifeSpan, float range, float chargeFloat);
 	float attackRange;
 	float chargedHit;
-
+	UPROPERTY(EditAnywhere)
+		class ARockElement* myElement;
 	USphereComponent* collider;
+	
+	
 	
 	FVector ownerPos;
 

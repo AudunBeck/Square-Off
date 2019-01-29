@@ -6,7 +6,7 @@
 #include "BaseAbility.h"
 #include "GameFramework/Actor.h"
 #include "Engine/Classes/Components/SphereComponent.h"
-#include "RockElementAbility2.h"
+#include "FireElement.h"
 #include "Tori.h"
 #include "FireElementAbility1.generated.h"
 
@@ -28,10 +28,11 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Owner of the attack
-	void setupAttack(ATori* newOwner, float lifeSpan, float range);
+	void setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale);
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		class ATori* myOwner;
+		class ATori* myPlayer;
+	class AFireElement* myElement;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		USphereComponent* collider;

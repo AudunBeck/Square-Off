@@ -20,31 +20,29 @@ ARockElementAbility1::ARockElementAbility1()
 void ARockElementAbility1::BeginPlay()
 {
 	Super::BeginPlay();
+	//UE_LOG(LogTemp, Warning, TEXT("Owner position: %f , %f , %f"), myPlayer->GetActorLocation().X, myPlayer->GetActorLocation().Y, myPlayer->GetActorLocation().Z);
+	if (GetOwner() != nullptr)
+		myElement = Cast<ARockElement>(GetOwner());
+	if (myElement != nullptr)
+		myPlayer = myElement->getMyOwner();
+	chargedHit = myElement->chargeFloat;
+	SetLifeSpan((myElement->ability1lifeSpan) * chargedHit);
+	attackRange = myElement->ability1Range;
+	
 }
 
 // Called every frame
 void ARockElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (myOwner != nullptr)
-	this->SetActorLocation(myOwner->GetActorForwardVector() * attackRange + myOwner->GetActorLocation());
-}
-
-void ARockElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, float chargeFloat)
-{
-	myOwner = newOwner;
-	ownerPos = myOwner->GetActorLocation();
-	//UE_LOG(LogTemp, Warning, TEXT("Owner position: %f , %f , %f"), myOwner->GetActorLocation().X, myOwner->GetActorLocation().Y, myOwner->GetActorLocation().Z);
-	SetLifeSpan(lifeSpan);
-	attackRange = range;
-	chargedHit = chargeFloat;
-
+	if (myPlayer != nullptr)
+	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
 }
 
 void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor != myOwner)
+	if (OtherActor != myPlayer)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
@@ -55,16 +53,16 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 		if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
 		{
 
-			if (myOwner != nullptr)
+			if (myPlayer != nullptr)
 			{
-				FVector temp = FVector(myOwner->GetActorLocation());
+				FRotator temp = FRotator(myPlayer->GetActorRotation());
 				Cast<ARockElementAbility2>(OtherActor)->moveWall(temp, chargedHit);
 			}
 			else
 			{
-				//UE_LOG(LogTemp, Warning, TEXT("Punch did not find myOwner"));
-				UE_LOG(LogTemp, Warning, TEXT("Punch did not find myOwner"));
-				Cast<ARockElementAbility2>(OtherActor)->moveWall(GetActorLocation(), chargedHit);
+				//UE_LOG(LogTemp, Warning, TEXT("Punch did not find myPlayer"));
+				UE_LOG(LogTemp, Warning, TEXT("Punch did not find myPlayer"));
+				Cast<ARockElementAbility2>(OtherActor)->moveWall(myPlayer->GetActorRotation(), chargedHit);
 			}
 		}
 	}
