@@ -34,7 +34,7 @@ void AWindElementAbility1::Tick(float DeltaTime)
 
 void AWindElementAbility1::setupAttack(ATori * newOwner, float lifeSpan, float boltSpeedIn, float damageIn)
 {
-	myOwner = newOwner;
+	myPlayer = newOwner;
 	SetLifeSpan(lifeSpan);
 	boltSpeed = boltSpeedIn;
 	damage = damageIn;
@@ -43,7 +43,7 @@ void AWindElementAbility1::setupAttack(ATori * newOwner, float lifeSpan, float b
 void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (OtherActor != myOwner)
+	if (OtherActor != myPlayer)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{

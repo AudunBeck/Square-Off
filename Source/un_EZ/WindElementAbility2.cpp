@@ -30,7 +30,7 @@ void AWindElementAbility2::Tick(float DeltaTime)
 
 void AWindElementAbility2::setupAttack(ATori * newOwner, AWindElement * myElementIn, float lifeSpan, float damageIn, float innerRadiusIn, float outerRadiusIn)
 {
-	myOwner = newOwner;
+	myPlayer = newOwner;
 	myElement = myElementIn;
 	SetLifeSpan(lifeSpan);
 	damage = damageIn;
@@ -48,7 +48,7 @@ void AWindElementAbility2::checkForEnemy()
 	{
 		for (int i = 0; i <= numOfEnemy; i++)
 		{
-			playerLocation = myOwner->GetActorLocation();
+			playerLocation = myPlayer->GetActorLocation();
 			enemyReference = Cast<ATori>(enemy[i]);
 			enemyLocation = enemyReference->GetActorLocation();
 
