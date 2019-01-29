@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
+#include "WindElement.h"
 #include "BaseAbility.h"
 #include "Engine/Classes/Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
@@ -37,26 +38,30 @@ public:
 	float pushForce = 2.0f;
 	float currentTime;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(BlueprintReadWrite)
 		class AWindElement* myElement;
 	UPROPERTY(BlueprintReadWrite)
 		class ATori* enemyReference;
-	UPROPERTY(EditAnywhere)
-		float RadiusToEnemy;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite)
+		float distToEnemy;
+	UPROPERTY(BlueprintReadWrite)
+		float dotValue;
+	UPROPERTY(BlueprintReadWrite)
+		float dotProduct;
+	UPROPERTY(BlueprintReadWrite)
+		float radian;
+	UPROPERTY(BlueprintReadWrite)
 		FVector pushDirection;
 
 	TArray <AActor*> enemy;
 	int numOfEnemy;
 	FVector playerLocation;
 	FVector enemyLocation;
+	FVector a;
+	FVector b;
 
 	void checkForEnemy();
 
 
 	USphereComponent* collider;
-
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

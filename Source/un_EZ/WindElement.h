@@ -62,7 +62,7 @@ public:
 		float ability2lifeSpan = 2.5f;
 	
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float innerRadius = 400.0f;
+		float innerRadius = 60.0f;
 	
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float outerRadius1Count = 600.0f;

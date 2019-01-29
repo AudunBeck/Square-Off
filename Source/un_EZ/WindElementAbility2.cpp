@@ -11,7 +11,7 @@ AWindElementAbility2::AWindElementAbility2()
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility2::OnOverlapBegin);
+	//collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility2::OnOverlapBegin);
 	
 }
 
@@ -51,53 +51,9 @@ void AWindElementAbility2::checkForEnemy()
 			playerLocation = myOwner->GetActorLocation();
 			enemyReference = Cast<ATori>(enemy[i]);
 			enemyLocation = enemyReference->GetActorLocation();
-			RadiusToEnemy = sqrt(pow((enemyLocation.X - playerLocation.X), 2) + pow((enemyLocation.Y - playerLocation.Y), 2));
-			if (RadiusToEnemy < outerRadius && RadiusToEnemy > innerRadius)
-			{
-				UE_LOG(LogTemp, Error, TEXT("Enemy velocity is: %s"), *enemyReference->GetVelocity().ToString());
-				pushDirection = (enemyLocation - playerLocation);
-				//FVector NewLocation = enemyReference->GetActorLocation();
-				//NewLocation = (enemyReference->GetVelocity() + pushDirection);
-				//FVector pushDirection = enemyLocation - playerLocation;
-				//enemyReference->AddMovementInput(pushDirection, pushForce);
-				//enemyReference->SetActorLocation((enemyReference->GetVelocity() + pushDirection) * currentTime);
-				//enemyReference->LaunchCharacter(pushDirection * pushForce, true, true);
-			}
+
 		}
 	}
 
 
-}
-
-void AWindElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
-	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
-{
-
-	// if(counter == 3) --> PushBack i tillegg, type "enemy->LaunchCharacter"
-
-	if (!OtherActor->IsA(AWindElementAbility2::StaticClass()))
-	{
-		if (OtherActor->IsA(ABaseAbility::StaticClass()))
-		{
-			if (myElement != nullptr)
-			{
-				if (myOwner != nullptr)
-				{
-				//	myElement->buffDur = 0.f;
-				//	if (myElement->buffDur == 0.f)
-				//	{
-				//		ATori* enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
-				//		FVector enemyLocation = enemy->GetActorLocation();
-				//		FVector ownerLocation = myOwner->GetActorLocation();
-				//		FVector launchDirection = enemyLocation - ownerLocation;
-				//		UE_LOG(LogTemp, Warning, TEXT("Countered an attack!"));
-				//		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * dashDist, true, true);
-				//		enemy->recieveDamage(damage, ccDur, slow, 0);
-				//		myOwner->locked = 0.f;
-
-				//	}
-				}
-			}
-		}
-	}
 }
