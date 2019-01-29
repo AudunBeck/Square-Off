@@ -29,14 +29,16 @@ void AWaterElement::Tick(float DeltaTime)
 	if(windUpTime <= 0 && charging == true)
 	{
 		//Cast waterbolt
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
 		AWaterElementAbility1* temp;
 		/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
-		temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP, myOwner->GetActorLocation() + ability1Range * myOwner->GetActorForwardVector(), myOwner->GetActorRotation());
+		temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP, myOwner->GetActorLocation() + ability1Range * myOwner->GetActorForwardVector(), myOwner->GetActorRotation(), tempParam);
 		
-		if (counter > 0)
-			temp->setupAttack(myOwner, ability1lifeSpan, boltSpeedBuffed, ccDurBuffed, slowBuffed, damageBuffed);
-		else
-			temp->setupAttack(myOwner, ability1lifeSpan, boltSpeed, ccDur, slow, damage);
+		//if (counter > 0)
+		//	temp->setupAttack(myOwner, ability1lifeSpan, boltSpeedBuffed, ccDurBuffed, slowBuffed, damageBuffed);
+		//else
+		//	temp->setupAttack(myOwner, ability1lifeSpan, boltSpeed, ccDur, slow, damage);
 		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 fired"));
 		myOwner->setRotationRate(myOwner->rotationRate);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
