@@ -20,6 +20,13 @@ AWaterElementAbility2::AWaterElementAbility2()
 void AWaterElementAbility2::BeginPlay()
 {
 	Super::BeginPlay();
+	myElement = Cast<AWaterElement>(GetOwner());
+	myPlayer = myElement->myOwner;
+	SetLifeSpan(myElement->ability2lifeSpan);
+	dashDist = myElement->dashDist;
+	ccDur = myElement->ability2CcDur;
+	slow = myElement->ability2Slow;
+	damage = myElement->ability2Damage;
 }
 
 // Called every frame
@@ -32,16 +39,6 @@ void AWaterElementAbility2::Tick(float DeltaTime)
 		UE_LOG(LogTemp, Error, TEXT("MyElement is nullptr - Check WaterElementAbilit2.cpp - setupAttack()"))
 }
 
-void AWaterElementAbility2::setupAttack(ATori * newOwner, AWaterElement* myElementIn, float lifeSpan, float dashDistIn, float ccDurIn, float slowIn, float damageIn)
-{
-	myPlayer = newOwner;
-	myElement = myElementIn;
-	SetLifeSpan(lifeSpan);
-	dashDist = dashDistIn;
-	ccDur = ccDurIn;
-	slow = slowIn;
-	damage = damageIn;
-}
 void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
