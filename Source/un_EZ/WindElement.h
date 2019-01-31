@@ -65,13 +65,10 @@ public:
 		float innerRadius = 60.0f;
 	
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float outerRadius1Count = 600.0f;
+		float outerRadius1 = 600.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float outerRadius2Count = 900.0f;
-	
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float outerRadius3Count = 1200.0f;
+		float outerRadius2 = 900.0f;
 
 
 	float buffDur;
@@ -79,9 +76,12 @@ public:
 
 	// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Damage = 0.f;
+		float ability2Damage1 = 30.f;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Damage2 = 50.f;
 	
-	int counter = 1;
+	int counter = 0;
 
 	float tempTimer;
 };

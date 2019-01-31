@@ -30,7 +30,7 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	void setupAttack(ATori* newOwner, AWindElement* myElementIn, float lifeSpan, float damageIn, float innerRadiusIn, float outerRadiusIn);
+	void setupAttack(ATori* newOwner, AWindElement* myElementIn, float damageIn, float outerRadiusIn);
 	float currBuffDur;
 	float damage;
 	float outerRadius;
@@ -49,7 +49,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		float dotProduct;
 	UPROPERTY(BlueprintReadWrite)
-		float radian;
+		float RadiusToEnemy;
 	UPROPERTY(BlueprintReadWrite)
 		FVector pushDirection;
 

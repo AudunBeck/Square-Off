@@ -28,15 +28,15 @@ void AWindElementAbility2::Tick(float DeltaTime)
 	checkForEnemy();
 }
 
-void AWindElementAbility2::setupAttack(ATori * newOwner, AWindElement * myElementIn, float lifeSpan, float damageIn, float innerRadiusIn, float outerRadiusIn)
+void AWindElementAbility2::setupAttack(ATori * newOwner, AWindElement * myElementIn, float damageIn, float outerRadiusIn)
 {
 	myPlayer = newOwner;
 	myElement = myElementIn;
-	SetLifeSpan(lifeSpan);
+	SetLifeSpan(myElement->ability2lifeSpan);
 	damage = damageIn;
-	innerRadius = innerRadiusIn;
+	innerRadius = myElement->innerRadius;
 	outerRadius = outerRadiusIn;
-	collider->SetSphereRadius(outerRadius);
+	//collider->SetSphereRadius(outerRadius);
 }
 
 void AWindElementAbility2::checkForEnemy()
@@ -51,7 +51,30 @@ void AWindElementAbility2::checkForEnemy()
 			playerLocation = myPlayer->GetActorLocation();
 			enemyReference = Cast<ATori>(enemy[i]);
 			enemyLocation = enemyReference->GetActorLocation();
+			RadiusToEnemy = sqrt(pow((enemyLocation.X - playerLocation.X), 2) + pow((enemyLocation.Y - playerLocation.Y), 2));
+			if (RadiusToEnemy < outerRadius && RadiusToEnemy > innerRadius)
+			{
+				pushDirection = (enemyLocation - playerLocation);
 
+				if (myElement->counter == 1)
+				{
+					UE_LOG(LogTemp, Error, TEXT("Counter is: %i"), myElement->counter);
+					enemyReference->recieveDamage(myElement->ability2Damage1);
+				}
+
+				if (myElement->counter == 2)
+				{
+					UE_LOG(LogTemp, Error, TEXT("Counter is: %i"), myElement->counter);
+					enemyReference->LaunchCharacter(pushDirection, true, true);
+				}
+
+				if (myElement->counter == 3)
+				{
+					UE_LOG(LogTemp, Error, TEXT("Counter is: %i"), myElement->counter);
+					enemyReference->LaunchCharacter(pushDirection, true, true);
+					enemyReference->recieveDamage(myElement->ability2Damage2);
+				}
+			}
 		}
 	}
 

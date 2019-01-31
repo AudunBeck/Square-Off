@@ -43,7 +43,7 @@ void AWindElement::Tick(float DeltaTime)
 		if (buffDur <= 0)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("WindElementAbility 2 buffduration is 0."));
-			counter = 1;
+			counter = 0;
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			tempTimer = 0.2f;	// Delay after ability2 register an attack and the time it takes to dash
 		}
@@ -72,6 +72,7 @@ void AWindElement::ability1()
 
 void AWindElement::ability2()
 {
+	counter++;
 	if (ammo2 > 0 && counter < 4)
 	{
 		myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3); /// Add this to UPROPERTY if we decide to keep the slow effect while ability2 is active. Remove if not.
@@ -82,13 +83,13 @@ void AWindElement::ability2()
 		temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
 
 		if (counter == 1)
-			temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, innerRadius, outerRadius1Count);
+			temp->setupAttack(myOwner, this, ability2Damage1, outerRadius1);
 		if (counter == 2)
-			temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, innerRadius, outerRadius2Count);
+			temp->setupAttack(myOwner, this, 0.f, outerRadius2);	// 0.f is the damage at 2 stacks, should be zero as of now
 		if (counter == 3)
-			temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, innerRadius, outerRadius3Count);
+			temp->setupAttack(myOwner, this, ability2Damage1, outerRadius2);
 
-		counter++;
+
 		Super::ability2();
 	}
 	else if (counter > 3)
