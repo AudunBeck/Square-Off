@@ -68,6 +68,7 @@ void ATori::Tick(float DeltaTime)
 		currentGlobalCooldown -= DeltaTime;
 		if (currentGlobalCooldown <= 0)
 		{
+			/// Add another visual indicator ingame
 			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldown finished"));
 		}
 	}

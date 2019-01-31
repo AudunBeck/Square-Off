@@ -30,13 +30,12 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	void setupAttack(ATori* newOwner, AWindElement* myElementIn, float damageIn, float outerRadiusIn);
-	float currBuffDur;
-	float damage;
-	float outerRadius;
-	float innerRadius;
-	float pushForce = 2.0f;
+	void setupAttack(ATori* newOwner, AWindElement* myElementIn);
+
+	int counter;
+	int myWindChi;
 	float currentTime;
+
 
 	UPROPERTY(BlueprintReadWrite)
 		class AWindElement* myElement;
@@ -60,8 +59,10 @@ public:
 	FVector a;
 	FVector b;
 
-	void checkForEnemy();
-
+	void checkForEnemy(float innerRadius, float outerRadius);
+	void firstWave();
+	void secondWave();
+	void thirdWave();
 
 	USphereComponent* collider;
 };

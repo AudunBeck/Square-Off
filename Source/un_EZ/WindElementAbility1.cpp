@@ -19,7 +19,11 @@ AWindElementAbility1::AWindElementAbility1()
 void AWindElementAbility1::BeginPlay()
 {
 	Super::BeginPlay();
-
+	myElement = Cast<AWindElement>(GetOwner());
+	myPlayer = myElement->myOwner;
+	SetLifeSpan(myElement->ability1lifeSpan);
+	boltSpeed = myElement->boltSpeed;
+	damage = myElement->ability1damage;
 }
 
 // Called every frame
@@ -32,14 +36,6 @@ void AWindElementAbility1::Tick(float DeltaTime)
 
 }
 
-void AWindElementAbility1::setupAttack(ATori * newOwner, float lifeSpan, float boltSpeedIn, float damageIn)
-{
-	myPlayer = newOwner;
-	SetLifeSpan(lifeSpan);
-	boltSpeed = boltSpeedIn;
-	damage = damageIn;
-}
-
 void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
@@ -48,7 +44,9 @@ void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			// Make the target take damage
-			//Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);	// float value 0 is slow
+			Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value 0 is slow
+			if(myElement->windChi < 2)
+				myElement->windChi++;
 		}
 	}
 }
