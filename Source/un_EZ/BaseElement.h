@@ -12,8 +12,8 @@ UCLASS()
 class UN_EZ_API ABaseElement : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ABaseElement();
 
@@ -21,7 +21,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -68,16 +68,4 @@ public:
 		int ammoPerCd2;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		int ammo2;
-
-	int switchToElement();
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animation")
-		bool currentlyActive = false;
-
-
-
-
-
-
-
 };

@@ -69,6 +69,7 @@ void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 		{
 			// Make the target take damage
 			Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);	// float value 0 is slow
+			this->Destroy();
 		}
 	}
 }
