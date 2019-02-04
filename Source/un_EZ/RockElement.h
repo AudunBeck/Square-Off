@@ -52,11 +52,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		FVector ability2Scale;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Lifespan = 2;
-	
-
-
-	
-
-	
+		float ability2Lifespan = 10;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Speed;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2KnockbackMulti = 2;
 };

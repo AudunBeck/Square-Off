@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseAbility.h"
 #include "GameFramework/Actor.h"
-#include "Tori.h"
+#include "FireElement.h"
 #include "Engine/Classes/Components/BoxComponent.h"
 #include "FireElementAbility2.generated.h"
 
 UCLASS()
-class UN_EZ_API AFireElementAbility2 : public AActor
+class UN_EZ_API AFireElementAbility2 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
@@ -25,9 +26,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Owner of the attack
-	void setupAttack(ATori * newOwner, float lifeSpan);
-
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		class ATori* myOwner;
+		class ATori* myPlayer;
+	class AFireElement* myElement;
+
+	float attackRange;
 };

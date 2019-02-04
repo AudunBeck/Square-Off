@@ -19,7 +19,7 @@ void ABaseElement::BeginPlay()
 	ammo2 = maxAmmo2;
 	cooldownAbility1 = maxCooldownAbility1;
 	cooldownAbility2 = maxCooldownAbility2;
-	
+	myOwner = Cast<ATori>(GetOwner());
 }
 
 // Called every frame
@@ -39,9 +39,9 @@ void ABaseElement::Tick(float DeltaTime)
 			if (ammo1 > maxAmmo1)
 				ammo1 = maxAmmo1;
 
-			UE_LOG(LogTemp, Warning, TEXT("Ammo1 is %i now"), ammo1);
+			//UE_LOG(LogTemp, Warning, TEXT("Ammo1 is %i now"), ammo1);
 
-			cooldownAbility1 = maxCooldownAbility2;
+			cooldownAbility1 = maxCooldownAbility1;
 		}
 	}
 
@@ -54,7 +54,7 @@ void ABaseElement::Tick(float DeltaTime)
 			if (ammo2 > maxAmmo2)
 				ammo2 = maxAmmo2;
 
-			UE_LOG(LogTemp, Warning, TEXT("Ammo2 is %i now"), ammo2);
+			//UE_LOG(LogTemp, Warning, TEXT("Ammo2 is %i now"), ammo2);
 			cooldownAbility2 = maxCooldownAbility2;
 		}
 
@@ -64,6 +64,14 @@ void ABaseElement::Tick(float DeltaTime)
 void ABaseElement::setPlayer(class ATori * newOwner)
 {
 	myOwner = newOwner;
+}
+
+ATori * ABaseElement::getMyOwner()
+{
+	if (myOwner == nullptr)
+		return nullptr;
+	else
+		return myOwner;
 }
 
 void ABaseElement::ability1()

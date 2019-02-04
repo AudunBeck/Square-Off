@@ -3,14 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseAbility.h"
 #include "GameFramework/Actor.h"
 #include "Engine/Classes/Components/SphereComponent.h"
-#include "RockElementAbility2.h"
+#include "FireElement.h"
 #include "Tori.h"
 #include "FireElementAbility1.generated.h"
 
 UCLASS()
-class UN_EZ_API AFireElementAbility1 : public AActor
+class UN_EZ_API AFireElementAbility1 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
@@ -27,13 +28,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Owner of the attack
-	void setupAttack(ATori* newOwner, float lifeSpan);
+	void setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale);
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		class ATori* myOwner;
+		class ATori* myPlayer;
+	class AFireElement* myElement;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		USphereComponent* collider;
+
 
 	// Add a description here
 	UFUNCTION()
@@ -41,5 +44,6 @@ public:
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	bool buffed = false;
+	float attackRange = 100;
 
 };

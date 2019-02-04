@@ -35,6 +35,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		class ATori* myOwner;
+	ATori* getMyOwner();
 
 	// Ability 1 variables.
 	virtual void ability1();

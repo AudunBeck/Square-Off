@@ -3,13 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseAbility.h"
 #include "GameFramework/Actor.h"
 #include "Engine/Classes/Components/SphereComponent.h"
+#include "RockElement.h"
 #include "Tori.h"
 #include "RockElementAbility1.generated.h"
 
 UCLASS()
-class UN_EZ_API ARockElementAbility1 : public AActor
+class UN_EZ_API ARockElementAbility1 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
@@ -26,15 +28,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Owner of the attack
-	void setupAttack(ATori* newOwner, float lifeSpan, float range, float chargeFloat);
 	float attackRange;
 	float chargedHit;
-
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		class ATori* myOwner;
-
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		USphereComponent* collider;
+	UPROPERTY(EditAnywhere)
+		class ARockElement* myElement;
+	USphereComponent* collider;
+	
+	
+	
+	FVector ownerPos;
 
 	// Add a description here
 	UFUNCTION()

@@ -13,21 +13,20 @@ void ARockElement::Tick(float DeltaTime)
 		{
 			chargeFloat = maxCharge;
 			ability1End();
-
 		}
-
 	}
-
 }
 
 void ARockElement::ability1()
 {
 	if (ammo1 > 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
+		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
 		charging = true;
 		myOwner->setMoveSpeed(0.f);
+		myOwner->currentSpeed = 0;
 		chargeFloat = 0;
+		myOwner->locked = maxCharge;
 	}
 	Super::ability1();
 }
@@ -36,13 +35,15 @@ void ARockElement::ability1End()
 {
 	if (charging)
 	{
-		
-
 		ARockElementAbility1* temp;
-		temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation());
-		temp->setupAttack(myOwner, ability1lifeSpan, ability1Range, chargeFloat);
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
+		temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+			myOwner->GetActorRotation(), tempParam);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
+		myOwner->currentSpeed = myOwner->moveSpeed;
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
+		myOwner->locked = 0;
 	}
 	charging = false;
 	
@@ -57,9 +58,10 @@ void ARockElement::ability2()
 		FRotator playerRot = myOwner->GetActorRotation();
 		const FVector newVec = (forwardVec * ability2Range) + playerVec;
 
-		UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
-		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot);
-		temp->setupAttack(myOwner, ability2Scale, ability2Lifespan);
+		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
+		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
 	}
 
 	Super::ability2();

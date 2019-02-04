@@ -10,14 +10,14 @@
 // Sets default values
 ATori::ATori()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-
+	
 }
 
 // Called when the game starts or when spawned
@@ -26,21 +26,50 @@ void ATori::BeginPlay()
 	Super::BeginPlay();
 	setMoveSpeed(moveSpeed);
 	setRotationRate(rotationRate);
-	
+	maxSlow = moveSpeed;
+	dodgeAmmo = dodgeMaxAmmo;
+	dodgeCooldown = dodgeMaxCooldown;
+	hitPoints = maxHitPoints;
+	hitPointPercentage = hitPoints / maxHitPoints;
+
 }
 
 // Called every frame
 void ATori::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
-	//UE_LOG(LogTemp, Warning, TEXT("Controllers's Rotation is %s"),
-	//	*GetControlRotation().ToString());
-
-	//UE_LOG(LogTemp, Warning, TEXT("MyCharacter's ForwardVector is %s"),
-	//	*GetActorForwardVector().ToString());
-	if (shouldDash)
+	/// Find better comment
+	// Slow stuff
+	if (slowDur.Num() > 0)
 	{
+		slowCheck(DeltaTime);
+	}
 
+	if (locked > 0)
+		locked -= DeltaTime;
+	if (iTime > 0)
+		iTime -= DeltaTime;
+
+	if (dodgeAmmo < dodgeMaxAmmo)
+	{
+		dodgeCooldown -= DeltaTime;
+		if (dodgeCooldown <= 0)
+		{
+			dodgeAmmo += 1;
+			if (dodgeAmmo > dodgeMaxAmmo)
+				dodgeAmmo = dodgeMaxAmmo;
+
+			UE_LOG(LogTemp, Warning, TEXT("DodgeAmmo is %i now"), dodgeAmmo);
+
+			dodgeCooldown = dodgeMaxCooldown;
+		}
+	}
+	if (currentGlobalCooldown > 0)
+	{
+		currentGlobalCooldown -= DeltaTime;
+		if (currentGlobalCooldown <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldown finished"));
+		}
 	}
 }
 
@@ -61,8 +90,11 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
 
+}
 
-
+void ATori::addForce(FVector pushDirection)
+{
+	myPushVector = pushDirection;
 }
 
 void ATori::move_X(float axisValue)
@@ -75,9 +107,10 @@ void ATori::move_Y(float axisValue)
 	AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
 }
 
-void ATori::setMoveSpeed (float newMoveSpeed)
+void ATori::setMoveSpeed(float newMoveSpeed)
 {
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
+	//UE_LOG(LogTemp, Warning, TEXT("Speed is now %f"), newMoveSpeed);
 }
 
 void ATori::setRotationRate(float newRotationRate)
@@ -85,59 +118,159 @@ void ATori::setRotationRate(float newRotationRate)
 	GetCharacterMovement()->RotationRate = FRotator(0.f, newRotationRate, 0.f);
 }
 
+void ATori::slowCheck(float DeltaTime)
+{
+	for (int i = 0; i < slowDur.Num(); i++)
+	{
+		slowDur[i] -= DeltaTime;
+		if (slowAmount[i] < maxSlow)
+		{
+			maxSlow = slowAmount[i];
+		}
+		if (currentSpeed > maxSlow)
+		{
+			setMoveSpeed(maxSlow);
+		}
+		if (slowDur[i] <= 0)
+		{
+			slowDur.RemoveAt(i);
+			slowAmount.RemoveAt(i);
+			//UE_LOG(LogTemp, Warning, TEXT("Removing slow num: %i"), i);
+			if (slowDur.Num() == 0)
+			{
+				setMoveSpeed(moveSpeed);
+				maxSlow = moveSpeed;
+				//UE_LOG(LogTemp, Warning, TEXT("Normal speed"));
+			}
+		}
+	}
+}
+
 void ATori::dodge()
 {
+	if (locked <= 0)
+	{
+		if (dodgeAmmo > 0)
+		{
+			locked = 0.5f;
+			iTime = 0.3f;
+			FVector launchVector;
+			launchVector = GetActorForwardVector() * dodgeRange;
+			LaunchCharacter(launchVector, false, true);
+			dodgeAmmo -= 1;
+		}
+	}
 }
 
 void ATori::ability_1()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability1();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability1();
+	if (locked <= 0)
+	{
+		if (currentGlobalCooldown <= 0)
+		{
+			if (activeElement == 1 && element_1 != nullptr)
+				element_1->ability1();
+			else if (activeElement == 2 && element_2 != nullptr)
+				element_2->ability1();
+			currentGlobalCooldown = globalCooldown;
+		}
+		else
+			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldonw: %f"), currentGlobalCooldown);
+	}
 }
 
 void ATori::ability1End()
 {
+
 	if (activeElement == 1 && element_1 != nullptr)
 		element_1->ability1End();
 	else if (activeElement == 2 && element_2 != nullptr)
 		element_2->ability1End();
+
 }
 
 void ATori::ability_2()
 {
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability2();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability2();
+	if (locked <= 0)
+	{
+		if (currentGlobalCooldown <= 0)
+		{
+			if (activeElement == 1 && element_1 != nullptr)
+				element_1->ability2();
+			else if (activeElement == 2 && element_2 != nullptr)
+				element_2->ability2();
+			currentGlobalCooldown = globalCooldown;
+
+		}
+	}
 }
 
 void ATori::ability2End()
 {
+
 	if (activeElement == 1 && element_1 != nullptr)
 		element_1->ability2End();
 	else if (activeElement == 2 && element_2 != nullptr)
 		element_2->ability2End();
+
 }
 
 void ATori::recieveDamage(float damage)
 {
 	// Might be something like this.
 	//int playerNum = Cast<APlayerController>(GetController())->GetLocalPlayer()->GetControllerId();
-
-	UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
-	hitPoints -= damage;
-	if (hitPoints <= 0)
+	if (iTime <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		UE_LOG(LogTemp, Warning, TEXT("Player has %f hitpoints left"), hitPoints); // Find a way to find the player-number, instead of 1
+		hitPoints -= damage;
+		if (hitPoints <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		}
 	}
+	hitPointPercentage = hitPoints / maxHitPoints;
 }
 
-void ATori::fireDash(float fireDash)
+void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Attempting to dash."));
+	// Type 0 is slow
+	if (type == 0)
+		if (iTime <= 0)
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+			hitPoints -= damage * damageMultiplier;
+			if (hitPoints <= 0)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+			}
+
+			slowDur.Push(ccDur);
+			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
+			UE_LOG(LogTemp, Warning, TEXT("There are now %i slows"), slowDur.Num());
+		}
+
+	// Type 1 is stun
+	if (type == 1)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
+		hitPoints -= damage;
+		if (hitPoints <= 0)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		}
+		/// Incert effect of stun
+	}
+	hitPointPercentage = hitPoints / maxHitPoints;
 }
+void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
+{
+	FVector delta = GetActorLocation() - knockbackPoint;
+	delta.Normalize();
+	FVector knockForce = delta * knockback;
+	LaunchCharacter(knockForce, false, true);
+	hitPointPercentage = hitPoints / maxHitPoints;
+}
+
 
 bool ATori::pickUpElement(ABaseElement * newElement)
 {
@@ -157,13 +290,13 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 			{
 				element_1->Destroy();
 				element_1 = newElement;
-				element_1->setPlayer(this);
+				//element_1->setPlayer(this);
 			}
 			else if (activeElement == 2)
 			{
 				element_2->Destroy();
 				element_2 = newElement;
-				element_2->setPlayer(this);
+				//element_2->setPlayer(this);
 			}
 		}
 	}
@@ -172,10 +305,12 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 
 void ATori::switchElement()
 {
-	if (activeElement == 1)
-		activeElement = 2;
-	else if (activeElement == 2)
-		activeElement = 1;
-	UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
+	if (locked <= 0)
+	{
+		if (activeElement == 1)
+			activeElement = 2;
+		else if (activeElement == 2)
+			activeElement = 1;
+		UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
+	}
 }
-

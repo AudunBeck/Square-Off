@@ -37,17 +37,23 @@ void ApickUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AA
 	UE_LOG(LogTemp, Warning, TEXT("PickUp Getting hit"));
 	if (OtherActor->IsA(ATori::StaticClass()))
 	{
-		ATori* player = Cast<ATori>(OtherActor);
-		ABaseElement* temp = GetWorld()->SpawnActor<ABaseElement>(ElementBlueprint);
-		if (player->pickUpElement(temp))
+		if (ElementBlueprint != nullptr)
 		{
-			temp->myOwner = player;
-			Destroy();
+			ATori* player = Cast<ATori>(OtherActor);
+			FActorSpawnParameters tempParam;
+			tempParam.Owner = player;
+			ABaseElement* temp = GetWorld()->SpawnActor<ABaseElement>(ElementBlueprint, tempParam);
+			if (player->pickUpElement(temp))
+			{
+				Destroy();
+			}
+			else
+			{
+				temp->Destroy();
+			}
 		}
 		else
-		{
-			temp->Destroy();
-		}
+			UE_LOG(LogTemp, Warning, TEXT("You forgot to add a element to this pickup, IDIOT!"));
 	}
 }
 

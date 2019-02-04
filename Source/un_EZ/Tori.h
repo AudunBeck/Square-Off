@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Engine/Classes/Components/ChildActorComponent.h"
 #include "BaseElement.h"
 #include "Tori.generated.h"
 
@@ -21,12 +20,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void addForce(FVector pushDirection);
 
 	// Runs movement for the character.
 	void move_X(float axisValue);
@@ -34,8 +35,12 @@ public:
 
 	void setMoveSpeed(float newMoveSpeed);
 	void setRotationRate(float newRotationSpeed);
-
+	float currentSpeed;
+	float maxSlow;
+	void slowCheck(float DeltaTime);
 	void dodge();
+
+	FVector myPushVector;
 
 	// Runs abilities, sends to the element it has equipped currently.
 	void ability_1();
@@ -45,32 +50,59 @@ public:
 	void ability2End();
 
 	UPROPERTY(EditAnywhere, Category = "HitPoints")
-		float hitPoints = 100;
+		float maxHitPoints = 100;
+	float hitPoints;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "HitPoints")
+		float hitPointPercentage;
+	
+
+	TArray<float> slowDur;
+	TArray<float> slowAmount;
 
 	// Recieve damage
+	float damageMultiplier = 1.f;
 	void recieveDamage(float damage);
-	void fireDash(float fireDash);
-	bool shouldDash = false;
-
-
+	void recieveDamage(float damage, float slow, float ccDur, int type);		//Int type defines effect, 0 = slow, 1 = stun
+	void recieveDamage(float damage, float knockback, FVector knockbackPoint);
+	
 
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
 	bool pickUpElement(class ABaseElement* newElement);
-	
+
 	// For switching between the 2 elements you have currently.
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		int activeElement = 1;
 	void switchElement();
 
-	// Holds the pointers for the elements you currently have. 
+	// Holds the pointers for the elements you currently have.
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		class ABaseElement* element_1;
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		class ABaseElement* element_2;
+	UPROPERTY(EditAnywhere, Category = "Elements")
+		float globalCooldown;
+	float currentGlobalCooldown;
 
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float locked; // How long the control of the character is locked.
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float moveSpeed = 600;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float rotationRate = 720;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		int dodgeMaxAmmo = 2;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		int dodgeAmmo;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float dodgeMaxCooldown = 10;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float dodgeCooldown;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float dodgeRange;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+		float iTime; // How long the character is invunrable to damage.
+
 
 };
