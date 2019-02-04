@@ -37,9 +37,6 @@ public:
 	float slow;
 	float damage;
 
-	UPROPERTY(EditAnywhere)
-		class AWaterElement* myElement;
-
 	USphereComponent* collider;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
