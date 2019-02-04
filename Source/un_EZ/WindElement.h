@@ -45,7 +45,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float boltSpeed = 1200.0f;
 
-	bool charging;
+	bool chargingAbilit1;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
 	
@@ -55,33 +55,42 @@ public:
 		float maxWindUpTime = 0.3f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float damage = 30.f;
+		float ability1damage = 30.f;
 
-	// Ability 2
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2lifeSpan = 2.5f;
+
+	// Ability 2 
+
+	///Value not used
+	/*UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2lifeSpan = 2.5f;*/
 	
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float innerRadius = 60.0f;
+		float radius0 = 60.0f;
 	
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float outerRadius1Count = 600.0f;
+		float radius1 = 300.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float outerRadius2Count = 900.0f;
+		float radius2 = 600.0f;
 	
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float outerRadius3Count = 1200.0f;
+		float radius3 = 900.0f;
 
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float timeTilSecond = 2.f;
 
-	float buffDur;
-	float maxBuffDur;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float timeTilThird = 2.f;
 
 	// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Damage = 0.f;
-	
-	int counter = 1;
+		float ability2Damage1 = 30.f;
 
-	float tempTimer;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Damage2 = 50.f;
+
+	int windChi;			// Used to power the secondary ability
+	float buffDur;
+	float maxBuffDur;
+	bool chargingAbilit2;
 };

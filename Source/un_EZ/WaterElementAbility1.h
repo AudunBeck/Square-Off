@@ -10,6 +10,8 @@
 #include "GameFramework/Actor.h"
 #include "WaterElementAbility1.generated.h"
 
+class AWaterElement;
+
 UCLASS()
 class UN_EZ_API AWaterElementAbility1 : public ABaseAbility
 {
@@ -28,7 +30,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// slow is set in %, where 25.5 = 25.5% slow
-	void setupAttack(ATori* newOwner, float lifeSpan, float boltSpeedIn, float ccDurIn, float slowIn, float damageIn);
 	float attackRange;
 	float chargedHit;
 	float boltSpeed;
@@ -41,6 +42,8 @@ public:
 
 	USphereComponent* collider;
 
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		class AWaterElement* myElement;
 	// Add a description here
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,

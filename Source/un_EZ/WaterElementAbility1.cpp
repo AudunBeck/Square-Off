@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "WaterElementAbility1.h"
+#include "WaterElement.h"
 
 // Sets default values
 AWaterElementAbility1::AWaterElementAbility1()
@@ -22,7 +23,8 @@ void AWaterElementAbility1::BeginPlay()
 	myElement = Cast<AWaterElement>(GetOwner());
 	myPlayer = myElement->myOwner;
 	SetLifeSpan(myElement->ability1lifeSpan);
-	if (myElement->counter > 0)
+
+	if (myElement->buffedAbility1)
 	{
 		boltSpeed = myElement->boltSpeedBuffed;
 		ccDur = myElement->ccDurBuffed;
@@ -34,7 +36,7 @@ void AWaterElementAbility1::BeginPlay()
 		boltSpeed = myElement->boltSpeed;
 		ccDur = myElement->ccDur;
 		slow = myElement->slow;
-		damage = damage;
+		damage = myElement->damage;
 	}
 }
 
@@ -72,4 +74,3 @@ void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 		}
 	}
 }
-

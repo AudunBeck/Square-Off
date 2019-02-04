@@ -29,6 +29,8 @@ public:
 	virtual void ability1()override;
 	virtual void ability2()override;
 
+	bool buffedAbility1;
+
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class AWaterElementAbility1> WaterElementAbility1_BP;
