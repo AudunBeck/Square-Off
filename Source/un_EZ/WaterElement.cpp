@@ -35,7 +35,7 @@ void AWaterElement::Tick(float DeltaTime)
 		/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
 		temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
 			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
-		
+
 		if (counter > 0)
 			buffedAbility1 = true;
 		else

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BaseAbility.h"
 #include "Engine/Classes/Components/SphereComponent.h"
+#include "WaterElement.h"
 #include "Tori.h"
 #include "GameFramework/Actor.h"
 #include "WaterElementAbility1.generated.h"
@@ -35,6 +36,9 @@ public:
 	float ccDur;
 	float slow;
 	float damage;
+
+	UPROPERTY(EditAnywhere)
+		class AWaterElement* myElement;
 
 	USphereComponent* collider;
 

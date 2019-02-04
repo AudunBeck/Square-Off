@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BaseAbility.h"
 #include "Engine/Classes/Components/SphereComponent.h"
+#include "WaterElement.h"
 #include "GameFramework/Actor.h"
 #include "WaterElementAbility2.generated.h"
 

@@ -23,7 +23,7 @@ void AWaterElementAbility1::BeginPlay()
 	myElement = Cast<AWaterElement>(GetOwner());
 	myPlayer = myElement->myOwner;
 	SetLifeSpan(myElement->ability1lifeSpan);
-	
+
 	if (myElement->buffedAbility1)
 	{
 		boltSpeed = myElement->boltSpeedBuffed;
@@ -51,6 +51,16 @@ void AWaterElementAbility1::Tick(float DeltaTime)
 	/// Add so that the first few frames, the waterbolt goes slow and afterwards go fast - Make bool so we can add (potentially) own animation to go along
 }
 
+void AWaterElementAbility1::setupAttack(ATori * newOwner, float lifeSpan, float boltSpeedIn, float ccDurIn, float slowIn, float damageIn)
+{
+	//myPlayer = newOwner;
+	//SetLifeSpan(lifeSpan);
+	//boltSpeed = boltSpeedIn;
+	//ccDur = ccDurIn;
+	//slow = slowIn;
+	//damage = damageIn;
+}
+
 void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
@@ -64,4 +74,3 @@ void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 		}
 	}
 }
-
