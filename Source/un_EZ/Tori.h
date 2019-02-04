@@ -40,6 +40,9 @@ public:
 	void slowCheck(float DeltaTime);
 	void dodge();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
+		bool dodging;
+
 	FVector myPushVector;
 
 	// Runs abilities, sends to the element it has equipped currently.
