@@ -153,12 +153,14 @@ void ATori::dodge()
 	{
 		if (dodgeAmmo > 0)
 		{
+			dodging = true;
 			locked = 0.5f;
 			iTime = 0.3f;
 			FVector launchVector;
 			launchVector = GetActorForwardVector() * dodgeRange;
 			LaunchCharacter(launchVector, false, true);
 			dodgeAmmo -= 1;
+			
 		}
 	}
 }
