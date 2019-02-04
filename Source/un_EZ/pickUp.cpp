@@ -34,7 +34,7 @@ void ApickUp::Tick(float DeltaTime)
 void ApickUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("PickUp Getting hit"));
+	//UE_LOG(LogTemp, Warning, TEXT("PickUp Getting hit"));
 	if (OtherActor->IsA(ATori::StaticClass()))
 	{
 		if (ElementBlueprint != nullptr)
@@ -53,7 +53,7 @@ void ApickUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AA
 			}
 		}
 		else
-			UE_LOG(LogTemp, Warning, TEXT("You forgot to add a element to this pickup, IDIOT!"));
+			UE_LOG(LogTemp, Error, TEXT("You forgot to add a element to this pickup, IDIOT!"));
 	}
 }
 
