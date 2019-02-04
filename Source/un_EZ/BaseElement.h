@@ -69,7 +69,11 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		int ammo2;
 
+	int switchToElement();
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool currentlyActive = false;
+
 
 
 

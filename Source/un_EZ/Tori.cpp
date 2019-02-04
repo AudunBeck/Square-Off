@@ -309,9 +309,20 @@ void ATori::switchElement()
 	if (locked <= 0)
 	{
 		if (activeElement == 1)
+		{
 			activeElement = 2;
+			if (element_2 != nullptr)
+				currentElementType = element_2->switchToElement();
+		}
 		else if (activeElement == 2)
+		{
 			activeElement = 1;
+			if (element_1 != nullptr)
+				currentElementType = element_1->switchToElement();
+		}
+		switchAnimationElement();
+		
 		UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 	}
 }
+

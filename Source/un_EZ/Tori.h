@@ -53,6 +53,7 @@ public:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
 		bool ability2Used = false;
 
+
 	UPROPERTY(EditAnywhere, Category = "HitPoints")
 		float maxHitPoints = 100;
 	float hitPoints;
@@ -77,7 +78,15 @@ public:
 	// For switching between the 2 elements you have currently.
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		int activeElement = 1;
+
+
 	void switchElement();
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+		void switchAnimationElement();
+	UPROPERTY (VisibleAnywhere, BluePrintReadOnly, Category = "Animations")
+	int currentElementType = 0;
+	
 
 	// Holds the pointers for the elements you currently have.
 	UPROPERTY(EditAnywhere, Category = "Elements")

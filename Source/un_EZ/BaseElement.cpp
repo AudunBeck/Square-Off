@@ -104,3 +104,9 @@ void ABaseElement::ability2End()
 
 }
 
+int ABaseElement::switchToElement()
+{
+	return elementType;
+}
+
+
