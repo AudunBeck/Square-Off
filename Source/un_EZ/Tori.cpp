@@ -200,6 +200,7 @@ void ATori::ability_2()
 			else if (activeElement == 2 && element_2 != nullptr)
 				element_2->ability2();
 			currentGlobalCooldown = globalCooldown;
+			
 
 		}
 	}

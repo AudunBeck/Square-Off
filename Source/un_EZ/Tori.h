@@ -45,9 +45,13 @@ public:
 	// Runs abilities, sends to the element it has equipped currently.
 	void ability_1();
 	void ability1End();
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
+		bool ability1Used = false;
 
 	void ability_2();
 	void ability2End();
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
+		bool ability2Used = false;
 
 	UPROPERTY(EditAnywhere, Category = "HitPoints")
 		float maxHitPoints = 100;
