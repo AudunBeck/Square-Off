@@ -68,12 +68,4 @@ public:
 		int ammoPerCd2;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		int ammo2;
-
-	
-
-
-
-
-
-
 };

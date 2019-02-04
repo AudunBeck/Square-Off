@@ -25,7 +25,6 @@ void AFireElementAbility1::BeginPlay()
 	attackRange = myElement->ability1Range;
 	if(myElement->fireChi > 0)
 		SetActorScale3D(myElement->boostedAbility1Scale);
-
 }
 
 // Called every frame
@@ -52,7 +51,6 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			{
 				// Make the target take damage
 				Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
-
 				/// Change this to its own effect-class
 				// Do some crazy shit
 			}
