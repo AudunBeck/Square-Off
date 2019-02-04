@@ -19,7 +19,23 @@ AWaterElementAbility1::AWaterElementAbility1()
 void AWaterElementAbility1::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	myElement = Cast<AWaterElement>(GetOwner());
+	myPlayer = myElement->myOwner;
+	SetLifeSpan(myElement->ability1lifeSpan);
+	if (myElement->counter > 0)
+	{
+		boltSpeed = myElement->boltSpeedBuffed;
+		ccDur = myElement->ccDurBuffed;
+		slow = myElement->slowBuffed;
+		damage = myElement->damageBuffed;
+	}
+	else
+	{
+		boltSpeed = myElement->boltSpeed;
+		ccDur = myElement->ccDur;
+		slow = myElement->slow;
+		damage = damage;
+	}
 }
 
 // Called every frame
@@ -35,12 +51,12 @@ void AWaterElementAbility1::Tick(float DeltaTime)
 
 void AWaterElementAbility1::setupAttack(ATori * newOwner, float lifeSpan, float boltSpeedIn, float ccDurIn, float slowIn, float damageIn)
 {
-	myPlayer = newOwner;
-	SetLifeSpan(lifeSpan);
-	boltSpeed = boltSpeedIn;
-	ccDur = ccDurIn;
-	slow = slowIn;
-	damage = damageIn;
+	//myPlayer = newOwner;
+	//SetLifeSpan(lifeSpan);
+	//boltSpeed = boltSpeedIn;
+	//ccDur = ccDurIn;
+	//slow = slowIn;
+	//damage = damageIn;
 }
 
 void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
