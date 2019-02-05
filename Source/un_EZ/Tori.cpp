@@ -227,10 +227,8 @@ void ATori::recieveDamage(float damage)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player has %f hitpoints left"), hitPoints); // Find a way to find the player-number, instead of 1
 		hitPoints -= damage;
-		if (hitPoints <= 0)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
-		}
+		checkIfDead();
+		wasHit = true;
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
@@ -243,10 +241,8 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
 			hitPoints -= damage * damageMultiplier;
-			if (hitPoints <= 0)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
-			}
+			checkIfDead();
+			wasHit = true;
 
 			slowDur.Push(ccDur);
 			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
@@ -258,10 +254,7 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
 		hitPoints -= damage;
-		if (hitPoints <= 0)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
-		}
+		
 		/// Incert effect of stun
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
@@ -273,6 +266,18 @@ void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 	FVector knockForce = delta * knockback;
 	LaunchCharacter(knockForce, false, true);
 	hitPointPercentage = hitPoints / maxHitPoints;
+	checkIfDead();
+	wasHit = true;
+}
+
+void ATori::checkIfDead()
+{
+	if (hitPoints <= 0)
+	{
+		DisableInput(Cast<APlayerController>(Controller));
+		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		isDead = true;
+	}
 }
 
 
