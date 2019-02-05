@@ -24,11 +24,7 @@ void AFireElementAbility1::BeginPlay()
 	SetLifeSpan(myElement->ability1lifeSpan);
 	attackRange = myElement->ability1Range;
 	if(myElement->fireChi > 0)
-	{
 		SetActorScale3D(myElement->boostedAbility1Scale);
-		buffed = true;
-		myElement->fireChi -= 1;
-	}
 }
 
 // Called every frame
@@ -37,6 +33,11 @@ void AFireElementAbility1::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
 	this->SetActorRotation(myPlayer->GetActorRotation());
+}
+
+void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale)
+{
+
 }
 
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
@@ -48,7 +49,6 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Buffed"));
 				// Make the target take damage
 				Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
 				/// Change this to its own effect-class
@@ -62,10 +62,11 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
-				UE_LOG(LogTemp, Warning, TEXT("Not buffed"));
 				// Make the target take damage
-				Cast<ATori>(OtherActor)->recieveDamage(20.f);	// float value is temporary
+				Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
 			}
 		}
 	}
+
+
 }
