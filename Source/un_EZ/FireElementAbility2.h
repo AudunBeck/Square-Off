@@ -26,16 +26,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	float attackRange;
-
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		class ATori* myPlayer;
 	class AFireElement* myElement;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		USphereComponent* collider;
-
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	float attackRange;
 };
