@@ -40,6 +40,11 @@ public:
 	void slowCheck(float DeltaTime);
 	void dodge();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
+		bool dodging;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
+		bool wasHit;
+
 	FVector myPushVector;
 
 	// Runs abilities, sends to the element it has equipped currently.
@@ -70,6 +75,8 @@ public:
 	void recieveDamage(float damage);
 	void recieveDamage(float damage, float slow, float ccDur, int type);		//Int type defines effect, 0 = slow, 1 = stun
 	void recieveDamage(float damage, float knockback, FVector knockbackPoint);
+
+	void checkIfDead();
 	
 
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
@@ -85,8 +92,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 		void switchAnimationElement();
 	UPROPERTY (VisibleAnywhere, BluePrintReadOnly, Category = "Animations")
-	int currentElementType = 0;
-	
+		int currentElementType = 0;
+	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Animations")
+		bool isDead = false;
+
 
 	// Holds the pointers for the elements you currently have.
 	UPROPERTY(EditAnywhere, Category = "Elements")
