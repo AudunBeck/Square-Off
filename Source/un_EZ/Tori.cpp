@@ -159,8 +159,7 @@ void ATori::dodge()
 			FVector launchVector;
 			launchVector = GetActorForwardVector() * dodgeRange;
 			LaunchCharacter(launchVector, false, true);
-			dodgeAmmo -= 1;
-			
+			dodgeAmmo -= 1;			
 		}
 	}
 }
@@ -285,9 +284,16 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 {
 	// Checking for nullptrs are smart
 	if (element_1 == nullptr)
+	{
 		element_1 = newElement;
+		currentElementType = element_1->switchToElement();
+
+	}
 	else if (element_2 == nullptr && newElement->elementType != element_1->elementType)
+	{
 		element_2 = newElement;
+		currentElementType = element_2->switchToElement();
+	}
 	// If it does not fill any empty spaces.
 	else
 	{
@@ -300,15 +306,21 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				element_1->Destroy();
 				element_1 = newElement;
 				//element_1->setPlayer(this);
+				currentElementType = element_1->switchToElement();
+
 			}
 			else if (activeElement == 2)
 			{
 				element_2->Destroy();
 				element_2 = newElement;
 				//element_2->setPlayer(this);
+				currentElementType = element_2->switchToElement();
+
 			}
 		}
 	}
+
+	switchAnimationElement();
 	return true;
 }
 
@@ -329,6 +341,7 @@ void ATori::switchElement()
 				currentElementType = element_1->switchToElement();
 		}
 		switchAnimationElement();
+		
 		
 		UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 	}
