@@ -45,7 +45,7 @@ void ApickUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AA
 			ABaseElement* temp = GetWorld()->SpawnActor<ABaseElement>(ElementBlueprint, tempParam);
 			if (player->pickUpElement(temp))
 			{
-				Destroy();
+				StartDestroy();
 			}
 			else
 			{
