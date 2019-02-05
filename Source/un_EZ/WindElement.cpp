@@ -11,7 +11,6 @@ AWindElement::AWindElement()
 void AWindElement::BeginPlay()
 {
 	Super::BeginPlay();
-	maxBuffDur = ability2lifeSpan;
 }
 
 void AWindElement::Tick(float DeltaTime)
@@ -22,46 +21,46 @@ void AWindElement::Tick(float DeltaTime)
 	if (windUpTime > 0)
 		windUpTime -= DeltaTime;
 
-	if (windUpTime <= 0 && charging == true)
+	if (windUpTime <= 0 && chargingAbilit1 == true)
 	{
-		//Cast waterbolt
+		//Cast windbolt
 		AWindElementAbility1* temp;
 		/// Under "myOwner->GetActorLocation() + myOwner->GetActorFowardVector()," add spawnpoint to socket in the hand
-		temp = GetWorld()->SpawnActor<AWindElementAbility1>(WindElementAbility1_BP, myOwner->GetActorLocation() + ability1Range * myOwner->GetActorForwardVector(), myOwner->GetActorRotation());
-		temp->setupAttack(myOwner, ability1lifeSpan, boltSpeed, damage);
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
+		temp = GetWorld()->SpawnActor<AWindElementAbility1>(WindElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+			myOwner->GetActorRotation(), tempParam);
 
 		UE_LOG(LogTemp, Warning, TEXT("WindElement Ability 1 fired"));
 		myOwner->setRotationRate(myOwner->rotationRate);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
-		charging = false;
+		chargingAbilit1 = false;
 	}
 
 	// Ability 2
 	if (buffDur > 0)
 	{
 		buffDur -= DeltaTime;
-		if (buffDur <= 0)
+		if (buffDur <= 0 && chargingAbilit2 == true)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("WindElementAbility 2 buffduration is 0."));
-			counter = 1;
+			myOwner->locked = 0;
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
-			tempTimer = 0.2f;	// Delay after ability2 register an attack and the time it takes to dash
+			chargingAbilit2 = false;
 		}
 	}
+	// To allow maxBuffTime to be 0, else the if-statement over (if(buffDur > 0)) can't be true
+	if (buffDur == 0 && chargingAbilit2 == true)
+		chargingAbilit2 = false;
 
-	// 
-	if (tempTimer > 0)
-	{
-		tempTimer -= DeltaTime;
-	}
 }
 
 
 void AWindElement::ability1()
 {
-	if (ammo1 > 0 && charging == false && myOwner->locked <= 0.f)
+	if (ammo1 > 0 && chargingAbilit1 == false && myOwner->locked <= 0.f)
 	{
-		charging = true;
+		chargingAbilit1 = true;
 		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 charging up"));
 		windUpTime = maxWindUpTime;
 		myOwner->setRotationRate(0.f);
@@ -72,31 +71,42 @@ void AWindElement::ability1()
 
 void AWindElement::ability2()
 {
-	if (ammo2 > 0 && counter < 4)
+	if (ammo2 > 0 && chargingAbilit2 == false && myOwner->locked <= 0.f)
 	{
-		myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3); /// Add this to UPROPERTY if we decide to keep the slow effect while ability2 is active. Remove if not.
+		chargingAbilit2 = true;
+		switch (windChi)
+		{
+		case 0:
+			maxBuffDur = 0;
+			break;
+		case 1:
+			maxBuffDur = timeTilSecond;
+			break;
+		case 2:
+			maxBuffDur = timeTilThird + timeTilSecond;
+			break;
+		}
 		buffDur = maxBuffDur;
-		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has: %i, counters."), counter);
+		myOwner->locked = myOwner->globalCooldown;
+		if(windChi != 0)
+			myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3); /// Add this to UPROPERTY if we decide to keep the slow effect while ability2 is active. Remove if not.
 
+		
+		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has: %i, windChi."), windChi);
 		AWindElementAbility2* temp;
-		temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation(), myOwner->GetActorRotation());
-
-		if (counter == 1)
-			temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, innerRadius, outerRadius1Count);
-		if (counter == 2)
-			temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, innerRadius, outerRadius2Count);
-		if (counter == 3)
-			temp->setupAttack(myOwner, this, ability2lifeSpan, ability2Damage, innerRadius, outerRadius3Count);
-
-		counter++;
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
+		temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+			myOwner->GetActorRotation(), tempParam);
+		windChi = 0;
 		Super::ability2();
 	}
-	else if (counter > 3)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has 3 stacks"));
-	}
-	else
+	else if(ammo2 == 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has no ammo"));
+	}
+	else if (chargingAbilit2 == true)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 is already being charged"));
 	}
 }

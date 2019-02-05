@@ -68,6 +68,7 @@ void ATori::Tick(float DeltaTime)
 		currentGlobalCooldown -= DeltaTime;
 		if (currentGlobalCooldown <= 0)
 		{
+			/// Add another visual indicator ingame
 			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldown finished"));
 		}
 	}
@@ -152,12 +153,14 @@ void ATori::dodge()
 	{
 		if (dodgeAmmo > 0)
 		{
+			dodging = true;
 			locked = 0.5f;
 			iTime = 0.3f;
 			FVector launchVector;
 			launchVector = GetActorForwardVector() * dodgeRange;
 			LaunchCharacter(launchVector, false, true);
 			dodgeAmmo -= 1;
+			
 		}
 	}
 }
@@ -200,6 +203,7 @@ void ATori::ability_2()
 			else if (activeElement == 2 && element_2 != nullptr)
 				element_2->ability2();
 			currentGlobalCooldown = globalCooldown;
+			
 
 		}
 	}
@@ -223,10 +227,8 @@ void ATori::recieveDamage(float damage)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player has %f hitpoints left"), hitPoints); // Find a way to find the player-number, instead of 1
 		hitPoints -= damage;
-		if (hitPoints <= 0)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
-		}
+		checkIfDead();
+		wasHit = true;
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
@@ -239,10 +241,8 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
 			hitPoints -= damage * damageMultiplier;
-			if (hitPoints <= 0)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
-			}
+			checkIfDead();
+			wasHit = true;
 
 			slowDur.Push(ccDur);
 			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
@@ -254,10 +254,7 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
 		hitPoints -= damage;
-		if (hitPoints <= 0)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
-		}
+		
 		/// Incert effect of stun
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
@@ -269,6 +266,18 @@ void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 	FVector knockForce = delta * knockback;
 	LaunchCharacter(knockForce, false, true);
 	hitPointPercentage = hitPoints / maxHitPoints;
+	checkIfDead();
+	wasHit = true;
+}
+
+void ATori::checkIfDead()
+{
+	if (hitPoints <= 0)
+	{
+		DisableInput(Cast<APlayerController>(Controller));
+		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		isDead = true;
+	}
 }
 
 
@@ -308,9 +317,20 @@ void ATori::switchElement()
 	if (locked <= 0)
 	{
 		if (activeElement == 1)
+		{
 			activeElement = 2;
+			if (element_2 != nullptr)
+				currentElementType = element_2->switchToElement();
+		}
 		else if (activeElement == 2)
+		{
 			activeElement = 1;
+			if (element_1 != nullptr)
+				currentElementType = element_1->switchToElement();
+		}
+		switchAnimationElement();
+		
 		UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 	}
 }
+

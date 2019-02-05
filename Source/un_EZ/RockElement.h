@@ -36,7 +36,7 @@ public:
 		float ability1lifeSpan = 0.1f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
+	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
 		bool charging;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;

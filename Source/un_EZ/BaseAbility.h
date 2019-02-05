@@ -27,5 +27,4 @@ public:
 	virtual ATori* getMyOwner();
 
 	class ATori* myPlayer;
-
 };

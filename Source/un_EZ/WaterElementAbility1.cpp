@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "WaterElementAbility1.h"
+#include "WaterElement.h"
 
 // Sets default values
 AWaterElementAbility1::AWaterElementAbility1()
@@ -22,7 +23,8 @@ void AWaterElementAbility1::BeginPlay()
 	myElement = Cast<AWaterElement>(GetOwner());
 	myPlayer = myElement->myOwner;
 	SetLifeSpan(myElement->ability1lifeSpan);
-	if (myElement->counter > 0)
+
+	if (myElement->buffedAbility1)
 	{
 		boltSpeed = myElement->boltSpeedBuffed;
 		ccDur = myElement->ccDurBuffed;
@@ -34,7 +36,7 @@ void AWaterElementAbility1::BeginPlay()
 		boltSpeed = myElement->boltSpeed;
 		ccDur = myElement->ccDur;
 		slow = myElement->slow;
-		damage = damage;
+		damage = myElement->damage;
 	}
 }
 
@@ -49,16 +51,6 @@ void AWaterElementAbility1::Tick(float DeltaTime)
 	/// Add so that the first few frames, the waterbolt goes slow and afterwards go fast - Make bool so we can add (potentially) own animation to go along
 }
 
-void AWaterElementAbility1::setupAttack(ATori * newOwner, float lifeSpan, float boltSpeedIn, float ccDurIn, float slowIn, float damageIn)
-{
-	//myPlayer = newOwner;
-	//SetLifeSpan(lifeSpan);
-	//boltSpeed = boltSpeedIn;
-	//ccDur = ccDurIn;
-	//slow = slowIn;
-	//damage = damageIn;
-}
-
 void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
@@ -69,7 +61,7 @@ void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 		{
 			// Make the target take damage
 			Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);	// float value 0 is slow
+			this->Destroy();
 		}
 	}
 }
-

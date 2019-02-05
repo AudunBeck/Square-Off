@@ -4,14 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "BaseAbility.h"
+#include "WindElement.h"
 #include "Engine/Classes/Components/SphereComponent.h"
 #include "Tori.h"
 #include "GameFramework/Actor.h"
 #include "WindElementAbility1.generated.h"
 
-/**
- * 
- */
+class AWindElement;
+
+
 UCLASS()
 class UN_EZ_API AWindElementAbility1 : public ABaseAbility
 {
@@ -29,11 +30,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void setupAttack(ATori* newOwner, float lifeSpan, float boltSpeedIn, float damageIn);
 	float attackRange;
 	float chargedHit;
 	float boltSpeed;
 	float damage;
+
+	UPROPERTY(BlueprintReadWrite)
+		class AWindElement* myElement;
 
 	USphereComponent* collider;
 
