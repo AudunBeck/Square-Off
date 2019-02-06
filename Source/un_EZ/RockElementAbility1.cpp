@@ -48,6 +48,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 		{
 			// Make the target take damage
 			Cast<ATori>(OtherActor)->recieveDamage(30.f * chargedHit);	// float value is temporary
+			myPlayer->stopAllVelocity();
 		}
 
 		if (OtherActor->IsA(ARockElementAbility2::StaticClass()))

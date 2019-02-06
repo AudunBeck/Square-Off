@@ -159,7 +159,8 @@ void ATori::dodge()
 			FVector launchVector;
 			launchVector = GetActorForwardVector() * dodgeRange;
 			LaunchCharacter(launchVector, false, true);
-			dodgeAmmo -= 1;			
+			dodgeAmmo -= 1;		
+	
 		}
 	}
 }
@@ -345,5 +346,10 @@ void ATori::switchElement()
 		
 		UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 	}
+}
+
+void ATori::stopAllVelocity_Implementation()
+{
+	//no code here, just here to please the UE4 Gods!!!!
 }
 

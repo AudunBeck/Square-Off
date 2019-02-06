@@ -53,6 +53,8 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
 				/// Change this to its own effect-class
 				// Do some crazy shit
+				myPlayer->stopAllVelocity();
+
 			}
 		}
 	}
@@ -64,6 +66,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			{
 				// Make the target take damage
 				Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
+				myPlayer->stopAllVelocity();
 			}
 		}
 	}
