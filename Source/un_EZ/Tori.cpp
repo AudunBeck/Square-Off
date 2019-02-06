@@ -265,6 +265,7 @@ void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 	delta.Normalize();
 	FVector knockForce = delta * knockback;
 	LaunchCharacter(knockForce, false, true);
+	hitPoints -= damage;
 	hitPointPercentage = hitPoints / maxHitPoints;
 	checkIfDead();
 	wasHit = true;
