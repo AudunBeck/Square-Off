@@ -66,7 +66,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER IS TOUCHING ME!"));
 			player->recieveDamage(damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
 		}
-		else if(OtherActor->IsA(ABlockingVolume::StaticClass()))
+		else if(OtherActor->IsA(ABlockingVolume::StaticClass()) || OtherActor->IsA(ARockElementAbility2::StaticClass()))
 		{
 			movingTime = 0;
 		}
