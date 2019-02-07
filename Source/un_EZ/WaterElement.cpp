@@ -5,7 +5,7 @@
 // Sets default values
 AWaterElement::AWaterElement()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -14,7 +14,7 @@ AWaterElement::AWaterElement()
 void AWaterElement::BeginPlay()
 {
 	Super::BeginPlay();
-	maxBuffDur = ability2lifeSpan;
+	//maxBuffDur = ability2lifeSpan;
 }
 
 // Called every frame
@@ -26,7 +26,7 @@ void AWaterElement::Tick(float DeltaTime)
 	if (windUpTime > 0)
 		windUpTime -= DeltaTime;
 
-	if(windUpTime <= 0 && charging == true)
+	if (windUpTime <= 0 && charging == true)
 	{
 		//Cast waterbolt
 		FActorSpawnParameters tempParam;
@@ -47,7 +47,7 @@ void AWaterElement::Tick(float DeltaTime)
 	}
 
 	// Ability 2
-	if (buffDur >= 0)
+	if (buffDur > 0)
 	{
 		myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
@@ -62,7 +62,7 @@ void AWaterElement::Tick(float DeltaTime)
 	if (tempTimer > 0)
 	{
 		tempTimer -= DeltaTime;
-		if(tempTimer <= 0.f)
+		if (tempTimer <= 0.f)
 			myOwner->SetActorEnableCollision(true);
 	}
 }
