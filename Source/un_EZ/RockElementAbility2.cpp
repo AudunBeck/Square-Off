@@ -2,6 +2,7 @@
 
 #include "RockElementAbility2.h"
 #include "Tori.h"
+#include "Engine/BlockingVolume.h"
 
 
 // Sets default values
@@ -27,7 +28,9 @@ void ARockElementAbility2::BeginPlay()
 	//SetActorScale3D(scale);
 	SetLifeSpan(myElement->ability2Lifespan);
 	speed = myElement->ability2Speed;
+	damageDivision = speed;
 	playerKnockback = myElement->ability2KnockbackMulti;
+	damage = myElement->ability2Damage;
 }
 
 // Called every frame
@@ -60,8 +63,12 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			ATori* player = Cast<ATori>(OtherActor);
-			UE_LOG(LogTemp, Warning, TEXT("PLAYESR IS TOUCHING ME!"));
-			player->recieveDamage(10.f, playerKnockback * speed, GetActorLocation());
+			UE_LOG(LogTemp, Warning, TEXT("PLAYER IS TOUCHING ME!"));
+			player->recieveDamage(damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
+		}
+		else if(OtherActor->IsA(ABlockingVolume::StaticClass()) || OtherActor->IsA(ARockElementAbility2::StaticClass()))
+		{
+			movingTime = 0;
 		}
 	}
 

@@ -28,7 +28,7 @@ void ARockElementAbility1::BeginPlay()
 	chargedHit = myElement->chargeFloat;
 	SetLifeSpan((myElement->ability1lifeSpan) * chargedHit);
 	attackRange = myElement->ability1Range;
-	
+	damage = myElement->ability1Damage;	
 }
 
 // Called every frame
@@ -47,7 +47,8 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(30.f * chargedHit);	// float value is temporary
+			Cast<ATori>(OtherActor)->recieveDamage(damage * chargedHit);	// float value is temporary
+			myPlayer->stopAllVelocity();
 		}
 
 		if (OtherActor->IsA(ARockElementAbility2::StaticClass()))

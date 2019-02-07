@@ -6,6 +6,7 @@
 #include "Engine/Classes/Engine/LocalPlayer.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/GameEngine.h"
+#include "un_EZGameModeBase.h"
 
 // Sets default values
 ATori::ATori()
@@ -159,8 +160,8 @@ void ATori::dodge()
 			FVector launchVector;
 			launchVector = GetActorForwardVector() * dodgeRange;
 			LaunchCharacter(launchVector, false, true);
-			dodgeAmmo -= 1;
-			
+			dodgeAmmo -= 1;		
+	
 		}
 	}
 }
@@ -265,6 +266,7 @@ void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 	delta.Normalize();
 	FVector knockForce = delta * knockback;
 	LaunchCharacter(knockForce, false, true);
+	hitPoints -= damage;
 	hitPointPercentage = hitPoints / maxHitPoints;
 	checkIfDead();
 	wasHit = true;
@@ -277,6 +279,7 @@ void ATori::checkIfDead()
 		DisableInput(Cast<APlayerController>(Controller));
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
 		isDead = true;
+		Cast<Aun_EZGameModeBase>(GetWorld()->GetAuthGameMode())->playerDead();
 	}
 }
 
@@ -285,9 +288,16 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 {
 	// Checking for nullptrs are smart
 	if (element_1 == nullptr)
+	{
 		element_1 = newElement;
+		currentElementType = element_1->switchToElement();
+
+	}
 	else if (element_2 == nullptr && newElement->elementType != element_1->elementType)
+	{
 		element_2 = newElement;
+		currentElementType = element_2->switchToElement();
+	}
 	// If it does not fill any empty spaces.
 	else
 	{
@@ -300,15 +310,21 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				element_1->Destroy();
 				element_1 = newElement;
 				//element_1->setPlayer(this);
+				currentElementType = element_1->switchToElement();
+
 			}
 			else if (activeElement == 2)
 			{
 				element_2->Destroy();
 				element_2 = newElement;
 				//element_2->setPlayer(this);
+				currentElementType = element_2->switchToElement();
+
 			}
 		}
 	}
+
+	switchAnimationElement();
 	return true;
 }
 
@@ -330,7 +346,13 @@ void ATori::switchElement()
 		}
 		switchAnimationElement();
 		
+		
 		UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 	}
+}
+
+void ATori::stopAllVelocity_Implementation()
+{
+	//no code here, just here to please the UE4 Gods!!!!
 }
 

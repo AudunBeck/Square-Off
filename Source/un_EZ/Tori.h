@@ -106,6 +106,8 @@ public:
 		float globalCooldown;
 	float currentGlobalCooldown;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Movement")
+		void stopAllVelocity();
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float locked; // How long the control of the character is locked.

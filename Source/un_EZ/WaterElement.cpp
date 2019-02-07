@@ -5,7 +5,7 @@
 // Sets default values
 AWaterElement::AWaterElement()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -26,7 +26,7 @@ void AWaterElement::Tick(float DeltaTime)
 	if (windUpTime > 0)
 		windUpTime -= DeltaTime;
 
-	if(windUpTime <= 0 && charging == true)
+	if (windUpTime <= 0 && charging == true)
 	{
 		//Cast waterbolt
 		FActorSpawnParameters tempParam;
@@ -47,13 +47,16 @@ void AWaterElement::Tick(float DeltaTime)
 	}
 
 	// Ability 2
-	if (buffDur >= 0)
+	if (buffDur > 0)
 	{
 		myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		buffDur -= DeltaTime;
+		UE_LOG(LogTemp, Warning, TEXT("counter dur left: %f"),buffDur);
 		if (buffDur <= 0)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Stopping counter"));
+
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
 			tempTimer = 0.2f;	// Delay after ability2 register an attack and the time it takes to dash
@@ -62,7 +65,7 @@ void AWaterElement::Tick(float DeltaTime)
 	if (tempTimer > 0)
 	{
 		tempTimer -= DeltaTime;
-		if(tempTimer <= 0.f)
+		if (tempTimer <= 0.f)
 			myOwner->SetActorEnableCollision(true);
 	}
 }

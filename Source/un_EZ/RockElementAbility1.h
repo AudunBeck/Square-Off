@@ -33,6 +33,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		class ARockElement* myElement;
 	USphereComponent* collider;
+	float damage;
 	
 	
 	

@@ -13,5 +13,8 @@ UCLASS()
 class UN_EZ_API Aun_EZGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Winning")
+		void playerDead();
 	
 };
