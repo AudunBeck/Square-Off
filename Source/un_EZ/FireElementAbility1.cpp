@@ -24,10 +24,13 @@ void AFireElementAbility1::BeginPlay()
 	SetLifeSpan(myElement->ability1lifeSpan);
 	attackRange = myElement->ability1Range;
 	damage = myElement->ability1Damage;
+	buffed = false;
 	if (myElement->fireChi > 0)
 	{
+		buffed = true;
 		damage = myElement->ability1BuffedDamage;
 		SetActorScale3D(myElement->boostedAbility1Scale);
+		beginSound();
 	}
 }
 

@@ -77,7 +77,7 @@ public:
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;
-	float buffDur;
+	float buffDur = 0;
 	float maxBuffDur;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float dashDist = 3000;

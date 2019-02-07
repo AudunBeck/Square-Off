@@ -30,10 +30,10 @@ public:
 	// Owner of the attack
 	void setupAttack(ATori * newOwner, FVector scale, float lifeSpan, float wallSpeed, float knockbackMultiplier);
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float movingTime;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float maxMovingTime = 1.f;
 
 	UPROPERTY(EditAnywhere)

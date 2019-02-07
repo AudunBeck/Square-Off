@@ -42,6 +42,8 @@ public:
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION(BlueprintImplementableEvent)
+		void beginSound();
 
 	UPROPERTY(BlueprintReadWrite)
 		bool buffed = false;
