@@ -31,4 +31,5 @@ public:
 	class AFireElement* myElement;
 
 	float attackRange;
+	float damage;
 };

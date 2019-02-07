@@ -38,9 +38,12 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float speed = 500.f;
+	float damageDivision; // here to easier fix dmg.
 
 	UPROPERTY(EditAnywhere)
 		float playerKnockback;
+
+	float damage;
 
 	class ARockElement* myElement;
 

@@ -33,6 +33,11 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float firePunch = 3000;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1Damage;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1BuffedDamage;
+
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
@@ -53,5 +58,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		FVector boostedAbility1Scale;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Damage;
 	
 };

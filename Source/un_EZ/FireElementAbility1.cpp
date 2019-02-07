@@ -23,8 +23,12 @@ void AFireElementAbility1::BeginPlay()
 	myPlayer = myElement->myOwner;
 	SetLifeSpan(myElement->ability1lifeSpan);
 	attackRange = myElement->ability1Range;
-	if(myElement->fireChi > 0)
+	damage = myElement->ability1Damage;
+	if (myElement->fireChi > 0)
+	{
+		damage = myElement->ability1BuffedDamage;
 		SetActorScale3D(myElement->boostedAbility1Scale);
+	}
 }
 
 // Called every frame
@@ -50,9 +54,11 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
 				// Make the target take damage
-				Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
+				Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value is temporary
 				/// Change this to its own effect-class
 				// Do some crazy shit
+				myPlayer->stopAllVelocity();
+
 			}
 		}
 	}
@@ -63,7 +69,8 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
 				// Make the target take damage
-				Cast<ATori>(OtherActor)->recieveDamage(30.f);	// float value is temporary
+				Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value is temporary
+				myPlayer->stopAllVelocity();
 			}
 		}
 	}

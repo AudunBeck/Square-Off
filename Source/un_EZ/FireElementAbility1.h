@@ -46,5 +46,6 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		bool buffed = false;
 	float attackRange = 100;
+	float damage;
 
 };

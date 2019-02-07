@@ -18,6 +18,7 @@ void AFireElementAbility2::BeginPlay()
 	myPlayer = myElement->myOwner;
 	SetLifeSpan(myElement->ability2Lifespan);
 	attackRange = myElement->ability2Range;
+	damage = myElement->ability2Damage;
 }
 
 // Called every frame

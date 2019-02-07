@@ -44,6 +44,8 @@ public:
 		float chargeFloat;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float rockPunch;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1Damage;
 
 
 
@@ -57,4 +59,7 @@ public:
 		float ability2Speed;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2KnockbackMulti = 2;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Damage;
+
 };
