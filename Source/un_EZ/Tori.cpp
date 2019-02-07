@@ -6,6 +6,7 @@
 #include "Engine/Classes/Engine/LocalPlayer.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/GameEngine.h"
+#include "un_EZGameModeBase.h"
 
 // Sets default values
 ATori::ATori()
@@ -278,6 +279,7 @@ void ATori::checkIfDead()
 		DisableInput(Cast<APlayerController>(Controller));
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
 		isDead = true;
+		Cast<Aun_EZGameModeBase>(GetWorld()->GetAuthGameMode())->playerDead();
 	}
 }
 
