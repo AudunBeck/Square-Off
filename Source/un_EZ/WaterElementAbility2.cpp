@@ -57,11 +57,11 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 						FVector enemyLocation = enemy->GetActorLocation();
 						FVector ownerLocation = myPlayer->GetActorLocation();
 						FVector launchDirection = enemyLocation - ownerLocation;
-						UE_LOG(LogTemp, Warning, TEXT("Countered an attack!"));
-						myPlayer->LaunchCharacter(myPlayer->GetActorForwardVector() * dashDist, true, true);
+							
+						 //myPlayer->LaunchCharacter(myPlayer->GetActorForwardVector() * dashDist, true, true);
 						enemy->recieveDamage(damage, ccDur, slow, 0);
 						myPlayer->locked = 0.f;
-
+						myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 						myElement->counter = 3;
 					}
 				}
