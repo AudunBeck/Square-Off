@@ -296,7 +296,6 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	else if (element_2 == nullptr && newElement->elementType != element_1->elementType)
 	{
 		element_2 = newElement;
-		currentElementType = element_2->switchToElement();
 	}
 	// If it does not fill any empty spaces.
 	else
