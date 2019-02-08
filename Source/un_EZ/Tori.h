@@ -52,11 +52,15 @@ public:
 	void ability1End();
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
 		bool ability1Used = false;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
+		bool ability1Ended = false;
 
 	void ability_2();
 	void ability2End();
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
 		bool ability2Used = false;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
+		bool ability2Ended = false;
 
 
 	UPROPERTY(EditAnywhere, Category = "HitPoints")
