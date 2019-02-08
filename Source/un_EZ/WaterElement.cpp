@@ -14,7 +14,7 @@ AWaterElement::AWaterElement()
 void AWaterElement::BeginPlay()
 {
 	Super::BeginPlay();
-	//maxBuffDur = ability2lifeSpan;
+	maxBuffDur = ability2lifeSpan;
 }
 
 // Called every frame
@@ -52,8 +52,11 @@ void AWaterElement::Tick(float DeltaTime)
 		myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		buffDur -= DeltaTime;
+		UE_LOG(LogTemp, Warning, TEXT("counter dur left: %f"),buffDur);
 		if (buffDur <= 0)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Stopping counter"));
+
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
 			tempTimer = 0.2f;	// Delay after ability2 register an attack and the time it takes to dash
