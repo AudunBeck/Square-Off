@@ -35,6 +35,7 @@ void ARockElement::ability1End()
 {
 	if (charging)
 	{
+		myOwner->ability1Ended = true;
 		ARockElementAbility1* temp;
 		FActorSpawnParameters tempParam;
 		tempParam.Owner = this;
@@ -44,6 +45,7 @@ void ARockElement::ability1End()
 		myOwner->currentSpeed = myOwner->moveSpeed;
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
 		myOwner->locked = 0;
+		
 	}
 	charging = false;
 	

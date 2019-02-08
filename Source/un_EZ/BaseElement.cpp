@@ -86,7 +86,7 @@ void ABaseElement::ability1()
 
 void ABaseElement::ability1End()
 {
-
+	
 }
 
 void ABaseElement::ability2()
@@ -101,7 +101,7 @@ void ABaseElement::ability2()
 
 void ABaseElement::ability2End()
 {
-
+	
 }
 
 int ABaseElement::switchToElement()
