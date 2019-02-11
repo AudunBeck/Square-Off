@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
-#include "FireElementStruct.generated.h"
+#include "RockElementStruct.generated.h"
 
 USTRUCT(BlueprintType)
-struct FFireElementStruct : public FTableRowBase
+struct FRockElementStruct : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -17,7 +17,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float Damage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float BuffedDamage;
+		float MaxCharge;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float MaxCooldown;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -31,9 +31,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float LifeSpan;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int FireChi;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FVector BuffedScale;
+		float KnockBack;
 
 
 };

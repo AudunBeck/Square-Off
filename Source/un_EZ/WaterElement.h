@@ -7,6 +7,7 @@
 #include "WaterElementAbility1.h"
 #include "WaterElementAbility2.h"
 #include "GameFramework/Actor.h"
+#include "Engine/Classes/Engine/DataTable.h"
 #include "WaterElement.generated.h"
 
 UCLASS()
@@ -92,5 +93,7 @@ public:
 	int counter = 0;
 
 	float tempTimer;
+
+	UDataTable* BalancingTable;
 
 };

@@ -11,11 +11,32 @@ AFireElement::AFireElement()
 		FireElementTable(TEXT("DataTable'/Game/DataTables/FireElementTable.FireElementTable'"));
 	BalancingTable = FireElementTable.Object;
 	//Searching and getting data
-	static const FString ContextString(TEXT("GENERAL"));
-	FFireElementStruct* Ability1Data = BalancingTable->FindRow<FFireElementStruct>(FName("1"), FString(""));
-	if (Ability1Data)
-		ability1Damage = Ability1Data->Damage;
 
+	FFireElementStruct* Ability1Data = BalancingTable->FindRow<FFireElementStruct>(FName("1"), FString(""));
+	FFireElementStruct* Ability2Data = BalancingTable->FindRow<FFireElementStruct>(FName("2"), FString(""));
+	if (Ability1Data)
+	{
+		ability1Damage = Ability1Data->Damage;
+		ability1BuffedDamage = Ability1Data->BuffedDamage;
+		maxCooldownAbility1 = Ability1Data->MaxCooldown;
+		ammo1 = Ability1Data->MaxAmmo;
+		ammoPerCd1 = Ability1Data->AmmoPerCD;
+		ability1Range = Ability1Data->Range;
+		firePunch = Ability1Data->MoveRange;
+		ability1lifeSpan = Ability1Data->LifeSpan;
+	}
+	if (Ability2Data)
+	{
+		ability2Damage = Ability2Data->Damage;
+		maxCooldownAbility2 = Ability2Data->MaxCooldown;
+		ammo2 = Ability2Data->MaxAmmo;
+		ammoPerCd2 = Ability2Data->AmmoPerCD;
+		ability2Range = Ability2Data->Range;
+		fireKick = Ability2Data->MoveRange;
+		ability2Lifespan = Ability2Data->LifeSpan;
+		maxFireChi = Ability2Data->FireChi;
+		boostedAbility1Scale = Ability2Data->BuffedScale;
+	}
 }
 
 void AFireElement::ability1()

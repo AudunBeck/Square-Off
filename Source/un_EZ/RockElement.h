@@ -6,6 +6,7 @@
 #include "BaseElement.h"
 #include "RockElementAbility1.h"
 #include "RockElementAbility2.h"
+#include "Engine/Classes/Engine/DataTable.h"
 #include "RockElement.generated.h"
 
 UCLASS()
@@ -14,6 +15,8 @@ class UN_EZ_API ARockElement : public ABaseElement
 	GENERATED_BODY()
 
 public:
+
+	ARockElement();
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -62,4 +65,5 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage;
 
+	UDataTable* BalancingTable;
 };
