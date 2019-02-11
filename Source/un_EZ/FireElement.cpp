@@ -1,16 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FireElement.h"
-#include "Engine/Classes/Engine/DataTable.h"
 #include "ConstructorHelpers.h"
+#include "FireElementStruct.h"
 
 AFireElement::AFireElement()
 {
-	UDataTable* BalancingTable;
+	
 	static ConstructorHelpers::FObjectFinder<UDataTable>
 		FireElementTable(TEXT("DataTable'/Game/DataTables/FireElementTable.FireElementTable'"));
 	BalancingTable = FireElementTable.Object;
-	static const FString ContextString(TEXT("GENERAL"));	
+	//Searching and getting data
+	static const FString ContextString(TEXT("GENERAL"));
+	FFireElementStruct* Ability1Data = BalancingTable->FindRow<FFireElementStruct>(FName("1"), FString(""));
+	if (Ability1Data)
+		ability1Damage = Ability1Data->Damage;
 
 }
 

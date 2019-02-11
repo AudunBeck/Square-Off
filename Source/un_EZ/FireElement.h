@@ -6,6 +6,7 @@
 #include "BaseElement.h"
 #include "FireElementAbility1.h"
 #include "FireElementAbility2.h"
+#include "Engine/Classes/Engine/DataTable.h"
 #include "FireElement.generated.h"
 
 
@@ -64,4 +65,5 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage;
 	
+	UDataTable* BalancingTable;
 };
