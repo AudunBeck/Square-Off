@@ -8,12 +8,15 @@
 #include "FireElementAbility2.h"
 #include "FireElement.generated.h"
 
+
 UCLASS()
 class UN_EZ_API AFireElement : public ABaseElement
 {
 	GENERATED_BODY()
 	
 public:	
+
+	AFireElement();
 
 	virtual void ability1()override;
 	virtual void ability2()override;
