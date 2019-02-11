@@ -49,14 +49,13 @@ void AWaterElement::Tick(float DeltaTime)
 	// Ability 2
 	if (buffDur > 0)
 	{
-		myOwner->SetActorEnableCollision(false);
+		//myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		buffDur -= DeltaTime;
 		UE_LOG(LogTemp, Warning, TEXT("counter dur left: %f"),buffDur);
 		if (buffDur <= 0)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Stopping counter"));
-
+			UE_LOG(LogTemp, Warning, TEXT("Stopping counter movespeed should be %f"), myOwner->moveSpeed);
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
 			tempTimer = 0.2f;	// Delay after ability2 register an attack and the time it takes to dash
@@ -65,8 +64,8 @@ void AWaterElement::Tick(float DeltaTime)
 	if (tempTimer > 0)
 	{
 		tempTimer -= DeltaTime;
-		if (tempTimer <= 0.f)
-			myOwner->SetActorEnableCollision(true);
+		//if (tempTimer <= 0.f)
+			//myOwner->SetActorEnableCollision(true);
 	}
 }
 
@@ -87,7 +86,7 @@ void AWaterElement::ability2()
 {
 	if (ammo2 > 0)
 	{
-		myOwner->SetActorEnableCollision(false);
+		//myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		myOwner->currentSpeed = 0.f;
 		myOwner->damageMultiplier = 0;

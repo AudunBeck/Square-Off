@@ -26,8 +26,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		class ATori* myPlayer;
+	//UPROPERTY(EditAnywhere, Category = "Ability2")
+	//	class ATori* myPlayer;
 	class AFireElement* myElement;
 
 	float attackRange;
