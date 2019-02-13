@@ -58,15 +58,10 @@ void AWaterElement::Tick(float DeltaTime)
 			//UE_LOG(LogTemp, Warning, TEXT("Stopping counter movespeed should be %f"), myOwner->moveSpeed);
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
+			
+			// Starts collision towards other Tori's
 			startCollision();
-			tempTimer = 0.2f;	// Delay after ability2 register an attack and the time it takes to dash
 		}
-	}
-	if (tempTimer > 0)
-	{
-		tempTimer -= DeltaTime;
-		//if (tempTimer <= 0.f)
-			//myOwner->SetActorEnableCollision(true);
 	}
 }
 

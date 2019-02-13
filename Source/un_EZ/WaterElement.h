@@ -38,6 +38,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class AWaterElementAbility2> WaterElementAbility2_BP;
 
+
+	// Blueprint functions
 	UFUNCTION(BlueprintCallable, Category = "Output Log WaterElement")
 		void outputLog();
 
@@ -98,7 +100,4 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Slow = 30.f;
 	int counter = 0;
-
-	float tempTimer;
-
 };

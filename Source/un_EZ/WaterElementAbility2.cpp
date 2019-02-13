@@ -27,6 +27,8 @@ void AWaterElementAbility2::BeginPlay()
 	ccDur = myElement->ability2CcDur;
 	slow = myElement->ability2Slow;
 	damage = myElement->ability2Damage;
+	
+	// Stops collision towards other Tori's
 	stopCollision();
 }
 
