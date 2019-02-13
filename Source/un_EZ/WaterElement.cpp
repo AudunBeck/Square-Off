@@ -47,7 +47,7 @@ void AWaterElement::Tick(float DeltaTime)
 	}
 
 	// Ability 2
-	if (buffDur > 0)
+	if (buffDur >= 0)
 	{
 		//myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
@@ -89,7 +89,7 @@ void AWaterElement::ability2()
 		//myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		myOwner->currentSpeed = 0.f;
-		myOwner->damageMultiplier = 0;
+		myOwner->damageMultiplier = 0.f;
 		buffDur = maxBuffDur;
 		myOwner->locked = buffDur;
 		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 ammo: %i"), ammo2);

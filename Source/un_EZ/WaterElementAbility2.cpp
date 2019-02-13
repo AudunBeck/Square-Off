@@ -57,8 +57,7 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 						FVector enemyLocation = enemy->GetActorLocation();
 						FVector ownerLocation = myPlayer->GetActorLocation();
 						FVector launchDirection = enemyLocation - ownerLocation;
-							
-						 //myPlayer->LaunchCharacter(myPlayer->GetActorForwardVector() * dashDist, true, true);
+						myPlayer->LaunchCharacter(myPlayer->GetActorForwardVector() * dashDist, false, true);
 						enemy->recieveDamage(damage, ccDur, slow, 0);
 						myPlayer->locked = 0.f;
 						myPlayer->setMoveSpeed(myPlayer->moveSpeed);

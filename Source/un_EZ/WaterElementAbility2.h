@@ -33,7 +33,7 @@ public:
 	float slow;
 	float damage;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(EditAnywhere, Category = "Ability2", BlueprintReadOnly)
 		class AWaterElement* myElement;
 
 	USphereComponent* collider;
