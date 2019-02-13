@@ -78,30 +78,32 @@ void ABaseElement::ability1()
 {
 	if (ammo1 > 0)
 	{
-		myOwner->ability1Used = true;
+		//myOwner->ability1Used = true;
 		ammo1 -= 1;
+		ability1AnimStart();
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 1 firing"));
 }
 
 void ABaseElement::ability1End()
 {
-	
+	ability1AnimEnd();
 }
 
 void ABaseElement::ability2()
 {
 	if (ammo2 > 0)
 	{
+		//myOwner->ability2Used = true;
 		ammo2 -= 1;
-		myOwner->ability2Used = true;
+		ability2AnimStart();
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 2 firing"));
 }
 
 void ABaseElement::ability2End()
 {
-	
+	ability2AnimEnd();
 }
 
 int ABaseElement::switchToElement()

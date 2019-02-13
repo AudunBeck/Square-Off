@@ -33,7 +33,7 @@ public:
 	// Setting Owner
 	void setPlayer(class ATori* newOwner);
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		class ATori* myOwner;
 	ATori* getMyOwner();
 
@@ -70,4 +70,14 @@ public:
 		int ammo2;
 
 	int switchToElement();
+
+	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+	//	void ability1AnimStart();
+	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+	//	void ability1AnimEnd();
+
+	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+	//	void ability2AnimStart();
+	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+	//	void ability2AnimEnd();
 };

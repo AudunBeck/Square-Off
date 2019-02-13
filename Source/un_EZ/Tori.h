@@ -100,10 +100,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Animations")
 		bool isDead = false;
 
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
-		void ability1AnimStart();
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
-		void ability2AnimStart();
+
 
 	// Holds the pointers for the elements you currently have.
 	UPROPERTY(EditAnywhere, Category = "Elements")
