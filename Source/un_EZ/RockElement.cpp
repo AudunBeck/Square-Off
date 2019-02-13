@@ -23,8 +23,8 @@ void ARockElement::ability1()
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
 		charging = true;
-		myOwner->setMoveSpeed(0.f);
-		myOwner->currentSpeed = 0;
+		myOwner->setMoveSpeed(myOwner->moveSpeed * 0.5f);
+		myOwner->currentSpeed = myOwner->moveSpeed * 0.5f;
 		chargeFloat = 0;
 		myOwner->locked = maxCharge;
 	}
