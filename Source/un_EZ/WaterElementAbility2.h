@@ -33,7 +33,13 @@ public:
 	float slow;
 	float damage;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2", BlueprintReadOnly)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterAbility2 collision")
+		void stopCollision();
+
+	UFUNCTION(BlueprintCallable, Category = "Output Log WaterAbility 2")
+		void outputLog();
+
+	UPROPERTY(EditAnywhere, Category = "Ability2", BlueprintReadWrite)
 		class AWaterElement* myElement;
 
 	USphereComponent* collider;

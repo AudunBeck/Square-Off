@@ -38,6 +38,13 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class AWaterElementAbility2> WaterElementAbility2_BP;
 
+	UFUNCTION(BlueprintCallable, Category = "Output Log WaterElement")
+		void outputLog();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterElement collision")
+		void startCollision();
+
+
 	// Ability 1
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 5.0f;

@@ -27,6 +27,7 @@ void AWaterElementAbility2::BeginPlay()
 	ccDur = myElement->ability2CcDur;
 	slow = myElement->ability2Slow;
 	damage = myElement->ability2Damage;
+	stopCollision();
 }
 
 // Called every frame
@@ -37,6 +38,11 @@ void AWaterElementAbility2::Tick(float DeltaTime)
 		this->SetActorLocation(myPlayer->GetActorLocation());
 	if (myElement == nullptr)
 		UE_LOG(LogTemp, Error, TEXT("MyElement is nullptr - Check WaterElementAbilit2.cpp - setupAttack()"))
+}
+
+void AWaterElementAbility2::outputLog()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Collision off"));
 }
 
 void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,

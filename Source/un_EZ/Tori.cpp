@@ -18,7 +18,6 @@ ATori::ATori()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-	
 }
 
 // Called when the game starts or when spawned
@@ -32,7 +31,6 @@ void ATori::BeginPlay()
 	dodgeCooldown = dodgeMaxCooldown;
 	hitPoints = maxHitPoints;
 	hitPointPercentage = hitPoints / maxHitPoints;
-
 }
 
 // Called every frame
