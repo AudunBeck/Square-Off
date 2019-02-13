@@ -32,7 +32,6 @@ void ATori::BeginPlay()
 	dodgeCooldown = dodgeMaxCooldown;
 	hitPoints = maxHitPoints;
 	hitPointPercentage = hitPoints / maxHitPoints;
-
 }
 
 // Called every frame
