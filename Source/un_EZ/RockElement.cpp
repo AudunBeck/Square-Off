@@ -60,38 +60,46 @@ void ARockElement::Tick(float DeltaTime)
 
 void ARockElement::ability1()
 {
-	if (ammo1 > 0)
+	// if the character has ended all animations of the punch, you are able to start a new punch.
+	if (ammo1 > 0 && myOwner->ability1Ended == false)
 	{
 		//Old Version
-		////UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
+		UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
 		//charging = true;
 		//myOwner->setMoveSpeed(0.f);
 		//myOwner->currentSpeed = 0;
 		//chargeFloat = 0;
 		//myOwner->locked = maxCharge;
+		
+		
 
+		if (myOwner->ability1Ended)
+		{
+			//myOwner->ability1Ended = false;
+		}
 
+		Super::ability1();
 		
 	}
-	Super::ability1();
+	
 }
 
 void ARockElement::ability1Anim_Implementation()
 {
-	myOwner->ability1Ended = true;
-	ARockElementAbility1* temp;
-	FActorSpawnParameters tempParam;
-	tempParam.Owner = this;
-	temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
-		myOwner->GetActorRotation(), tempParam);
-	myOwner->setMoveSpeed(myOwner->moveSpeed);
-	myOwner->currentSpeed = myOwner->moveSpeed;
-	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
-	myOwner->locked = 0;
-	chargeFloat = 0;
+	//myOwner->ability1Ended = true;
+	//ARockElementAbility1* temp;
+	//FActorSpawnParameters tempParam;
+	//tempParam.Owner = this;
+	//temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+	//	myOwner->GetActorRotation(), tempParam);
+	//myOwner->setMoveSpeed(myOwner->moveSpeed);
+	//myOwner->currentSpeed = myOwner->moveSpeed;
+	//myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
+	//myOwner->locked = 0;
+	//chargeFloat = 0;
 }
 
-void ARockElement::ability1End()
+void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
 {
 	if (charging)
 	{
@@ -105,10 +113,12 @@ void ARockElement::ability1End()
 		myOwner->currentSpeed = myOwner->moveSpeed;
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
 		myOwner->locked = 0;
+		chargeFloat = 0;
+		Super::ability1End();
 		
 	}
 	//charging = false;
-	Super::ability1End();
+	
 	
 }
 

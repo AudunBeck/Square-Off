@@ -91,7 +91,7 @@ void ABaseElement::ability1Anim_Implementation()
 
 void ABaseElement::ability1End()
 {
-	myOwner->ability1Used = false;
+	//myOwner->ability1Used = false;
 	//ability1AnimEnd();
 }
 
