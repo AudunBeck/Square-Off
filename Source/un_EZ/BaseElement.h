@@ -38,8 +38,10 @@ public:
 	ATori* getMyOwner();
 
 	// Ability 1 variables.
-	virtual void ability1();
-	virtual void ability1End();
+	UFUNCTION(BlueprintCallable)
+		virtual void ability1();
+	UFUNCTION(BlueprintCallable)
+		virtual void ability1End();
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCooldownAbility1;
@@ -55,8 +57,10 @@ public:
 
 
 	// Ability 2 variables.
-	virtual void ability2();
-	virtual void ability2End();
+	UFUNCTION(BlueprintCallable)
+		virtual void ability2();
+	UFUNCTION(BlueprintCallable)
+		virtual void ability2End();
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float maxCooldownAbility2;

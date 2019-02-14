@@ -104,6 +104,7 @@ void ABaseElement::ability2()
 
 void ABaseElement::ability2End()
 {
+	myOwner->ability2Used = false;
 	//ability2AnimEnd();
 }
 

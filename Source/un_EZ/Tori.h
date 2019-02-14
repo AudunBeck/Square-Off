@@ -39,6 +39,7 @@ public:
 	float maxSlow;
 	void slowCheck(float DeltaTime);
 	void dodge();
+	void dodgeEnd();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool dodging;
