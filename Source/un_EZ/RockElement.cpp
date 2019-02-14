@@ -43,12 +43,18 @@ void ARockElement::Tick(float DeltaTime)
 	
 	if (charging)
 	{
-		chargeFloat += DeltaTime;
-		if (chargeFloat >= maxCharge)
+		if (chargeFloat < maxCharge)
 		{
-			chargeFloat = maxCharge;
-			ability1End();
+			chargeFloat += DeltaTime;
+			if (chargeFloat > maxCharge)
+				chargeFloat = maxCharge;
 		}
+		// Old version
+		//if (chargeFloat >= maxCharge)
+		//{
+		//	chargeFloat = maxCharge;
+		//	ability1End();
+		//}
 	}
 }
 
@@ -56,14 +62,33 @@ void ARockElement::ability1()
 {
 	if (ammo1 > 0)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
-		charging = true;
-		myOwner->setMoveSpeed(0.f);
-		myOwner->currentSpeed = 0;
-		chargeFloat = 0;
-		myOwner->locked = maxCharge;
+		//Old Version
+		////UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
+		//charging = true;
+		//myOwner->setMoveSpeed(0.f);
+		//myOwner->currentSpeed = 0;
+		//chargeFloat = 0;
+		//myOwner->locked = maxCharge;
+
+
+		
 	}
 	Super::ability1();
+}
+
+void ARockElement::ability1Anim_Implementation()
+{
+	myOwner->ability1Ended = true;
+	ARockElementAbility1* temp;
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+		myOwner->GetActorRotation(), tempParam);
+	myOwner->setMoveSpeed(myOwner->moveSpeed);
+	myOwner->currentSpeed = myOwner->moveSpeed;
+	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
+	myOwner->locked = 0;
+	chargeFloat = 0;
 }
 
 void ARockElement::ability1End()
@@ -82,7 +107,7 @@ void ARockElement::ability1End()
 		myOwner->locked = 0;
 		
 	}
-	charging = false;
+	//charging = false;
 	Super::ability1End();
 	
 }

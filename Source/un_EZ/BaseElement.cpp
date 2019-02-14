@@ -84,6 +84,10 @@ void ABaseElement::ability1()
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 1 firing"));
 }
+void ABaseElement::ability1Anim_Implementation()
+{
+
+}
 
 void ABaseElement::ability1End()
 {

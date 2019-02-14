@@ -22,6 +22,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void ability1()override;
+	virtual void ability1Anim_Implementation();
+
 	virtual void ability1End()override;
 
 	virtual void ability2()override;
@@ -40,7 +42,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
 	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
-		bool charging;
+		bool charging = true;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
