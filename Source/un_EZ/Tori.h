@@ -39,6 +39,7 @@ public:
 	float maxSlow;
 	void slowCheck(float DeltaTime);
 	void dodge();
+	void dodgeEnd();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool dodging;
@@ -87,7 +88,7 @@ public:
 	bool pickUpElement(class ABaseElement* newElement);
 
 	// For switching between the 2 elements you have currently.
-	UPROPERTY(EditAnywhere, Category = "Elements")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Elements")
 		int activeElement = 1;
 
 
@@ -101,10 +102,11 @@ public:
 		bool isDead = false;
 
 
+
 	// Holds the pointers for the elements you currently have.
-	UPROPERTY(EditAnywhere, Category = "Elements")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Elements")
 		class ABaseElement* element_1;
-	UPROPERTY(EditAnywhere, Category = "Elements")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Elements")
 		class ABaseElement* element_2;
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		float globalCooldown;

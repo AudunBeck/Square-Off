@@ -7,14 +7,15 @@
 #include "WaterElementAbility1.h"
 #include "WaterElementAbility2.h"
 #include "GameFramework/Actor.h"
+#include "Engine/Classes/Engine/DataTable.h"
 #include "WaterElement.generated.h"
 
 UCLASS()
 class UN_EZ_API AWaterElement : public ABaseElement
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AWaterElement();
 
@@ -22,7 +23,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -54,7 +55,7 @@ public:
 	// How far ahead of Tori the ability spawns
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
-	
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float boltSpeed = 1200.0f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
@@ -82,7 +83,7 @@ public:
 		float slow = 15.f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float slowBuffed = 30.f;
-	
+
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;
@@ -100,4 +101,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Slow = 30.f;
 	int counter = 0;
+
+	float tempTimer;
+
+	UDataTable* BalancingTable;
+
 };

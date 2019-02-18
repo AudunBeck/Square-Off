@@ -6,7 +6,9 @@
 #include "BaseElement.h"
 #include "FireElementAbility1.h"
 #include "FireElementAbility2.h"
+#include "Engine/Classes/Engine/DataTable.h"
 #include "FireElement.generated.h"
+
 
 UCLASS()
 class UN_EZ_API AFireElement : public ABaseElement
@@ -14,6 +16,8 @@ class UN_EZ_API AFireElement : public ABaseElement
 	GENERATED_BODY()
 	
 public:	
+
+	AFireElement();
 
 	virtual void ability1()override;
 	virtual void ability2()override;
@@ -61,4 +65,5 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage;
 	
+	UDataTable* BalancingTable;
 };

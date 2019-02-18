@@ -81,6 +81,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
 	InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
+	InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
@@ -163,6 +164,10 @@ void ATori::dodge()
 		}
 	}
 }
+void ATori::dodgeEnd()
+{
+	dodging = false;
+}
 
 void ATori::ability_1()
 {
@@ -184,10 +189,10 @@ void ATori::ability_1()
 void ATori::ability1End()
 {
 
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability1End();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability1End();
+	//if (activeElement == 1 && element_1 != nullptr)
+	//	element_1->ability1End();
+	//else if (activeElement == 2 && element_2 != nullptr)
+	//	element_2->ability1End();
 
 }
 
@@ -211,10 +216,10 @@ void ATori::ability_2()
 void ATori::ability2End()
 {
 
-	if (activeElement == 1 && element_1 != nullptr)
-		element_1->ability2End();
-	else if (activeElement == 2 && element_2 != nullptr)
-		element_2->ability2End();
+	//if (activeElement == 1 && element_1 != nullptr)
+	//	element_1->ability2End();
+	//else if (activeElement == 2 && element_2 != nullptr)
+	//	element_2->ability2End();
 
 }
 
