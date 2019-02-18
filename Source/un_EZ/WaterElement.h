@@ -38,6 +38,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class AWaterElementAbility2> WaterElementAbility2_BP;
 
+
+	// Blueprint functions
+	UFUNCTION(BlueprintCallable, Category = "Output Log WaterElement")
+		void outputLog();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterElement collision")
+		void startCollision();
+
+
 	// Ability 1
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 5.0f;
@@ -77,7 +86,8 @@ public:
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;
-	float buffDur = 0;
+	UPROPERTY(BlueprintReadOnly)
+		float buffDur = 0;
 	float maxBuffDur;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float dashDist = 3000;
@@ -90,7 +100,4 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Slow = 30.f;
 	int counter = 0;
-
-	float tempTimer;
-
 };

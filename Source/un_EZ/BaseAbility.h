@@ -26,6 +26,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual ATori* getMyOwner();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ATori* myPlayer;
 };

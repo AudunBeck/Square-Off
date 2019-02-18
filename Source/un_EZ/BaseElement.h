@@ -33,7 +33,7 @@ public:
 	// Setting Owner
 	void setPlayer(class ATori* newOwner);
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		class ATori* myOwner;
 	ATori* getMyOwner();
 
