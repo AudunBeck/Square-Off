@@ -103,7 +103,7 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 {
 	if (charging)
 	{
-		myOwner->ability1Ended = true;
+		
 		ARockElementAbility1* temp;
 		FActorSpawnParameters tempParam;
 		tempParam.Owner = this;

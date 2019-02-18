@@ -40,9 +40,8 @@ public:
 	// Ability 1 variables.
 	UFUNCTION(BlueprintCallable)
 		virtual void ability1();
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Animations")
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 		void ability1Anim();
-	virtual void ability1Anim_Implementation();
 	UFUNCTION(BlueprintCallable)
 		virtual void ability1End();
 

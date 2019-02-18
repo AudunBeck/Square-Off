@@ -78,15 +78,11 @@ void ABaseElement::ability1()
 {
 	if (ammo1 > 0)
 	{
-		myOwner->ability1Used = true;
+		//myOwner->ability1Used = true;
 		ammo1 -= 1;
-		//ability1AnimStart();
+		ability1Anim();
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 1 firing"));
-}
-void ABaseElement::ability1Anim_Implementation()
-{
-
 }
 
 void ABaseElement::ability1End()
