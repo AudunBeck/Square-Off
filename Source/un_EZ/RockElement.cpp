@@ -103,7 +103,6 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 {
 	if (charging)
 	{
-
 		ARockElementAbility1* temp;
 		FActorSpawnParameters tempParam;
 		tempParam.Owner = this;
@@ -115,7 +114,6 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 		myOwner->locked = 0;
 		chargeFloat = 0;
 		Super::ability1End();
-
 	}
 	//charging = false;
 
@@ -124,18 +122,23 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 
 void ARockElement::ability2()
 {
-	if (ammo2 > 0)
+	if (ammo2 > 0 && myOwner->ability2Ended == false)
 	{
-		FVector forwardVec = myOwner->GetActorForwardVector();
-		FVector playerVec = myOwner->GetActorLocation();
-		FRotator playerRot = myOwner->GetActorRotation();
-		const FVector newVec = (forwardVec * ability2Range) + playerVec;
-
-		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
+		Super::ability2();
 	}
 
-	Super::ability2();
+	
+}
+
+void ARockElement::ability2End()
+{
+	FVector forwardVec = myOwner->GetActorForwardVector();
+	FVector playerVec = myOwner->GetActorLocation();
+	FRotator playerRot = myOwner->GetActorRotation();
+	const FVector newVec = (forwardVec * ability2Range) + playerVec;
+
+	//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
 }
