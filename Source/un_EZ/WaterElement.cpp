@@ -77,32 +77,28 @@ void AWaterElement::Tick(float DeltaTime)
 			buffedAbility1 = true;
 		else
 			buffedAbility1 = false;
-		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 fired"));
+		//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 fired"));
 		myOwner->setRotationRate(myOwner->rotationRate);
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		charging = false;
 	}
 
 	// Ability 2
-	if (buffDur > 0)
+	if (buffDur >= 0)
 	{
 		//myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		buffDur -= DeltaTime;
-		UE_LOG(LogTemp, Warning, TEXT("counter dur left: %f"),buffDur);
+		//UE_LOG(LogTemp, Warning, TEXT("counter dur left: %f"),buffDur);
 		if (buffDur <= 0)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Stopping counter movespeed should be %f"), myOwner->moveSpeed);
+			//UE_LOG(LogTemp, Warning, TEXT("Stopping counter movespeed should be %f"), myOwner->moveSpeed);
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
-			tempTimer = 0.2f;	// Delay after ability2 register an attack and the time it takes to dash
+			
+			// Starts collision towards other Tori's
+			startCollision();
 		}
-	}
-	if (tempTimer > 0)
-	{
-		tempTimer -= DeltaTime;
-		//if (tempTimer <= 0.f)
-			//myOwner->SetActorEnableCollision(true);
 	}
 }
 
@@ -111,7 +107,7 @@ void AWaterElement::ability1()
 	if (ammo1 > 0 && charging == false && myOwner->locked <= 0.f)
 	{
 		charging = true;
-		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 charging up"));
+		//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 charging up"));
 		windUpTime = maxWindUpTime;
 		myOwner->setRotationRate(0.f);
 		myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
@@ -126,10 +122,10 @@ void AWaterElement::ability2()
 		//myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		myOwner->currentSpeed = 0.f;
-		myOwner->damageMultiplier = 0;
+		myOwner->damageMultiplier = 0.f;
 		buffDur = maxBuffDur;
 		myOwner->locked = buffDur;
-		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 ammo: %i"), ammo2);
+		//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 ammo: %i"), ammo2);
 		FActorSpawnParameters tempParam;
 		tempParam.Owner = this;
 		AWaterElementAbility2* temp;
@@ -140,6 +136,11 @@ void AWaterElement::ability2()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has no ammo"));
+		//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has no ammo"));
 	}
+}
+
+void AWaterElement::outputLog()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Collision on"));
 }

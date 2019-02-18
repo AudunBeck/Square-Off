@@ -40,7 +40,7 @@ ARockElement::ARockElement()
 void ARockElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
 	if (charging)
 	{
 		if (chargeFloat < maxCharge)
@@ -70,8 +70,8 @@ void ARockElement::ability1()
 		//myOwner->currentSpeed = 0;
 		//chargeFloat = 0;
 		//myOwner->locked = maxCharge;
-		
-		
+
+
 
 		if (myOwner->ability1Ended)
 		{
@@ -79,9 +79,9 @@ void ARockElement::ability1()
 		}
 
 		Super::ability1();
-		
+
 	}
-	
+
 }
 
 void ARockElement::ability1Anim_Implementation()
@@ -103,7 +103,7 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 {
 	if (charging)
 	{
-		
+
 		ARockElementAbility1* temp;
 		FActorSpawnParameters tempParam;
 		tempParam.Owner = this;
@@ -115,11 +115,11 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 		myOwner->locked = 0;
 		chargeFloat = 0;
 		Super::ability1End();
-		
+
 	}
 	//charging = false;
-	
-	
+
+
 }
 
 void ARockElement::ability2()
