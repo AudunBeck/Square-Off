@@ -56,9 +56,9 @@ public:
 		float fireKick = 6000;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float maxFireChi = 2;
+		int maxFireChi = 2;
 
-	float fireChi;
+	int fireChi;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		FVector boostedAbility1Scale;

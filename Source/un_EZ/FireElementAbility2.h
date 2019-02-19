@@ -30,6 +30,13 @@ public:
 	//	class ATori* myPlayer;
 	class AFireElement* myElement;
 
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		USphereComponent* collider;
+
 	float attackRange;
 	float damage;
+
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

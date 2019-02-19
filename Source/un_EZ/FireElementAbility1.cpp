@@ -23,14 +23,18 @@ void AFireElementAbility1::BeginPlay()
 	myPlayer = myElement->myOwner;
 	SetLifeSpan(myElement->ability1lifeSpan);
 	attackRange = myElement->ability1Range;
-	damage = myElement->ability1Damage;
-	buffed = false;
-	if (myElement->fireChi > 0)
+	if (myElement->fireChi == 2)
 	{
 		buffed = true;
 		damage = myElement->ability1BuffedDamage;
 		SetActorScale3D(myElement->boostedAbility1Scale);
 		beginSound();
+		myElement->fireChi = 0;
+	}
+	else
+	{
+		damage = myElement->ability1Damage;
+		buffed = false;
 	}
 }
 
@@ -40,11 +44,6 @@ void AFireElementAbility1::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
 	this->SetActorRotation(myPlayer->GetActorRotation());
-}
-
-void AFireElementAbility1::setupAttack(ATori* newOwner, float lifeSpan, float range, FVector scale)
-{
-
 }
 
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
@@ -61,7 +60,6 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				/// Change this to its own effect-class
 				// Do some crazy shit
 				myPlayer->stopAllVelocity();
-
 			}
 		}
 	}
@@ -74,6 +72,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				// Make the target take damage
 				Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value is temporary
 				myPlayer->stopAllVelocity();
+				myElement->fireChi += 1;
 			}
 		}
 	}
