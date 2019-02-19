@@ -18,6 +18,7 @@ ATori::ATori()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+	isMenuTori = false;
 }
 
 // Called when the game starts or when spawned
@@ -149,24 +150,26 @@ void ATori::slowCheck(float DeltaTime)
 
 void ATori::dodge()
 {
-	if (locked <= 0)
-	{
-		if (dodgeAmmo > 0)
+	if(!isMenuTori)
+		if (locked <= 0)
 		{
-			dodging = true;
-			locked = 0.5f;
-			iTime = 0.3f;
-			FVector launchVector;
-			launchVector = GetActorForwardVector() * dodgeRange;
-			LaunchCharacter(launchVector, false, true);
-			dodgeAmmo -= 1;		
-	
+			if (dodgeAmmo > 0)
+			{
+				dodging = true;
+				locked = 0.5f;
+				iTime = 0.3f;
+				FVector launchVector;
+				launchVector = GetActorForwardVector() * dodgeRange;
+				LaunchCharacter(launchVector, false, true);
+				dodgeAmmo -= 1;
+
+			}
 		}
-	}
 }
 void ATori::dodgeEnd()
 {
-	dodging = false;
+	if (!isMenuTori)
+		dodging = false;
 }
 
 void ATori::ability_1()
@@ -207,8 +210,6 @@ void ATori::ability_2()
 			else if (activeElement == 2 && element_2 != nullptr)
 				element_2->ability2();
 			currentGlobalCooldown = globalCooldown;
-			
-
 		}
 	}
 }
@@ -333,25 +334,26 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 
 void ATori::switchElement()
 {
-	if (locked <= 0)
-	{
-		if (activeElement == 1)
+	if (!isMenuTori)
+		if (locked <= 0)
 		{
-			activeElement = 2;
-			if (element_2 != nullptr)
-				currentElementType = element_2->switchToElement();
+			if (activeElement == 1)
+			{
+				activeElement = 2;
+				if (element_2 != nullptr)
+					currentElementType = element_2->switchToElement();
+			}
+			else if (activeElement == 2)
+			{
+				activeElement = 1;
+				if (element_1 != nullptr)
+					currentElementType = element_1->switchToElement();
+			}
+			switchAnimationElement();
+
+
+			UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 		}
-		else if (activeElement == 2)
-		{
-			activeElement = 1;
-			if (element_1 != nullptr)
-				currentElementType = element_1->switchToElement();
-		}
-		switchAnimationElement();
-		
-		
-		UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
-	}
 }
 
 void ATori::stopAllVelocity_Implementation()
@@ -359,3 +361,12 @@ void ATori::stopAllVelocity_Implementation()
 	//no code here, just here to please the UE4 Gods!!!!
 }
 
+void ATori::clearElement()
+{
+	if(element_1 != nullptr)
+		element_1->Destroy();
+	element_1 = nullptr;
+	if(element_2 != nullptr)
+		element_2->Destroy();
+	element_2 = nullptr;
+}

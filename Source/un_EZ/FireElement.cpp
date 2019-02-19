@@ -41,7 +41,7 @@ AFireElement::AFireElement()
 
 void AFireElement::ability1()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("FireElement Ability 1 firing"));
+	UE_LOG(LogTemp, Warning, TEXT("FireElement Ability 1 firing"));
 
 	// Dash part of the attack
 	if (ammo1 > 0)

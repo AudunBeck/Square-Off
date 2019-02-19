@@ -45,6 +45,8 @@ public:
 		bool dodging;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool wasHit;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		bool isMenuTori;
 
 	FVector myPushVector;
 
@@ -104,7 +106,7 @@ public:
 
 
 	// Holds the pointers for the elements you currently have.
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Elements")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Elements")
 		class ABaseElement* element_1;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Elements")
 		class ABaseElement* element_2;
@@ -135,4 +137,7 @@ public:
 		float iTime; // How long the character is invunrable to damage.
 
 
+	// MenuTori functions
+	UFUNCTION(BlueprintCallable, Category = "MenuTori")
+		void clearElement();
 };
