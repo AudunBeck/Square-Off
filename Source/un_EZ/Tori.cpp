@@ -37,6 +37,9 @@ void ATori::BeginPlay()
 // Called every frame
 void ATori::Tick(float DeltaTime)
 {
+	if (isMenuTori)
+		damageMultiplier = 0;
+
 	/// Find better comment
 	// Slow stuff
 	if (slowDur.Num() > 0)
