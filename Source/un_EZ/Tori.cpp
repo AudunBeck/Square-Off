@@ -159,7 +159,17 @@ void ATori::dodge()
 			FVector launchVector;
 			launchVector = GetActorForwardVector() * dodgeRange;
 			LaunchCharacter(launchVector, false, true);
-			dodgeAmmo -= 1;		
+			dodgeAmmo -= 1;
+			if (element_1 != nullptr)
+			{
+				element_1->resetAbility1();
+				element_1->resetAbility2();
+			}
+			if (element_2 != nullptr)
+			{
+				element_2->resetAbility1();
+				element_2->resetAbility2();
+			}
 	
 		}
 	}

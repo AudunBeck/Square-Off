@@ -88,4 +88,9 @@ public:
 	//	void ability2AnimStart();
 	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 	//	void ability2AnimEnd();
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+		void resetAbility1();
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+		void resetAbility2();
 };
