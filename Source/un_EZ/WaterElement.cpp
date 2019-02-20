@@ -90,10 +90,14 @@ void AWaterElement::Tick(float DeltaTime)
 
 void AWaterElement::ability1()
 {
-	if (ammo1 > 0 && myOwner->ability1Ended == false && myOwner->locked <= 0.f)
+
+	if (ammo1 > 0 /*&& myOwner->ability1Ended == false*/ && myOwner->locked <= 0.f)
 	{
-		Super::ability1();
+			Super::ability1();
 	}
+	myOwner->stillFiring1 = true;
+	if (myOwner->finishedCombo1)
+		myOwner->stillFiring1 = false;
 	
 }
 

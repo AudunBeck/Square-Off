@@ -134,5 +134,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float iTime; // How long the character is invunrable to damage.
 
-
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
+		bool stillFiring1 = false;
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
+		bool finishedCombo1 = false;
 };
