@@ -65,22 +65,22 @@ void AWaterElement::Tick(float DeltaTime)
 
 	if (windUpTime <= 0 && charging == true)
 	{
-		//Cast waterbolt
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		AWaterElementAbility1* temp;
-		/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
-		temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
-			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+		////Cast waterbolt
+		//FActorSpawnParameters tempParam;
+		//tempParam.Owner = this;
+		//AWaterElementAbility1* temp;
+		///// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
+		//temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
+		//	myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 
-		if (counter > 0)
-			buffedAbility1 = true;
-		else
-			buffedAbility1 = false;
-		//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 fired"));
-		myOwner->setRotationRate(myOwner->rotationRate);
-		myOwner->setMoveSpeed(myOwner->moveSpeed);
-		charging = false;
+		//if (counter > 0)
+		//	buffedAbility1 = true;
+		//else
+		//	buffedAbility1 = false;
+		////UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 fired"));
+		//myOwner->setRotationRate(myOwner->rotationRate);
+		//myOwner->setMoveSpeed(myOwner->moveSpeed);
+		//charging = false;
 	}
 
 	// Ability 2
@@ -106,38 +106,82 @@ void AWaterElement::ability1()
 {
 	if (ammo1 > 0 && charging == false && myOwner->locked <= 0.f)
 	{
-		charging = true;
-		//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 charging up"));
-		windUpTime = maxWindUpTime;
-		myOwner->setRotationRate(0.f);
-		myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
+		//charging = true;
+		////UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 charging up"));
+		//windUpTime = maxWindUpTime;
+		//myOwner->setRotationRate(0.f);
+		//myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
+		Super::ability1();
 	}
-	Super::ability1();
+	
+}
+
+void AWaterElement::ability1End()
+{
+	charging = true;
+	//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 charging up"));
+	windUpTime = maxWindUpTime;
+	myOwner->setRotationRate(0.f);
+	myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
+	///Go over this to fix later.
+	//Cast waterbolt
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	AWaterElementAbility1* temp;
+	/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
+	temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
+		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+
+	if (counter > 0)
+		buffedAbility1 = true;
+	else
+		buffedAbility1 = false;
+	//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 fired"));
+	myOwner->setRotationRate(myOwner->rotationRate);
+	myOwner->setMoveSpeed(myOwner->moveSpeed);
+	charging = false;
 }
 
 void AWaterElement::ability2()
 {
 	if (ammo2 > 0)
 	{
-		//myOwner->SetActorEnableCollision(false);
-		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
-		myOwner->currentSpeed = 0.f;
-		myOwner->damageMultiplier = 0.f;
-		buffDur = maxBuffDur;
-		myOwner->locked = buffDur;
-		//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 ammo: %i"), ammo2);
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		AWaterElementAbility2* temp;
-		/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
-		temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
-			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+		////myOwner->SetActorEnableCollision(false);
+		//myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
+		//myOwner->currentSpeed = 0.f;
+		//myOwner->damageMultiplier = 0.f;
+		//buffDur = maxBuffDur;
+		//myOwner->locked = buffDur;
+		////UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 ammo: %i"), ammo2);
+		//FActorSpawnParameters tempParam;
+		//tempParam.Owner = this;
+		//AWaterElementAbility2* temp;
+		///// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
+		//temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
+		//	myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 		Super::ability2();
 	}
 	else
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has no ammo"));
 	}
+}
+
+void AWaterElement::ability2End()
+{
+	//myOwner->SetActorEnableCollision(false);
+	myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
+	myOwner->currentSpeed = 0.f;
+	myOwner->damageMultiplier = 0.f;
+	buffDur = maxBuffDur;
+	myOwner->locked = buffDur;
+	//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 ammo: %i"), ammo2);
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	AWaterElementAbility2* temp;
+	/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
+	temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
+		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 }
 
 void AWaterElement::outputLog()
