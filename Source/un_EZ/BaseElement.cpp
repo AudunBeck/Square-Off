@@ -91,6 +91,11 @@ void ABaseElement::ability1End()
 	//ability1AnimEnd();
 }
 
+int ABaseElement::returnElementType()
+{
+	return 0;
+}
+
 void ABaseElement::ability2()
 {
 	if (ammo2 > 0)

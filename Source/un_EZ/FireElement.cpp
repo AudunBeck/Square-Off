@@ -78,3 +78,9 @@ void AFireElement::ability2()
 	}
 	Super::ability2();
 }
+
+int AFireElement::returnElementType()
+{
+	Super::returnElementType();
+	return 2;
+}

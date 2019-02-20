@@ -144,3 +144,9 @@ void AWaterElement::outputLog()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Collision on"));
 }
+
+int AWaterElement::returnElementType()
+{
+	Super::returnElementType();
+	return 3;
+}

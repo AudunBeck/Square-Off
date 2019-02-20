@@ -139,3 +139,9 @@ void ARockElement::ability2()
 
 	Super::ability2();
 }
+
+int ARockElement::returnElementType()
+{
+	Super::returnElementType();
+	return 1;
+}
