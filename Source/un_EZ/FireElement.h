@@ -20,7 +20,9 @@ public:
 	AFireElement();
 
 	virtual void ability1()override;
+	virtual void ability1End()override;
 	virtual void ability2()override;
+	virtual void ability2End()override;
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
