@@ -110,3 +110,9 @@ void AWindElement::ability2()
 		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 is already being charged"));
 	}
 }
+
+int AWindElement::returnElementType()
+{
+	Super::returnElementType();
+	return 4;
+}

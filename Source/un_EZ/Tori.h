@@ -45,6 +45,8 @@ public:
 		bool dodging;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool wasHit;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		bool isMenuTori;
 
 	FVector myPushVector;
 
@@ -70,7 +72,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "HitPoints")
 		float hitPointPercentage;
-	
+
 
 	TArray<float> slowDur;
 	TArray<float> slowAmount;
@@ -82,7 +84,7 @@ public:
 	void recieveDamage(float damage, float knockback, FVector knockbackPoint);
 
 	void checkIfDead();
-	
+
 
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
 	bool pickUpElement(class ABaseElement* newElement);
@@ -104,7 +106,7 @@ public:
 
 
 	// Holds the pointers for the elements you currently have.
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Elements")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Elements")
 		class ABaseElement* element_1;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Elements")
 		class ABaseElement* element_2;
@@ -134,5 +136,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float iTime; // How long the character is invunrable to damage.
 
-
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
+		bool stillFiring1 = false;
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
+		bool finishedCombo1 = false;
+		UFUNCTION(BlueprintCallable, Category = "MenuTori")
+			void clearElement();
 };

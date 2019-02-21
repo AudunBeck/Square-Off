@@ -91,13 +91,18 @@ void ABaseElement::ability1End()
 	//ability1AnimEnd();
 }
 
+int ABaseElement::returnElementType()
+{
+	return 0;
+}
+
 void ABaseElement::ability2()
 {
 	if (ammo2 > 0)
 	{
-		myOwner->ability2Used = true;
+		//myOwner->ability2Used = true;
 		ammo2 -= 1;
-		//ability2AnimStart();
+		ability2Anim();
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 2 firing"));
 }
