@@ -156,17 +156,24 @@ void ATori::dodge()
 	if(!isMenuTori)
 		if (locked <= 0)
 		{
-			if (dodgeAmmo > 0)
+			dodging = true;
+			locked = 0.5f;
+			iTime = 0.3f;
+			FVector launchVector;
+			launchVector = GetActorForwardVector() * dodgeRange;
+			LaunchCharacter(launchVector, false, true);
+			dodgeAmmo -= 1;
+			if (element_1 != nullptr)
 			{
-				dodging = true;
-				locked = 0.5f;
-				iTime = 0.3f;
-				FVector launchVector;
-				launchVector = GetActorForwardVector() * dodgeRange;
-				LaunchCharacter(launchVector, false, true);
-				dodgeAmmo -= 1;
-
+				element_1->resetAbility1();
+				element_1->resetAbility2();
 			}
+			if (element_2 != nullptr)
+			{
+				element_2->resetAbility1();
+				element_2->resetAbility2();
+			}
+
 		}
 }
 void ATori::dodgeEnd()
@@ -263,7 +270,7 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
 		hitPoints -= damage * damageMultiplier;
-		
+
 		/// Incert effect of stun
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;

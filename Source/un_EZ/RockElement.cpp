@@ -49,12 +49,6 @@ void ARockElement::Tick(float DeltaTime)
 			if (chargeFloat > maxCharge)
 				chargeFloat = maxCharge;
 		}
-		// Old version
-		//if (chargeFloat >= maxCharge)
-		//{
-		//	chargeFloat = maxCharge;
-		//	ability1End();
-		//}
 	}
 }
 
@@ -65,45 +59,15 @@ void ARockElement::ability1()
 	{
 		//Old Version
 		UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 1 firing"));
-		//charging = true;
-		//myOwner->setMoveSpeed(0.f);
-		//myOwner->currentSpeed = 0;
-		//chargeFloat = 0;
-		//myOwner->locked = maxCharge;
-
-
-
-		if (myOwner->ability1Ended)
-		{
-			//myOwner->ability1Ended = false;
-		}
-
 		Super::ability1();
-
 	}
-
 }
 
-void ARockElement::ability1Anim_Implementation()
-{
-	//myOwner->ability1Ended = true;
-	//ARockElementAbility1* temp;
-	//FActorSpawnParameters tempParam;
-	//tempParam.Owner = this;
-	//temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
-	//	myOwner->GetActorRotation(), tempParam);
-	//myOwner->setMoveSpeed(myOwner->moveSpeed);
-	//myOwner->currentSpeed = myOwner->moveSpeed;
-	//myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
-	//myOwner->locked = 0;
-	//chargeFloat = 0;
-}
 
 void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
 {
 	if (charging)
 	{
-
 		ARockElementAbility1* temp;
 		FActorSpawnParameters tempParam;
 		tempParam.Owner = this;
@@ -115,7 +79,6 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 		myOwner->locked = 0;
 		chargeFloat = 0;
 		Super::ability1End();
-
 	}
 	//charging = false;
 
@@ -124,20 +87,23 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 
 void ARockElement::ability2()
 {
-	if (ammo2 > 0)
+	if (ammo2 > 0 && myOwner->ability2Ended == false)
 	{
-		FVector forwardVec = myOwner->GetActorForwardVector();
-		FVector playerVec = myOwner->GetActorLocation();
-		FRotator playerRot = myOwner->GetActorRotation();
-		const FVector newVec = (forwardVec * ability2Range) + playerVec;
+		Super::ability2();
+	}	
+}
 
-		//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
-	}
+void ARockElement::ability2End()
+{
+	FVector forwardVec = myOwner->GetActorForwardVector();
+	FVector playerVec = myOwner->GetActorLocation();
+	FRotator playerRot = myOwner->GetActorRotation();
+	const FVector newVec = (forwardVec * ability2Range) + playerVec;
 
-	Super::ability2();
+	//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
 }
 
 int ARockElement::returnElementType()
