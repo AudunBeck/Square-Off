@@ -61,10 +61,6 @@ void AFireElement::ability1End()
 	AFireElementAbility1* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
-	if (fireChi > 0)
-	{
-		fireChi -= 1;
-	}
 }
 
 void AFireElement::ability2()
@@ -93,7 +89,6 @@ void AFireElement::ability2End()
 	ammo1 += ammo1Refill;
 	if (ammo1 > maxAmmo1)
 		ammo1 = maxAmmo1;
-	fireChi = maxFireChi;
 }
 
 int AFireElement::returnElementType()
