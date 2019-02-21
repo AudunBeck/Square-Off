@@ -72,7 +72,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "HitPoints")
 		float hitPointPercentage;
-	
+
 
 	TArray<float> slowDur;
 	TArray<float> slowAmount;
@@ -84,7 +84,7 @@ public:
 	void recieveDamage(float damage, float knockback, FVector knockbackPoint);
 
 	void checkIfDead();
-	
+
 
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.
 	bool pickUpElement(class ABaseElement* newElement);
@@ -136,8 +136,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float iTime; // How long the character is invunrable to damage.
 
-
-	// MenuTori functions
-	UFUNCTION(BlueprintCallable, Category = "MenuTori")
-		void clearElement();
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
+		bool stillFiring1 = false;
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
+		bool finishedCombo1 = false;
+		UFUNCTION(BlueprintCallable, Category = "MenuTori")
+			void clearElement();
 };

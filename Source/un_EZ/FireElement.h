@@ -14,13 +14,15 @@ UCLASS()
 class UN_EZ_API AFireElement : public ABaseElement
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 
 	AFireElement();
 
 	virtual void ability1()override;
+	virtual void ability1End()override;
 	virtual void ability2()override;
+	virtual void ability2End()override;
 	virtual int returnElementType()override;
 
 	// Holds the pointers for element abilities
@@ -65,6 +67,6 @@ public:
 		FVector boostedAbility1Scale;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage;
-	
+
 	UDataTable* BalancingTable;
 };
