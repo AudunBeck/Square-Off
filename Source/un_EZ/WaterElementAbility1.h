@@ -17,31 +17,27 @@ class UN_EZ_API AWaterElementAbility1 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
+public:
 	AWaterElementAbility1();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
+public:
 	virtual void Tick(float DeltaTime) override;
 
-	// slow is set in %, where 25.5 = 25.5% slow
 	float attackRange;
 	float chargedHit;
 	float boltSpeed;
 	float ccDur;
-	float slow;
+	float slow;				// slow is set in %, where 25.5 = 25.5% slow
 	float damage;
 
 	USphereComponent* collider;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		class AWaterElement* myElement;
-	// Add a description here
+
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

@@ -16,16 +16,13 @@ class UN_EZ_API AWaterElementAbility2 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
+public:
 	AWaterElementAbility2();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
+public:
 	virtual void Tick(float DeltaTime) override;
 	float currBuffDur;
 	float dashDist;
@@ -40,7 +37,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Output Log WaterAbility 2")
 		void outputLog();
-
 
 	UPROPERTY(EditAnywhere, Category = "Ability2", BlueprintReadWrite)
 		class AWaterElement* myElement;

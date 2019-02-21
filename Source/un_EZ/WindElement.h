@@ -15,15 +15,12 @@ class UN_EZ_API AWindElement : public ABaseElement
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	AWindElement();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	virtual void ability1()override;
 	virtual void ability2()override;
@@ -44,7 +41,7 @@ public:
 		float ability1Range = 100.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float boltSpeed = 1200.0f;
+		float boltSpeed = 3000.0f;
 
 	bool chargingAbilit1;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
@@ -57,6 +54,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1damage = 30.f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float range = 400.f;
 
 
 	// Ability 2 
@@ -90,7 +89,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage2 = 50.f;
 
-	int windChi;			// Used to power the secondary ability
+	int windChi;
 	float buffDur;
 	float maxBuffDur;
 	bool chargingAbilit2;
