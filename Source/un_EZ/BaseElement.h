@@ -33,13 +33,20 @@ public:
 	// Setting Owner
 	void setPlayer(class ATori* newOwner);
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		class ATori* myOwner;
 	ATori* getMyOwner();
 
 	// Ability 1 variables.
-	virtual void ability1();
-	virtual void ability1End();
+	UFUNCTION(BlueprintCallable)
+		virtual void ability1();
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+		void ability1Anim();
+	UFUNCTION(BlueprintCallable)
+		virtual void ability1End();
+	UFUNCTION(BlueprintCallable)
+		virtual int returnElementType();
+
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCooldownAbility1;
@@ -55,8 +62,12 @@ public:
 
 
 	// Ability 2 variables.
-	virtual void ability2();
-	virtual void ability2End();
+	UFUNCTION(BlueprintCallable)
+		virtual void ability2();
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+		void ability2Anim();
+	UFUNCTION(BlueprintCallable)
+		virtual void ability2End();
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float maxCooldownAbility2;
@@ -70,4 +81,14 @@ public:
 		int ammo2;
 
 	int switchToElement();
+
+	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+	//	void ability1AnimStart();
+	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+	//	void ability1AnimEnd();
+
+	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+	//	void ability2AnimStart();
+	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+	//	void ability2AnimEnd();
 };

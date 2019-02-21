@@ -27,6 +27,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void ability1()override;
 	virtual void ability2()override;
+	virtual int returnElementType()override;
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")

@@ -7,14 +7,15 @@
 #include "WaterElementAbility1.h"
 #include "WaterElementAbility2.h"
 #include "GameFramework/Actor.h"
+#include "Engine/Classes/Engine/DataTable.h"
 #include "WaterElement.generated.h"
 
 UCLASS()
 class UN_EZ_API AWaterElement : public ABaseElement
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AWaterElement();
 
@@ -22,12 +23,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void ability1()override;
 	virtual void ability2()override;
+	virtual int returnElementType()override;
 
 	bool buffedAbility1;
 
@@ -38,6 +40,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class AWaterElementAbility2> WaterElementAbility2_BP;
 
+
+	// Blueprint functions
+	UFUNCTION(BlueprintCallable, Category = "Output Log WaterElement")
+		void outputLog();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterElement collision")
+		void startCollision();
+
+
 	// Ability 1
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 5.0f;
@@ -45,7 +56,7 @@ public:
 	// How far ahead of Tori the ability spawns
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
-	
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float boltSpeed = 1200.0f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
@@ -73,11 +84,12 @@ public:
 		float slow = 15.f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float slowBuffed = 30.f;
-	
+
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;
-	float buffDur = 0;
+	UPROPERTY(BlueprintReadOnly)
+		float buffDur = 0;
 	float maxBuffDur;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float dashDist = 3000;
@@ -93,4 +105,5 @@ public:
 
 	float tempTimer;
 
+	UDataTable* BalancingTable;
 };
