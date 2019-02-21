@@ -16,15 +16,12 @@ class UN_EZ_API AWaterElement : public ABaseElement
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	AWaterElement();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void ability1()override;
@@ -33,7 +30,6 @@ public:
 	virtual void ability2()override;
 	virtual void ability2End()override;
 	virtual int returnElementType()override;
-
 
 	bool buffedAbility1;
 

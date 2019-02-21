@@ -13,15 +13,12 @@ class UN_EZ_API ATori : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	ATori();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
@@ -32,7 +29,6 @@ public:
 	// Runs movement for the character.
 	void move_X(float axisValue);
 	void move_Y(float axisValue);
-
 	void setMoveSpeed(float newMoveSpeed);
 	void setRotationRate(float newRotationSpeed);
 	float currentSpeed;
@@ -65,7 +61,7 @@ public:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
 		bool ability2Ended = false;
 
-
+	// Health properties
 	UPROPERTY(EditAnywhere, Category = "HitPoints")
 		float maxHitPoints = 100;
 	float hitPoints;
@@ -93,7 +89,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Elements")
 		int activeElement = 1;
 
-
 	void switchElement();
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
@@ -102,8 +97,6 @@ public:
 		int currentElementType = 0;
 	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Animations")
 		bool isDead = false;
-
-
 
 	// Holds the pointers for the elements you currently have.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Elements")

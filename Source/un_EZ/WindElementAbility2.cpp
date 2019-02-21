@@ -4,15 +4,11 @@
 
 AWindElementAbility2::AWindElementAbility2()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-
-	//collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility2::OnOverlapBegin);
-	
 }
 
 void AWindElementAbility2::BeginPlay()
@@ -55,9 +51,9 @@ void AWindElementAbility2::Tick(float DeltaTime)
 		UE_LOG(LogTemp, Warning, TEXT("Attempting to shoot third wave"));
 		thirdWave();
 	}
-		
 }
 
+// Checks for enemies, and affect them
 void AWindElementAbility2::checkForEnemy(float innerRadius, float outerRadius)
 {
 	enemyReference = nullptr;
@@ -92,8 +88,6 @@ void AWindElementAbility2::checkForEnemy(float innerRadius, float outerRadius)
 			}
 		}
 	}
-
-
 }
 
 void AWindElementAbility2::firstWave()

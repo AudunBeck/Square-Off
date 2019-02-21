@@ -3,10 +3,8 @@
 #include "WaterElementAbility2.h"
 #include "WaterElement.h"
 
-// Sets default values
 AWaterElementAbility2::AWaterElementAbility2()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
 	RootComponent = collider;
@@ -16,7 +14,6 @@ AWaterElementAbility2::AWaterElementAbility2()
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility2::OnOverlapBegin);
 }
 
-// Called when the game starts or when spawned
 void AWaterElementAbility2::BeginPlay()
 {
 	Super::BeginPlay();
@@ -28,11 +25,10 @@ void AWaterElementAbility2::BeginPlay()
 	slow = myElement->ability2Slow;
 	damage = myElement->ability2Damage;
 	
-	// Stops collision towards other Tori's
+	// Stops collision towards other Tori's - Called in Blueprint
 	stopCollision();
 }
 
-// Called every frame
 void AWaterElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

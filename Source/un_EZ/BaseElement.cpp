@@ -2,15 +2,12 @@
 
 #include "BaseElement.h"
 
-// Sets default values
 ABaseElement::ABaseElement()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
-// Called when the game starts or when spawned
 void ABaseElement::BeginPlay()
 {
 	Super::BeginPlay();
@@ -22,7 +19,6 @@ void ABaseElement::BeginPlay()
 	myOwner = Cast<ATori>(GetOwner());
 }
 
-// Called every frame
 void ABaseElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -39,8 +35,6 @@ void ABaseElement::Tick(float DeltaTime)
 			if (ammo1 > maxAmmo1)
 				ammo1 = maxAmmo1;
 
-			//UE_LOG(LogTemp, Warning, TEXT("Ammo1 is %i now"), ammo1);
-
 			cooldownAbility1 = maxCooldownAbility1;
 		}
 	}
@@ -53,8 +47,6 @@ void ABaseElement::Tick(float DeltaTime)
 			ammo2 += ammoPerCd2;
 			if (ammo2 > maxAmmo2)
 				ammo2 = maxAmmo2;
-
-			//UE_LOG(LogTemp, Warning, TEXT("Ammo2 is %i now"), ammo2);
 			cooldownAbility2 = maxCooldownAbility2;
 		}
 
@@ -78,11 +70,9 @@ void ABaseElement::ability1()
 {
 	if (ammo1 > 0)
 	{
-		//myOwner->ability1Used = true;
 		ammo1 -= 1;
 		ability1Anim();
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 1 firing"));
 }
 
 void ABaseElement::ability1End()
@@ -104,7 +94,6 @@ void ABaseElement::ability2()
 		ammo2 -= 1;
 		ability2Anim();
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("BaseElement Ability 2 firing"));
 }
 
 void ABaseElement::ability2End()
@@ -117,5 +106,3 @@ int ABaseElement::switchToElement()
 {
 	return elementType;
 }
-
-

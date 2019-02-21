@@ -14,15 +14,12 @@ class UN_EZ_API ABaseElement : public AActor
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	ABaseElement();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, Category = "Abilities")
@@ -30,7 +27,6 @@ public:
 
 	bool isActive;
 
-	// Setting Owner
 	void setPlayer(class ATori* newOwner);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -58,7 +54,6 @@ public:
 		int ammoPerCd1;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		int ammo1;
-
 
 
 	// Ability 2 variables.
