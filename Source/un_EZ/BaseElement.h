@@ -44,6 +44,9 @@ public:
 		void ability1Anim();
 	UFUNCTION(BlueprintCallable)
 		virtual void ability1End();
+	UFUNCTION(BlueprintCallable)
+		virtual int returnElementType();
+
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCooldownAbility1;

@@ -95,3 +95,9 @@ void AFireElement::ability2End()
 		ammo1 = maxAmmo1;
 	fireChi = maxFireChi;
 }
+
+int AFireElement::returnElementType()
+{
+	Super::returnElementType();
+	return 2;
+}

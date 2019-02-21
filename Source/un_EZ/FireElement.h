@@ -14,8 +14,8 @@ UCLASS()
 class UN_EZ_API AFireElement : public ABaseElement
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 
 	AFireElement();
 
@@ -23,6 +23,7 @@ public:
 	virtual void ability1End()override;
 	virtual void ability2()override;
 	virtual void ability2End()override;
+	virtual int returnElementType()override;
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
@@ -58,14 +59,14 @@ public:
 		float fireKick = 6000;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float maxFireChi = 2;
+		int maxFireChi = 2;
 
-	float fireChi;
+	int fireChi;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		FVector boostedAbility1Scale;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage;
-	
+
 	UDataTable* BalancingTable;
 };

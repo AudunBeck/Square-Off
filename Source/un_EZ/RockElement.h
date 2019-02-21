@@ -23,9 +23,9 @@ public:
 
 	virtual void ability1()override;
 	virtual void ability1End()override;
-
 	virtual void ability2()override;
 	virtual void ability2End()override;
+	virtual int returnElementType()override;
 
 
 

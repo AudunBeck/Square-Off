@@ -105,3 +105,9 @@ void ARockElement::ability2End()
 	tempParam.Owner = this;
 	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
 }
+
+int ARockElement::returnElementType()
+{
+	Super::returnElementType();
+	return 1;
+}

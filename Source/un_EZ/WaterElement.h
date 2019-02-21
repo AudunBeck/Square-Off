@@ -32,6 +32,8 @@ public:
 
 	virtual void ability2()override;
 	virtual void ability2End()override;
+	virtual int returnElementType()override;
+
 
 	bool buffedAbility1;
 
@@ -108,7 +110,4 @@ public:
 	float tempTimer;
 
 	UDataTable* BalancingTable;
-
-
-
 };
