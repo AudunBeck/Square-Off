@@ -5,7 +5,7 @@
 // Sets default values
 AFireElementAbility1::AFireElementAbility1()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
 	RootComponent = collider;
@@ -49,33 +49,15 @@ void AFireElementAbility1::Tick(float DeltaTime)
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (buffed)
+	if (OtherActor != myPlayer)
 	{
-		if (OtherActor != myPlayer)
+		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			if (OtherActor->IsA(ATori::StaticClass()))
-			{
-				// Make the target take damage
-				Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value is temporary
-				/// Change this to its own effect-class
-				// Do some crazy shit
-				myPlayer->stopAllVelocity();
-			}
-		}
-	}
-	if (!buffed)
-	{
-		if (OtherActor != myPlayer)
-		{
-			if (OtherActor->IsA(ATori::StaticClass()))
-			{
-				// Make the target take damage
-				Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value is temporary
-				myPlayer->stopAllVelocity();
+			// Make the target take damage
+			Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value is temporary
+			myPlayer->stopAllVelocity();
+			if (!buffed)
 				myElement->fireChi += 1;
-			}
 		}
 	}
-
-
 }

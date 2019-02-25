@@ -5,7 +5,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Classes/Engine/LocalPlayer.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
-#include "Engine/GameEngine.h"
 #include "un_EZGameModeBase.h"
 
 // Sets default values

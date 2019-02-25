@@ -96,4 +96,6 @@ public:
 		void resetAbility1();
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 		void resetAbility2();
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+		void stopAnimMontage();
 };
