@@ -80,9 +80,6 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 		chargeFloat = 0;
 		Super::ability1End();
 	}
-	//charging = false;
-
-
 }
 
 void ARockElement::ability2()
@@ -100,7 +97,6 @@ void ARockElement::ability2End()
 	FRotator playerRot = myOwner->GetActorRotation();
 	const FVector newVec = (forwardVec * ability2Range) + playerVec;
 
-	//UE_LOG(LogTemp, Warning, TEXT("RockElement Ability 2 firing"));
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);

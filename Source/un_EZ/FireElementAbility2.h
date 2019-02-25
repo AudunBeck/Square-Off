@@ -14,20 +14,14 @@ class UN_EZ_API AFireElementAbility2 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
+public:
 	AFireElementAbility2();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
+public:
 	virtual void Tick(float DeltaTime) override;
-
-	//UPROPERTY(EditAnywhere, Category = "Ability2")
-	//	class ATori* myPlayer;
 	class AFireElement* myElement;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")

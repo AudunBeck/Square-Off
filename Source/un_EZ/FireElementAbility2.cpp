@@ -2,10 +2,8 @@
 
 #include "FireElementAbility2.h"
 
-// Sets default values
 AFireElementAbility2::AFireElementAbility2()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
 	RootComponent = collider;
@@ -15,7 +13,6 @@ AFireElementAbility2::AFireElementAbility2()
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility2::OnOverlapBegin);
 }
 
-// Called when the game starts or when spawned
 void AFireElementAbility2::BeginPlay()
 {
 	Super::BeginPlay();
@@ -26,7 +23,6 @@ void AFireElementAbility2::BeginPlay()
 	damage = myElement->ability2Damage;
 }
 
-// Called every frame
 void AFireElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -42,12 +38,10 @@ void AFireElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value is temporary
+			Cast<ATori>(OtherActor)->recieveDamage(damage);
 			myPlayer->stopAllVelocity();
 			myElement->fireChi = 2;
 			myElement->stopAnimMontage();
 		}
 	}
 }
-

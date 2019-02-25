@@ -2,7 +2,6 @@
 
 #include "FireElementAbility1.h"
 
-// Sets default values
 AFireElementAbility1::AFireElementAbility1()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -15,7 +14,6 @@ AFireElementAbility1::AFireElementAbility1()
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility1::OnOverlapBegin);
 }
 
-// Called when the game starts or when spawned
 void AFireElementAbility1::BeginPlay()
 {
 	Super::BeginPlay();
@@ -38,7 +36,6 @@ void AFireElementAbility1::BeginPlay()
 	}
 }
 
-// Called every frame
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

@@ -15,20 +15,14 @@ class UN_EZ_API ARockElementAbility2 : public ABaseAbility
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
+public:
 	ARockElementAbility2();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Owner of the attack
-	void setupAttack(ATori * newOwner, FVector scale, float lifeSpan, float wallSpeed, float knockbackMultiplier);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float movingTime;

@@ -7,14 +7,13 @@
 // Sets default values
 AWaterElement::AWaterElement()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	static ConstructorHelpers::FObjectFinder<UDataTable>
 		WaterElementTable(TEXT("DataTable'/Game/DataTables/WaterElementTable.WaterElementTable'"));
 	BalancingTable = WaterElementTable.Object;
+	
 	//Searching and getting data
-
 	FWaterElementStruct* Ability1Data = BalancingTable->FindRow<FWaterElementStruct>(FName("1"), FString(""));
 	FWaterElementStruct* Ability2Data = BalancingTable->FindRow<FWaterElementStruct>(FName("2"), FString(""));
 	if (Ability1Data)
@@ -47,14 +46,12 @@ AWaterElement::AWaterElement()
 	}
 }
 
-// Called when the game starts or when spawned
 void AWaterElement::BeginPlay()
 {
 	Super::BeginPlay();
 	maxBuffDur = ability2lifeSpan;
 }
 
-// Called every frame
 void AWaterElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -72,13 +69,10 @@ void AWaterElement::Tick(float DeltaTime)
 	// Ability 2
 	if (buffDur >= 0)
 	{
-		//myOwner->SetActorEnableCollision(false);
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		buffDur -= DeltaTime;
-		//UE_LOG(LogTemp, Warning, TEXT("counter dur left: %f"),buffDur);
 		if (buffDur <= 0)
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("Stopping counter movespeed should be %f"), myOwner->moveSpeed);
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
 			
@@ -104,7 +98,6 @@ void AWaterElement::ability1()
 void AWaterElement::ability1End()
 {
 	charging = true;
-	//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 charging up"));
 	windUpTime = maxWindUpTime;
 	myOwner->setRotationRate(0.f);
 	myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
@@ -121,7 +114,6 @@ void AWaterElement::ability1End()
 		buffedAbility1 = true;
 	else
 		buffedAbility1 = false;
-	//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 1 fired"));
 	myOwner->setRotationRate(myOwner->rotationRate);
 	myOwner->setMoveSpeed(myOwner->moveSpeed);
 	charging = false;
@@ -133,21 +125,15 @@ void AWaterElement::ability2()
 	{
 		Super::ability2();
 	}
-	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has no ammo"));
-	}
 }
 
 void AWaterElement::ability2End()
 {
-	//myOwner->SetActorEnableCollision(false);
 	myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 	myOwner->currentSpeed = 0.f;
 	myOwner->damageMultiplier = 0.f;
 	buffDur = maxBuffDur;
 	myOwner->locked = buffDur;
-	//UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 ammo: %i"), ammo2);
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AWaterElementAbility2* temp;

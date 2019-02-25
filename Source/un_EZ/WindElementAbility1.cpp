@@ -2,10 +2,8 @@
 
 #include "WindElementAbility1.h"
 
-// Sets default values
 AWindElementAbility1::AWindElementAbility1()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
 	RootComponent = collider;
@@ -15,7 +13,6 @@ AWindElementAbility1::AWindElementAbility1()
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility1::OnOverlapBegin);
 }
 
-// Called when the game starts or when spawned
 void AWindElementAbility1::BeginPlay()
 {
 	Super::BeginPlay();
@@ -24,15 +21,19 @@ void AWindElementAbility1::BeginPlay()
 	SetLifeSpan(myElement->ability1lifeSpan);
 	boltSpeed = myElement->boltSpeed;
 	damage = myElement->ability1damage;
+	range = myElement->range;
+	spawnLocation = GetActorLocation();
 }
 
-// Called every frame
 void AWindElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	FVector NewLocation = GetActorLocation();
 	NewLocation += GetActorForwardVector() * boltSpeed * DeltaTime;
 	SetActorLocation(NewLocation);
+	distTraveled = sqrt(pow((spawnLocation.X - NewLocation.X), 2) + pow((spawnLocation.Y - NewLocation.Y), 2));
+	if (distTraveled > range)
+		this->Destroy();
 
 }
 
@@ -43,8 +44,7 @@ void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value 0 is slow
+			Cast<ATori>(OtherActor)->recieveDamage(damage);
 			if(myElement->windChi < 2)
 				myElement->windChi++;
 		}

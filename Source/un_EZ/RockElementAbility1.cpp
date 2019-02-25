@@ -3,10 +3,8 @@
 #include "RockElementAbility1.h"
 #include "RockElementAbility2.h"
 
-// Sets default values
 ARockElementAbility1::ARockElementAbility1()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
 	RootComponent = collider;
@@ -16,11 +14,9 @@ ARockElementAbility1::ARockElementAbility1()
 	collider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility1::OnOverlapBegin);
 }
 
-// Called when the game starts or when spawned
 void ARockElementAbility1::BeginPlay()
 {
 	Super::BeginPlay();
-	//UE_LOG(LogTemp, Warning, TEXT("Owner position: %f , %f , %f"), myPlayer->GetActorLocation().X, myPlayer->GetActorLocation().Y, myPlayer->GetActorLocation().Z);
 	if (GetOwner() != nullptr)
 		myElement = Cast<ARockElement>(GetOwner());
 	if (myElement != nullptr)
@@ -31,7 +27,6 @@ void ARockElementAbility1::BeginPlay()
 	damage = myElement->ability1Damage;	
 }
 
-// Called every frame
 void ARockElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -46,8 +41,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(damage * chargedHit);	// float value is temporary
+			Cast<ATori>(OtherActor)->recieveDamage(damage * chargedHit);
 			myPlayer->stopAllVelocity();
 		}
 
@@ -61,7 +55,6 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			}
 			else
 			{
-				//UE_LOG(LogTemp, Warning, TEXT("Punch did not find myPlayer"));
 				UE_LOG(LogTemp, Warning, TEXT("Punch did not find myPlayer"));
 				Cast<ARockElementAbility2>(OtherActor)->moveWall(myPlayer->GetActorRotation(), chargedHit);
 			}

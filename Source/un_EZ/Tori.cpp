@@ -7,10 +7,8 @@
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "un_EZGameModeBase.h"
 
-// Sets default values
 ATori::ATori()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	bUseControllerRotationPitch = false;
@@ -20,7 +18,6 @@ ATori::ATori()
 	isMenuTori = false;
 }
 
-// Called when the game starts or when spawned
 void ATori::BeginPlay()
 {
 	Super::BeginPlay();
@@ -33,7 +30,6 @@ void ATori::BeginPlay()
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
 
-// Called every frame
 void ATori::Tick(float DeltaTime)
 {
 	if (isMenuTori)
@@ -76,7 +72,6 @@ void ATori::Tick(float DeltaTime)
 	}
 }
 
-// Called to bind functionality to input
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -114,7 +109,6 @@ void ATori::move_Y(float axisValue)
 void ATori::setMoveSpeed(float newMoveSpeed)
 {
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
-	//UE_LOG(LogTemp, Warning, TEXT("Speed is now %f"), newMoveSpeed);
 }
 
 void ATori::setRotationRate(float newRotationRate)
@@ -139,12 +133,10 @@ void ATori::slowCheck(float DeltaTime)
 		{
 			slowDur.RemoveAt(i);
 			slowAmount.RemoveAt(i);
-			//UE_LOG(LogTemp, Warning, TEXT("Removing slow num: %i"), i);
 			if (slowDur.Num() == 0)
 			{
 				setMoveSpeed(moveSpeed);
 				maxSlow = moveSpeed;
-				//UE_LOG(LogTemp, Warning, TEXT("Normal speed"));
 			}
 		}
 	}
@@ -200,12 +192,10 @@ void ATori::ability_1()
 
 void ATori::ability1End()
 {
-
 	//if (activeElement == 1 && element_1 != nullptr)
 	//	element_1->ability1End();
 	//else if (activeElement == 2 && element_2 != nullptr)
 	//	element_2->ability1End();
-
 }
 
 void ATori::ability_2()
@@ -225,12 +215,10 @@ void ATori::ability_2()
 
 void ATori::ability2End()
 {
-
 	//if (activeElement == 1 && element_1 != nullptr)
 	//	element_1->ability2End();
 	//else if (activeElement == 2 && element_2 != nullptr)
 	//	element_2->ability2End();
-
 }
 
 void ATori::recieveDamage(float damage)
@@ -254,22 +242,17 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 	if (type == 0)
 		if (iTime <= 0)
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
 			hitPoints -= damage * damageMultiplier;
 			checkIfDead();
 			wasHit = true;
-
 			slowDur.Push(ccDur);
 			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
-			UE_LOG(LogTemp, Warning, TEXT("There are now %i slows"), slowDur.Num());
 		}
 
 	// Type 1 is stun
 	if (type == 1)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, was struck."), 1); // Find a way to find the player-number, instead of 1
 		hitPoints -= damage * damageMultiplier;
-
 		/// Incert effect of stun
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
@@ -296,7 +279,6 @@ void ATori::checkIfDead()
 		Cast<Aun_EZGameModeBase>(GetWorld()->GetAuthGameMode())->playerDead();
 	}
 }
-
 
 bool ATori::pickUpElement(ABaseElement * newElement)
 {
@@ -359,9 +341,6 @@ void ATori::switchElement()
 					currentElementType = element_1->switchToElement();
 			}
 			switchAnimationElement();
-
-
-			UE_LOG(LogTemp, Warning, TEXT("Active element is now %i"), activeElement);
 		}
 }
 

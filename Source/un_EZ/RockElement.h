@@ -18,7 +18,6 @@ public:
 
 	ARockElement();
 
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void ability1()override;
@@ -27,8 +26,6 @@ public:
 	virtual void ability2End()override;
 	virtual int returnElementType()override;
 
-
-
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class ARockElementAbility1> RockElementAbility1_BP;
@@ -36,6 +33,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class ARockElementAbility2> RockElementAbility2_BP;
 
+	// Ability 1
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.1f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
@@ -51,8 +49,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Damage;
 
-
-
+	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
