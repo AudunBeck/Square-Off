@@ -26,14 +26,16 @@ void AFireElementAbility1::BeginPlay()
 		buffed = true;
 		damage = myElement->ability1BuffedDamage;
 		SetActorScale3D(myElement->boostedAbility1Scale);
-		beginSound();
 		myElement->fireChi = 0;
+		//UObject* temp = GetWorld()->SpawnActor<UObject>(buffedPunchVFX, GetActorLocation()+FVector(90,0,0), GetActorRotation());
 	}
 	else
 	{
 		damage = myElement->ability1Damage;
 		buffed = false;
+		//UObject* temp = GetWorld()->SpawnActor<UObject>(normalPunchVFX, GetActorLocation(), GetActorRotation());
 	}
+	beginSound();
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)
@@ -55,6 +57,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			myPlayer->stopAllVelocity();
 			if (!buffed)
 				myElement->fireChi += 1;
+			UObject* temp = GetWorld()->SpawnActor<UObject>(hitVFX, OtherActor->GetActorLocation(), GetActorRotation());
 		}
 	}
 }

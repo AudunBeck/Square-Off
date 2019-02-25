@@ -39,4 +39,11 @@ public:
 	float attackRange = 100;
 	float damage;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "VFX")
+		TSubclassOf<class UObject> normalPunchVFX;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+		TSubclassOf<class UObject> buffedPunchVFX;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+		TSubclassOf<class UObject> hitVFX;
+
 };
