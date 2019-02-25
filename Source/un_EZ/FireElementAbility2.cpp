@@ -41,6 +41,7 @@ void AFireElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 			Cast<ATori>(OtherActor)->recieveDamage(damage);
 			myPlayer->stopAllVelocity();
 			myElement->fireChi = 2;
+			myElement->stopAnimMontage();
 		}
 	}
 }
