@@ -72,6 +72,7 @@ void AFireElement::ability2()
 	{
 		Super::ability2();
 		myOwner->locked = 3;
+		myOwner->setMoveSpeed(0);
 	}
 
 }
@@ -91,6 +92,7 @@ void AFireElement::ability2End()
 	if (ammo1 > maxAmmo1)
 		ammo1 = maxAmmo1;
 	myOwner->locked = 0;
+	myOwner->setMoveSpeed(myOwner->moveSpeed);
 }
 
 int AFireElement::returnElementType()
