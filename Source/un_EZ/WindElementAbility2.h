@@ -52,8 +52,11 @@ public:
 	int numOfEnemy;
 	FVector playerLocation;
 	FVector enemyLocation;
+	FVector enemyForward;
 	FVector a;
 	FVector b;
+	float ccDur;
+	float slow;
 
 	USphereComponent* collider;
 

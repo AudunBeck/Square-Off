@@ -37,12 +37,29 @@ void AWindElementAbility2::Tick(float DeltaTime)
 
 void AWindElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Damage is: %f"), damage);
 	if (OtherActor != myPlayer)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			Cast<ATori>(OtherActor)->recieveDamage(damage);
+			ccDur = 2/*myElement->maxInterval*/;
+			playerLocation = myPlayer->GetActorLocation();
+			enemyLocation = OtherActor->GetActorLocation();
+			enemyForward = OtherActor->GetActorForwardVector();
+
+			a = (playerLocation - enemyLocation).GetSafeNormal();
+			b = enemyForward.GetSafeNormal();
+			slow = 30.f; //(50 * (b.Size() / a.Size()));
+
+			float angle = FMath::RadiansToDegrees(acosf(FVector::DotProduct(a, b)));
+			float sin;
+			float cos;
+			FMath::SinCos(&sin, &cos, angle);
+			//UE_LOG(LogTemp, Warning, TEXT("Angle is: %f"), angle);
+			UE_LOG(LogTemp, Warning, TEXT("Sine is: %f"), sin);
+			//UE_LOG(LogTemp, Warning, TEXT("cos is: %f"), cos);
+
+			Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);
+			//Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * 300.f, false, true);
 		}
 	}
 }

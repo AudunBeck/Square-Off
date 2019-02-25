@@ -29,7 +29,7 @@ void AWindElement::Tick(float DeltaTime)
 		{
 			interval = maxInterval;
 			myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3);
-			ability2();
+			//ability2();
 		}
 	}
 	if (myOwner->channelingAbility2 == false && channelTime < maxChannelTime)
@@ -40,7 +40,7 @@ void AWindElement::Tick(float DeltaTime)
 	if (channelTime != 0)
 	{
 		ability2Damage = (MaxAbility2Damage / maxChannelTime) * channelTime;
-		distance = (maxDistance / maxChannelTime )* channelTime;
+		distance = (maxDistance / maxChannelTime ) * channelTime;
 	}
 	if (interval > 0)
 		interval -= DeltaTime;
