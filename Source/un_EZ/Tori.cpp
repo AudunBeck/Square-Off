@@ -176,6 +176,7 @@ void ATori::dodgeEnd()
 
 void ATori::ability_1()
 {
+	channelingAbility1 = true;
 	if (locked <= 0)
 	{
 		if (currentGlobalCooldown <= 0)
@@ -193,6 +194,7 @@ void ATori::ability_1()
 
 void ATori::ability1End()
 {
+	channelingAbility1 = false;
 	//if (activeElement == 1 && element_1 != nullptr)
 	//	element_1->ability1End();
 	//else if (activeElement == 2 && element_2 != nullptr)
@@ -201,6 +203,7 @@ void ATori::ability1End()
 
 void ATori::ability_2()
 {
+	channelingAbility2 = true;
 	if (locked <= 0)
 	{
 		if (currentGlobalCooldown <= 0)
@@ -216,6 +219,7 @@ void ATori::ability_2()
 
 void ATori::ability2End()
 {
+	channelingAbility2 = false;
 	//if (activeElement == 1 && element_1 != nullptr)
 	//	element_1->ability2End();
 	//else if (activeElement == 2 && element_2 != nullptr)

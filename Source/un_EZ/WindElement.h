@@ -63,34 +63,25 @@ public:
 	///Value not used
 	/*UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;*/
-	
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float radius0 = 60.0f;
-	
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float radius1 = 300.0f;
-
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float radius2 = 600.0f;
-	
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float radius3 = 900.0f;
-
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float timeTilSecond = 2.f;
-
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float timeTilThird = 2.f;
 
 	// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Damage1 = 30.f;
+		float MaxAbility2Damage = 5.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Damage2 = 50.f;
+		float maxDistance = 700.0f;
 
-	int windChi;
-	float buffDur;
-	float maxBuffDur;
-	bool chargingAbilit2;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float channelSpeed = 2000.f;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float maxChannelTime = 5.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float maxInterval = 0.2f;
+
+	float interval;
+	float ability2Damage;
+	float distance;
+	float channelTime;
 };

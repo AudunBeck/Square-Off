@@ -45,8 +45,6 @@ void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			Cast<ATori>(OtherActor)->recieveDamage(damage);
-			if(myElement->windChi < 2)
-				myElement->windChi++;
 		}
 	}
 }
