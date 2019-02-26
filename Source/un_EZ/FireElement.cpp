@@ -43,7 +43,7 @@ AFireElement::AFireElement()
 
 void AFireElement::ability1()
 {
-	if (ammo1 > 0 && myOwner->ability1Ended == false)
+	if (myOwner->ability1Ended == false)
 	{
 		Super::ability1();
 		UE_LOG(LogTemp, Warning, TEXT("Fire attack1"));
@@ -62,13 +62,12 @@ void AFireElement::ability1End()
 	AFireElementAbility1* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
-	myOwner->locked = 0;
 
 }
 
 void AFireElement::ability2()
 {
-	if (ammo2 > 0 && myOwner->ability2Ended == false)
+	if (myOwner->ability2Ended == false)
 	{
 		Super::ability2();
 		myOwner->locked = 3;
@@ -79,6 +78,9 @@ void AFireElement::ability2()
 
 void AFireElement::ability2End()
 {
+	///Had to put rotationRate change here, seemed to go off after we changed it to the right value in the firelemenent hitting.
+	/// multithreading???
+	myOwner->setRotationRate(0);
 	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
 
 	FActorSpawnParameters tempParam;
@@ -86,13 +88,6 @@ void AFireElement::ability2End()
 	AFireElementAbility2* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
-
-	// Refills ammo1 as mentioned in design doc
-	ammo1 += ammo1Refill;
-	if (ammo1 > maxAmmo1)
-		ammo1 = maxAmmo1;
-	myOwner->locked = 0;
-	myOwner->setMoveSpeed(myOwner->moveSpeed);
 }
 
 int AFireElement::returnElementType()

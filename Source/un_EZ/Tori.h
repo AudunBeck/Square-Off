@@ -29,8 +29,10 @@ public:
 	// Runs movement for the character.
 	void move_X(float axisValue);
 	void move_Y(float axisValue);
-	void setMoveSpeed(float newMoveSpeed);
-	void setRotationRate(float newRotationSpeed);
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+		void setMoveSpeed(float newMoveSpeed);
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+		void setRotationRate(float newRotationSpeed);
 	float currentSpeed;
 	float maxSlow;
 	void slowCheck(float DeltaTime);
@@ -110,11 +112,11 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Movement")
 		void stopAllVelocity();
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float locked; // How long the control of the character is locked.
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 		float moveSpeed = 600;
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 		float rotationRate = 720;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		int dodgeMaxAmmo = 2;
