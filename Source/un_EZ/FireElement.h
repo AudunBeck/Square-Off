@@ -58,7 +58,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float fireKick = 6000;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ability2")
 		int maxFireChi = 2;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Animations")
 		int fireChi;
