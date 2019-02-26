@@ -19,7 +19,8 @@ AFireElement::AFireElement()
 		ability1Damage = Ability1Data->Damage;
 		ability1BuffedDamage = Ability1Data->BuffedDamage;
 		maxCooldownAbility1 = Ability1Data->MaxCooldown;
-		ammo1 = Ability1Data->MaxAmmo;
+		maxAmmo1 = Ability1Data->MaxAmmo;
+		ammo1 = maxAmmo1;
 		ammoPerCd1 = Ability1Data->AmmoPerCD;
 		ability1Range = Ability1Data->Range;
 		firePunch = Ability1Data->MoveRange;
@@ -29,7 +30,8 @@ AFireElement::AFireElement()
 	{
 		ability2Damage = Ability2Data->Damage;
 		maxCooldownAbility2 = Ability2Data->MaxCooldown;
-		ammo2 = Ability2Data->MaxAmmo;
+		maxAmmo2 = Ability2Data->MaxAmmo;
+		ammo2 = maxAmmo2;
 		ammoPerCd2 = Ability2Data->AmmoPerCD;
 		ability2Range = Ability2Data->Range;
 		fireKick = Ability2Data->MoveRange;
@@ -41,9 +43,12 @@ AFireElement::AFireElement()
 
 void AFireElement::ability1()
 {
-	if (ammo1 > 0 && myOwner->ability1Ended == false)
+	if (myOwner->ability1Ended == false)
 	{
 		Super::ability1();
+		UE_LOG(LogTemp, Warning, TEXT("Fire attack1"));
+		myOwner->locked = 3;
+
 	}
 }
 
@@ -57,23 +62,25 @@ void AFireElement::ability1End()
 	AFireElementAbility1* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
-	if (fireChi > 0)
-	{
-		fireChi -= 1;
-	}
+
 }
 
 void AFireElement::ability2()
 {
-	if (ammo2 > 0 && myOwner->ability2Ended == false)
+	if (myOwner->ability2Ended == false)
 	{
 		Super::ability2();
+		myOwner->locked = 3;
+		myOwner->setMoveSpeed(0);
 	}
 
 }
 
 void AFireElement::ability2End()
 {
+	///Had to put rotationRate change here, seemed to go off after we changed it to the right value in the firelemenent hitting.
+	/// multithreading???
+	myOwner->setRotationRate(0);
 	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
 
 	FActorSpawnParameters tempParam;
@@ -81,12 +88,6 @@ void AFireElement::ability2End()
 	AFireElementAbility2* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
-
-	// Refills ammo1 as mentioned in design doc
-	ammo1 += ammo1Refill;
-	if (ammo1 > maxAmmo1)
-		ammo1 = maxAmmo1;
-	fireChi = maxFireChi;
 }
 
 int AFireElement::returnElementType()
