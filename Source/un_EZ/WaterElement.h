@@ -50,6 +50,9 @@ public:
 
 
 	// Ability 1
+	float windUpTime;
+	bool charging;
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 5.0f;
 
@@ -59,51 +62,40 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float boltSpeed = 1200.0f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float boltSpeedBuffed = 2200.0f;
 
-	bool charging;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
-	// Charge that starts when you press attack, and fires the bolt when reaching 0
-	float windUpTime;
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxWindUpTime = 0.3f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float damage = 30.f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float damageBuffed = 60.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ccDur = 0.5f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ccDurBuffed = 1.5f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float slow = 15.f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float slowBuffed = 30.f;
 
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;
+
 	UPROPERTY(BlueprintReadOnly)
 		float buffDur = 0;
-	float maxBuffDur;
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float dashDist = 3000;
 
-	// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage = 0.f;
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2CcDur = 0.5f;
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Slow = 30.f;
-	int counter = 0;
-
-	float tempTimer;
 
 	UDataTable* BalancingTable;
 };

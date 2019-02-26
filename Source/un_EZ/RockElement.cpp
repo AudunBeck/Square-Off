@@ -41,6 +41,9 @@ void ARockElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (cooldown > 0)
+		cooldown -= DeltaTime;
+
 	// Hold the charge
 	if (channelingAbility1 == true)
 	{
@@ -76,8 +79,8 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 	ARockElementAbility1* temp;
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
-	temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
-		myOwner->GetActorRotation(), tempParam);
+	temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP,
+		myOwner->GetActorLocation() + myOwner->GetActorForwardVector(), myOwner->GetActorRotation(), tempParam);
 	myOwner->setMoveSpeed(myOwner->moveSpeed);
 	myOwner->currentSpeed = myOwner->moveSpeed;
 	myOwner->damageMultiplier = 1;
@@ -92,8 +95,9 @@ void ARockElement::ability2()
 {
 	/// Can still use ability2 while charging - fix this with animation
 	/// Can also use multiple walls
-	if (myOwner->ability2Ended == false)
+	if (myOwner->ability2Ended == false && cooldown <= 0)
 	{
+		cooldown = ability2Lifespan; // To avoid spamming of the wall
 		Super::ability2();
 		FVector forwardVec = myOwner->GetActorForwardVector();
 		FVector playerVec = myOwner->GetActorLocation();

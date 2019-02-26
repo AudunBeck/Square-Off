@@ -108,14 +108,13 @@ void ATori::move_Y(float axisValue)
 
 void ATori::setMoveSpeed(float newMoveSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Setting movespeed to %f"), newMoveSpeed);
-
+	//UE_LOG(LogTemp, Warning, TEXT("Setting movespeed to %f"), newMoveSpeed);
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
 }
 
 void ATori::setRotationRate(float newRotationRate)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Setting rotation rate to %f"), newRotationRate);
+	//UE_LOG(LogTemp, Warning, TEXT("Setting rotation rate to %f"), newRotationRate);
 	GetCharacterMovement()->RotationRate = FRotator(0.f, newRotationRate, 0.f);
 }
 
