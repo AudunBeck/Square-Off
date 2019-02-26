@@ -53,8 +53,7 @@ public:
 		bool ability1Used = false;
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
 		bool ability1Ended = false;
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "WindElement")
-		bool channelingAbility1 = false;
+
 
 	void ability_2();
 	void ability2End();
@@ -62,8 +61,6 @@ public:
 		bool ability2Used = false;
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
 		bool ability2Ended = false;
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "WindElement")
-		bool channelingAbility2 = false;
 
 	// Health properties
 	UPROPERTY(EditAnywhere, Category = "HitPoints")

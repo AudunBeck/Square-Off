@@ -39,7 +39,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
 	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
-		bool charging = true;
+		bool charging = false;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
@@ -48,6 +48,10 @@ public:
 		float rockPunch;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Damage;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float damageReduction;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float slowFactor = 0.3f;
 
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")

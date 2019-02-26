@@ -176,15 +176,21 @@ void ATori::dodgeEnd()
 
 void ATori::ability_1()
 {
-	channelingAbility1 = true;
+	
 	if (locked <= 0)
 	{
 		if (currentGlobalCooldown <= 0)
 		{
 			if (activeElement == 1 && element_1 != nullptr)
+			{
 				element_1->ability1();
+				element_1->channelingAbility1 = true;
+			}
 			else if (activeElement == 2 && element_2 != nullptr)
+			{
 				element_2->ability1();
+				element_2->channelingAbility1 = true;
+			}
 			currentGlobalCooldown = globalCooldown;
 		}
 		else
@@ -194,24 +200,36 @@ void ATori::ability_1()
 
 void ATori::ability1End()
 {
-	channelingAbility1 = false;
-	//if (activeElement == 1 && element_1 != nullptr)
-	//	element_1->ability1End();
-	//else if (activeElement == 2 && element_2 != nullptr)
-	//	element_2->ability1End();
+	if (activeElement == 1 && element_1 != nullptr)
+	{
+		element_1->ability1End();
+		element_1->channelingAbility1 = false;
+	}
+	else if (activeElement == 2 && element_2 != nullptr)
+	{
+		element_2->ability1End();
+		element_2->channelingAbility1 = false;
+	}
 }
 
 void ATori::ability_2()
 {
-	channelingAbility2 = true;
+	
 	if (locked <= 0)
 	{
 		if (currentGlobalCooldown <= 0)
 		{
 			if (activeElement == 1 && element_1 != nullptr)
+			{
 				element_1->ability2();
+				element_1->channelingAbility2 = true;
+			}
 			else if (activeElement == 2 && element_2 != nullptr)
+			{
 				element_2->ability2();
+				element_2->channelingAbility2 = true;
+			}
+				
 			currentGlobalCooldown = globalCooldown;
 		}
 	}
@@ -219,11 +237,16 @@ void ATori::ability_2()
 
 void ATori::ability2End()
 {
-	channelingAbility2 = false;
-	//if (activeElement == 1 && element_1 != nullptr)
-	//	element_1->ability2End();
-	//else if (activeElement == 2 && element_2 != nullptr)
-	//	element_2->ability2End();
+	if (activeElement == 1 && element_1 != nullptr)
+	{
+		element_1->ability2End();
+		element_1->channelingAbility2 = false;
+	}
+	else if (activeElement == 2 && element_2 != nullptr)
+	{
+		element_2->ability2End();
+		element_2->channelingAbility2 = false;
+	}
 }
 
 void ATori::recieveDamage(float damage)

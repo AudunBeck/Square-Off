@@ -33,6 +33,11 @@ public:
 		class ATori* myOwner;
 	ATori* getMyOwner();
 
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Abilities")
+		bool channelingAbility1 = false;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Abilities")
+		bool channelingAbility2 = false;
+
 	// Ability 1 variables.
 	UFUNCTION(BlueprintCallable)
 		virtual void ability1();

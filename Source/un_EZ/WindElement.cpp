@@ -22,7 +22,7 @@ void AWindElement::Tick(float DeltaTime)
 		windUpTime -= DeltaTime;
 
 	// Ability 2
-	if (myOwner->channelingAbility2 == true)
+	if (channelingAbility2 == true)
 	{
 		channelTime -= DeltaTime;
 		if (channelTime > 0 && interval <= 0)
@@ -32,7 +32,7 @@ void AWindElement::Tick(float DeltaTime)
 			//ability2();
 		}
 	}
-	if (myOwner->channelingAbility2 == false && channelTime < maxChannelTime)
+	if (channelingAbility2 == false && channelTime < maxChannelTime)
 	{
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		channelTime += DeltaTime;
