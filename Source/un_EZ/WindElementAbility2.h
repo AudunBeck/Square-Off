@@ -3,10 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
-#include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
-#include "WindElement.h"
 #include "BaseAbility.h"
+#include "WindElement.h"
 #include "Engine/Classes/Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "WindElementAbility2.generated.h"
@@ -28,10 +26,12 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
-	int counter;
-	int myWindChi;
 	float currentTime;
-
+	float myDistance;
+	float myChannelSpeed;
+	float distTraveled;
+	float damage;
+	FVector spawnLocation;
 
 	UPROPERTY(BlueprintReadWrite)
 		class AWindElement* myElement;
@@ -52,13 +52,15 @@ public:
 	int numOfEnemy;
 	FVector playerLocation;
 	FVector enemyLocation;
+	FVector enemyForward;
 	FVector a;
 	FVector b;
-
-	void checkForEnemy(float innerRadius, float outerRadius);
-	void firstWave();
-	void secondWave();
-	void thirdWave();
+	float ccDur;
+	float slow;
 
 	USphereComponent* collider;
+
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

@@ -9,6 +9,8 @@ AWindElementAbility2::AWindElementAbility2()
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility2::OnOverlapBegin);
 }
 
 void AWindElementAbility2::BeginPlay()
@@ -16,94 +18,49 @@ void AWindElementAbility2::BeginPlay()
 	Super::BeginPlay();
 	myElement = Cast<AWindElement>(GetOwner());
 	myPlayer = myElement->myOwner;
-	myWindChi = myElement->windChi;
-	switch(myWindChi)
-	{
-		case 0:
-			SetLifeSpan(myPlayer->globalCooldown);
-			break;
-		case 1:
-			SetLifeSpan(myElement->timeTilSecond);
-			break;
-		case 2:
-			SetLifeSpan(myElement->timeTilSecond + myElement->timeTilThird);
-			break;
-	}
-	counter = 0;
+	myDistance = myElement->distance;
+	myChannelSpeed = myElement->channelSpeed;
+	damage = myElement->ability2Damage;
+	spawnLocation = GetActorLocation();
 }
 
 void AWindElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	if(counter == 0)
-		firstWave();
-
-	if (counter == 1 && (GetGameTimeSinceCreation() > myElement->timeTilSecond) && myWindChi >= 1)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Attempting to shoot second wave"));
-		secondWave();
-	}
-		
-
-	if (counter == 2 && (GetGameTimeSinceCreation() > myElement->timeTilSecond + myElement->timeTilThird) && myWindChi == 2)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Attempting to shoot third wave"));
-		thirdWave();
-	}
+	FVector NewLocation = GetActorLocation();
+	NewLocation += GetActorForwardVector() * myChannelSpeed * DeltaTime;
+	SetActorLocation(NewLocation);
+	distTraveled = sqrt(pow((spawnLocation.X - NewLocation.X), 2) + pow((spawnLocation.Y - NewLocation.Y), 2));
+	if (distTraveled > myDistance)
+		this->Destroy();
 }
 
-// Checks for enemies, and affect them
-void AWindElementAbility2::checkForEnemy(float innerRadius, float outerRadius)
+void AWindElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	enemyReference = nullptr;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATori::StaticClass(), enemy);
-	numOfEnemy = enemy.Num() -1;
-	if (numOfEnemy > 0)
+	if (OtherActor != myPlayer)
 	{
-		for (int i = 0; i <= numOfEnemy; i++)
+		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			enemyReference = Cast<ATori>(enemy[i]);
+			ccDur = 2/*myElement->maxInterval*/;
+			playerLocation = myPlayer->GetActorLocation();
+			enemyLocation = OtherActor->GetActorLocation();
+			enemyForward = OtherActor->GetActorForwardVector();
 
-			playerLocation = myPlayer->GetActorLocation();			
-			enemyLocation = enemyReference->GetActorLocation();
-			pushDirection = (enemyLocation - playerLocation);
+			a = (playerLocation - enemyLocation).GetSafeNormal();
+			b = enemyForward.GetSafeNormal();
+			slow = 30.f; //(50 * (b.Size() / a.Size()));
 
-			RadiusToEnemy = sqrt(pow((enemyLocation.X - playerLocation.X), 2) + pow((enemyLocation.Y - playerLocation.Y), 2));
-			if (RadiusToEnemy > innerRadius && RadiusToEnemy < outerRadius)
-			{
-				switch (counter)
-				{
-					case 0:
-						enemyReference->recieveDamage(myElement->ability2Damage1);
-						break;
-					case 1:
-						enemyReference->LaunchCharacter(pushDirection, true, true);
-						break;
-					case 2:
-						enemyReference->recieveDamage(myElement->ability2Damage1);
-						enemyReference->LaunchCharacter(pushDirection, true, true);
-						break;
-				}
-			}
+			float angle = FMath::RadiansToDegrees(acosf(FVector::DotProduct(a, b)));
+			float sin;
+			float cos;
+			FMath::SinCos(&sin, &cos, angle);
+			UE_LOG(LogTemp, Warning, TEXT("Angle is: %f"), angle);
+			UE_LOG(LogTemp, Warning, TEXT("Sine is: %f"), sin);
+			UE_LOG(LogTemp, Warning, TEXT("cos is: %f"), cos);
+
+			Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);
+			
+			//Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * 300.f, false, true);
 		}
 	}
 }
-
-void AWindElementAbility2::firstWave()
-{
-	checkForEnemy(myElement->radius0, myElement->radius1);
-	counter = 1;
-}
-
-void AWindElementAbility2::secondWave()
-{
-	checkForEnemy(myElement->radius1, myElement->radius2);
-	counter = 2;
-}
-
-void AWindElementAbility2::thirdWave()
-{
-	checkForEnemy(myElement->radius2, myElement->radius3);
-}
-

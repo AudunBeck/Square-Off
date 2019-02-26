@@ -24,7 +24,7 @@ void ARockElementAbility1::BeginPlay()
 	chargedHit = myElement->chargeFloat;
 	SetLifeSpan((myElement->ability1lifeSpan) * chargedHit);
 	attackRange = myElement->ability1Range;
-	damage = myElement->ability1Damage;	
+	damage = myElement->ability1Damage;
 }
 
 void ARockElementAbility1::Tick(float DeltaTime)

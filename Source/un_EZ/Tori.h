@@ -56,6 +56,7 @@ public:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
 		bool ability1Ended = false;
 
+
 	void ability_2();
 	void ability2End();
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Animations")
