@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Tori.h"
 #include "Engine/World.h"
 #include "BaseElement.generated.h"
+
+class ATori;
 
 UCLASS()
 class UN_EZ_API ABaseElement : public AActor
