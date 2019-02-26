@@ -38,9 +38,13 @@ void AFireElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
+			myPlayer->setRotationRate(myPlayer->rotationRate);
+			myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 			Cast<ATori>(OtherActor)->recieveDamage(damage);
 			myPlayer->stopAllVelocity();
 			myElement->fireChi = 2;
+			myElement->stopAnimMontage(0.4f, 2);
+			myPlayer->locked = 0;			
 		}
 	}
 }

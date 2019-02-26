@@ -5,7 +5,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Classes/Engine/LocalPlayer.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
-#include "Engine/GameEngine.h"
 #include "un_EZGameModeBase.h"
 
 ATori::ATori()
@@ -109,11 +108,14 @@ void ATori::move_Y(float axisValue)
 
 void ATori::setMoveSpeed(float newMoveSpeed)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Setting movespeed to %f"), newMoveSpeed);
+
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
 }
 
 void ATori::setRotationRate(float newRotationRate)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Setting rotation rate to %f"), newRotationRate);
 	GetCharacterMovement()->RotationRate = FRotator(0.f, newRotationRate, 0.f);
 }
 
@@ -255,8 +257,8 @@ void ATori::recieveDamage(float damage)
 	//int playerNum = Cast<APlayerController>(GetController())->GetLocalPlayer()->GetControllerId();
 	if (iTime <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player has %f hitpoints left"), hitPoints); // Find a way to find the player-number, instead of 1
-		UE_LOG(LogTemp, Warning, TEXT("Damage multiplier: %f"), damageMultiplier);
+		//UE_LOG(LogTemp, Warning, TEXT("Player has %f hitpoints left"), hitPoints); // Find a way to find the player-number, instead of 1
+		//UE_LOG(LogTemp, Warning, TEXT("Damage multiplier: %f"), damageMultiplier);
 		hitPoints -= damage * damageMultiplier;
 		checkIfDead();
 		wasHit = true;

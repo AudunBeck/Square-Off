@@ -4,6 +4,7 @@
 
 AFireElementAbility1::AFireElementAbility1()
 {
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
 	RootComponent = collider;
@@ -20,19 +21,21 @@ void AFireElementAbility1::BeginPlay()
 	myPlayer = myElement->myOwner;
 	SetLifeSpan(myElement->ability1lifeSpan);
 	attackRange = myElement->ability1Range;
-	if (myElement->fireChi == 2)
+	if (myElement->fireChi >= 2)
 	{
 		buffed = true;
 		damage = myElement->ability1BuffedDamage;
 		SetActorScale3D(myElement->boostedAbility1Scale);
-		beginSound();
 		myElement->fireChi = 0;
+		//UObject* temp = GetWorld()->SpawnActor<UObject>(buffedPunchVFX, GetActorLocation()+FVector(90,0,0), GetActorRotation());
 	}
 	else
 	{
 		damage = myElement->ability1Damage;
 		buffed = false;
+		//UObject* temp = GetWorld()->SpawnActor<UObject>(normalPunchVFX, GetActorLocation(), GetActorRotation());
 	}
+	beginSound();
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)
@@ -45,27 +48,16 @@ void AFireElementAbility1::Tick(float DeltaTime)
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (buffed)
+	if (OtherActor != myPlayer)
 	{
-		if (OtherActor != myPlayer)
+		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			if (OtherActor->IsA(ATori::StaticClass()))
-			{
-				Cast<ATori>(OtherActor)->recieveDamage(damage);
-				myPlayer->stopAllVelocity();
-			}
-		}
-	}
-	if (!buffed)
-	{
-		if (OtherActor != myPlayer)
-		{
-			if (OtherActor->IsA(ATori::StaticClass()))
-			{
-				Cast<ATori>(OtherActor)->recieveDamage(damage);
-				myPlayer->stopAllVelocity();
+			// Make the target take damage
+			Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value is temporary
+			myPlayer->stopAllVelocity();
+			if (!buffed)
 				myElement->fireChi += 1;
-			}
+			UObject* temp = GetWorld()->SpawnActor<UObject>(hitVFX, OtherActor->GetActorLocation(), GetActorRotation());
 		}
 	}
 }
