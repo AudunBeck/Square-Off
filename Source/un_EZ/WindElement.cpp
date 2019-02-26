@@ -29,7 +29,13 @@ void AWindElement::Tick(float DeltaTime)
 		{
 			interval = maxInterval;
 			myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3);
-			//ability2();
+			myOwner->locked = myOwner->globalCooldown;
+
+			AWindElementAbility2* temp;
+			FActorSpawnParameters tempParam;
+			tempParam.Owner = this;
+			temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+				myOwner->GetActorRotation(), tempParam);
 		}
 	}
 	if (channelingAbility2 == false && channelTime < maxChannelTime)
@@ -66,15 +72,13 @@ void AWindElement::ability2()
 {
 	if (channelTime > 0)
 	{
-		myOwner->locked = myOwner->globalCooldown;
-		
-		AWindElementAbility2* temp;
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
-			myOwner->GetActorRotation(), tempParam);
-		//Super::ability2();
+		canChannel = true;
 	}
+}
+
+void AWindElement::ability2End()
+{
+	canChannel = false;
 }
 
 int AWindElement::returnElementType()

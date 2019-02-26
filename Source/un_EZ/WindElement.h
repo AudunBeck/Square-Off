@@ -24,6 +24,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void ability1()override;
 	virtual void ability2()override;
+	virtual void ability2End()override;
 	virtual int returnElementType()override;
 
 	// Holds the pointers for element abilities
@@ -59,6 +60,8 @@ public:
 
 
 	// Ability 2 
+
+	bool canChannel = false;
 
 	///Value not used
 	/*UPROPERTY(EditAnywhere, Category = "Ability2")
