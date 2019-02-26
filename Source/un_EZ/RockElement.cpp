@@ -67,8 +67,9 @@ void ARockElement::ability1()
 	myOwner->damageMultiplier = damageReduction;
 	myOwner->setMoveSpeed(myOwner->moveSpeed * slowFactor);
 	myOwner->currentSpeed = myOwner->moveSpeed * slowFactor;
+	myOwner->ability1Used = true;
 
-	//Super::ability1();
+	Super::ability1();
 }
 
 
@@ -83,10 +84,10 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 	myOwner->currentSpeed = myOwner->moveSpeed;
 	myOwner->damageMultiplier = 1;
 	//myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
-	myOwner->locked = 0;
+	myOwner->ability1Used = false;
 	chargeFloat = 0;
 	myOwner->ability1Ended = true;
-	Super::ability1End();
+	//Super::ability1End();
 }
 
 void ARockElement::ability2()
