@@ -51,16 +51,16 @@ void AFireElement::ability1End()
 {
 
 	// Dash part of the attack
-	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
-	FActorSpawnParameters tempParam;
-	tempParam.Owner = this;
-	AFireElementAbility1* temp;
-	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
-		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
-	if (fireChi > 0)
-	{
-		fireChi -= 1;
-	}
+	//myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
+	//FActorSpawnParameters tempParam;
+	//tempParam.Owner = this;
+	//AFireElementAbility1* temp;
+	//temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
+	//	myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+	//if (fireChi > 0)
+	//{
+	//	fireChi -= 1;
+	//}
 }
 
 void AFireElement::ability2()
@@ -74,19 +74,19 @@ void AFireElement::ability2()
 
 void AFireElement::ability2End()
 {
-	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
+	//myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
 
-	FActorSpawnParameters tempParam;
-	tempParam.Owner = this;
-	AFireElementAbility2* temp;
-	temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
-		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
+	//FActorSpawnParameters tempParam;
+	//tempParam.Owner = this;
+	//AFireElementAbility2* temp;
+	//temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
+	//	myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
 
-	// Refills ammo1 as mentioned in design doc
-	ammo1 += ammo1Refill;
-	if (ammo1 > maxAmmo1)
-		ammo1 = maxAmmo1;
-	fireChi = maxFireChi;
+	//// Refills ammo1 as mentioned in design doc
+	//ammo1 += ammo1Refill;
+	//if (ammo1 > maxAmmo1)
+	//	ammo1 = maxAmmo1;
+	//fireChi = maxFireChi;
 }
 
 int AFireElement::returnElementType()

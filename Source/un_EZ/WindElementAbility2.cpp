@@ -54,11 +54,12 @@ void AWindElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 			float sin;
 			float cos;
 			FMath::SinCos(&sin, &cos, angle);
-			//UE_LOG(LogTemp, Warning, TEXT("Angle is: %f"), angle);
+			UE_LOG(LogTemp, Warning, TEXT("Angle is: %f"), angle);
 			UE_LOG(LogTemp, Warning, TEXT("Sine is: %f"), sin);
-			//UE_LOG(LogTemp, Warning, TEXT("cos is: %f"), cos);
+			UE_LOG(LogTemp, Warning, TEXT("cos is: %f"), cos);
 
 			Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);
+			
 			//Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * 300.f, false, true);
 		}
 	}

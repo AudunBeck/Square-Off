@@ -78,7 +78,6 @@ void AWindElement::ability2()
 
 void AWindElement::ability2End()
 {
-	canChannel = false;
 }
 
 int AWindElement::returnElementType()

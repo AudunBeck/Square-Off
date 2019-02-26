@@ -68,7 +68,7 @@ void ARockElement::ability1()
 	myOwner->setMoveSpeed(myOwner->moveSpeed * slowFactor);
 	myOwner->currentSpeed = myOwner->moveSpeed * slowFactor;
 
-	Super::ability1();
+	//Super::ability1();
 }
 
 
@@ -100,13 +100,13 @@ void ARockElement::ability2()
 
 void ARockElement::ability2End()
 {
-	FVector forwardVec = myOwner->GetActorForwardVector();
-	FVector playerVec = myOwner->GetActorLocation();
-	FRotator playerRot = myOwner->GetActorRotation();
-	const FVector newVec = (forwardVec * ability2Range) + playerVec;
-	FActorSpawnParameters tempParam;
-	tempParam.Owner = this;
-	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
+	//FVector forwardVec = myOwner->GetActorForwardVector();
+	//FVector playerVec = myOwner->GetActorLocation();
+	//FRotator playerRot = myOwner->GetActorRotation();
+	//const FVector newVec = (forwardVec * ability2Range) + playerVec;
+	//FActorSpawnParameters tempParam;
+	//tempParam.Owner = this;
+	//ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
 }
 
 int ARockElement::returnElementType()
