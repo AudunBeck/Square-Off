@@ -48,13 +48,11 @@ void AFireElement::ability1()
 		Super::ability1();
 		UE_LOG(LogTemp, Warning, TEXT("Fire attack1"));
 		myOwner->locked = 3;
-
 	}
 }
 
 void AFireElement::ability1End()
 {
-
 	// Dash part of the attack
 	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
 	FActorSpawnParameters tempParam;
@@ -73,7 +71,6 @@ void AFireElement::ability2()
 		myOwner->locked = 3;
 		myOwner->setMoveSpeed(0);
 	}
-
 }
 
 void AFireElement::ability2End()

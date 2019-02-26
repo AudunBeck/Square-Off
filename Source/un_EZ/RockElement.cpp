@@ -42,7 +42,6 @@ void ARockElement::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Hold the charge
-
 	if (channelingAbility1 == true)
 	{
 		/// Can still use ability2 while charging - fix this with animation
@@ -58,7 +57,6 @@ void ARockElement::Tick(float DeltaTime)
 	{
 		// Reset parameters if needed - Else remove this if-statement
 	}
-	
 }
 
 void ARockElement::ability1()
@@ -69,7 +67,7 @@ void ARockElement::ability1()
 	myOwner->currentSpeed = myOwner->moveSpeed * slowFactor;
 	myOwner->ability1Used = true;
 
-	Super::ability1();
+	//Super::ability1();
 }
 
 
@@ -93,21 +91,23 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 void ARockElement::ability2()
 {
 	/// Can still use ability2 while charging - fix this with animation
+	/// Can also use multiple walls
 	if (myOwner->ability2Ended == false)
 	{
 		Super::ability2();
+		FVector forwardVec = myOwner->GetActorForwardVector();
+		FVector playerVec = myOwner->GetActorLocation();
+		FRotator playerRot = myOwner->GetActorRotation();
+		const FVector newVec = (forwardVec * ability2Range) + playerVec;
+		FActorSpawnParameters tempParam;
+		tempParam.Owner = this;
+		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
 	}	
 }
 
 void ARockElement::ability2End()
 {
-	//FVector forwardVec = myOwner->GetActorForwardVector();
-	//FVector playerVec = myOwner->GetActorLocation();
-	//FRotator playerRot = myOwner->GetActorRotation();
-	//const FVector newVec = (forwardVec * ability2Range) + playerVec;
-	//FActorSpawnParameters tempParam;
-	//tempParam.Owner = this;
-	//ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
+	// Does nothing
 }
 
 int ARockElement::returnElementType()
