@@ -76,6 +76,10 @@ void ABaseElement::ability1()
 	}
 }
 
+void ABaseElement::ability1FireCode()
+{
+}
+
 void ABaseElement::ability1End()
 {
 	//myOwner->ability1Used = false;
@@ -95,6 +99,10 @@ void ABaseElement::ability2()
 		ammo2 -= 1;
 		ability2Anim();
 	}
+}
+
+void ABaseElement::ability2FireCode()
+{
 }
 
 void ABaseElement::ability2End()

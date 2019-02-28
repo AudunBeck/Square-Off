@@ -21,8 +21,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void ability1()override;
+	virtual void ability1FireCode()override;
 	virtual void ability1End()override;
 	virtual void ability2()override;
+	virtual void ability2FireCode()override;
 	virtual void ability2End()override;
 	virtual int returnElementType()override;
 
@@ -43,7 +45,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float chargeFloat;
+		float chargeFloat = 1;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float rockPunch;
 	UPROPERTY(EditAnywhere, Category = "Ability1")

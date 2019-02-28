@@ -46,10 +46,10 @@ void ARockElement::Tick(float DeltaTime)
 	if (channelingAbility1 == true)
 	{
 		/// Can still use ability2 while charging - fix this with animation
-		UE_LOG(LogTemp, Warning, TEXT("Rock ability charging"));
+		//UE_LOG(LogTemp, Warning, TEXT("Rock ability charging"));
 		if (chargeFloat < maxCharge)
 		{
-			chargeFloat += DeltaTime;
+			//chargeFloat += DeltaTime;
 			if (chargeFloat > maxCharge)
 				chargeFloat = maxCharge;
 		}
@@ -72,8 +72,7 @@ void ARockElement::ability1()
 	Super::ability1();
 }
 
-
-void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
+void ARockElement::ability1FireCode()
 {
 	ARockElementAbility1* temp;
 	FActorSpawnParameters tempParam;
@@ -83,10 +82,17 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 	myOwner->setMoveSpeed(myOwner->moveSpeed);
 	myOwner->currentSpeed = myOwner->moveSpeed;
 	myOwner->damageMultiplier = 1;
-	//myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
-	myOwner->ability1Used = false;
-	chargeFloat = 0;
+	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch, false, true);
+	
+	//chargeFloat = 0;
+}
+
+
+void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
+{
+
 	myOwner->ability1Ended = true;
+	myOwner->ability1Used = false;
 	//Super::ability1End();
 }
 
@@ -97,6 +103,18 @@ void ARockElement::ability2()
 	{
 		Super::ability2();
 	}	
+}
+
+void ARockElement::ability2FireCode()
+{
+	FVector forwardVec = myOwner->GetActorForwardVector();
+	FVector playerVec = myOwner->GetActorLocation();
+	FRotator playerRot = myOwner->GetActorRotation();
+	const FVector newVec = (forwardVec * ability2Range) + playerVec;
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
+
 }
 
 void ARockElement::ability2End()

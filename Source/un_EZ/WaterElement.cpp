@@ -95,7 +95,7 @@ void AWaterElement::ability1()
 	
 }
 
-void AWaterElement::ability1End()
+void AWaterElement::ability1FireCode()
 {
 	charging = true;
 	windUpTime = maxWindUpTime;
@@ -119,6 +119,11 @@ void AWaterElement::ability1End()
 	charging = false;
 }
 
+void AWaterElement::ability1End()
+{
+
+}
+
 void AWaterElement::ability2()
 {
 	if (ammo2 > 0 && myOwner->ability2Ended == false)
@@ -127,7 +132,7 @@ void AWaterElement::ability2()
 	}
 }
 
-void AWaterElement::ability2End()
+void AWaterElement::ability2FireCode()
 {
 	myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 	myOwner->currentSpeed = 0.f;
@@ -140,6 +145,11 @@ void AWaterElement::ability2End()
 	/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
 	temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+}
+
+void AWaterElement::ability2End()
+{
+
 }
 
 void AWaterElement::outputLog()
