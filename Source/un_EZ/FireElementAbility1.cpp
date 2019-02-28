@@ -6,10 +6,11 @@ AFireElementAbility1::AFireElementAbility1()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
-	RootComponent = collider;
-	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
-	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+	collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider")); // Can change USphereComponent to Mesh
+	//RootComponent = collider;
+	collider->SetupAttachment(RootComponent);
+	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(false);
+	Cast<UShapeComponent>(collider)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility1::OnOverlapBegin);
 }
@@ -36,6 +37,8 @@ void AFireElementAbility1::BeginPlay()
 		//UObject* temp = GetWorld()->SpawnActor<UObject>(normalPunchVFX, GetActorLocation(), GetActorRotation());
 	}
 	beginSound();
+	//Cast<UShapeComponent>(collider)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)
@@ -48,16 +51,21 @@ void AFireElementAbility1::Tick(float DeltaTime)
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor != myPlayer)
-	{
-		if (OtherActor->IsA(ATori::StaticClass()))
+
+	
+		if (OtherActor != myPlayer)
 		{
-			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(damage);	// float value is temporary
-			myPlayer->stopAllVelocity();
-			if (!buffed)
-				myElement->fireChi += 1;
-			UObject* temp = GetWorld()->SpawnActor<UObject>(hitVFX, OtherActor->GetActorLocation(), GetActorRotation());
+			if (OtherActor->IsA(ATori::StaticClass()))
+			{
+				// Make the target take damage
+				Cast<ATori>(OtherActor)->recieveDamage(damage);
+				if (!buffed)
+					myElement->fireChi += 1;
+				hitEnemyVFX(OtherActor->GetActorLocation());
+				myPlayer->freezeFrame(0.15, false);
+				myPlayer->stopAllVelocity();
+				myElement->ability1Hit = true;
+				Destroy();
+			}
 		}
-	}
 }

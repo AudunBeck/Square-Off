@@ -97,8 +97,8 @@ public:
 		void resetAbility1();
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 		void resetAbility2();
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
-		void stopAnimMontage(float blendoutTimeF, int abilityNum);
+
+	
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Abilities")
 		float attackSpeed = 1.f;

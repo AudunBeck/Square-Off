@@ -56,13 +56,15 @@ void AFireElement::ability1End()
 {
 
 	// Dash part of the attack
-	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AFireElementAbility1* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 
+	if(!ability1Hit)
+		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
+	ability1Hit = false;
 }
 
 void AFireElement::ability2()
