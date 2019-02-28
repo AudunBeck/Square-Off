@@ -260,7 +260,8 @@ void ATori::recieveDamage(float damage)
 		//UE_LOG(LogTemp, Warning, TEXT("Damage multiplier: %f"), damageMultiplier);
 		hitPoints -= damage * damageMultiplier;
 		checkIfDead();
-		wasHit = true;
+		PlayAnimMontage(receiveDamageAnim, 1, FName("Start"));
+		freezeFrame(0.4, false);//Give this some good math for dmg becoming time frozen.
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
 }

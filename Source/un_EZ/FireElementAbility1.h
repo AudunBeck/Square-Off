@@ -25,8 +25,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	class AFireElement* myElement;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		USphereComponent* collider;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UShapeComponent* collider;
 
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
@@ -40,10 +40,8 @@ public:
 	float damage;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "VFX")
-		TSubclassOf<class UObject> normalPunchVFX;
+		UParticleSystem* normalPunchVFX;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
-		TSubclassOf<class UObject> buffedPunchVFX;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
-		TSubclassOf<class UObject> hitVFX;
+		UParticleSystem* buffedPunchVFX;
 
 };

@@ -81,6 +81,8 @@ public:
 	void recieveDamage(float damage);
 	void recieveDamage(float damage, float slow, float ccDur, int type);		//Int type defines effect, 0 = slow, 1 = stun
 	void recieveDamage(float damage, float knockback, FVector knockbackPoint);
+	UPROPERTY(EditAnywhere, Category = "Animations")
+		UAnimMontage * receiveDamageAnim;
 
 	void checkIfDead();
 
@@ -100,6 +102,9 @@ public:
 		int currentElementType = 0;
 	UPROPERTY(VisibleAnywhere, BluePrintReadOnly, Category = "Animations")
 		bool isDead = false;
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
+		void freezeFrame(float timeFrozen, bool endAnim = false);
 
 	// Holds the pointers for the elements you currently have.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Elements")
