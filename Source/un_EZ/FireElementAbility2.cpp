@@ -45,6 +45,7 @@ void AFireElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 			myElement->fireChi = 2;
 			myPlayer->freezeFrame(0.3, true);
 			myPlayer->locked = 0;		
+			myElement->abilityHit = true;
 			
 		}
 	}

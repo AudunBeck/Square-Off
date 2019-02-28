@@ -44,7 +44,7 @@ public:
 		float ability1Damage;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1BuffedDamage;
-	bool ability1Hit = false;
+	bool abilityHit = false;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;

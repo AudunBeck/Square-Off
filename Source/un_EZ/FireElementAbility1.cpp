@@ -64,7 +64,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				hitEnemyVFX(OtherActor->GetActorLocation());
 				myPlayer->freezeFrame(0.15, false);
 				myPlayer->stopAllVelocity();
-				myElement->ability1Hit = true;
+				myElement->abilityHit = true;
 				Destroy();
 			}
 		}
