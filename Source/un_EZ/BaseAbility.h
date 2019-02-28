@@ -25,4 +25,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ATori* myPlayer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+		UParticleSystem* hitVFX;
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "VFX")
+		void hitEnemyVFX(FVector enemyLocation);
+
 };

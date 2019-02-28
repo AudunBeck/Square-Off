@@ -54,15 +54,17 @@ void AFireElement::ability1()
 
 void AFireElement::ability1End()
 {
-
-	// Dash part of the attack
-	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
+	abilityHit = false;
+	
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AFireElementAbility1* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 
+	if(!abilityHit)
+		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
+	
 }
 
 void AFireElement::ability2()
@@ -81,13 +83,18 @@ void AFireElement::ability2End()
 	///Had to put rotationRate change here, seemed to go off after we changed it to the right value in the firelemenent hitting.
 	/// multithreading???
 	myOwner->setRotationRate(0);
-	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
+	abilityHit = false;
 
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AFireElementAbility2* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
+	if (!abilityHit)
+		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
+	
+
+
 }
 
 int AFireElement::returnElementType()
