@@ -8,6 +8,7 @@
 #include "BaseElement.h"
 #include "pickUp.generated.h"
 
+class ApickUpSpawner;
 UCLASS()
 class UN_EZ_API ApickUp : public AActor
 {
@@ -33,4 +34,6 @@ public:
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 		void StartDestroy();
+
+	ApickUpSpawner* mySpawner;
 };
