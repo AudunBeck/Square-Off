@@ -167,6 +167,8 @@ void ATori::dodge()
 				element_2->resetAbility1();
 				element_2->resetAbility2();
 			}
+			setMoveSpeed(moveSpeed);
+			setRotationRate(rotationRate);
 
 		}
 }
@@ -306,6 +308,8 @@ void ATori::checkIfDead()
 	{
 		DisableInput(Cast<APlayerController>(Controller));
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		if (!isDead)
+			slowMoDeath(0.1f, 3.f);
 		isDead = true;
 		Cast<Aun_EZGameModeBase>(GetWorld()->GetAuthGameMode())->playerDead();
 	}
