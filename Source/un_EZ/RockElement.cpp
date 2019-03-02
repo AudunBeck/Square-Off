@@ -133,3 +133,9 @@ int ARockElement::returnElementType()
 	Super::returnElementType();
 	return 1;
 }
+
+void ARockElement::BeginPlay()
+{
+	Super::BeginPlay();
+	attachRockGlove();
+}
