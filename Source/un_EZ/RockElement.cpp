@@ -83,6 +83,7 @@ void ARockElement::ability1FireCode()
 	myOwner->currentSpeed = myOwner->moveSpeed;
 	myOwner->damageMultiplier = 1;
 	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch, false, true);
+	myOwner->setRotationRate(0);
 	
 	//chargeFloat = 0;
 }

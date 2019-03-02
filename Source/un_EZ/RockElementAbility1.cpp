@@ -44,6 +44,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			Cast<ATori>(OtherActor)->recieveDamage(damage);
 			myPlayer->stopAllVelocity();
 			myPlayer->freezeFrame(0.15, false);
+			myPlayer->setRotationRate(myPlayer->rotationRate);
 			hitEnemyVFX(OtherActor->GetActorLocation());
 		}
 
@@ -55,6 +56,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				FRotator temp = FRotator(myPlayer->GetActorRotation());
 				Cast<ARockElementAbility2>(OtherActor)->moveWall(temp, chargedHit);
 				hitEnemyVFX(OtherActor->GetActorLocation());
+				myPlayer->setRotationRate(myPlayer->rotationRate);
 				Destroy();
 			}
 			else
@@ -62,6 +64,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				UE_LOG(LogTemp, Warning, TEXT("Punch did not find myPlayer"));
 				Cast<ARockElementAbility2>(OtherActor)->moveWall(myPlayer->GetActorRotation(), chargedHit);
 				hitEnemyVFX(OtherActor->GetActorLocation());
+				myPlayer->setRotationRate(myPlayer->rotationRate);
 			}
 		}
 	}
