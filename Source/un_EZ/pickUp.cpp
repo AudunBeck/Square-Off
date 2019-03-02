@@ -3,6 +3,7 @@
 #include "pickUp.h"
 #include "Tori.h"
 #include "Engine/Classes/Components/PrimitiveComponent.h"
+#include "pickUpSpawner.h"
 
 ApickUp::ApickUp()
 {
@@ -39,6 +40,8 @@ void ApickUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AA
 			ABaseElement* temp = GetWorld()->SpawnActor<ABaseElement>(ElementBlueprint, tempParam);
 			if (player->pickUpElement(temp))
 			{
+				if (mySpawner != nullptr)
+					mySpawner->elementPickedUp();
 				StartDestroy();
 			}
 			else
