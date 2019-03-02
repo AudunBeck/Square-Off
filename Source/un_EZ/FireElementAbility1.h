@@ -23,7 +23,9 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
-	class AFireElement* myElement;
+
+	UPROPERTY(BlueprintReadOnly)
+		class AFireElement* myElement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UShapeComponent* collider;

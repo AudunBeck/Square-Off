@@ -111,3 +111,9 @@ int AFireElement::returnElementType()
 	Super::returnElementType();
 	return 2;
 }
+
+void AFireElement::BeginPlay()
+{
+	Super::BeginPlay();
+	attachFireEmitters();
+}
