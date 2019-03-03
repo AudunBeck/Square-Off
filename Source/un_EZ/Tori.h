@@ -141,10 +141,12 @@ public:
 		bool stillFiring1 = false;
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
 		bool finishedCombo1 = false;
+	bool hitAnimImmune = false;
 	UFUNCTION(BlueprintCallable, Category = "MenuTori")
 		void clearElement();
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 		void slowMoDeath(float slowMoEffect, float slowMoTime);
+	
 
 
 };

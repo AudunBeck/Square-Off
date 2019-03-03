@@ -68,6 +68,7 @@ void ARockElement::ability1()
 	myOwner->setMoveSpeed(myOwner->moveSpeed * slowFactor);
 	myOwner->currentSpeed = myOwner->moveSpeed * slowFactor;
 	myOwner->ability1Used = true;
+	myOwner->hitAnimImmune = true;
 
 	Super::ability1();
 }
@@ -79,12 +80,12 @@ void ARockElement::ability1FireCode()
 	tempParam.Owner = this;
 	temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
 		myOwner->GetActorRotation(), tempParam);
-	myOwner->setMoveSpeed(myOwner->moveSpeed);
+	myOwner->setMoveSpeed(0);
 	myOwner->currentSpeed = myOwner->moveSpeed;
+	myOwner->setRotationRate(0);
 	myOwner->damageMultiplier = 1;
 	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch, false, true);
-	myOwner->setRotationRate(0);
-	
+	myOwner->hitAnimImmune = false;
 	//chargeFloat = 0;
 }
 
