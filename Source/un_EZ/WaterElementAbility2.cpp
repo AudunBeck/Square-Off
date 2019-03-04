@@ -65,7 +65,6 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 						enemy->recieveDamage(damage, ccDur, slow, 0);
 						myPlayer->locked = 0.f;
 						myPlayer->setMoveSpeed(myPlayer->moveSpeed);
-						myElement->counter = 3;
 					}
 				}
 			}

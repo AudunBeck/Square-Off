@@ -61,6 +61,7 @@ public:
 		float slowFactor = 0.3f;
 
 	// Ability 2
+	float cooldown;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
