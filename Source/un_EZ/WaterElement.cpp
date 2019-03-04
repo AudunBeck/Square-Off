@@ -12,7 +12,7 @@ AWaterElement::AWaterElement()
 	static ConstructorHelpers::FObjectFinder<UDataTable>
 		WaterElementTable(TEXT("DataTable'/Game/DataTables/WaterElementTable.WaterElementTable'"));
 	BalancingTable = WaterElementTable.Object;
-	
+
 	//Searching and getting data
 	FWaterElementStruct* Ability1Data = BalancingTable->FindRow<FWaterElementStruct>(FName("1"), FString(""));
 	FWaterElementStruct* Ability2Data = BalancingTable->FindRow<FWaterElementStruct>(FName("2"), FString(""));
@@ -51,7 +51,7 @@ void AWaterElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//// Ability 1
+	// Ability 1
 	//if (windUpTime > 0)
 	//	windUpTime -= DeltaTime;
 
@@ -74,7 +74,7 @@ void AWaterElement::Tick(float DeltaTime)
 		{
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
-			
+
 			// Starts collision towards other Tori's
 			startCollision();
 		}
@@ -95,6 +95,10 @@ void AWaterElement::ability1()
 void AWaterElement::ability1FireCode()
 {
 	// Does nothing
+
+	myOwner->setRotationRate(myOwner->rotationRate);
+	myOwner->setMoveSpeed(myOwner->moveSpeed);
+	//Cast waterbolt
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AWaterElementAbility1* temp;
@@ -102,8 +106,7 @@ void AWaterElement::ability1FireCode()
 	temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 
-	myOwner->setRotationRate(myOwner->rotationRate);
-	myOwner->setMoveSpeed(myOwner->moveSpeed);
+
 }
 
 void AWaterElement::ability1End()
@@ -122,7 +125,7 @@ void AWaterElement::ability2()
 		myOwner->locked = true;
 		Super::ability2();
 	}
-	
+
 }
 
 void AWaterElement::ability2FireCode()
