@@ -75,8 +75,8 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
-	InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
-	InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
+	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
+	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
@@ -176,7 +176,6 @@ void ATori::dodgeEnd()
 
 void ATori::ability_1()
 {
-
 	if (locked == false)
 	{
 		if (currentGlobalCooldown <= 0)
