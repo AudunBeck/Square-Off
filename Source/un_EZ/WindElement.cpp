@@ -56,7 +56,7 @@ void AWindElement::Tick(float DeltaTime)
 
 void AWindElement::ability1()
 {
-	if (ammo1 > 0 && myOwner->locked <= 0.f && channelingAbility2 == false)
+	if (ammo1 > 0 && myOwner->locked == false && channelingAbility2 == false)
 	{
 		AWindElementAbility1* temp;
 		/// Under "myOwner->GetActorLocation() + myOwner->GetActorFowardVector()," add spawnpoint to socket in the hand
