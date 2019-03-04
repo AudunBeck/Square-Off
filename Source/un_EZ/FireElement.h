@@ -20,10 +20,17 @@ public:
 	AFireElement();
 
 	virtual void ability1()override;
+	virtual void ability1FireCode()override;
 	virtual void ability1End()override;
 	virtual void ability2()override;
+	virtual void ability2FireCode()override;
 	virtual void ability2End()override;
 	virtual int returnElementType()override;
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Particles")
+		void attachFireEmitters();
+
+	void BeginPlay()override;
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")

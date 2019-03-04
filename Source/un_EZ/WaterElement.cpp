@@ -105,9 +105,14 @@ void AWaterElement::ability1()
 	//Super::ability1();
 }
 
-void AWaterElement::ability1End()
+void AWaterElement::ability1FireCode()
 {
 	// Does nothing
+}
+
+void AWaterElement::ability1End()
+{
+
 }
 
 void AWaterElement::ability2()
@@ -129,9 +134,14 @@ void AWaterElement::ability2()
 	//Super::ability2();
 }
 
-void AWaterElement::ability2End()
+void AWaterElement::ability2FireCode()
 {
 	// Does nothing
+}
+
+void AWaterElement::ability2End()
+{
+
 }
 
 void AWaterElement::outputLog()

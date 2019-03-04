@@ -166,6 +166,8 @@ void ATori::dodge()
 				element_2->resetAbility1();
 				element_2->resetAbility2();
 			}
+			setMoveSpeed(moveSpeed);
+			setRotationRate(rotationRate);
 
 		}
 }
@@ -260,7 +262,21 @@ void ATori::recieveDamage(float damage)
 		//UE_LOG(LogTemp, Warning, TEXT("Damage multiplier: %f"), damageMultiplier);
 		hitPoints -= damage * damageMultiplier;
 		checkIfDead();
-		PlayAnimMontage(receiveDamageAnim, 1, FName("Start"));
+		if (!hitAnimImmune)
+		{
+			PlayAnimMontage(receiveDamageAnim, 1, FName("Start"));
+			// So we dont lock characters forever.
+			if (element_1 != nullptr)
+			{
+				element_1->resetAbility1();
+				element_1->resetAbility2();
+			}
+			if (element_2 != nullptr)
+			{
+				element_2->resetAbility1();
+				element_2->resetAbility2();
+			}
+		}
 		freezeFrame(0.4, false);//Give this some good math for dmg becoming time frozen.
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
@@ -305,6 +321,8 @@ void ATori::checkIfDead()
 	{
 		DisableInput(Cast<APlayerController>(Controller));
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		if (!isDead)
+			slowMoDeath(0.1f, 3.f);
 		isDead = true;
 		Cast<Aun_EZGameModeBase>(GetWorld()->GetAuthGameMode())->playerDead();
 	}

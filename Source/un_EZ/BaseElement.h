@@ -45,6 +45,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 		void ability1Anim();
 	UFUNCTION(BlueprintCallable)
+		virtual void ability1FireCode();
+	UFUNCTION(BlueprintCallable)
 		virtual void ability1End();
 	UFUNCTION(BlueprintCallable)
 		virtual int returnElementType();
@@ -67,6 +69,8 @@ public:
 		virtual void ability2();
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 		void ability2Anim();
+	UFUNCTION(BlueprintCallable)
+		virtual void ability2FireCode();
 	UFUNCTION(BlueprintCallable)
 		virtual void ability2End();
 

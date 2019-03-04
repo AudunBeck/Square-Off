@@ -48,10 +48,10 @@ void ARockElement::Tick(float DeltaTime)
 	if (channelingAbility1 == true)
 	{
 		/// Can still use ability2 while charging - fix this with animation
-		UE_LOG(LogTemp, Warning, TEXT("Rock ability charging"));
+		//UE_LOG(LogTemp, Warning, TEXT("Rock ability charging"));
 		if (chargeFloat < maxCharge)
 		{
-			chargeFloat += DeltaTime;
+			//chargeFloat += DeltaTime;
 			if (chargeFloat > maxCharge)
 				chargeFloat = maxCharge;
 		}
@@ -69,25 +69,33 @@ void ARockElement::ability1()
 	myOwner->setMoveSpeed(myOwner->moveSpeed * slowFactor);
 	myOwner->currentSpeed = myOwner->moveSpeed * slowFactor;
 	myOwner->ability1Used = true;
+	myOwner->hitAnimImmune = true;
 
 	//Super::ability1();
+}
+
+void ARockElement::ability1FireCode()
+{
+	ARockElementAbility1* temp;
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+		myOwner->GetActorRotation(), tempParam);
+	myOwner->setMoveSpeed(0);
+	myOwner->currentSpeed = myOwner->moveSpeed;
+	myOwner->setRotationRate(0);
+	myOwner->damageMultiplier = 1;
+	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch, false, true);
+	myOwner->hitAnimImmune = false;
+	//chargeFloat = 0;
 }
 
 
 void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
 {
-	ARockElementAbility1* temp;
-	FActorSpawnParameters tempParam;
-	tempParam.Owner = this;
-	temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP,
-		myOwner->GetActorLocation() + myOwner->GetActorForwardVector(), myOwner->GetActorRotation(), tempParam);
-	myOwner->setMoveSpeed(myOwner->moveSpeed);
-	myOwner->currentSpeed = myOwner->moveSpeed;
-	myOwner->damageMultiplier = 1;
-	//myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch * chargeFloat, false, true);
-	myOwner->ability1Used = false;
-	chargeFloat = 0;
+
 	myOwner->ability1Ended = true;
+	myOwner->ability1Used = false;
 	//Super::ability1End();
 }
 
@@ -106,7 +114,19 @@ void ARockElement::ability2()
 		FActorSpawnParameters tempParam;
 		tempParam.Owner = this;
 		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
-	}	
+	}
+}
+
+void ARockElement::ability2FireCode()
+{
+	FVector forwardVec = myOwner->GetActorForwardVector();
+	FVector playerVec = myOwner->GetActorLocation();
+	FRotator playerRot = myOwner->GetActorRotation();
+	const FVector newVec = (forwardVec * ability2Range) + playerVec;
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
+
 }
 
 void ARockElement::ability2End()
@@ -118,4 +138,10 @@ int ARockElement::returnElementType()
 {
 	Super::returnElementType();
 	return 1;
+}
+
+void ARockElement::BeginPlay()
+{
+	Super::BeginPlay();
+	attachRockGlove();
 }

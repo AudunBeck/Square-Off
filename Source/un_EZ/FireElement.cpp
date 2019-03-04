@@ -51,7 +51,7 @@ void AFireElement::ability1()
 	}
 }
 
-void AFireElement::ability1End()
+void AFireElement::ability1FireCode()
 {
 	abilityHit = false;
 
@@ -61,8 +61,13 @@ void AFireElement::ability1End()
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 
-	if(!abilityHit)
+	if (!abilityHit)
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
+}
+
+void AFireElement::ability1End()
+{
+
 
 }
 
@@ -76,9 +81,8 @@ void AFireElement::ability2()
 	}
 }
 
-void AFireElement::ability2End()
-{
-	///Had to put rotationRate change here, seemed to go off after we changed it to the right value in the firelemenent hitting.
+void AFireElement::ability2FireCode()
+{	///Had to put rotationRate change here, seemed to go off after we changed it to the right value in the firelemenent hitting.
 	/// multithreading???
 	myOwner->setRotationRate(0);
 	abilityHit = false;
@@ -90,6 +94,11 @@ void AFireElement::ability2End()
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
 	if (!abilityHit)
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
+}
+
+void AFireElement::ability2End()
+{
+
 
 
 
@@ -99,4 +108,10 @@ int AFireElement::returnElementType()
 {
 	Super::returnElementType();
 	return 2;
+}
+
+void AFireElement::BeginPlay()
+{
+	Super::BeginPlay();
+	attachFireEmitters();
 }
