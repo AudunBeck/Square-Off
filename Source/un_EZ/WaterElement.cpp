@@ -52,27 +52,17 @@ void AWaterElement::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Ability 1
-	if (windUpTime > 0)
-		windUpTime -= DeltaTime;
+	//if (windUpTime > 0)
+	//	windUpTime -= DeltaTime;
 
-	if (windUpTime <= 0 && charging == true)
-	{
-		windUpTime = maxWindUpTime;
-		myOwner->setRotationRate(0.f);
-		myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
-		///Go over this to fix later.
-		//Cast waterbolt
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		AWaterElementAbility1* temp;
-		/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
-		temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
-			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+	//if (windUpTime <= 0 && charging == true)
+	//{
+	//	windUpTime = maxWindUpTime;
+	//	myOwner->setRotationRate(0.f);
+	//	myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
+	//	///Go over this to fix later.
 
-		myOwner->setRotationRate(myOwner->rotationRate);
-		myOwner->setMoveSpeed(myOwner->moveSpeed);
-		charging = false;
-	}
+	//}
 
 	// Ability 2
 	if (buffDur >= 0)
@@ -92,22 +82,30 @@ void AWaterElement::Tick(float DeltaTime)
 
 void AWaterElement::ability1()
 {
-	if (charging == false && myOwner->locked == false)
+	if (myOwner->ability1Ended == false)
 	{
-		charging = true;
-		windUpTime = maxWindUpTime;
+		Super::ability1();
+		UE_LOG(LogTemp, Warning, TEXT("Fire attack1"));
+		combo = !combo;
+		myOwner->locked = true;
 	}
-
-	myOwner->stillFiring1 = true;
-	if (myOwner->finishedCombo1)
-		myOwner->stillFiring1 = false;
-	
-	//Super::ability1();
 }
 
 void AWaterElement::ability1FireCode()
 {
 	// Does nothing
+
+	myOwner->setRotationRate(myOwner->rotationRate);
+	myOwner->setMoveSpeed(myOwner->moveSpeed);
+	//Cast waterbolt
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	AWaterElementAbility1* temp;
+	/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
+	temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
+		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+
+
 }
 
 void AWaterElement::ability1End()
@@ -124,19 +122,20 @@ void AWaterElement::ability2()
 		myOwner->damageMultiplier = 0.f;
 		buffDur = ability2lifeSpan;
 		myOwner->locked = true;
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		AWaterElementAbility2* temp;
-		/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
-		temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
-			myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 	}
-	//Super::ability2();
+	Super::ability2();
 }
 
 void AWaterElement::ability2FireCode()
 {
 	// Does nothing
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	AWaterElementAbility2* temp;
+	/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
+	temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
+		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+
 }
 
 void AWaterElement::ability2End()

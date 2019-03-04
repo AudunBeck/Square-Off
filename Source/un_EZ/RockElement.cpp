@@ -104,11 +104,13 @@ void ARockElement::ability2()
 {
 	/// Can still use ability2 while charging - fix this with animation
 	/// Can also use multiple walls
-	myOwner->locked = true;
+
 	if (myOwner->ability2Ended == false && cooldown <= 0)
 	{
-		cooldown = ability2Lifespan; // To avoid spamming of the wall
 		Super::ability2();
+		myOwner->locked = true;
+		cooldown = ability2Lifespan; // To avoid spamming of the wall
+		
 	}
 }
 

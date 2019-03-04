@@ -54,7 +54,8 @@ public:
 
 	// Ability 1
 	float windUpTime;
-	bool charging;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		bool combo;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 5.0f;

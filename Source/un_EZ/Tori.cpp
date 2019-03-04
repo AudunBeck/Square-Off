@@ -147,7 +147,7 @@ void ATori::dodge()
 		if (locked == false)
 		{
 			dodging = true;
-			locked = 0.5f;
+			locked = true;
 			iTime = 0.3f;
 			FVector launchVector;
 			launchVector = GetActorForwardVector() * dodgeRange;
@@ -191,7 +191,7 @@ void ATori::ability_1()
 				element_2->ability1();
 				element_2->channelingAbility1 = true;
 			}
-			currentGlobalCooldown = globalCooldown;
+			//currentGlobalCooldown = globalCooldown;
 		}
 		else
 			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldonw: %f"), currentGlobalCooldown);
@@ -371,8 +371,8 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 void ATori::switchElement()
 {
 	if (!isMenuTori)
-		if (locked == false)
-		{
+		/*if (locked == false)
+		{*/
 			if (activeElement == 1)
 			{
 				activeElement = 2;
@@ -386,7 +386,8 @@ void ATori::switchElement()
 					currentElementType = element_1->switchToElement();
 			}
 			switchAnimationElement();
-		}
+			locked = false;
+		/*}*/
 }
 
 void ATori::stopAllVelocity_Implementation()
