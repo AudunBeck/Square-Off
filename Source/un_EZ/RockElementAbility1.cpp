@@ -46,6 +46,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			myPlayer->freezeFrame(0.15, false);
 			myPlayer->setRotationRate(myPlayer->rotationRate);
 			hitEnemyVFX(OtherActor->GetActorLocation());
+			Destroy();
 		}
 
 		if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
