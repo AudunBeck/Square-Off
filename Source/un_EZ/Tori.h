@@ -118,7 +118,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Movement")
 		void stopAllVelocity();
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Movement")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movement")
 		bool locked; // How long the control of the character is locked.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 		float moveSpeed = 600;

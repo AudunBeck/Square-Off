@@ -365,6 +365,7 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	}
 
 	switchAnimationElement();
+	locked = false;
 	return true;
 }
 
@@ -386,6 +387,7 @@ void ATori::switchElement()
 					currentElementType = element_1->switchToElement();
 			}
 			switchAnimationElement();
+			locked = false;
 		}
 }
 
