@@ -111,7 +111,9 @@ void ABaseElement::ability2End()
 	//ability2AnimEnd();
 }
 
-int ABaseElement::switchToElement()
+int ABaseElement::switchToElement(bool active)
 {
+	setActive(active);
+	isActive = active;
 	return elementType;
 }

@@ -331,7 +331,7 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	if (element_1 == nullptr)
 	{
 		element_1 = newElement;
-		currentElementType = element_1->switchToElement();
+		currentElementType = element_1->switchToElement(true);
 
 	}
 	else if (element_2 == nullptr && newElement->elementType != element_1->elementType)
@@ -350,7 +350,8 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				element_1->Destroy();
 				element_1 = newElement;
 				//element_1->setPlayer(this);
-				currentElementType = element_1->switchToElement();
+				currentElementType = element_1->switchToElement(true);
+				element_2->switchToElement(false);
 
 			}
 			else if (activeElement == 2)
@@ -358,7 +359,8 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				element_2->Destroy();
 				element_2 = newElement;
 				//element_2->setPlayer(this);
-				currentElementType = element_2->switchToElement();
+				currentElementType = element_2->switchToElement(true);
+				element_1->switchToElement(false);
 
 			}
 		}
@@ -366,29 +368,40 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 
 	switchAnimationElement();
 	locked = false;
+	setMoveSpeed(moveSpeed);
+	setRotationRate(rotationRate);
 	return true;
 }
 
 void ATori::switchElement()
 {
 	if (!isMenuTori)
-		/*if (locked == false)
-		{*/
+		if (!locked)
+		{
 			if (activeElement == 1)
 			{
-				activeElement = 2;
 				if (element_2 != nullptr)
-					currentElementType = element_2->switchToElement();
+				{
+					activeElement = 2;
+					currentElementType = element_2->switchToElement(true);
+					element_1->switchToElement(false);
+				}
 			}
 			else if (activeElement == 2)
 			{
-				activeElement = 1;
+				
 				if (element_1 != nullptr)
-					currentElementType = element_1->switchToElement();
+				{
+					activeElement = 1;
+					currentElementType = element_1->switchToElement(true);
+					element_2->switchToElement(false);
+				}
 			}
 			switchAnimationElement();
 			locked = false;
-		/*}*/
+			setMoveSpeed(moveSpeed);
+			setRotationRate(rotationRate);
+		}
 }
 
 void ATori::stopAllVelocity_Implementation()

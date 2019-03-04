@@ -64,6 +64,7 @@ void ARockElement::Tick(float DeltaTime)
 
 void ARockElement::ability1()
 {
+
 	// if the character has ended all animations of the punch, you are able to start a new punch.
 	myOwner->damageMultiplier = damageReduction;
 	myOwner->setMoveSpeed(myOwner->moveSpeed * slowFactor);
@@ -95,7 +96,7 @@ void ARockElement::ability1FireCode()
 void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
 {
 
-	myOwner->ability1Ended = true;
+	//myOwner->ability1Ended = true;
 	myOwner->ability1Used = false;
 	//Super::ability1End();
 }

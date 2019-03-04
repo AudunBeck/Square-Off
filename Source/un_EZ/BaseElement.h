@@ -26,7 +26,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 	int elementType = 0;
 
-	bool isActive;
+	UPROPERTY(VisibleAnywhere, Category = "Abilities")
+		bool isActive;
 
 	void setPlayer(class ATori* newOwner);
 
@@ -50,6 +51,8 @@ public:
 		virtual void ability1End();
 	UFUNCTION(BlueprintCallable)
 		virtual int returnElementType();
+	UFUNCTION(BlueprintImplementableEvent, Category = "Animations")
+		void setActive(bool active);
 
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
@@ -85,7 +88,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		int ammo2;
 
-	int switchToElement();
+	int switchToElement(bool active);
 
 	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 	//	void ability1AnimStart();
