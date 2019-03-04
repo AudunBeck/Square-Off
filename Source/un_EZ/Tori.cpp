@@ -41,9 +41,6 @@ void ATori::Tick(float DeltaTime)
 	{
 		slowCheck(DeltaTime);
 	}
-
-	if (locked > 0)
-		locked -= DeltaTime;
 	if (iTime > 0)
 		iTime -= DeltaTime;
 
@@ -147,7 +144,7 @@ void ATori::slowCheck(float DeltaTime)
 void ATori::dodge()
 {
 	if(!isMenuTori)
-		if (locked <= 0)
+		if (locked == false)
 		{
 			dodging = true;
 			locked = 0.5f;
@@ -180,7 +177,7 @@ void ATori::dodgeEnd()
 void ATori::ability_1()
 {
 	
-	if (locked <= 0)
+	if (locked == false)
 	{
 		if (currentGlobalCooldown <= 0)
 		{
@@ -218,7 +215,7 @@ void ATori::ability1End()
 void ATori::ability_2()
 {
 	
-	if (locked <= 0)
+	if (locked == false)
 	{
 		if (currentGlobalCooldown <= 0)
 		{
@@ -374,7 +371,7 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 void ATori::switchElement()
 {
 	if (!isMenuTori)
-		if (locked <= 0)
+		if (locked == false)
 		{
 			if (activeElement == 1)
 			{

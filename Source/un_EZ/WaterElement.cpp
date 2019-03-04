@@ -92,7 +92,7 @@ void AWaterElement::Tick(float DeltaTime)
 
 void AWaterElement::ability1()
 {
-	if (charging == false && myOwner->locked <= 0.f)
+	if (charging == false && myOwner->locked == false)
 	{
 		charging = true;
 		windUpTime = maxWindUpTime;
@@ -123,7 +123,7 @@ void AWaterElement::ability2()
 		myOwner->currentSpeed = 0.f;
 		myOwner->damageMultiplier = 0.f;
 		buffDur = ability2lifeSpan;
-		myOwner->locked = buffDur;
+		myOwner->locked = true;
 		FActorSpawnParameters tempParam;
 		tempParam.Owner = this;
 		AWaterElementAbility2* temp;

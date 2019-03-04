@@ -47,7 +47,7 @@ void AFireElement::ability1()
 	{
 		Super::ability1();
 		UE_LOG(LogTemp, Warning, TEXT("Fire attack1"));
-		myOwner->locked = 3;
+		myOwner->locked = true;
 	}
 }
 
@@ -76,7 +76,7 @@ void AFireElement::ability2()
 	if (myOwner->ability2Ended == false)
 	{
 		Super::ability2();
-		myOwner->locked = 3;
+		myOwner->locked = true;
 		myOwner->setMoveSpeed(0);
 	}
 }
