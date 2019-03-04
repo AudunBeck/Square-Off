@@ -71,7 +71,7 @@ void ARockElement::ability1()
 	myOwner->ability1Used = true;
 	myOwner->hitAnimImmune = true;
 
-	//Super::ability1();
+	Super::ability1();
 }
 
 void ARockElement::ability1FireCode()
@@ -107,13 +107,6 @@ void ARockElement::ability2()
 	{
 		cooldown = ability2Lifespan; // To avoid spamming of the wall
 		Super::ability2();
-		FVector forwardVec = myOwner->GetActorForwardVector();
-		FVector playerVec = myOwner->GetActorLocation();
-		FRotator playerRot = myOwner->GetActorRotation();
-		const FVector newVec = (forwardVec * ability2Range) + playerVec;
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
 	}
 }
 
