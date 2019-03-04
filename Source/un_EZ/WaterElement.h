@@ -54,7 +54,8 @@ public:
 
 	// Ability 1
 	float windUpTime;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool combo;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")

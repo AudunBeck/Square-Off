@@ -176,7 +176,7 @@ void ATori::dodgeEnd()
 
 void ATori::ability_1()
 {
-	
+
 	if (locked == false)
 	{
 		if (currentGlobalCooldown <= 0)
@@ -214,7 +214,7 @@ void ATori::ability1End()
 
 void ATori::ability_2()
 {
-	
+
 	if (locked == false)
 	{
 		if (currentGlobalCooldown <= 0)
@@ -229,7 +229,7 @@ void ATori::ability_2()
 				element_2->ability2();
 				element_2->channelingAbility2 = true;
 			}
-				
+
 			currentGlobalCooldown = globalCooldown;
 		}
 	}
@@ -365,6 +365,7 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	}
 
 	switchAnimationElement();
+	locked = false;
 	return true;
 }
 
