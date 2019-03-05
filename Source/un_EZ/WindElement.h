@@ -34,42 +34,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class AWindElementAbility2> WindElementAbility2_BP;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ability1lifeSpan = 5.0f;
-
-	// How far ahead of Tori the ability spawns
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ability1Range = 100.f;
-
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float boltSpeed = 3000.0f;
-
-	bool chargingAbilit1;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float maxCharge = 2;
-	
-	// Charge that starts when you press attack, and fires the bolt when reaching 0
-	float windUpTime;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float maxWindUpTime = 0.3f;
-
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ability1damage = 30.f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float range = 400.f;
-
-
-	// Ability 2 
-
-	bool canChannel = false;
-
-	///Value not used
+	// Ability 1
+		///Value not used
 	/*UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;*/
 
-	// Damage properties
+		// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float MaxAbility2Damage = 5.0f;
+		float MaxAbility1Damage = 5.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float maxDistance = 700.0f;
@@ -87,4 +59,8 @@ public:
 	float ability2Damage;
 	float distance;
 	float channelTime;
+
+	// Ability 2 
+
+
 };

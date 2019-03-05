@@ -18,10 +18,9 @@ void AWindElementAbility1::BeginPlay()
 	Super::BeginPlay();
 	myElement = Cast<AWindElement>(GetOwner());
 	myPlayer = myElement->myOwner;
-	SetLifeSpan(myElement->ability1lifeSpan);
-	boltSpeed = myElement->boltSpeed;
-	damage = myElement->ability1damage;
-	range = myElement->range;
+	myDistance = myElement->distance;
+	myChannelSpeed = myElement->channelSpeed;
+	damage = myElement->ability2Damage;
 	spawnLocation = GetActorLocation();
 }
 
@@ -29,22 +28,33 @@ void AWindElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	FVector NewLocation = GetActorLocation();
-	NewLocation += GetActorForwardVector() * boltSpeed * DeltaTime;
+	NewLocation += GetActorForwardVector() * myChannelSpeed * DeltaTime;
 	SetActorLocation(NewLocation);
 	distTraveled = sqrt(pow((spawnLocation.X - NewLocation.X), 2) + pow((spawnLocation.Y - NewLocation.Y), 2));
-	if (distTraveled > range)
+	if (distTraveled > myDistance)
 		this->Destroy();
-
 }
 
-void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
-	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	if (OtherActor != myPlayer)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			Cast<ATori>(OtherActor)->recieveDamage(damage);
+			ccDur = 2/*myElement->maxInterval*/;
+			playerLocation = myPlayer->GetActorLocation();
+			enemyLocation = OtherActor->GetActorLocation();
+			enemyForward = OtherActor->GetActorForwardVector();
+
+			a = (playerLocation - enemyLocation).GetSafeNormal();
+			b = enemyForward.GetSafeNormal();
+			float angle = FMath::RadiansToDegrees(acosf(FVector::DotProduct(a, b)));
+			//UE_LOG(LogTemp, Warning, TEXT("Angle is: %f"), angle);
+			slow = (angle - 90) / 3;		// 3 is a covalent, which can be increased to degress the slow, and vise-versa
+
+			Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);
+
+			//Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * 300.f, false, true);
 		}
 	}
 }

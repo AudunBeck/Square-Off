@@ -17,11 +17,7 @@ void AWindElement::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Ability 1
-	if (windUpTime > 0)
-		windUpTime -= DeltaTime;
-
-	// Ability 2
-	if (channelingAbility2 == true && channelTime <= maxChannelTime)
+	if (channelingAbility1 == true && channelTime <= maxChannelTime)
 	{
 		channelTime += DeltaTime;
 		if (interval <= 0)
@@ -29,14 +25,14 @@ void AWindElement::Tick(float DeltaTime)
 			interval = maxInterval;
 			myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3);
 
-			AWindElementAbility2* temp;
+			AWindElementAbility1* temp;
 			FActorSpawnParameters tempParam;
 			tempParam.Owner = this;
-			temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+			temp = GetWorld()->SpawnActor<AWindElementAbility1>(WindElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
 				myOwner->GetActorRotation(), tempParam);
 		}
 	}
-	if (channelingAbility2 == false && channelTime > 0)
+	if (channelingAbility1 == false && channelTime > 0)
 	{
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		channelTime -= DeltaTime;
@@ -48,35 +44,23 @@ void AWindElement::Tick(float DeltaTime)
 	}
 	if (channelTime != 0)
 	{
-		ability2Damage = (MaxAbility2Damage / maxChannelTime) * channelTime;
+		ability2Damage = (MaxAbility1Damage / maxChannelTime) * channelTime;
 		distance = (maxDistance / maxChannelTime) * channelTime;
 	}
 	if (interval > 0)
 		interval -= DeltaTime;
 
+	// Ability 2
 }
 
 
 void AWindElement::ability1()
 {
-	if (ammo1 > 0 && myOwner->locked == false && channelingAbility2 == false)
-	{
-		AWindElementAbility1* temp;
-		/// Under "myOwner->GetActorLocation() + myOwner->GetActorFowardVector()," add spawnpoint to socket in the hand
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		temp = GetWorld()->SpawnActor<AWindElementAbility1>(WindElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
-			myOwner->GetActorRotation(), tempParam);
-	}
 	//Super::ability1();
 }
 
 void AWindElement::ability2()
 {
-	if (channelTime <= maxChannelTime)
-	{
-		canChannel = true;
-	}
 }
 
 void AWindElement::ability2End()
