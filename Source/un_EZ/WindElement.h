@@ -78,7 +78,7 @@ public:
 		float channelSpeed = 2000.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float maxChannelTime = 5.0f;
+		float maxChannelTime = 3.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float maxInterval = 0.2f;

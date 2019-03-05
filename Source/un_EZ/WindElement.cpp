@@ -9,8 +9,7 @@ AWindElement::AWindElement()
 void AWindElement::BeginPlay()
 {
 	Super::BeginPlay();
-	channelTime = maxChannelTime;
-	ability2Damage = MaxAbility2Damage;
+	channelTime = 0;
 }
 
 void AWindElement::Tick(float DeltaTime)
@@ -22,14 +21,13 @@ void AWindElement::Tick(float DeltaTime)
 		windUpTime -= DeltaTime;
 
 	// Ability 2
-	if (channelingAbility2 == true)
+	if (channelingAbility2 == true && channelTime <= maxChannelTime)
 	{
-		channelTime -= DeltaTime;
-		if (channelTime > 0 && interval <= 0)
+		channelTime += DeltaTime;
+		if (interval <= 0)
 		{
 			interval = maxInterval;
 			myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3);
-			myOwner->locked = myOwner->globalCooldown;
 
 			AWindElementAbility2* temp;
 			FActorSpawnParameters tempParam;
@@ -38,15 +36,20 @@ void AWindElement::Tick(float DeltaTime)
 				myOwner->GetActorRotation(), tempParam);
 		}
 	}
-	if (channelingAbility2 == false && channelTime < maxChannelTime)
+	if (channelingAbility2 == false && channelTime > 0)
 	{
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
-		channelTime += DeltaTime;
+		channelTime -= DeltaTime;
+	}
+	if (channelTime >= maxChannelTime)
+	{
+		channelTime = 0;
+		/// Cast pushback ability
 	}
 	if (channelTime != 0)
 	{
 		ability2Damage = (MaxAbility2Damage / maxChannelTime) * channelTime;
-		distance = (maxDistance / maxChannelTime ) * channelTime;
+		distance = (maxDistance / maxChannelTime) * channelTime;
 	}
 	if (interval > 0)
 		interval -= DeltaTime;
@@ -70,7 +73,7 @@ void AWindElement::ability1()
 
 void AWindElement::ability2()
 {
-	if (channelTime > 0)
+	if (channelTime <= maxChannelTime)
 	{
 		canChannel = true;
 	}
@@ -78,6 +81,9 @@ void AWindElement::ability2()
 
 void AWindElement::ability2End()
 {
+	myOwner->setMoveSpeed(myOwner->moveSpeed);
+	myOwner->currentSpeed = myOwner->moveSpeed;
+	channelTime = 0;
 }
 
 int AWindElement::returnElementType()
