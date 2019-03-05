@@ -34,14 +34,14 @@ void AWindElement::Tick(float DeltaTime)
 	}
 	if ((channelingAbility1 == false && channelTime > 0) || channelTime >= maxChannelTime)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Channel time set to 0 through If statement"));
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		channelTime = 0;
 	}
-	if (channelTime != 0)
-	{
-		ability2Damage = (MaxAbility1Damage / maxChannelTime) * channelTime;
-		distance = (maxDistance / maxChannelTime) * channelTime;
-	}
+
+	ability2Damage = (MaxAbility1Damage / maxChannelTime) * channelTime;
+	distance = (maxDistance / maxChannelTime) * channelTime;
+
 	if (interval > 0)
 		interval -= DeltaTime;
 
@@ -63,9 +63,7 @@ void AWindElement::ability2()
 		myOwner->GetActorRotation(), tempParam);
 }
 
-void AWindElement::ability2End()
-{
-}
+
 
 int AWindElement::returnElementType()
 {
