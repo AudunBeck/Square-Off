@@ -48,15 +48,9 @@ void AWindElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 
 			a = (playerLocation - enemyLocation).GetSafeNormal();
 			b = enemyForward.GetSafeNormal();
-			slow = 30.f; //(50 * (b.Size() / a.Size()));
-
 			float angle = FMath::RadiansToDegrees(acosf(FVector::DotProduct(a, b)));
-			float sin;
-			float cos;
-			FMath::SinCos(&sin, &cos, angle);
-			UE_LOG(LogTemp, Warning, TEXT("Angle is: %f"), angle);
-			UE_LOG(LogTemp, Warning, TEXT("Sine is: %f"), sin);
-			UE_LOG(LogTemp, Warning, TEXT("cos is: %f"), cos);
+			//UE_LOG(LogTemp, Warning, TEXT("Angle is: %f"), angle);
+			slow = (angle - 90) / 3;		// 3 is a covalent, which can be increased to degress the slow, and vise-versa
 
 			Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);
 			
