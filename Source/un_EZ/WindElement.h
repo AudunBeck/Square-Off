@@ -40,19 +40,19 @@ public:
 		float ability2lifeSpan = 2.5f;*/
 
 		// Damage properties
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float MaxAbility1Damage = 5.0f;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxDistance = 700.0f;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float channelSpeed = 2000.f;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxChannelTime = 3.0f;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxInterval = 0.2f;
 
 	float interval;
@@ -61,6 +61,8 @@ public:
 	float channelTime;
 
 	// Ability 2 
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float buffDur = 2.f;
 
 
 };

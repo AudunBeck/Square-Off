@@ -8,15 +8,30 @@ AWindElementAbility2::AWindElementAbility2()
 
 }
 
+AWindElementAbility2::~AWindElementAbility2()
+{
+}
+
 void AWindElementAbility2::BeginPlay()
 {
 	Super::BeginPlay();
-
+	myElement = Cast<AWindElement>(GetOwner());
+	myPlayer = myElement->myOwner;
+	this->SetLifeSpan(myElement->buffDur);
+	myPlayer->locked = true;
+	myPlayer->setMoveSpeed(myPlayer->moveSpeed * 2);
+	// Stops collision towards other Tori's - Called in Blueprint
+	stopCollision();
 }
 
 void AWindElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
 
+void AWindElementAbility2::startCollision()
+{
+	myPlayer->locked = false;
+	myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 }
 

@@ -19,12 +19,23 @@ class UN_EZ_API AWindElementAbility2 : public ABaseAbility
 
 public:
 	AWindElementAbility2();
+	~AWindElementAbility2();
 
 protected:
 	virtual void BeginPlay() override;
 
 public:
 	virtual void Tick(float DeltaTime) override;
+	// Blueprint functions
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterAbility2 collision")
+		void stopCollision();
 
-	
+	// Blueprint functions
+	UFUNCTION(BlueprintCallable, Category = "WaterElement collision")
+		void startCollision();
+
+	UPROPERTY(BlueprintReadWrite)
+		class AWindElement* myElement;
+	UPROPERTY(BlueprintReadWrite)
+		class ATori* enemyReference;
 };

@@ -32,15 +32,10 @@ void AWindElement::Tick(float DeltaTime)
 				myOwner->GetActorRotation(), tempParam);
 		}
 	}
-	if (channelingAbility1 == false && channelTime > 0)
+	if ((channelingAbility1 == false && channelTime > 0) || channelTime >= maxChannelTime)
 	{
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
-		channelTime -= DeltaTime;
-	}
-	if (channelTime >= maxChannelTime)
-	{
 		channelTime = 0;
-		/// Cast pushback ability
 	}
 	if (channelTime != 0)
 	{
@@ -61,13 +56,15 @@ void AWindElement::ability1()
 
 void AWindElement::ability2()
 {
+	AWindElementAbility2* temp;
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+		myOwner->GetActorRotation(), tempParam);
 }
 
 void AWindElement::ability2End()
 {
-	myOwner->setMoveSpeed(myOwner->moveSpeed);
-	myOwner->currentSpeed = myOwner->moveSpeed;
-	channelTime = 0;
 }
 
 int AWindElement::returnElementType()
