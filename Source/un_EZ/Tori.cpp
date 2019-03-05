@@ -272,6 +272,7 @@ void ATori::recieveDamage(float damage)
 				element_2->resetAbility1();
 				element_2->resetAbility2();
 			}
+			locked = 0;
 		}
 		freezeFrame(0.4, false);//Give this some good math for dmg becoming time frozen.
 	}
