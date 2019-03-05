@@ -76,7 +76,7 @@ void AWaterElement::Tick(float DeltaTime)
 			myOwner->damageMultiplier = 1;
 
 			// Starts collision towards other Tori's
-			startCollision();
+			//startCollision();
 		}
 	}
 }
@@ -87,7 +87,6 @@ void AWaterElement::ability1()
 	{
 		Super::ability1();
 		UE_LOG(LogTemp, Warning, TEXT("Fire attack1"));
-		//myOwner->locked = true;
 		combo = !combo;
 	}
 }
@@ -122,7 +121,6 @@ void AWaterElement::ability2()
 		myOwner->currentSpeed = 0.f;
 		myOwner->damageMultiplier = 0.f;
 		buffDur = ability2lifeSpan;
-		myOwner->locked = true;
 		Super::ability2();
 	}
 

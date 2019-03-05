@@ -63,8 +63,8 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 						FVector launchDirection = myPlayer->GetActorForwardVector() * -1;
 						myPlayer->LaunchCharacter(launchDirection * dashDist, false, true);
 						enemy->recieveDamage(damage, ccDur, slow, 0);
-						myPlayer->locked = false;
 						myPlayer->setMoveSpeed(myPlayer->moveSpeed);
+						// Spawn emitter for water 2 here.  
 					}
 				}
 			}
