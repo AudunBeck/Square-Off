@@ -71,7 +71,6 @@ void ARockElement::ability1()
 	myOwner->currentSpeed = myOwner->moveSpeed * slowFactor;
 	myOwner->ability1Used = true;
 	myOwner->hitAnimImmune = true;
-	myOwner->locked = true;
 
 	Super::ability1();
 }
@@ -109,7 +108,6 @@ void ARockElement::ability2()
 	if (myOwner->ability2Ended == false && cooldown <= 0)
 	{
 		Super::ability2();
-		myOwner->locked = true;
 		cooldown = ability2Lifespan; // To avoid spamming of the wall
 		
 	}
