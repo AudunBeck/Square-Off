@@ -64,13 +64,13 @@ void ARockElement::Tick(float DeltaTime)
 
 void ARockElement::ability1()
 {
+
 	// if the character has ended all animations of the punch, you are able to start a new punch.
 	myOwner->damageMultiplier = damageReduction;
 	myOwner->setMoveSpeed(myOwner->moveSpeed * slowFactor);
 	myOwner->currentSpeed = myOwner->moveSpeed * slowFactor;
 	myOwner->ability1Used = true;
 	myOwner->hitAnimImmune = true;
-	myOwner->locked = true;
 
 	Super::ability1();
 }
@@ -95,7 +95,7 @@ void ARockElement::ability1FireCode()
 void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
 {
 
-	myOwner->ability1Ended = true;
+	//myOwner->ability1Ended = true;
 	myOwner->ability1Used = false;
 	//Super::ability1End();
 }
@@ -104,11 +104,12 @@ void ARockElement::ability2()
 {
 	/// Can still use ability2 while charging - fix this with animation
 	/// Can also use multiple walls
-	myOwner->locked = true;
+
 	if (myOwner->ability2Ended == false && cooldown <= 0)
 	{
-		cooldown = ability2Lifespan; // To avoid spamming of the wall
 		Super::ability2();
+		cooldown = ability2Lifespan; // To avoid spamming of the wall
+		
 	}
 }
 
