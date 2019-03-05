@@ -39,7 +39,6 @@ AWaterElement::AWaterElement()
 		ability2Slow = Ability2Data->Slow;
 		ability2CcDur = Ability2Data->SlowDur;
 		dashDist = Ability2Data->CounterDash;
-
 	}
 }
 
@@ -122,6 +121,7 @@ void AWaterElement::ability2()
 		myOwner->currentSpeed = 0.f;
 		myOwner->damageMultiplier = 0.f;
 		buffDur = ability2lifeSpan;
+		myOwner->hitAnimImmune = true;
 		Super::ability2();
 	}
 
@@ -129,12 +129,12 @@ void AWaterElement::ability2()
 
 void AWaterElement::ability2FireCode()
 {
-	FActorSpawnParameters tempParam;
-	tempParam.Owner = this;
-	AWaterElementAbility2* temp;
-	/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
-	temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
-		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+	//FActorSpawnParameters tempParam;
+	//tempParam.Owner = this;
+	//AWaterElementAbility2* temp;
+	///// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
+	//temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
+	//	myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 }
 
 void AWaterElement::ability2End()
@@ -151,4 +151,16 @@ int AWaterElement::returnElementType()
 {
 	Super::returnElementType();
 	return 3;
+}
+
+void AWaterElement::ability2Counter_Implementation(ATori * enemy)
+{
+	//FVector enemyLocation = enemy->GetActorLocation();
+	FVector ownerLocation = myOwner->GetActorLocation();
+	FVector launchDirection = myOwner->GetActorForwardVector() * -1;
+	myOwner->LaunchCharacter(launchDirection * dashDist, false, true);
+	enemy->recieveDamage(damage, ccDur, slow, 0);
+	myOwner->setMoveSpeed(myOwner->moveSpeed);
+	myOwner->hitAnimImmune = false;
+	Countering = false;
 }
