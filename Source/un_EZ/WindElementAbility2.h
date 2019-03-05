@@ -19,48 +19,23 @@ class UN_EZ_API AWindElementAbility2 : public ABaseAbility
 
 public:
 	AWindElementAbility2();
+	~AWindElementAbility2();
 
 protected:
 	virtual void BeginPlay() override;
 
 public:
 	virtual void Tick(float DeltaTime) override;
+	// Blueprint functions
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterAbility2 collision")
+		void stopCollision();
 
-	float currentTime;
-	float myDistance;
-	float myChannelSpeed;
-	float distTraveled;
-	float damage;
-	FVector spawnLocation;
+	// Blueprint functions
+	UFUNCTION(BlueprintCallable, Category = "WaterElement collision")
+		void startCollision();
 
 	UPROPERTY(BlueprintReadWrite)
 		class AWindElement* myElement;
 	UPROPERTY(BlueprintReadWrite)
 		class ATori* enemyReference;
-	UPROPERTY(BlueprintReadWrite)
-		float distToEnemy;
-	UPROPERTY(BlueprintReadWrite)
-		float dotValue;
-	UPROPERTY(BlueprintReadWrite)
-		float dotProduct;
-	UPROPERTY(BlueprintReadWrite)
-		float RadiusToEnemy;
-	UPROPERTY(BlueprintReadWrite)
-		FVector pushDirection;
-
-	TArray <AActor*> enemy;
-	int numOfEnemy;
-	FVector playerLocation;
-	FVector enemyLocation;
-	FVector enemyForward;
-	FVector a;
-	FVector b;
-	float ccDur;
-	float slow;
-
-	USphereComponent* collider;
-
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

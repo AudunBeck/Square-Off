@@ -41,8 +41,10 @@ void ARockElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// Hold the charge
+	if (cooldown > 0)
+		cooldown -= DeltaTime;
 
+	// Hold the charge
 	if (channelingAbility1 == true)
 	{
 		/// Can still use ability2 while charging - fix this with animation
@@ -58,16 +60,17 @@ void ARockElement::Tick(float DeltaTime)
 	{
 		// Reset parameters if needed - Else remove this if-statement
 	}
-	
 }
 
 void ARockElement::ability1()
 {
+
 	// if the character has ended all animations of the punch, you are able to start a new punch.
 	myOwner->damageMultiplier = damageReduction;
 	myOwner->setMoveSpeed(myOwner->moveSpeed * slowFactor);
 	myOwner->currentSpeed = myOwner->moveSpeed * slowFactor;
 	myOwner->ability1Used = true;
+	myOwner->hitAnimImmune = true;
 
 	Super::ability1();
 }
@@ -79,11 +82,12 @@ void ARockElement::ability1FireCode()
 	tempParam.Owner = this;
 	temp = GetWorld()->SpawnActor<ARockElementAbility1>(RockElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
 		myOwner->GetActorRotation(), tempParam);
-	myOwner->setMoveSpeed(myOwner->moveSpeed);
+	myOwner->setMoveSpeed(0);
 	myOwner->currentSpeed = myOwner->moveSpeed;
+	myOwner->setRotationRate(0);
 	myOwner->damageMultiplier = 1;
 	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch, false, true);
-	
+	myOwner->hitAnimImmune = false;
 	//chargeFloat = 0;
 }
 
@@ -91,7 +95,7 @@ void ARockElement::ability1FireCode()
 void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
 {
 
-	myOwner->ability1Ended = true;
+	//myOwner->ability1Ended = true;
 	myOwner->ability1Used = false;
 	//Super::ability1End();
 }
@@ -99,10 +103,14 @@ void ARockElement::ability1End() // Currently goes off after the animation, look
 void ARockElement::ability2()
 {
 	/// Can still use ability2 while charging - fix this with animation
-	if (myOwner->ability2Ended == false)
+	/// Can also use multiple walls
+
+	if (myOwner->ability2Ended == false && cooldown <= 0)
 	{
 		Super::ability2();
-	}	
+		cooldown = ability2Lifespan; // To avoid spamming of the wall
+		
+	}
 }
 
 void ARockElement::ability2FireCode()
@@ -119,17 +127,17 @@ void ARockElement::ability2FireCode()
 
 void ARockElement::ability2End()
 {
-	//FVector forwardVec = myOwner->GetActorForwardVector();
-	//FVector playerVec = myOwner->GetActorLocation();
-	//FRotator playerRot = myOwner->GetActorRotation();
-	//const FVector newVec = (forwardVec * ability2Range) + playerVec;
-	//FActorSpawnParameters tempParam;
-	//tempParam.Owner = this;
-	//ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
+	// Does nothing
 }
 
 int ARockElement::returnElementType()
 {
 	Super::returnElementType();
 	return 1;
+}
+
+void ARockElement::BeginPlay()
+{
+	Super::BeginPlay();
+	attachRockGlove();
 }

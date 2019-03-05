@@ -27,6 +27,11 @@ public:
 	virtual void ability2End()override;
 	virtual int returnElementType()override;
 
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Particles")
+		void attachFireEmitters();
+
+	void BeginPlay()override;
+
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class AFireElementAbility1> FireElementAbility1_BP;

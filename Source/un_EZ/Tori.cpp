@@ -41,9 +41,6 @@ void ATori::Tick(float DeltaTime)
 	{
 		slowCheck(DeltaTime);
 	}
-
-	if (locked > 0)
-		locked -= DeltaTime;
 	if (iTime > 0)
 		iTime -= DeltaTime;
 
@@ -78,8 +75,8 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
-	InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
-	InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
+	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
+	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
@@ -108,14 +105,13 @@ void ATori::move_Y(float axisValue)
 
 void ATori::setMoveSpeed(float newMoveSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Setting movespeed to %f"), newMoveSpeed);
-
+	//UE_LOG(LogTemp, Warning, TEXT("Setting movespeed to %f"), newMoveSpeed);
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
 }
 
 void ATori::setRotationRate(float newRotationRate)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Setting rotation rate to %f"), newRotationRate);
+	//UE_LOG(LogTemp, Warning, TEXT("Setting rotation rate to %f"), newRotationRate);
 	GetCharacterMovement()->RotationRate = FRotator(0.f, newRotationRate, 0.f);
 }
 
@@ -148,10 +144,10 @@ void ATori::slowCheck(float DeltaTime)
 void ATori::dodge()
 {
 	if(!isMenuTori)
-		if (locked <= 0)
+		if (locked == false)
 		{
 			dodging = true;
-			locked = 0.5f;
+			locked = true;
 			iTime = 0.3f;
 			FVector launchVector;
 			launchVector = GetActorForwardVector() * dodgeRange;
@@ -180,8 +176,7 @@ void ATori::dodgeEnd()
 
 void ATori::ability_1()
 {
-	
-	if (locked <= 0)
+	if (locked == false)
 	{
 		if (currentGlobalCooldown <= 0)
 		{
@@ -195,7 +190,7 @@ void ATori::ability_1()
 				element_2->ability1();
 				element_2->channelingAbility1 = true;
 			}
-			currentGlobalCooldown = globalCooldown;
+			//currentGlobalCooldown = globalCooldown;
 		}
 		else
 			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldonw: %f"), currentGlobalCooldown);
@@ -218,8 +213,8 @@ void ATori::ability1End()
 
 void ATori::ability_2()
 {
-	
-	if (locked <= 0)
+
+	if (locked == false)
 	{
 		if (currentGlobalCooldown <= 0)
 		{
@@ -233,7 +228,7 @@ void ATori::ability_2()
 				element_2->ability2();
 				element_2->channelingAbility2 = true;
 			}
-				
+
 			currentGlobalCooldown = globalCooldown;
 		}
 	}
@@ -263,7 +258,22 @@ void ATori::recieveDamage(float damage)
 		//UE_LOG(LogTemp, Warning, TEXT("Damage multiplier: %f"), damageMultiplier);
 		hitPoints -= damage * damageMultiplier;
 		checkIfDead();
-		PlayAnimMontage(receiveDamageAnim, 1, FName("Start"));
+		if (!hitAnimImmune)
+		{
+			PlayAnimMontage(receiveDamageAnim, 1, FName("Start"));
+			// So we dont lock characters forever.
+			if (element_1 != nullptr)
+			{
+				element_1->resetAbility1();
+				element_1->resetAbility2();
+			}
+			if (element_2 != nullptr)
+			{
+				element_2->resetAbility1();
+				element_2->resetAbility2();
+			}
+			locked = 0;
+		}
 		freezeFrame(0.4, false);//Give this some good math for dmg becoming time frozen.
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
@@ -321,7 +331,7 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	if (element_1 == nullptr)
 	{
 		element_1 = newElement;
-		currentElementType = element_1->switchToElement();
+		currentElementType = element_1->switchToElement(true);
 
 	}
 	else if (element_2 == nullptr && newElement->elementType != element_1->elementType)
@@ -340,7 +350,8 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				element_1->Destroy();
 				element_1 = newElement;
 				//element_1->setPlayer(this);
-				currentElementType = element_1->switchToElement();
+				currentElementType = element_1->switchToElement(true);
+				element_2->switchToElement(false);
 
 			}
 			else if (activeElement == 2)
@@ -348,34 +359,48 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				element_2->Destroy();
 				element_2 = newElement;
 				//element_2->setPlayer(this);
-				currentElementType = element_2->switchToElement();
+				currentElementType = element_2->switchToElement(true);
+				element_1->switchToElement(false);
 
 			}
 		}
 	}
 
 	switchAnimationElement();
+	locked = false;
+	setMoveSpeed(moveSpeed);
+	setRotationRate(rotationRate);
 	return true;
 }
 
 void ATori::switchElement()
 {
 	if (!isMenuTori)
-		if (locked <= 0)
+		if (!locked)
 		{
 			if (activeElement == 1)
 			{
-				activeElement = 2;
 				if (element_2 != nullptr)
-					currentElementType = element_2->switchToElement();
+				{
+					activeElement = 2;
+					currentElementType = element_2->switchToElement(true);
+					element_1->switchToElement(false);
+				}
 			}
 			else if (activeElement == 2)
 			{
-				activeElement = 1;
+				
 				if (element_1 != nullptr)
-					currentElementType = element_1->switchToElement();
+				{
+					activeElement = 1;
+					currentElementType = element_1->switchToElement(true);
+					element_2->switchToElement(false);
+				}
 			}
 			switchAnimationElement();
+			locked = false;
+			setMoveSpeed(moveSpeed);
+			setRotationRate(rotationRate);
 		}
 }
 

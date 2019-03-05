@@ -47,8 +47,6 @@ void AFireElement::ability1()
 	{
 		Super::ability1();
 		UE_LOG(LogTemp, Warning, TEXT("Fire attack1"));
-		myOwner->locked = 3;
-
 	}
 }
 
@@ -69,7 +67,7 @@ void AFireElement::ability1FireCode()
 void AFireElement::ability1End()
 {
 
-	
+
 }
 
 void AFireElement::ability2()
@@ -77,10 +75,9 @@ void AFireElement::ability2()
 	if (myOwner->ability2Ended == false)
 	{
 		Super::ability2();
-		myOwner->locked = 3;
+		myOwner->locked = true;
 		myOwner->setMoveSpeed(0);
 	}
-
 }
 
 void AFireElement::ability2FireCode()
@@ -101,7 +98,7 @@ void AFireElement::ability2FireCode()
 void AFireElement::ability2End()
 {
 
-	
+
 
 
 }
@@ -110,4 +107,10 @@ int AFireElement::returnElementType()
 {
 	Super::returnElementType();
 	return 2;
+}
+
+void AFireElement::BeginPlay()
+{
+	Super::BeginPlay();
+	attachFireEmitters();
 }

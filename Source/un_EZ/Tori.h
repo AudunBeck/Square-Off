@@ -118,8 +118,8 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Movement")
 		void stopAllVelocity();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-		float locked; // How long the control of the character is locked.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movement")
+		bool locked; // How long the control of the character is locked.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 		float moveSpeed = 600;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
@@ -141,10 +141,12 @@ public:
 		bool stillFiring1 = false;
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
 		bool finishedCombo1 = false;
+	bool hitAnimImmune = false;
 	UFUNCTION(BlueprintCallable, Category = "MenuTori")
 		void clearElement();
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 		void slowMoDeath(float slowMoEffect, float slowMoTime);
+	
 
 
 };

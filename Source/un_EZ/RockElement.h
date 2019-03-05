@@ -28,6 +28,11 @@ public:
 	virtual void ability2End()override;
 	virtual int returnElementType()override;
 
+	void BeginPlay()override;
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "VFX")
+		void attachRockGlove();
+
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class ARockElementAbility1> RockElementAbility1_BP;
@@ -56,6 +61,7 @@ public:
 		float slowFactor = 0.3f;
 
 	// Ability 2
+	float cooldown;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
