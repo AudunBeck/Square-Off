@@ -19,7 +19,7 @@ void AWindElementAbility2::BeginPlay()
 	myPlayer = myElement->myOwner;
 	this->SetLifeSpan(myElement->buffDur);
 	myPlayer->locked = true;
-	myPlayer->setMoveSpeed(myPlayer->moveSpeed * 2);
+	myPlayer->setMoveSpeed(myPlayer->moveSpeed + myElement->bonusSpeed);
 	// Stops collision towards other Tori's - Called in Blueprint
 	stopCollision();
 }

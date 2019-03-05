@@ -60,8 +60,13 @@ public:
 	float channelTime;
 
 	// Ability 2 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float buffDur = 2.f;
 
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float bonusSpeed = 600.f;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float pushForce = 300.f;
 
 };
