@@ -39,6 +39,7 @@ AWaterElement::AWaterElement()
 		ability2Slow = Ability2Data->Slow;
 		ability2CcDur = Ability2Data->SlowDur;
 		dashDist = Ability2Data->CounterDash;
+
 	}
 }
 
