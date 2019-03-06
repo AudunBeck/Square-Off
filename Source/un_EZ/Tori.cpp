@@ -28,6 +28,7 @@ void ATori::BeginPlay()
 	dodgeCooldown = dodgeMaxCooldown;
 	hitPoints = maxHitPoints;
 	hitPointPercentage = hitPoints / maxHitPoints;
+	locked = false;
 }
 
 void ATori::Tick(float DeltaTime)
