@@ -81,15 +81,42 @@ void ATori::Tick(float DeltaTime)
 		float tempZ = (GetActorLocation().Z + (GetVelocity().Z * DeltaTime));
 		float tempY;
 
-		if(GetVelocity().Y < 100 && GetVelocity().Y > -100)
+		// Dette under funker ikke
+		if (GetVelocity().Y < 100 || GetVelocity().Y > -100)
 			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
+
+		else if (GetVelocity().Y >= 100 && GetActorForwardVector().Y < 0)
+			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
+
+		if (GetVelocity().Y <= -100 && GetActorForwardVector().Y > 0)
+			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
+
 		else
 			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime));
 
-		UE_LOG(LogTemp, Warning, TEXT("TempY = %f"), GetVelocity().Y);
-		//tempY = FMath::Clamp(tempY, 0.f, 100.f);
+		
+
+
+
+
+		/*
+
+					if ((GetVelocity().Y >= 100 && GetActorForwardVector().Y > 0) || (GetVelocity().Y <= -100 && GetActorForwardVector().Y < 0))
+			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime));
+
+		if ((GetVelocity().Y >= 100 && GetActorForwardVector().Y < 0) || (GetVelocity().Y <= -100 && GetActorForwardVector().Y > 0) || (GetVelocity().Y < 100 || GetVelocity().Y < 100))
+			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
+
+
+		*/
+
+
+
+
 		FVector newLocation = FVector(tempX, tempY, tempZ);
 		SetActorLocation(newLocation);
+
+		UE_LOG(LogTemp, Warning, TEXT("TempY = %f"), GetVelocity().Y);
 	}
 	/*	Dette funker, ved siden av at om du har velocity i dét tori hopper
 		if (isJumping == true)
