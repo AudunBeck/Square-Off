@@ -78,10 +78,28 @@ void ATori::Tick(float DeltaTime)
 	if (isJumping == true)
 	{
 		float tempX = (GetActorLocation().X + (GetVelocity().X * DeltaTime));
+		float tempZ = (GetActorLocation().Z + (GetVelocity().Z * DeltaTime));
+		float tempY;
+
+		if(GetVelocity().Y < 100 && GetVelocity().Y > -100)
+			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
+		else
+			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime));
+
+		UE_LOG(LogTemp, Warning, TEXT("TempY = %f"), GetVelocity().Y);
+		//tempY = FMath::Clamp(tempY, 0.f, 100.f);
+		FVector newLocation = FVector(tempX, tempY, tempZ);
+		SetActorLocation(newLocation);
+	}
+	/*	Dette funker, ved siden av at om du har velocity i dét tori hopper
+		if (isJumping == true)
+	{
+		float tempX = (GetActorLocation().X + (GetVelocity().X * DeltaTime));
 		float tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
 		float tempZ = (GetActorLocation().Z + (GetVelocity().Z * DeltaTime));
 		SetActorLocation(FVector(tempX, tempY, tempZ));
 	}
+	*/
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
