@@ -41,7 +41,13 @@ public:
 	void jump();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		float inAirMoceForce = 10.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float jumpForce = 400.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		bool isJumping = false;
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Movement")
+		void checkIfLanded();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool dodging;

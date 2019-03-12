@@ -72,6 +72,16 @@ void ATori::Tick(float DeltaTime)
 	// Make sure character position can't diviate from X = 0
 	if (GetActorLocation().X != 0)
 		SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
+
+	// Jump variables and functions
+	checkIfLanded();
+	if (isJumping == true)
+	{
+		float tempX = (GetActorLocation().X + (GetVelocity().X * DeltaTime));
+		float tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
+		float tempZ = (GetActorLocation().Z + (GetVelocity().Z * DeltaTime));
+		SetActorLocation(FVector(tempX, tempY, tempZ));
+	}
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -95,6 +105,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+/// Remove addForce - Doesn't work unless we simulate physics
 void ATori::addForce(FVector pushDirection)
 {
 	myPushVector = pushDirection;
@@ -189,6 +200,7 @@ void ATori::jump()
 {
 	/// Make moving in air possible - Possible by getting current velocity, and manipulating this
 	this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
+	isJumping = true;
 }
 
 void ATori::ability_1()
