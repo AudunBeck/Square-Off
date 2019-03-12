@@ -10,6 +10,7 @@ void AWindElement::BeginPlay()
 {
 	Super::BeginPlay();
 	channelTime = 0;
+	distance = maxDistance;
 }
 
 void AWindElement::Tick(float DeltaTime)
@@ -34,13 +35,11 @@ void AWindElement::Tick(float DeltaTime)
 	}
 	if ((channelingAbility1 == false && channelTime > 0) || channelTime >= maxChannelTime)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Channel time set to 0 through If statement"));
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		channelTime = 0;
 	}
 
 	ability2Damage = (MaxAbility1Damage / maxChannelTime) * channelTime;
-	distance = (maxDistance / maxChannelTime) * channelTime;
 
 	if (interval > 0)
 		interval -= DeltaTime;

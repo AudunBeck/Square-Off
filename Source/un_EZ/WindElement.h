@@ -43,16 +43,16 @@ public:
 		float MaxAbility1Damage = 5.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float maxDistance = 700.0f;
+		float maxDistance = 500.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float channelSpeed = 2000.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float maxChannelTime = 3.0f;
+		float maxChannelTime = 1.2f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float maxInterval = 0.2f;
+		float maxInterval = 0.4f;
 
 	float interval;
 	float ability2Damage;
