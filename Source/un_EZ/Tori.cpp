@@ -68,6 +68,10 @@ void ATori::Tick(float DeltaTime)
 			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldown finished"));
 		}
 	}
+
+	// Make sure character position can't diviate from X = 0
+	if (GetActorLocation().X != 0)
+		SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -78,6 +82,8 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
+
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::jump);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
@@ -96,12 +102,16 @@ void ATori::addForce(FVector pushDirection)
 
 void ATori::move_X(float axisValue)
 {
-	AddMovementInput(FVector(1, 0.f, 0.f), axisValue);
+	//AddMovementInput(FVector(1, 0.f, 0.f), axisValue);
 }
 
 void ATori::move_Y(float axisValue)
 {
 	AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
+	if (axisValue > 0)
+		SetActorRotation(FRotator(0.f, 90.f, 0.f));
+	if (axisValue < 0)
+		SetActorRotation(FRotator(0.f, -90.f, 0.f));
 }
 
 void ATori::setMoveSpeed(float newMoveSpeed)
@@ -173,6 +183,12 @@ void ATori::dodgeEnd()
 {
 	if (!isMenuTori)
 		dodging = false;
+}
+
+void ATori::jump()
+{
+	/// Make moving in air possible - Possible by getting current velocity, and manipulating this
+	this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
 }
 
 void ATori::ability_1()

@@ -86,7 +86,6 @@ void AWaterElement::ability1()
 	//if (myOwner->ability1Ended == false)
 	{
 		Super::ability1();
-		UE_LOG(LogTemp, Warning, TEXT("Fire attack1"));
 		combo = !combo;
 	}
 }
@@ -101,7 +100,6 @@ void AWaterElement::ability1FireCode()
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AWaterElementAbility1* temp;
-	/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
 	temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 

@@ -38,6 +38,10 @@ public:
 	void slowCheck(float DeltaTime);
 	void dodge();
 	void dodgeEnd();
+	void jump();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		float jumpForce = 400.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool dodging;
