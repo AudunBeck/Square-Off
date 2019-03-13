@@ -15,6 +15,7 @@ ATori::ATori()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->AirControl = 1.f;
 	isMenuTori = false;
 }
 
@@ -73,60 +74,7 @@ void ATori::Tick(float DeltaTime)
 	if (GetActorLocation().X != 0)
 		SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
 
-	// Jump variables and functions
 	checkIfLanded();
-	if (isJumping == true)
-	{
-		float tempX = (GetActorLocation().X + (GetVelocity().X * DeltaTime));
-		float tempZ = (GetActorLocation().Z + (GetVelocity().Z * DeltaTime));
-		float tempY;
-
-		// Dette under funker ikke
-		if (GetVelocity().Y < 100 || GetVelocity().Y > -100)
-			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
-
-		else if (GetVelocity().Y >= 100 && GetActorForwardVector().Y < 0)
-			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
-
-		if (GetVelocity().Y <= -100 && GetActorForwardVector().Y > 0)
-			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
-
-		else
-			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime));
-
-		
-
-
-
-
-		/*
-
-					if ((GetVelocity().Y >= 100 && GetActorForwardVector().Y > 0) || (GetVelocity().Y <= -100 && GetActorForwardVector().Y < 0))
-			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime));
-
-		if ((GetVelocity().Y >= 100 && GetActorForwardVector().Y < 0) || (GetVelocity().Y <= -100 && GetActorForwardVector().Y > 0) || (GetVelocity().Y < 100 || GetVelocity().Y < 100))
-			tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
-
-
-		*/
-
-
-
-
-		FVector newLocation = FVector(tempX, tempY, tempZ);
-		SetActorLocation(newLocation);
-
-		UE_LOG(LogTemp, Warning, TEXT("TempY = %f"), GetVelocity().Y);
-	}
-	/*	Dette funker, ved siden av at om du har velocity i dét tori hopper
-		if (isJumping == true)
-	{
-		float tempX = (GetActorLocation().X + (GetVelocity().X * DeltaTime));
-		float tempY = (GetActorLocation().Y + (GetVelocity().Y * DeltaTime * inAirMoceForce));
-		float tempZ = (GetActorLocation().Z + (GetVelocity().Z * DeltaTime));
-		SetActorLocation(FVector(tempX, tempY, tempZ));
-	}
-	*/
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -148,12 +96,6 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
 
-}
-
-/// Remove addForce - Doesn't work unless we simulate physics
-void ATori::addForce(FVector pushDirection)
-{
-	myPushVector = pushDirection;
 }
 
 void ATori::move_X(float axisValue)

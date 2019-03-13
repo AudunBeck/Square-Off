@@ -24,8 +24,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void addForce(FVector pushDirection);
-
 	// Runs movement for the character.
 	void move_X(float axisValue);
 	void move_Y(float axisValue);
@@ -39,6 +37,9 @@ public:
 	void dodge();
 	void dodgeEnd();
 	void jump();
+
+	//UPROPERTY(EditAnywhere)
+	//	UMovementComponent* PhysicsComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float inAirMoceForce = 10.f;
