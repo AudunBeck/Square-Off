@@ -86,7 +86,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::jump);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
@@ -95,7 +95,6 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Ability_2", IE_Released, this, &ATori::ability2End);
 
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
-
 }
 
 void ATori::move_X(float axisValue)
@@ -181,7 +180,6 @@ void ATori::dodge()
 			}
 			setMoveSpeed(moveSpeed);
 			setRotationRate(rotationRate);
-
 		}
 }
 void ATori::dodgeEnd()
@@ -192,9 +190,8 @@ void ATori::dodgeEnd()
 
 void ATori::jump()
 {
-	
 	/// Make moving in air possible - Possible by getting current velocity, and manipulating this
-	if (!locked)
+	if (!locked && !isJumping)
 	{
 		this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
 		isJumping = true;
@@ -240,7 +237,6 @@ void ATori::ability1End()
 
 void ATori::ability_2()
 {
-
 	if (locked == false)
 	{
 		if (currentGlobalCooldown <= 0)
@@ -255,7 +251,6 @@ void ATori::ability_2()
 				element_2->ability2();
 				element_2->channelingAbility2 = true;
 			}
-
 			currentGlobalCooldown = globalCooldown;
 		}
 	}
@@ -318,7 +313,6 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 			slowDur.Push(ccDur);
 			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
 		}
-
 	// Type 1 is stun
 	if (type == 1)
 	{
@@ -359,7 +353,6 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	{
 		element_1 = newElement;
 		currentElementType = element_1->switchToElement(true);
-
 	}
 	else if (element_2 == nullptr && newElement->elementType != element_1->elementType)
 	{
@@ -379,7 +372,6 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				//element_1->setPlayer(this);
 				currentElementType = element_1->switchToElement(true);
 				element_2->switchToElement(false);
-
 			}
 			else if (activeElement == 2)
 			{
@@ -388,7 +380,6 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				//element_2->setPlayer(this);
 				currentElementType = element_2->switchToElement(true);
 				element_1->switchToElement(false);
-
 			}
 		}
 	}
@@ -416,7 +407,6 @@ void ATori::switchElement()
 			}
 			else if (activeElement == 2)
 			{
-				
 				if (element_1 != nullptr)
 				{
 					activeElement = 1;
