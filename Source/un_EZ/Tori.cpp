@@ -101,15 +101,22 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ATori::move_X(float axisValue)
 {
 	//AddMovementInput(FVector(1, 0.f, 0.f), axisValue);
+	if (!locked)
+	{
+		AddControllerPitchInput(axisValue);
+	}
 }
 
 void ATori::move_Y(float axisValue)
 {
-	AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
-	if (axisValue > 0)
-		SetActorRotation(FRotator(0.f, 90.f, 0.f));
-	if (axisValue < 0)
-		SetActorRotation(FRotator(0.f, -90.f, 0.f));
+	if (!locked)
+	{
+		AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
+		if (axisValue > 0)
+			SetActorRotation(FRotator(0.f, 90.f, 0.f));
+		if (axisValue < 0)
+			SetActorRotation(FRotator(0.f, -90.f, 0.f));
+	}
 }
 
 void ATori::setMoveSpeed(float newMoveSpeed)
@@ -185,9 +192,13 @@ void ATori::dodgeEnd()
 
 void ATori::jump()
 {
+	
 	/// Make moving in air possible - Possible by getting current velocity, and manipulating this
-	this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
-	isJumping = true;
+	if (!locked)
+	{
+		this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
+		isJumping = true;
+	}
 }
 
 void ATori::ability_1()
