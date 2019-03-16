@@ -25,7 +25,6 @@ public:
 	virtual void ability1End()override;
 	virtual void ability2()override;
 	virtual void ability2FireCode()override;
-	virtual void ability2End()override;
 	virtual int returnElementType()override;
 
 	void BeginPlay()override;

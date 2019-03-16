@@ -37,6 +37,12 @@ ARockElement::ARockElement()
 	}
 }
 
+void ARockElement::BeginPlay()
+{
+	Super::BeginPlay();
+	attachRockGlove();
+}
+
 void ARockElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -88,28 +94,20 @@ void ARockElement::ability1FireCode()
 	myOwner->damageMultiplier = 1;
 	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch, false, true);
 	myOwner->hitAnimImmune = false;
-	//chargeFloat = 0;
 }
 
 
 void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
 {
-
-	//myOwner->ability1Ended = true;
 	myOwner->ability1Used = false;
-	//Super::ability1End();
 }
 
 void ARockElement::ability2()
 {
-	/// Can still use ability2 while charging - fix this with animation
-	/// Can also use multiple walls
-
 	if (myOwner->ability2Ended == false && cooldown <= 0)
 	{
 		Super::ability2();
 		cooldown = ability2Lifespan; // To avoid spamming of the wall
-		
 	}
 }
 
@@ -125,10 +123,6 @@ void ARockElement::ability2FireCode()
 
 }
 
-void ARockElement::ability2End()
-{
-	// Does nothing
-}
 
 int ARockElement::returnElementType()
 {
@@ -136,8 +130,4 @@ int ARockElement::returnElementType()
 	return 1;
 }
 
-void ARockElement::BeginPlay()
-{
-	Super::BeginPlay();
-	attachRockGlove();
-}
+

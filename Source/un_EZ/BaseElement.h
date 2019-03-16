@@ -90,22 +90,11 @@ public:
 
 	int switchToElement(bool active);
 
-	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
-	//	void ability1AnimStart();
-	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
-	//	void ability1AnimEnd();
-
-	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
-	//	void ability2AnimStart();
-	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
-	//	void ability2AnimEnd();
-
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 		void resetAbility1();
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Animations")
 		void resetAbility2();
 
-	
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Abilities")
 		float attackSpeed = 1.f;

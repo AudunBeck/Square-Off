@@ -214,7 +214,6 @@ void ATori::ability_1()
 				element_2->ability1();
 				element_2->channelingAbility1 = true;
 			}
-			//currentGlobalCooldown = globalCooldown;
 		}
 		else
 			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldonw: %f"), currentGlobalCooldown);
@@ -251,7 +250,6 @@ void ATori::ability_2()
 				element_2->ability2();
 				element_2->channelingAbility2 = true;
 			}
-			currentGlobalCooldown = globalCooldown;
 		}
 	}
 }
@@ -273,11 +271,8 @@ void ATori::ability2End()
 void ATori::recieveDamage(float damage)
 {
 	// Might be something like this.
-	//int playerNum = Cast<APlayerController>(GetController())->GetLocalPlayer()->GetControllerId();
 	if (iTime <= 0)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Player has %f hitpoints left"), hitPoints); // Find a way to find the player-number, instead of 1
-		//UE_LOG(LogTemp, Warning, TEXT("Damage multiplier: %f"), damageMultiplier);
 		hitPoints -= damage * damageMultiplier;
 		checkIfDead();
 		if (!hitAnimImmune)
@@ -317,7 +312,7 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 	if (type == 1)
 	{
 		hitPoints -= damage * damageMultiplier;
-		/// Incert effect of stun
+		/// Insert effect of stun
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
@@ -383,7 +378,6 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 			}
 		}
 	}
-
 	switchAnimationElement();
 	locked = false;
 	setMoveSpeed(moveSpeed);
