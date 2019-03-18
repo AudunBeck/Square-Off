@@ -25,10 +25,11 @@ void AToriSpawner::BeginPlay()
 void AToriSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// Might need to rewrite, very patchy, just testing.
 	FVector newLocation = GetActorLocation();
 	newLocation += direction * dropSpeed;
 	SetActorLocation(newLocation);
-
 }
 
 // Called to bind functionality to input
