@@ -187,7 +187,6 @@ void ATori::jump()
 {
 	/// Make moving in air possible - Possible by getting current velocity, and manipulating this
 	this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
-	isJumping = true;
 }
 
 void ATori::ability_1()
