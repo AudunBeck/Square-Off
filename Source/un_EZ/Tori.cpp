@@ -86,7 +86,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::jump);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
@@ -95,21 +95,27 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Ability_2", IE_Released, this, &ATori::ability2End);
 
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
-
 }
 
 void ATori::move_X(float axisValue)
 {
 	//AddMovementInput(FVector(1, 0.f, 0.f), axisValue);
+	if (!locked)
+	{
+		AddControllerPitchInput(axisValue);
+	}
 }
 
 void ATori::move_Y(float axisValue)
 {
-	AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
-	if (axisValue > 0)
-		SetActorRotation(FRotator(0.f, 90.f, 0.f));
-	if (axisValue < 0)
-		SetActorRotation(FRotator(0.f, -90.f, 0.f));
+	if (!locked)
+	{
+		AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
+		if (axisValue > 0)
+			SetActorRotation(FRotator(0.f, 90.f, 0.f));
+		if (axisValue < 0)
+			SetActorRotation(FRotator(0.f, -90.f, 0.f));
+	}
 }
 
 void ATori::setMoveSpeed(float newMoveSpeed)
@@ -174,7 +180,6 @@ void ATori::dodge()
 			}
 			setMoveSpeed(moveSpeed);
 			setRotationRate(rotationRate);
-
 		}
 }
 void ATori::dodgeEnd()
@@ -186,7 +191,11 @@ void ATori::dodgeEnd()
 void ATori::jump()
 {
 	/// Make moving in air possible - Possible by getting current velocity, and manipulating this
-	this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
+	if (!locked && !isJumping)
+	{
+		this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
+		isJumping = true;
+        }
 }
 
 void ATori::ability_1()
@@ -205,7 +214,6 @@ void ATori::ability_1()
 				element_2->ability1();
 				element_2->channelingAbility1 = true;
 			}
-			//currentGlobalCooldown = globalCooldown;
 		}
 		else
 			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldonw: %f"), currentGlobalCooldown);
@@ -228,7 +236,6 @@ void ATori::ability1End()
 
 void ATori::ability_2()
 {
-
 	if (locked == false)
 	{
 		if (currentGlobalCooldown <= 0)
@@ -243,8 +250,6 @@ void ATori::ability_2()
 				element_2->ability2();
 				element_2->channelingAbility2 = true;
 			}
-
-			currentGlobalCooldown = globalCooldown;
 		}
 	}
 }
@@ -266,11 +271,8 @@ void ATori::ability2End()
 void ATori::recieveDamage(float damage)
 {
 	// Might be something like this.
-	//int playerNum = Cast<APlayerController>(GetController())->GetLocalPlayer()->GetControllerId();
 	if (iTime <= 0)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Player has %f hitpoints left"), hitPoints); // Find a way to find the player-number, instead of 1
-		//UE_LOG(LogTemp, Warning, TEXT("Damage multiplier: %f"), damageMultiplier);
 		hitPoints -= damage * damageMultiplier;
 		checkIfDead();
 		if (!hitAnimImmune)
@@ -306,12 +308,11 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 			slowDur.Push(ccDur);
 			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
 		}
-
 	// Type 1 is stun
 	if (type == 1)
 	{
 		hitPoints -= damage * damageMultiplier;
-		/// Incert effect of stun
+		/// Insert effect of stun
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
@@ -347,7 +348,6 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	{
 		element_1 = newElement;
 		currentElementType = element_1->switchToElement(true);
-
 	}
 	else if (element_2 == nullptr && newElement->elementType != element_1->elementType)
 	{
@@ -367,7 +367,6 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				//element_1->setPlayer(this);
 				currentElementType = element_1->switchToElement(true);
 				element_2->switchToElement(false);
-
 			}
 			else if (activeElement == 2)
 			{
@@ -376,11 +375,9 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				//element_2->setPlayer(this);
 				currentElementType = element_2->switchToElement(true);
 				element_1->switchToElement(false);
-
 			}
 		}
 	}
-
 	switchAnimationElement();
 	locked = false;
 	setMoveSpeed(moveSpeed);
@@ -404,7 +401,6 @@ void ATori::switchElement()
 			}
 			else if (activeElement == 2)
 			{
-				
 				if (element_1 != nullptr)
 				{
 					activeElement = 1;

@@ -67,7 +67,6 @@ void AFireElement::ability1FireCode()
 void AFireElement::ability1End()
 {
 
-
 }
 
 void AFireElement::ability2()
@@ -97,9 +96,6 @@ void AFireElement::ability2FireCode()
 
 void AFireElement::ability2End()
 {
-
-
-
 
 }
 

@@ -28,16 +28,13 @@ void AFireElementAbility1::BeginPlay()
 		damage = myElement->ability1BuffedDamage;
 		SetActorScale3D(myElement->boostedAbility1Scale);
 		myElement->fireChi = 0;
-		//UObject* temp = GetWorld()->SpawnActor<UObject>(buffedPunchVFX, GetActorLocation()+FVector(90,0,0), GetActorRotation());
 	}
 	else
 	{
 		damage = myElement->ability1Damage;
 		buffed = false;
-		//UObject* temp = GetWorld()->SpawnActor<UObject>(normalPunchVFX, GetActorLocation(), GetActorRotation());
 	}
 	beginSound();
-	//Cast<UShapeComponent>(collider)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
 }
 
