@@ -34,6 +34,7 @@ void ATori::BeginPlay()
 
 void ATori::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 	if (isMenuTori)
 		damageMultiplier = 0;
 
@@ -75,6 +76,15 @@ void ATori::Tick(float DeltaTime)
 		SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
 
 	checkIfLanded();
+	if (GetVelocity().Z > 0)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Going up!"));
+		isGoingUp = true;
+	}
+	else
+	{
+		isGoingUp = false;
+	}
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
