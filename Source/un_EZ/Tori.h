@@ -25,8 +25,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// Runs movement for the character.
-	void move_X(float axisValue);
 	void move_Y(float axisValue);
+	void move_X();
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 		void setMoveSpeed(float newMoveSpeed);
 	UFUNCTION(BlueprintCallable, Category = "Movement")
@@ -44,11 +44,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float inAirMoceForce = 10.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-		float jumpForce = 400.f;
+		float jumpForce = 800.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		bool isJumping = false;
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Movement")
 		void checkIfLanded();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		bool isGoingUp = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		bool isGoingDown = false;
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Movement")
+		void goDown();
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool dodging;

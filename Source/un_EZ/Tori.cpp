@@ -34,6 +34,7 @@ void ATori::BeginPlay()
 
 void ATori::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 	if (isMenuTori)
 		damageMultiplier = 0;
 
@@ -75,14 +76,23 @@ void ATori::Tick(float DeltaTime)
 	//	SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
 
 	checkIfLanded();
+	if (GetVelocity().Z > 0)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Going up!"));
+		isGoingUp = true;
+	}
+	else
+	{
+		isGoingUp = false;
+	}
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
+	InputComponent->BindAction("Move_X", IE_Pressed, this, &ATori::move_X);
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
@@ -98,9 +108,12 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
 }
 
-void ATori::move_X(float axisValue)
+void ATori::move_X()
 {
-	//AddMovementInput(FVector(1, 0.f, 0.f), axisValue);
+	isGoingDown = true;
+	goDown();
+	if(GetVelocity().Z <= 0.f)
+		LaunchCharacter(GetActorUpVector() * -1, false, false);
 }
 
 void ATori::move_Y(float axisValue)
@@ -192,7 +205,7 @@ void ATori::jump()
 	{
 		this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
 		isJumping = true;
-	}
+        }
 }
 
 void ATori::ability_1()
