@@ -147,6 +147,7 @@ public:
 		float dodgeRange;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 		float iTime; // How long the character is invunrable to damage.
+	FRotator desiredRotation;
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
 		bool stillFiring1 = false;
