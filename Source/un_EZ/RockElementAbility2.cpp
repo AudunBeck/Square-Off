@@ -26,11 +26,20 @@ void ARockElementAbility2::BeginPlay()
 	damageDivision = speed;
 	playerKnockback = myElement->ability2KnockbackMulti;
 	damage = myElement->ability2Damage;
+	hangTime = maxHangTime;
 }
 
 void ARockElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if(hangTime >= 0)
+		hangTime -= DeltaTime;
+	if (isTouchingGround == false && hangTime < 0)
+	{
+		FVector NewLocation = GetActorLocation();
+		NewLocation += GetActorUpVector() * -1 * speed * DeltaTime;
+		SetActorLocation(NewLocation);
+	}
 	if (movingTime > 0)
 	{
 		FVector NewLocation = GetActorLocation();
@@ -43,16 +52,17 @@ void ARockElementAbility2::Tick(float DeltaTime)
 void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (movingTime > 0)
+	if (movingTime > 0 || !isTouchingGround)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			ATori* player = Cast<ATori>(OtherActor);
 			player->recieveDamage(damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
+			movingTime = 0.f;
 		}
 		else if(OtherActor->IsA(ABlockingVolume::StaticClass()) || OtherActor->IsA(ARockElementAbility2::StaticClass()))
 		{
-			movingTime = 0;
+			movingTime = 0.f;
 		}
 	}
 }

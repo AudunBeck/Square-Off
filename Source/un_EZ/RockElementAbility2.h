@@ -39,6 +39,10 @@ public:
 
 	float damage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float maxHangTime = 0.3f;
+	float hangTime;
+
 	class ARockElement* myElement;
 
 	FVector punchPos;
@@ -46,6 +50,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* boxCollider;
+
+	UPROPERTY(BlueprintReadWrite)
+		bool isTouchingGround;
 
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
