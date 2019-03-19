@@ -14,7 +14,7 @@ ATori::ATori()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
-	GetCharacterMovement()->bOrientRotationToMovement = true;
+	//GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->AirControl = 1.f;
 	isMenuTori = false;
 }
@@ -72,8 +72,8 @@ void ATori::Tick(float DeltaTime)
 	}
 
 	// Make sure character position can't diviate from X = 0
-	if (GetActorLocation().X != 0)
-		SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
+	//if (GetActorLocation().X != 0)
+	//	SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
 
 	checkIfLanded();
 	if (GetVelocity().Z > 0)
@@ -97,6 +97,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
+	InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
@@ -120,9 +121,9 @@ void ATori::move_Y(float axisValue)
 	{
 		AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
 		if (axisValue > 0)
-			SetActorRotation(FRotator(0.f, 90.f, 0.f));
+			desiredRotation = FRotator(0.f, 90.f, 0.f);
 		if (axisValue < 0)
-			SetActorRotation(FRotator(0.f, -90.f, 0.f));
+			desiredRotation = FRotator(0.f, -90.f, 0.f);
 	}
 }
 
@@ -210,6 +211,7 @@ void ATori::ability_1()
 {
 	if (locked == false)
 	{
+		SetActorRotation(desiredRotation);
 		if (currentGlobalCooldown <= 0)
 		{
 			if (activeElement == 1 && element_1 != nullptr)
@@ -246,6 +248,7 @@ void ATori::ability_2()
 {
 	if (locked == false)
 	{
+		SetActorRotation(desiredRotation);
 		if (currentGlobalCooldown <= 0)
 		{
 			if (activeElement == 1 && element_1 != nullptr)
