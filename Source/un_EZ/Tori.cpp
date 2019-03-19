@@ -112,7 +112,8 @@ void ATori::move_X()
 {
 	isGoingDown = true;
 	goDown();
-	LaunchCharacter(GetActorUpVector() * -1, false, false);
+	if(GetVelocity().Z <= 0.f)
+		LaunchCharacter(GetActorUpVector() * -1, false, false);
 }
 
 void ATori::move_Y(float axisValue)
