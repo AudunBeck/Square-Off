@@ -27,6 +27,9 @@ public:
 	// Runs movement for the character.
 	void move_Y(float axisValue);
 	void move_X();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Movement")
+		void move_XEnd();
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 		void setMoveSpeed(float newMoveSpeed);
 	UFUNCTION(BlueprintCallable, Category = "Movement")
@@ -53,8 +56,6 @@ public:
 		bool isGoingUp = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		bool isGoingDown = false;
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Movement")
-		void goDown();
 
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
