@@ -60,7 +60,7 @@ void AFireElement::ability1FireCode()
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 
-	if (!abilityHit)
+	if (!abilityHit && myOwner->isJumping != true)
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
 }
 
@@ -90,7 +90,7 @@ void AFireElement::ability2FireCode()
 	AFireElementAbility2* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
-	if (!abilityHit)
+	if (!abilityHit && myOwner->isJumping != true)
 		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
 }
 
