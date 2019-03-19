@@ -126,6 +126,13 @@ void ATori::move_Y(float axisValue)
 		if (axisValue < 0)
 			desiredRotation = FRotator(0.f, -90.f, 0.f);
 	}
+	if (ability1Used)
+	{
+		if (axisValue > 0)
+			SetActorRotation(FRotator(0.f, 90.f, 0.f));
+		if (axisValue < 0)
+			SetActorRotation(FRotator(0.f, -90.f, 0.f));
+	}
 }
 
 void ATori::setMoveSpeed(float newMoveSpeed)
@@ -212,6 +219,7 @@ void ATori::ability_1()
 {
 	if (locked == false)
 	{
+		ability1Used = true;
 		SetActorRotation(desiredRotation);
 		if (currentGlobalCooldown <= 0)
 		{
