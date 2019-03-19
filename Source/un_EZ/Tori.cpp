@@ -91,8 +91,8 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
+	InputComponent->BindAction("Move_X", IE_Pressed, this, &ATori::move_X);
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
@@ -107,13 +107,11 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
 }
 
-void ATori::move_X(float axisValue)
+void ATori::move_X()
 {
-	//AddMovementInput(FVector(1, 0.f, 0.f), axisValue);
-	if (!locked)
-	{
-		AddControllerPitchInput(axisValue);
-	}
+	isGoingDown = true;
+	goDown();
+	LaunchCharacter(GetActorUpVector() * -1, false, false);
 }
 
 void ATori::move_Y(float axisValue)
