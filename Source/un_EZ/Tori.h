@@ -162,6 +162,7 @@ public:
 		bool stillFiring1 = false;
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Animations")
 		bool finishedCombo1 = false;
+	UPROPERTY(BlueprintReadWrite, Category = "Animations")
 	bool hitAnimImmune = false;
 	UFUNCTION(BlueprintCallable, Category = "MenuTori")
 		void clearElement();

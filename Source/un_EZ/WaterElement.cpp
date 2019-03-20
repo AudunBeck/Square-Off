@@ -116,10 +116,11 @@ void AWaterElement::ability2()
 	//if (myOwner->ability2Ended == false)
 	{
 		Super::ability2();
+		myOwner->hitAnimImmune = true;
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		myOwner->currentSpeed = 0.f;
 		buffDur = ability2lifeSpan;
-		myOwner->hitAnimImmune = true;
+		
 		
 	}
 
