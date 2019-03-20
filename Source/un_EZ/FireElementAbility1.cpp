@@ -13,6 +13,7 @@ AFireElementAbility1::AFireElementAbility1()
 	Cast<UShapeComponent>(collider)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility1::OnOverlapBegin);
+	RootComponent = collider;
 }
 
 void AFireElementAbility1::BeginPlay()
