@@ -94,7 +94,6 @@ void ABaseElement::ability2()
 {
 	if (ammo2 > 0)
 	{
-		//myOwner->ability2Used = true;
 		ammo2 -= 1;
 		ability2Anim();
 	}

@@ -113,14 +113,14 @@ void AWaterElement::ability1End()
 
 void AWaterElement::ability2()
 {
-	if (myOwner->ability2Ended == false)
+	//if (myOwner->ability2Ended == false)
 	{
+		Super::ability2();
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		myOwner->currentSpeed = 0.f;
-		myOwner->damageMultiplier = 0.f;
 		buffDur = ability2lifeSpan;
 		myOwner->hitAnimImmune = true;
-		Super::ability2();
+		
 	}
 
 }
