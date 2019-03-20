@@ -46,7 +46,6 @@ void AFireElement::ability1()
 	if (myOwner->ability1Ended == false)
 	{
 		Super::ability1();
-		UE_LOG(LogTemp, Warning, TEXT("Fire attack1"));
 	}
 }
 
