@@ -112,7 +112,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ATori::move_X()
 {
 	isGoingDown = true;
-	if(GetVelocity().Z <= 0.f)
+	if (GetVelocity().Z <= 0.f)
 		LaunchCharacter(GetActorUpVector() * -1, false, false);
 }
 
@@ -175,7 +175,7 @@ void ATori::slowCheck(float DeltaTime)
 
 void ATori::dodge()
 {
-	if(!isMenuTori)
+	if (!isMenuTori)
 		if (locked == false)
 		{
 			dodging = true;
@@ -212,14 +212,13 @@ void ATori::jump()
 	{
 		this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
 		isJumping = true;
-        }
+	}
 }
 
 void ATori::ability_1()
 {
 	if (locked == false)
 	{
-		ability1Used = true;
 		SetActorRotation(desiredRotation);
 		if (currentGlobalCooldown <= 0)
 		{
@@ -443,10 +442,10 @@ void ATori::stopAllVelocity_Implementation()
 
 void ATori::clearElement()
 {
-	if(element_1 != nullptr)
+	if (element_1 != nullptr)
 		element_1->Destroy();
 	element_1 = nullptr;
-	if(element_2 != nullptr)
+	if (element_2 != nullptr)
 		element_2->Destroy();
 	element_2 = nullptr;
 }
