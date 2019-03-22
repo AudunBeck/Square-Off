@@ -168,7 +168,7 @@ public:
 		void clearElement();
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 		void slowMoDeath(float slowMoEffect, float slowMoTime);
-	
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USkeletalMeshComponent* Arms = nullptr;
 };

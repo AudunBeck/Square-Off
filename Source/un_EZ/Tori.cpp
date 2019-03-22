@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Classes/Engine/LocalPlayer.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
+#include "Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "un_EZGameModeBase.h"
 
 ATori::ATori()
@@ -17,6 +18,8 @@ ATori::ATori()
 	//GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->AirControl = 1.f;
 	isMenuTori = false;
+	Arms = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
+	Arms->SetupAttachment(GetMesh());
 }
 
 void ATori::BeginPlay()
