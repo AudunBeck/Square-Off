@@ -32,4 +32,7 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "VFX")
 		void hitEnemyVFX(FVector enemyLocation);
 
+	UPROPERTY(BlueprintReadOnly)
+		FVector direction;
+
 };

@@ -37,12 +37,14 @@ void AFireElementAbility1::BeginPlay()
 	}
 	beginSound();
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
+	direction = myPlayer->facingDirection;
+	direction.Normalize();
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	this->SetActorLocation(myPlayer->facingDirection * attackRange + myPlayer->GetActorLocation());
+	this->SetActorLocation(direction * attackRange + myPlayer->GetActorLocation());
 	this->SetActorRotation(myPlayer->GetActorRotation());
 }
 
