@@ -46,6 +46,12 @@ public:
 	//UPROPERTY(EditAnywhere)
 	//	UMovementComponent* PhysicsComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int PlayerNumber;
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Movement")
+		void gainPoint();
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float moveXDeadZone = 0.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
@@ -64,8 +70,8 @@ public:
 		bool dodging;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool wasHit;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		bool isMenuTori;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	//	bool isMenuTori;
 
 	FVector myPushVector;
 

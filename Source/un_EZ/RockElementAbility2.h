@@ -54,9 +54,8 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		bool isTouchingGround;
 
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 	UFUNCTION()
 		void EndOnOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
