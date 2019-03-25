@@ -95,13 +95,14 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
-	InputComponent->BindAction("Move_X", IE_Pressed, this, &ATori::move_X);
-	InputComponent->BindAction("Move_X", IE_Released, this, &ATori::move_XEnd);
+	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
+	InputComponent->BindAction("XButtonDown", IE_Pressed, this, &ATori::XButtonDown);
+	InputComponent->BindAction("XButtonDown", IE_Released, this, &ATori::XButtonDownEnd);
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
-	InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
+	//InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
+	//InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
@@ -112,11 +113,27 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
 }
 
-void ATori::move_X()
+void ATori::move_X(float axisValue)
 {
-	isGoingDown = true;
-	if (GetVelocity().Z <= 0.f)
-		LaunchCharacter(GetActorUpVector() * -1, false, false);
+	if (axisValue < -moveXDeadZone)
+	{
+		isGoingDown = true;
+		if (GetVelocity().Z <= 0.f)
+			LaunchCharacter(GetActorUpVector() * -1, false, false);
+		UE_LOG(LogTemp, Warning, TEXT("Axisvalue %f"), axisValue);
+
+	}
+	else if (axisValue > moveXDeadZone)
+	{
+		Jump();
+	}
+}
+
+void ATori::XButtonDown()
+{
+	//isGoingDown = true;
+	//if (GetVelocity().Z <= 0.f)
+	//	LaunchCharacter(GetActorUpVector() * -1, false, false);
 }
 
 void ATori::move_Y(float axisValue)
