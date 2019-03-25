@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Classes/Engine/LocalPlayer.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
+#include "Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "un_EZGameModeBase.h"
 
 ATori::ATori()
@@ -17,6 +18,8 @@ ATori::ATori()
 	//GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->AirControl = 1.f;
 	isMenuTori = false;
+	Arms = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
+	Arms->SetupAttachment(GetMesh());
 }
 
 void ATori::BeginPlay()
@@ -92,13 +95,14 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	InputComponent->BindAxis("Move_Y", this, &ATori::move_Y);
-	InputComponent->BindAction("Move_X", IE_Pressed, this, &ATori::move_X);
-	InputComponent->BindAction("Move_X", IE_Released, this, &ATori::move_XEnd);
+	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
+	InputComponent->BindAction("XButtonDown", IE_Pressed, this, &ATori::XButtonDown);
+	InputComponent->BindAction("XButtonDown", IE_Released, this, &ATori::XButtonDownEnd);
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
-	InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
+	//InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
+	//InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
@@ -109,11 +113,27 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
 }
 
-void ATori::move_X()
+void ATori::move_X(float axisValue)
 {
-	isGoingDown = true;
-	if(GetVelocity().Z <= 0.f)
-		LaunchCharacter(GetActorUpVector() * -1, false, false);
+	if (axisValue < -moveXDeadZone)
+	{
+		isGoingDown = true;
+		if (GetVelocity().Z <= 0.f)
+			LaunchCharacter(GetActorUpVector() * -1, false, false);
+		UE_LOG(LogTemp, Warning, TEXT("Axisvalue %f"), axisValue);
+
+	}
+	else if (axisValue > moveXDeadZone)
+	{
+		Jump();
+	}
+}
+
+void ATori::XButtonDown()
+{
+	//isGoingDown = true;
+	//if (GetVelocity().Z <= 0.f)
+	//	LaunchCharacter(GetActorUpVector() * -1, false, false);
 }
 
 void ATori::move_Y(float axisValue)
@@ -175,7 +195,7 @@ void ATori::slowCheck(float DeltaTime)
 
 void ATori::dodge()
 {
-	if(!isMenuTori)
+	if (!isMenuTori)
 		if (locked == false)
 		{
 			dodging = true;
@@ -212,14 +232,13 @@ void ATori::jump()
 	{
 		this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
 		isJumping = true;
-        }
+	}
 }
 
 void ATori::ability_1()
 {
 	if (locked == false)
 	{
-		ability1Used = true;
 		SetActorRotation(desiredRotation);
 		if (currentGlobalCooldown <= 0)
 		{
@@ -443,10 +462,10 @@ void ATori::stopAllVelocity_Implementation()
 
 void ATori::clearElement()
 {
-	if(element_1 != nullptr)
+	if (element_1 != nullptr)
 		element_1->Destroy();
 	element_1 = nullptr;
-	if(element_2 != nullptr)
+	if (element_2 != nullptr)
 		element_2->Destroy();
 	element_2 = nullptr;
 }

@@ -26,10 +26,12 @@ public:
 
 	// Runs movement for the character.
 	void move_Y(float axisValue);
-	void move_X();
+	void move_X(float axisValue);
 
+	void XButtonDown();
 	UFUNCTION(BlueprintImplementableEvent, Category = "Movement")
-		void move_XEnd();
+		void XButtonDownEnd();
+
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 		void setMoveSpeed(float newMoveSpeed);
 	UFUNCTION(BlueprintCallable, Category = "Movement")
@@ -45,7 +47,7 @@ public:
 	//	UMovementComponent* PhysicsComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-		float inAirMoceForce = 10.f;
+		float moveXDeadZone = 0.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		float jumpForce = 800.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
@@ -168,7 +170,7 @@ public:
 		void clearElement();
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 		void slowMoDeath(float slowMoEffect, float slowMoTime);
-	
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USkeletalMeshComponent* Arms = nullptr;
 };
