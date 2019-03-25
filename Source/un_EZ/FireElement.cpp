@@ -52,15 +52,16 @@ void AFireElement::ability1()
 void AFireElement::ability1FireCode()
 {
 	abilityHit = false;
-
+	FVector tempDir = myOwner->facingDirection;
+	tempDir.Normalize();
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AFireElementAbility1* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
-		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+		myOwner->GetActorLocation() + tempDir * ability1Range, myOwner->GetActorRotation(), tempParam);
 
 	if (!abilityHit && myOwner->isJumping != true)
-		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * firePunch, false, true);
+		myOwner->LaunchCharacter(tempDir * firePunch, false, true);
 }
 
 void AFireElement::ability1End()

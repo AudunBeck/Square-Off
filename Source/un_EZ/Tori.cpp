@@ -115,6 +115,8 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATori::move_X(float axisValue)
 {
+	//if (axisValue != 0)
+		facingDirection.Z = axisValue;
 	if (axisValue < -moveXDeadZone)
 	{
 		isGoingDown = true;
@@ -138,6 +140,8 @@ void ATori::XButtonDown()
 
 void ATori::move_Y(float axisValue)
 {
+	if(axisValue != 0)
+		facingDirection.Y = axisValue;
 	if (!locked)
 	{
 		AddMovementInput(FVector(0.f, 1, 0.f), axisValue);

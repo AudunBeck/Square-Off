@@ -42,7 +42,7 @@ void AFireElementAbility1::BeginPlay()
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
+	this->SetActorLocation(myPlayer->facingDirection * attackRange + myPlayer->GetActorLocation());
 	this->SetActorRotation(myPlayer->GetActorRotation());
 }
 
