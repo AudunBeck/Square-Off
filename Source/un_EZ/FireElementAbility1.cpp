@@ -38,7 +38,12 @@ void AFireElementAbility1::BeginPlay()
 	beginSound();
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
 	direction = myPlayer->facingDirection;
-	direction.Normalize();
+	if (direction.Z > 0.5f)
+		direction = FVector(0.f, 0.f, 1.f);
+	else if (direction.Z < -0.5f)
+		direction = FVector(0.f, 0.f, -1.f);
+	else
+		direction = myPlayer->GetActorForwardVector();
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)

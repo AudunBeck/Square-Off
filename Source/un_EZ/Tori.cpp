@@ -101,7 +101,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
-	//InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
 	//InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
@@ -125,10 +125,10 @@ void ATori::move_X(float axisValue)
 		UE_LOG(LogTemp, Warning, TEXT("Axisvalue %f"), axisValue);
 
 	}
-	else if (axisValue > moveXDeadZone)
-	{
-		Jump();
-	}
+	//else if (axisValue > moveXDeadZone)
+	//{
+	//	Jump();
+	//}
 }
 
 void ATori::XButtonDown()
