@@ -40,7 +40,7 @@ void AFireElementAbility1::BeginPlay()
 	direction = myPlayer->facingDirection;
 	if (direction.Z > 0.5f)
 		direction = FVector(0.f, 0.f, 1.f);
-	else if (direction.Z < -0.5f)
+	else if (direction.Z < -0.5f && myPlayer->isJumping)
 		direction = FVector(0.f, 0.f, -1.f);
 	else
 		direction = myPlayer->GetActorForwardVector();
