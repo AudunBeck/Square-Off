@@ -120,8 +120,6 @@ void ATori::move_X(float axisValue)
 		isGoingDown = true;
 		if (GetVelocity().Z <= 0.f)
 			LaunchCharacter(GetActorUpVector() * -1, false, false);
-		UE_LOG(LogTemp, Warning, TEXT("Axisvalue %f"), axisValue);
-
 	}
 	else if (axisValue > moveXDeadZone)
 	{

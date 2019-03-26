@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "Engine/Classes/Components/BoxComponent.h"
 #include "ToriSpawner.generated.h"
 
 UCLASS()
@@ -27,15 +26,20 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, Category = "Spawning Player")
-		float dropSpeed = 10;
-	UPROPERTY(EditAnywhere, Category = "Spawning Player")
-		float directionSpeed = 5;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
-		UBoxComponent* Collider;
-	bool moving = false;
+		float directionSpeed = 300.f;
+
+	// How fast the spawner "falls" when it goes down
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
+		float fallSpeed = 15.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
+		FVector spawnPosition;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
+		float spawnHeight = 700.f;
+
 	FVector direction;
 
+	bool shouldSpawn;
 	void moveDirection(float AxisValue);
-
+	void spawnPlayer();
 };
