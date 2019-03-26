@@ -106,13 +106,14 @@ public:
 	// Recieve damage
 	UPROPERTY(BlueprintReadWrite, Category = "Damage")
 		float damageMultiplier = 1.f;
-	void recieveDamage(float damage);
-	void recieveDamage(float damage, float slow, float ccDur, int type);		//Int type defines effect, 0 = slow, 1 = stun
-	void recieveDamage(float damage, float knockback, FVector knockbackPoint);
+	void recieveDamage(ATori* attacker, float damage);
+	void recieveDamage(ATori* attacker, float damage, float slow, float ccDur, int type);		//Int type defines effect, 0 = slow, 1 = stun
+	void recieveDamage(ATori* attacker, float damage, float knockback, FVector knockbackPoint);
 	UPROPERTY(EditAnywhere, Category = "Animations")
 		UAnimMontage * receiveDamageAnim;
-
 	void checkIfDead();
+	UPROPERTY(BlueprintReadWrite, Category = "Damage")
+		ATori* lastAttacker;
 
 
 	// Made for the pickup to access this and send new element to the player, is a bool to check if it already contains it and will not destroy the pickup.

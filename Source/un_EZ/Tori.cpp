@@ -305,7 +305,7 @@ void ATori::ability2End()
 	}
 }
 
-void ATori::recieveDamage(float damage)
+void ATori::recieveDamage(ATori* attacker, float damage)
 {
 	// Might be something like this.
 	if (iTime <= 0)
@@ -331,9 +331,10 @@ void ATori::recieveDamage(float damage)
 		freezeFrame(0.4, false);//Give this some good math for dmg becoming time frozen.
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
+	lastAttacker = attacker;
 }
 
-void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
+void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow, int type)
 {
 	// Type 0 is slow
 	if (type == 0)
@@ -352,8 +353,9 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 		/// Insert effect of stun
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
+	lastAttacker = attacker;
 }
-void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
+void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVector knockbackPoint)
 {
 	FVector delta = GetActorLocation() - knockbackPoint;
 	delta.Normalize();
@@ -364,6 +366,7 @@ void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
 	hitPointPercentage = hitPoints / maxHitPoints;
 	checkIfDead();
 	wasHit = true;
+	lastAttacker = attacker;
 }
 
 void ATori::checkIfDead()
@@ -376,6 +379,7 @@ void ATori::checkIfDead()
 			slowMoDeath(0.1f, 3.f);
 		isDead = true;
 		Cast<Aun_EZGameModeBase>(GetWorld()->GetAuthGameMode())->playerDead();
+		lastAttacker->gainPoint();
 	}
 }
 

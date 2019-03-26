@@ -42,7 +42,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			Cast<ATori>(OtherActor)->recieveDamage(damage);
+			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
 			myPlayer->stopAllVelocity();
 			myPlayer->freezeFrame(0.15, false);
 			myPlayer->setRotationRate(myPlayer->rotationRate);

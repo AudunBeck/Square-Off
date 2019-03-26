@@ -41,7 +41,7 @@ void AFireElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		{
 			myPlayer->setRotationRate(myPlayer->rotationRate);
 			myPlayer->setMoveSpeed(myPlayer->moveSpeed);
-			Cast<ATori>(OtherActor)->recieveDamage(damage);
+			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
 			myPlayer->stopAllVelocity();
 			myElement->fireChi = 2;
 			myPlayer->freezeFrame(0.3, true);

@@ -55,7 +55,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(damage);
+			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
 			if (!buffed)
 				myElement->fireChi += 1;
 			hitEnemyVFX(OtherActor->GetActorLocation());

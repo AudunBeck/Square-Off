@@ -65,7 +65,7 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 					FVector ownerLocation = myPlayer->GetActorLocation();
 					FVector launchDirection = myPlayer->GetActorForwardVector() * -1;
 					myPlayer->LaunchCharacter(launchDirection * dashDist, false, true);
-					enemy->recieveDamage(damage, ccDur, slow, 0);
+					enemy->recieveDamage(myPlayer, damage, ccDur, slow, 0);
 					myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 					myPlayer->hitAnimImmune = false;
 					UE_LOG(LogTemp, Warning, TEXT("Countering"));

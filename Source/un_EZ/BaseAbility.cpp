@@ -29,8 +29,7 @@ void ABaseAbility::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor *
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Gaining point"));
-			myPlayer->gainPoint();
+			
 		}
 	}
 }

@@ -49,7 +49,7 @@ void ARockElementAbility2::Tick(float DeltaTime)
 		movingTime -= DeltaTime;
 		if (hitPlayer)
 		{
-			hitPlayer->recieveDamage(damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
+			hitPlayer->recieveDamage(myPlayer, damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
 			movingTime = 0.f;
 			hitPlayer = nullptr;
 		}
@@ -69,7 +69,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			hitPlayer = Cast<ATori>(OtherActor);
-			hitPlayer->recieveDamage(damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
+			hitPlayer->recieveDamage(myPlayer, damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
 			movingTime = 0.f;
 			hitPlayer = nullptr;
 		}
