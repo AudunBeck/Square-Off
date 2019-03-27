@@ -75,8 +75,8 @@ void ATori::Tick(float DeltaTime)
 	}
 
 	// Make sure character position can't diviate from X = 0
-	//if (GetActorLocation().X != 0)
-	//	SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
+	if (GetActorLocation().X != 0)
+		SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
 
 	checkIfLanded();
 	if (GetVelocity().Z > 0)
