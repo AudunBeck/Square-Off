@@ -75,8 +75,9 @@ void ACameraSetUp::calculateCenterLocation()
 	{
 		centerLocation += pawnLocations[i];
 	}
-	centerLocation = (centerLocation / numberOfPawns) - offsetCam;
 	centerLocation.X = 0;
+	centerLocation = (centerLocation / numberOfPawns) + offsetCam;
+	
 
 	for (int i = 0; i < numberOfPawns; i++)
 	{
