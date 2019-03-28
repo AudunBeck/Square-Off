@@ -37,11 +37,12 @@ void ARockElementAbility1::Tick(float DeltaTime)
 void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 	if (OtherActor != myPlayer)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			Cast<ATori>(OtherActor)->recieveDamage(damage);
+			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
 			myPlayer->stopAllVelocity();
 			myPlayer->freezeFrame(0.15, false);
 			myPlayer->setRotationRate(myPlayer->rotationRate);

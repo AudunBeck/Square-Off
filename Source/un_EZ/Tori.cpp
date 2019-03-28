@@ -17,7 +17,7 @@ ATori::ATori()
 	bUseControllerRotationRoll = false;
 	//GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->AirControl = 1.f;
-	isMenuTori = false;
+	//isMenuTori = false;
 	Arms = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
 	Arms->SetupAttachment(GetMesh());
 }
@@ -38,8 +38,8 @@ void ATori::BeginPlay()
 void ATori::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (isMenuTori)
-		damageMultiplier = 0;
+	//if (isMenuTori)
+	//	damageMultiplier = 0;
 
 	/// Find better comment
 	// Slow stuff
@@ -75,19 +75,14 @@ void ATori::Tick(float DeltaTime)
 	}
 
 	// Make sure character position can't diviate from X = 0
-	//if (GetActorLocation().X != 0)
-	//	SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
+	if (GetActorLocation().X != 0)
+		SetActorLocation(FVector(0.f, GetActorLocation().Y, GetActorLocation().Z));
 
 	checkIfLanded();
 	if (GetVelocity().Z > 0)
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("Going up!"));
 		isGoingUp = true;
-	}
 	else
-	{
 		isGoingUp = false;
-	}
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -122,7 +117,6 @@ void ATori::move_X(float axisValue)
 		isGoingDown = true;
 		if (GetVelocity().Z <= 0.f)
 			LaunchCharacter(GetActorUpVector() * -1, false, false);
-
 	}
 	//else if (axisValue > moveXDeadZone)
 	//{
@@ -198,34 +192,32 @@ void ATori::slowCheck(float DeltaTime)
 
 void ATori::dodge()
 {
-	if (!isMenuTori)
-		if (locked == false)
+	if (locked == false)
+	{
+		dodging = true;
+		locked = true;
+		iTime = 0.3f;
+		FVector launchVector;
+		launchVector = GetActorForwardVector() * dodgeRange;
+		LaunchCharacter(launchVector, false, true);
+		dodgeAmmo -= 1;
+		if (element_1 != nullptr)
 		{
-			dodging = true;
-			locked = true;
-			iTime = 0.3f;
-			FVector launchVector;
-			launchVector = GetActorForwardVector() * dodgeRange;
-			LaunchCharacter(launchVector, false, true);
-			dodgeAmmo -= 1;
-			if (element_1 != nullptr)
-			{
-				element_1->resetAbility1();
-				element_1->resetAbility2();
-			}
-			if (element_2 != nullptr)
-			{
-				element_2->resetAbility1();
-				element_2->resetAbility2();
-			}
-			setMoveSpeed(moveSpeed);
-			setRotationRate(rotationRate);
+			element_1->resetAbility1();
+			element_1->resetAbility2();
 		}
+		if (element_2 != nullptr)
+		{
+			element_2->resetAbility1();
+			element_2->resetAbility2();
+		}
+		setMoveSpeed(moveSpeed);
+		setRotationRate(rotationRate);
+	}
 }
 void ATori::dodgeEnd()
 {
-	if (!isMenuTori)
-		dodging = false;
+	dodging = false;
 }
 
 void ATori::jump()
@@ -310,8 +302,9 @@ void ATori::ability2End()
 	}
 }
 
-void ATori::recieveDamage(float damage)
+void ATori::recieveDamage(ATori* attacker, float damage)
 {
+	lastAttacker = attacker;
 	// Might be something like this.
 	if (iTime <= 0)
 	{
@@ -338,8 +331,9 @@ void ATori::recieveDamage(float damage)
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
 
-void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
+void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow, int type)
 {
+	lastAttacker = attacker;
 	// Type 0 is slow
 	if (type == 0)
 		if (iTime <= 0)
@@ -358,8 +352,9 @@ void ATori::recieveDamage(float damage, float ccDur, float slow, int type)
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
-void ATori::recieveDamage(float damage, float knockback, FVector knockbackPoint)
+void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVector knockbackPoint)
 {
+	lastAttacker = attacker;
 	FVector delta = GetActorLocation() - knockbackPoint;
 	delta.Normalize();
 	FVector knockForce = delta * knockback;
@@ -375,8 +370,9 @@ void ATori::checkIfDead()
 {
 	if (hitPoints <= 0)
 	{
+		lastAttacker->gainPoint();
 		DisableInput(Cast<APlayerController>(Controller));
-		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), 1);
+		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), PlayerNumber);
 		if (!isDead)
 			slowMoDeath(0.1f, 3.f);
 		isDead = true;
@@ -430,32 +426,31 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 
 void ATori::switchElement()
 {
-	if (!isMenuTori)
-		if (!locked)
+	if (!locked)
+	{
+		if (activeElement == 1)
 		{
-			if (activeElement == 1)
+			if (element_2 != nullptr)
 			{
-				if (element_2 != nullptr)
-				{
-					activeElement = 2;
-					currentElementType = element_2->switchToElement(true);
-					element_1->switchToElement(false);
-				}
+				activeElement = 2;
+				currentElementType = element_2->switchToElement(true);
+				element_1->switchToElement(false);
 			}
-			else if (activeElement == 2)
-			{
-				if (element_1 != nullptr)
-				{
-					activeElement = 1;
-					currentElementType = element_1->switchToElement(true);
-					element_2->switchToElement(false);
-				}
-			}
-			switchAnimationElement();
-			locked = false;
-			setMoveSpeed(moveSpeed);
-			setRotationRate(rotationRate);
 		}
+		else if (activeElement == 2)
+		{
+			if (element_1 != nullptr)
+			{
+				activeElement = 1;
+				currentElementType = element_1->switchToElement(true);
+				element_2->switchToElement(false);
+			}
+		}
+		switchAnimationElement();
+		locked = false;
+		setMoveSpeed(moveSpeed);
+		setRotationRate(rotationRate);
+	}
 }
 
 void ATori::stopAllVelocity_Implementation()

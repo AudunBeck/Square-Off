@@ -56,12 +56,13 @@ void AFireElementAbility1::Tick(float DeltaTime)
 void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex,bFromSweep, SweepResult);
 	if (OtherActor != myPlayer)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(damage);
+			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
 			if (!buffed)
 				myElement->fireChi += 1;
 			hitEnemyVFX(OtherActor->GetActorLocation());
