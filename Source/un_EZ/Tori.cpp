@@ -80,14 +80,9 @@ void ATori::Tick(float DeltaTime)
 
 	checkIfLanded();
 	if (GetVelocity().Z > 0)
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("Going up!"));
 		isGoingUp = true;
-	}
 	else
-	{
 		isGoingUp = false;
-	}
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -305,6 +300,7 @@ void ATori::ability2End()
 
 void ATori::recieveDamage(ATori* attacker, float damage)
 {
+	lastAttacker = attacker;
 	// Might be something like this.
 	if (iTime <= 0)
 	{
@@ -329,11 +325,11 @@ void ATori::recieveDamage(ATori* attacker, float damage)
 		freezeFrame(0.4, false);//Give this some good math for dmg becoming time frozen.
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
-	lastAttacker = attacker;
 }
 
 void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow, int type)
 {
+	lastAttacker = attacker;
 	// Type 0 is slow
 	if (type == 0)
 		if (iTime <= 0)
@@ -351,10 +347,10 @@ void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow
 		/// Insert effect of stun
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
-	lastAttacker = attacker;
 }
 void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVector knockbackPoint)
 {
+	lastAttacker = attacker;
 	FVector delta = GetActorLocation() - knockbackPoint;
 	delta.Normalize();
 	FVector knockForce = delta * knockback;
@@ -364,20 +360,19 @@ void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVecto
 	hitPointPercentage = hitPoints / maxHitPoints;
 	checkIfDead();
 	wasHit = true;
-	lastAttacker = attacker;
 }
 
 void ATori::checkIfDead()
 {
 	if (hitPoints <= 0)
 	{
+		lastAttacker->gainPoint();
 		DisableInput(Cast<APlayerController>(Controller));
 		UE_LOG(LogTemp, Warning, TEXT("Player_ %i, is dead."), PlayerNumber);
 		if (!isDead)
 			slowMoDeath(0.1f, 3.f);
 		isDead = true;
 		Cast<Aun_EZGameModeBase>(GetWorld()->GetAuthGameMode())->playerDead();
-		lastAttacker->gainPoint();
 	}
 }
 
