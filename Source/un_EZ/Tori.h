@@ -43,6 +43,10 @@ public:
 	void dodgeEnd();
 	void jump();
 
+	// Check if stuck
+	float currentZ;
+	float tempZ;
+
 	//UPROPERTY(EditAnywhere)
 	//	UMovementComponent* PhysicsComponent;
 

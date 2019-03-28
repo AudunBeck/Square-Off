@@ -83,6 +83,17 @@ void ATori::Tick(float DeltaTime)
 		isGoingUp = true;
 	else
 		isGoingUp = false;
+
+	if (isJumping == true && isGoingDown == false && isGoingUp == false)
+	{
+		currentZ = GetActorLocation().Z;
+		if (tempZ == currentZ)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Tori is stuck"));
+		}
+		tempZ = currentZ;
+	}
+		
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
