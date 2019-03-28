@@ -39,9 +39,9 @@ void AFireElementAbility1::BeginPlay()
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
 	direction = myPlayer->facingDirection;
 	if (direction.Z > 0.5f)
-		direction = FVector(0.f, 0.f, 1.f);
+		direction = FVector(0.f, 0.f, 1.3f);
 	else if (direction.Z < -0.5f && myPlayer->isJumping)
-		direction = FVector(0.f, 0.f, -1.f);
+		direction = FVector(0.f, 0.f, -1.3f);
 	else
 		direction = myPlayer->GetActorForwardVector();
 }
