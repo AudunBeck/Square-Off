@@ -37,12 +37,19 @@ void AFireElementAbility1::BeginPlay()
 	}
 	beginSound();
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
+	direction = myPlayer->facingDirection;
+	if (direction.Z > 0.5f)
+		direction = FVector(0.f, 0.f, 1.3f);
+	else if (direction.Z < -0.5f && myPlayer->isJumping)
+		direction = FVector(0.f, 0.f, -1.3f);
+	else
+		direction = myPlayer->GetActorForwardVector();
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
+	this->SetActorLocation(direction * attackRange + myPlayer->GetActorLocation());
 	this->SetActorRotation(myPlayer->GetActorRotation());
 }
 

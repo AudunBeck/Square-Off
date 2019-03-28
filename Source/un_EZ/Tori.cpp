@@ -82,7 +82,7 @@ void ATori::Tick(float DeltaTime)
 	if (GetVelocity().Z > 0)
 		isGoingUp = true;
 	else
-		isGoingUp = false;	
+		isGoingUp = false;
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -96,7 +96,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
-	//InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
 	//InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
@@ -110,16 +110,18 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATori::move_X(float axisValue)
 {
+	//if (axisValue != 0)
+		facingDirection.Z = axisValue;
 	if (axisValue < -moveXDeadZone)
 	{
 		isGoingDown = true;
 		if (GetVelocity().Z <= 0.f)
 			LaunchCharacter(GetActorUpVector() * -1, false, false);
 	}
-	else if (axisValue > moveXDeadZone)
-	{
-		Jump();
-	}
+	//else if (axisValue > moveXDeadZone)
+	//{
+	//	Jump();
+	//}
 }
 
 void ATori::XButtonDown()
@@ -131,6 +133,8 @@ void ATori::XButtonDown()
 
 void ATori::move_Y(float axisValue)
 {
+	if(axisValue != 0)
+		facingDirection.Y = axisValue;
 	if (!locked)
 	{
 		AddMovementInput(FVector(0.f, 1, 0.f), axisValue);

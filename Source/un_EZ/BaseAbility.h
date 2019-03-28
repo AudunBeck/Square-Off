@@ -12,14 +12,14 @@ UCLASS()
 class UN_EZ_API ABaseAbility : public AActor
 {
 	GENERATED_BODY()
-	
+
 public:
 	ABaseAbility();
 
 protected:
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	virtual void Tick(float DeltaTime) override;
 	virtual ATori* getMyOwner();
 
@@ -35,5 +35,8 @@ public:
 	UFUNCTION()
 		virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UPROPERTY(BlueprintReadOnly)
+				FVector direction;
 
 };

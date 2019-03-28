@@ -184,4 +184,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USkeletalMeshComponent* Arms = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		FVector facingDirection;
 };
