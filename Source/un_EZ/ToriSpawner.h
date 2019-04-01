@@ -32,10 +32,6 @@ public:
 	// How fast the spawner "falls" when it goes down
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
 		float fallSpeed = 15.f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
-		FVector spawnPosition;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
-		float spawnHeight = 700.f;
 
 	FVector direction;
 

@@ -15,8 +15,6 @@ AToriSpawner::AToriSpawner()
 void AToriSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	spawnPosition = FVector(0.f, 0.f, spawnHeight);
-	SetActorLocation(spawnPosition);
 	shouldSpawn = false;
 }
 
