@@ -112,7 +112,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ATori::move_X(float axisValue)
 {
 	//if (axisValue != 0)
-		facingDirection.Z = axisValue;
+	facingDirection.Z = axisValue;
 	if (axisValue < -moveXDeadZone)
 	{
 		isGoingDown = true;
@@ -134,7 +134,7 @@ void ATori::XButtonDown()
 
 void ATori::move_Y(float axisValue)
 {
-	if(axisValue != 0)
+	if (axisValue != 0)
 		facingDirection.Y = axisValue;
 	if (!locked)
 	{
@@ -384,10 +384,11 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 
 void ATori::switchElement()
 {
-	if (currentPickUp != nullptr)
-	{
-		currentPickUp->giveElement(this);
-	}
+	if (!locked)
+		if (currentPickUp != nullptr)
+		{
+			currentPickUp->giveElement(this);
+		}
 	//if (!locked)
 	//{
 	//	if (activeElement == 1)

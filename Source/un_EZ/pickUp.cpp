@@ -3,6 +3,7 @@
 #include "pickUp.h"
 #include "Tori.h"
 #include "Engine/Classes/Components/PrimitiveComponent.h"
+#include "Engine/Classes/Components/SphereComponent.h"
 #include "pickUpSpawner.h"
 
 ApickUp::ApickUp()
@@ -12,15 +13,16 @@ ApickUp::ApickUp()
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-
 	collider->OnComponentBeginOverlap.AddDynamic(this, &ApickUp::OnOverlapBegin);
-	collider->OnComponentEndOverlap.AddDynamic(this, &ApickUp::OnOverlapEnd);
+
 
 }
 
 void ApickUp::BeginPlay()
 {
 	Super::BeginPlay();
+
+	collider->OnComponentEndOverlap.AddDynamic(this, &ApickUp::OnOverlapEnd);
 }
 
 void ApickUp::Tick(float DeltaTime)
@@ -45,13 +47,10 @@ void ApickUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AA
 
 void ApickUp::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Error, TEXT("Object walking away"));
 	if (OtherActor->IsA(ATori::StaticClass()))
 	{
 		ATori* player = Cast<ATori>(OtherActor);
 		player->currentPickUp = nullptr;
-		UE_LOG(LogTemp, Error, TEXT("Player Walking away"));
-
 	}
 }
 
