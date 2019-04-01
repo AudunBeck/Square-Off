@@ -68,7 +68,10 @@ public:
 		bool isGoingUp = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 		bool isGoingDown = false;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+		bool onSolidGround = false;
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Movement")
+		void stopCollision();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool dodging;
