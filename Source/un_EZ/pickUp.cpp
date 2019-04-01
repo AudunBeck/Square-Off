@@ -14,6 +14,7 @@ ApickUp::ApickUp()
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
 	collider->OnComponentBeginOverlap.AddDynamic(this, &ApickUp::OnOverlapBegin);
+	collider->OnComponentEndOverlap.AddDynamic(this, &ApickUp::OnOverlapEnd);
 
 }
 
@@ -35,21 +36,38 @@ void ApickUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AA
 		if (ElementBlueprint != nullptr)
 		{
 			ATori* player = Cast<ATori>(OtherActor);
-			FActorSpawnParameters tempParam;
-			tempParam.Owner = player;
-			ABaseElement* temp = GetWorld()->SpawnActor<ABaseElement>(ElementBlueprint, tempParam);
-			if (player->pickUpElement(temp))
-			{
-				if (mySpawner != nullptr)
-					mySpawner->elementPickedUp();
-				StartDestroy();
-			}
-			else
-			{
-				temp->Destroy();
-			}
+			player->currentPickUp = this;
 		}
 		else
 			UE_LOG(LogTemp, Error, TEXT("You forgot to add a element to this pickup, IDIOT!"));
+	}
+}
+
+void ApickUp::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+{
+	UE_LOG(LogTemp, Error, TEXT("Object walking away"));
+	if (OtherActor->IsA(ATori::StaticClass()))
+	{
+		ATori* player = Cast<ATori>(OtherActor);
+		player->currentPickUp = nullptr;
+		UE_LOG(LogTemp, Error, TEXT("Player Walking away"));
+
+	}
+}
+
+void ApickUp::giveElement(ATori * player)
+{
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = player;
+	ABaseElement* temp = GetWorld()->SpawnActor<ABaseElement>(ElementBlueprint, tempParam);
+	if (player->pickUpElement(temp))
+	{
+		if (mySpawner != nullptr)
+			mySpawner->elementPickedUp();
+		StartDestroy();
+	}
+	else
+	{
+		temp->Destroy();
 	}
 }
