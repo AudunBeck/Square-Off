@@ -24,8 +24,6 @@ void ASpawnInpact::Tick(float DeltaTime)
 void ASpawnInpact::checkForEnemies(ATori* myPlayer)
 {
 	ATori* enemyReference = nullptr;
-
-	// Finds all actors of LitenViking and StorViking, and counts them
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATori::StaticClass(), foundEnemy);
 	numberOfEnemyFound = foundEnemy.Num() - 1;
 	if (numberOfEnemyFound > 0)
@@ -41,7 +39,6 @@ void ASpawnInpact::checkForEnemies(ATori* myPlayer)
 					radiusToEnemy = sqrt(pow((enemyLocation.X - tempLocation.X), 2) + pow((enemyLocation.Y - tempLocation.Y), 2));
 					if (radiusToEnemy < inpactRadius)
 					{
-						UE_LOG(LogTemp, Warning, TEXT("Hei, %i"), i);
 						enemyReference->recieveDamage(myPlayer, damage);
 						FVector knockDirection = (enemyLocation - tempLocation);
 						knockDirection.Normalize();
