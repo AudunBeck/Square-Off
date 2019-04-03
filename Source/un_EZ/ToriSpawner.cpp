@@ -11,6 +11,7 @@ AToriSpawner::AToriSpawner()
 void AToriSpawner::BeginPlay()
 {
 	Super::BeginPlay();
+	GetCharacterMovement()->GravityScale = 0.f;
 }
 
 // Called every frame
@@ -18,11 +19,9 @@ void AToriSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
 	if (inAxis == 0)
 		GetCharacterMovement()->StopMovementImmediately();
-
-	if (GetActorLocation().Z < spawnHeight)
-		SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, spawnHeight));
 }
 
 // Called to bind functionality to input
