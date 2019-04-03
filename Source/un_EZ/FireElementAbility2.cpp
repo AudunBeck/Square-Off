@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FireElementAbility2.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AFireElementAbility2::AFireElementAbility2()
 {
@@ -21,11 +22,17 @@ void AFireElementAbility2::BeginPlay()
 	SetLifeSpan(myElement->ability2Lifespan);
 	attackRange = myElement->ability2Range;
 	damage = myElement->ability2Damage;
+	//myPlayer->GetCharacterMovement()->GravityScale = 0.f;
 }
 
 void AFireElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	FVector forward = myPlayer->GetActorForwardVector();
+	NewLocation = myPlayer->GetActorLocation();
+	NewLocation += (forward * speed * DeltaTime);
+	myPlayer->SetActorLocation(NewLocation);
 
 	// Sets the hitbox ahead of the player while flying forward
 	SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());

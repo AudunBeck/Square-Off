@@ -99,8 +99,8 @@ void AFireElement::ability2FireCode()
 	AFireElementAbility2* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
-	if (!abilityHit && myOwner->isJumping != true)
-		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);
+	/*if (!abilityHit && myOwner->isJumping != true)
+		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);*/
 }
 
 void AFireElement::ability2End()
