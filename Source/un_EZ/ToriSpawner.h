@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
+#include "GameFramework/Character.h"
 #include "ToriSpawner.generated.h"
 
 UCLASS()
-class UN_EZ_API AToriSpawner : public APawn
+class UN_EZ_API AToriSpawner : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -27,7 +27,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
-		float directionSpeed = 300.f;
+		float directionSpeed = 600.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
+		float spawnHeight = 900.f;
 
 	// How fast the spawner "falls" when it goes down
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
