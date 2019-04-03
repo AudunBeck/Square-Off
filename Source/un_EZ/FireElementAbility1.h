@@ -36,6 +36,8 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 		void beginSound();
 
+	FVector NewLocation;
+
 	UPROPERTY(BlueprintReadWrite)
 		bool buffed = false;
 	float attackRange = 100;
