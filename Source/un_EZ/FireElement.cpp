@@ -60,16 +60,16 @@ void AFireElement::ability1FireCode()
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
 		myOwner->GetActorLocation() + tempDir * ability1Range, myOwner->GetActorRotation(), tempParam);
 
-	if (!abilityHit)
-	{
-		if (myOwner->isJumping == true)
-		{
-			myOwner->LaunchCharacter(tempDir * firePunch * 0.7f, false, true);
-			UE_LOG(LogTemp, Warning, TEXT("Punching in air"));
-		}
-		else
-			myOwner->LaunchCharacter(tempDir * firePunch, false, true);
-	}
+	//if (!abilityHit)
+	//{
+	//	if (myOwner->isJumping == true)
+	//	{
+	//		myOwner->LaunchCharacter(tempDir * firePunch * 0.7f, false, true);
+	//		UE_LOG(LogTemp, Warning, TEXT("Punching in air"));
+	//	}
+	//	else
+	//		myOwner->LaunchCharacter(tempDir * firePunch, false, true);
+	//}
 		
 }
 

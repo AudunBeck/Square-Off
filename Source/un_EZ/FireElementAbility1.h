@@ -36,6 +36,11 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 		void beginSound();
 
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float speed = 300.f;
+
+	FVector NewLocation;
+
 	UPROPERTY(BlueprintReadWrite)
 		bool buffed = false;
 	float attackRange = 100;

@@ -27,7 +27,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		USphereComponent* collider;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float speed = 3000.f;
 	
 	FVector NewLocation;
