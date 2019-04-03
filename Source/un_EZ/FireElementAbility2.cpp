@@ -31,7 +31,7 @@ void AFireElementAbility2::Tick(float DeltaTime)
 	// Change speed to rather check the distance traveled, while still stopping on inpact
 	FVector forward = myPlayer->GetActorForwardVector();
 	NewLocation = myPlayer->GetActorLocation();
-	NewLocation += (forward * speed * DeltaTime);
+	NewLocation += (forward * myElement->launchSpeed_2 * DeltaTime);
 	myPlayer->SetActorLocation(NewLocation);
 
 	// Sets the hitbox ahead of the player while flying forward

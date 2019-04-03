@@ -52,7 +52,7 @@ void AFireElementAbility1::Tick(float DeltaTime)
 
 	FVector forward = myPlayer->GetActorForwardVector();
 	NewLocation = myPlayer->GetActorLocation();
-	NewLocation += (forward * speed * DeltaTime);
+	NewLocation += (forward * myElement->launchSpeed_1 * DeltaTime);
 	myPlayer->SetActorLocation(NewLocation);
 
 	this->SetActorLocation(direction * attackRange + myPlayer->GetActorLocation());

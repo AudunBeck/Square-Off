@@ -43,9 +43,10 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.3f;
-
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float firePunch = 3000;
+		float launchSpeed_1 = 300.f;
+	//UPROPERTY(EditAnywhere, Category = "Ability1")
+	//	float firePunch = 3000;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Damage;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
@@ -61,9 +62,10 @@ public:
 	/// Add a function that reads how long the dash lasts, and constantly update the lifespan accordingly
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Lifespan = 2;
-
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float fireKick = 6000;
+		float launchSpeed_2 = 3000.f;
+	//UPROPERTY(EditAnywhere, Category = "Ability2")
+	//	float fireKick = 6000;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Ability2")
 		int maxFireChi = 2;

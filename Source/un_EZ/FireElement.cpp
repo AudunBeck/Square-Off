@@ -23,7 +23,7 @@ AFireElement::AFireElement()
 		ammo1 = maxAmmo1;
 		ammoPerCd1 = Ability1Data->AmmoPerCD;
 		ability1Range = Ability1Data->Range;
-		firePunch = Ability1Data->MoveRange;
+		//firePunch = Ability1Data->MoveRange;
 		ability1lifeSpan = Ability1Data->LifeSpan;
 	}
 	if (Ability2Data)
@@ -34,7 +34,7 @@ AFireElement::AFireElement()
 		ammo2 = maxAmmo2;
 		ammoPerCd2 = Ability2Data->AmmoPerCD;
 		ability2Range = Ability2Data->Range;
-		fireKick = Ability2Data->MoveRange;
+		//fireKick = Ability2Data->MoveRange;
 		ability2Lifespan = Ability2Data->LifeSpan;
 		maxFireChi = Ability2Data->FireChi;
 		boostedAbility1Scale = Ability2Data->BuffedScale;

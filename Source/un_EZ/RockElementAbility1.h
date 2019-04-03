@@ -24,6 +24,8 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+	FVector NewLocation;
+
 	float attackRange;
 	float chargedHit;
 	UPROPERTY(EditAnywhere)
