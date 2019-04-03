@@ -6,6 +6,7 @@
 #include "Engine/Classes/Engine/LocalPlayer.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/Classes/Components/SkeletalMeshComponent.h"
+#include "pickUp.h"
 #include "un_EZGameModeBase.h"
 
 ATori::ATori()
@@ -84,12 +85,12 @@ void ATori::Tick(float DeltaTime)
 		isGoingDown = false;
 		isGoingUp = true;
 	}
-		
+
 	else
 	{
 		isGoingDown = false;
 		isGoingUp = false;
-	}		
+	}
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -141,7 +142,7 @@ void ATori::XButtonDown()
 
 void ATori::move_Y(float axisValue)
 {
-	if(axisValue != 0)
+	if (axisValue != 0)
 		facingDirection.Y = axisValue;
 	if (!locked)
 	{
@@ -214,11 +215,6 @@ void ATori::dodge()
 			element_1->resetAbility1();
 			element_1->resetAbility2();
 		}
-		if (element_2 != nullptr)
-		{
-			element_2->resetAbility1();
-			element_2->resetAbility2();
-		}
 		setMoveSpeed(moveSpeed);
 		setRotationRate(rotationRate);
 	}
@@ -250,11 +246,6 @@ void ATori::ability_1()
 				element_1->ability1();
 				element_1->channelingAbility1 = true;
 			}
-			else if (activeElement == 2 && element_2 != nullptr)
-			{
-				element_2->ability1();
-				element_2->channelingAbility1 = true;
-			}
 		}
 		else
 			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldonw: %f"), currentGlobalCooldown);
@@ -267,11 +258,6 @@ void ATori::ability1End()
 	{
 		element_1->ability1End();
 		element_1->channelingAbility1 = false;
-	}
-	else if (activeElement == 2 && element_2 != nullptr)
-	{
-		element_2->ability1End();
-		element_2->channelingAbility1 = false;
 	}
 }
 
@@ -287,11 +273,6 @@ void ATori::ability_2()
 				element_1->ability2();
 				element_1->channelingAbility2 = true;
 			}
-			else if (activeElement == 2 && element_2 != nullptr)
-			{
-				element_2->ability2();
-				element_2->channelingAbility2 = true;
-			}
 		}
 	}
 }
@@ -302,11 +283,6 @@ void ATori::ability2End()
 	{
 		element_1->ability2End();
 		element_1->channelingAbility2 = false;
-	}
-	else if (activeElement == 2 && element_2 != nullptr)
-	{
-		element_2->ability2End();
-		element_2->channelingAbility2 = false;
 	}
 }
 
@@ -326,11 +302,6 @@ void ATori::recieveDamage(ATori* attacker, float damage)
 			{
 				element_1->resetAbility1();
 				element_1->resetAbility2();
-			}
-			if (element_2 != nullptr)
-			{
-				element_2->resetAbility1();
-				element_2->resetAbility2();
 			}
 			locked = 0;
 		}
@@ -396,14 +367,10 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 		element_1 = newElement;
 		currentElementType = element_1->switchToElement(true);
 	}
-	else if (element_2 == nullptr && newElement->elementType != element_1->elementType)
-	{
-		element_2 = newElement;
-	}
 	// If it does not fill any empty spaces.
 	else
 	{
-		if (newElement->elementType == element_1->elementType || newElement->elementType == element_2->elementType)
+		if (newElement->elementType == element_1->elementType)
 			return false;
 		else
 		{
@@ -413,15 +380,6 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 				element_1 = newElement;
 				//element_1->setPlayer(this);
 				currentElementType = element_1->switchToElement(true);
-				element_2->switchToElement(false);
-			}
-			else if (activeElement == 2)
-			{
-				element_2->Destroy();
-				element_2 = newElement;
-				//element_2->setPlayer(this);
-				currentElementType = element_2->switchToElement(true);
-				element_1->switchToElement(false);
 			}
 		}
 	}
@@ -435,30 +393,35 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 void ATori::switchElement()
 {
 	if (!locked)
-	{
-		if (activeElement == 1)
+		if (currentPickUp != nullptr)
 		{
-			if (element_2 != nullptr)
-			{
-				activeElement = 2;
-				currentElementType = element_2->switchToElement(true);
-				element_1->switchToElement(false);
-			}
+			currentPickUp->giveElement(this);
 		}
-		else if (activeElement == 2)
-		{
-			if (element_1 != nullptr)
-			{
-				activeElement = 1;
-				currentElementType = element_1->switchToElement(true);
-				element_2->switchToElement(false);
-			}
-		}
-		switchAnimationElement();
-		locked = false;
-		setMoveSpeed(moveSpeed);
-		setRotationRate(rotationRate);
-	}
+	//if (!locked)
+	//{
+	//	if (activeElement == 1)
+	//	{
+	//		if (element_2 != nullptr)
+	//		{
+	//			activeElement = 2;
+	//			currentElementType = element_2->switchToElement(true);
+	//			element_1->switchToElement(false);
+	//		}
+	//	}
+	//	else if (activeElement == 2)
+	//	{
+	//		if (element_1 != nullptr)
+	//		{
+	//			activeElement = 1;
+	//			currentElementType = element_1->switchToElement(true);
+	//			element_2->switchToElement(false);
+	//		}
+	//	}
+	//	switchAnimationElement();
+	//	locked = false;
+	//	setMoveSpeed(moveSpeed);
+	//	setRotationRate(rotationRate);
+	//}
 }
 
 void ATori::stopAllVelocity_Implementation()
@@ -471,7 +434,4 @@ void ATori::clearElement()
 	if (element_1 != nullptr)
 		element_1->Destroy();
 	element_1 = nullptr;
-	if (element_2 != nullptr)
-		element_2->Destroy();
-	element_2 = nullptr;
 }
