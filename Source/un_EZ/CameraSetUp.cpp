@@ -4,6 +4,11 @@
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/World.h"
 
+
+//This actor contains a camera and follows up to 4 actors that are controlled by up to 4 player controllers,
+//getting the locations from each of them and calculating a center position
+//it then finds the furthes away actor and adjusts the length of the spring arm so all of the characters are on screen.
+
 // Sets default values
 ACameraSetUp::ACameraSetUp()
 {
@@ -59,7 +64,7 @@ void ACameraSetUp::getPawnLocations()
 		{
 			pawnLocations[i] = playerControllers[i]->GetPawn()->GetActorLocation();			
 		}
-		else if(logbug) //This is only here to please the UE4 math gods, they want a UE_LOG sacrifice
+		else if(logbug) //If all of this is commented out the Z value of centerlocation ends up being infinite. 
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Removed player at %i"), i);
 			logbug = false;
