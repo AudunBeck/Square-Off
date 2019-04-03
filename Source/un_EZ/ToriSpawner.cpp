@@ -17,7 +17,6 @@ AToriSpawner::AToriSpawner()
 void AToriSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	shouldSpawn = false;
 }
 
 // Called every frame
@@ -26,9 +25,11 @@ void AToriSpawner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Might need to rewrite, very patchy, just testing.
-	FVector newLocation = GetActorLocation();
-	if(shouldSpawn == false)
-		SetActorLocation(FVector{ 0.f, newLocation.Y, spawnHeight});
+	if (inAxis == 0)
+		GetCharacterMovement()->StopMovementImmediately();
+
+	if (GetActorLocation().Z < spawnHeight)
+		SetActorLocation(FVector(GetActorLocation().X, GetActorLocation().Y, spawnHeight));
 }
 
 // Called to bind functionality to input
@@ -42,10 +43,10 @@ void AToriSpawner::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 void AToriSpawner::moveDirection(float AxisValue)
 {
 	AddMovementInput(FVector(0.f, 1, 0.f), AxisValue);
-	
+	inAxis = AxisValue;
 }
 
 void AToriSpawner::spawnPlayer()
 {
-	shouldSpawn = true;
+
 }

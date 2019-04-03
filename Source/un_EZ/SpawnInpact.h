@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Tori.h"
-#include "Engine/Classes/Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "SpawnInpact.generated.h"
 
@@ -25,16 +24,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable, Category = "Damage")
+		void checkForEnemies(ATori* myPlayer);
+
+	FVector enemyLocation;
+	FVector tempLocation;
+	TArray<AActor*> foundEnemy;
+	int numberOfEnemyFound;
+	float radiusToEnemy;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+		float inpactRadius = 150.f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 		float damage = 15.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class ATori* myPlayer;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UShapeComponent* collider;
-
-	UFUNCTION()
-		virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+		float inpactKnockback = 1000.f;
 };

@@ -38,7 +38,7 @@ public:
 
 	FVector direction;
 
-	bool shouldSpawn;
+	float inAxis;
 	void moveDirection(float AxisValue);
 	void spawnPlayer();
 };
