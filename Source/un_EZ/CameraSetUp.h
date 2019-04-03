@@ -51,4 +51,5 @@ public:
 	void getPawnLocations();
 	void calculateCenterLocation();
 	void setCameraPosition();
+	bool logbug = true;
 };

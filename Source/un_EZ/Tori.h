@@ -7,6 +7,7 @@
 #include "BaseElement.h"
 #include "Tori.generated.h"
 
+class ApickUp;
 UCLASS()
 class UN_EZ_API ATori : public ACharacter
 {
@@ -146,7 +147,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Elements")
 		class ABaseElement* element_1;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Elements")
-		class ABaseElement* element_2;
+		class ApickUp* currentPickUp;
 	UPROPERTY(EditAnywhere, Category = "Elements")
 		float globalCooldown;
 	float currentGlobalCooldown;

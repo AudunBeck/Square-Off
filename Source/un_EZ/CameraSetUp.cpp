@@ -4,10 +4,15 @@
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/World.h"
 
+
+//This actor contains a camera and follows up to 4 actors that are controlled by up to 4 player controllers,
+//getting the locations from each of them and calculating a center position
+//it then finds the furthes away actor and adjusts the length of the spring arm so all of the characters are on screen.
+
 // Sets default values
 ACameraSetUp::ACameraSetUp()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
@@ -21,7 +26,7 @@ void ACameraSetUp::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+
 }
 
 // Called every frame
@@ -52,17 +57,18 @@ void ACameraSetUp::findPlayerControllers()
 
 void ACameraSetUp::getPawnLocations()
 {
-	
+
 	for (int i = 0; i < pawnLocations.Num(); i++)
 	{
 		if (playerControllers[i]->GetPawn() != nullptr)
-			pawnLocations[i] = playerControllers[i]->GetPawn()->GetActorLocation();
-		else
 		{
-			//pawnLocations.RemoveAt(i);
-			UE_LOG(LogTemp, Warning, TEXT("Removed player at i%"), i);
+			pawnLocations[i] = playerControllers[i]->GetPawn()->GetActorLocation();			
 		}
-
+		else if(logbug) //If all of this is commented out the Z value of centerlocation ends up being infinite. 
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Removed player at %i"), i);
+			logbug = false;
+		}
 	}
 }
 
@@ -73,17 +79,24 @@ void ACameraSetUp::calculateCenterLocation()
 	centerLocation = FVector();
 	for (int i = 0; i < numberOfPawns; i++)
 	{
-		centerLocation += pawnLocations[i];
+		centerLocation.Y += pawnLocations[i].Y;
+		centerLocation.Z += pawnLocations[i].Z;
 	}
-	centerLocation = (centerLocation / numberOfPawns) - offsetCam;
 	centerLocation.X = 0;
 
-	for (int i = 0; i < numberOfPawns; i++)
+
+	centerLocation = (centerLocation / numberOfPawns) + offsetCam;
+
+
+	for (int i = 0; i < pawnLocations.Num(); i++)
 	{
-		float tempFloat = (centerLocation - pawnLocations[i]).Size();
-			if (furthestPawn < tempFloat)
-				furthestPawn = tempFloat;
+		FVector tempVector = centerLocation - pawnLocations[i];
+		float tempFloat = tempVector.Size();
+		if (furthestPawn < tempFloat)
+			furthestPawn = tempFloat;
+		
 	}
+	//UE_LOG(LogTemp, Warning, TEXT("Furthest pawn %s"), furthestPawn);
 }
 
 void ACameraSetUp::setCameraPosition()
