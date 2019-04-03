@@ -81,9 +81,16 @@ void ATori::Tick(float DeltaTime)
 
 	checkIfLanded();
 	if (GetVelocity().Z > 0)
+	{
+		isGoingDown = false;
 		isGoingUp = true;
+	}
+
 	else
+	{
+		isGoingDown = false;
 		isGoingUp = false;
+	}
 }
 
 void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -112,9 +119,10 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ATori::move_X(float axisValue)
 {
 	//if (axisValue != 0)
-	facingDirection.Z = axisValue;
-	if (axisValue < -moveXDeadZone)
+		facingDirection.Z = axisValue;
+	if (axisValue < -moveXDeadZone && onSolidGround == false)
 	{
+		stopCollision();
 		isGoingDown = true;
 		if (GetVelocity().Z <= 0.f)
 			LaunchCharacter(GetActorUpVector() * -1, false, false);
