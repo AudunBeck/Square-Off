@@ -3,6 +3,7 @@
 #include "CameraSetUp.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/World.h"
+#include "ToriSpawner.h"
 
 
 //This actor contains a camera and follows up to 4 actors that are controlled by up to 4 player controllers,
@@ -62,7 +63,12 @@ void ACameraSetUp::getPawnLocations()
 	{
 		if (playerControllers[i]->GetPawn() != nullptr)
 		{
-			pawnLocations[i] = playerControllers[i]->GetPawn()->GetActorLocation();			
+			AActor* player = playerControllers[i]->GetPawn();
+			pawnLocations[i] = player->GetActorLocation();
+			if (player->IsA(AToriSpawner::StaticClass()))
+			{
+				pawnLocations[i].Z -= spawnerOffset;
+			}
 		}
 		else if(logbug) //If all of this is commented out the Z value of centerlocation ends up being infinite. 
 		{
