@@ -38,5 +38,7 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 				FVector direction;
-
+	
+	UPROPERTY(BlueprintReadOnly)
+		bool hasHit = false;
 };

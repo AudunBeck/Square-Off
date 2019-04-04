@@ -38,12 +38,13 @@ void AFireElementAbility1::BeginPlay()
 	beginSound();
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
 	direction = myPlayer->facingDirection;
-	if (direction.Z > 0.5f)
+	//Add this back when we want 4 directions
+	/*if (direction.Z > 0.5f)
 		direction = FVector(0.f, 0.f, 1.3f);
 	else if (direction.Z < -0.5f && myPlayer->isJumping)
 		direction = FVector(0.f, 0.f, -1.3f);
-	else
-		direction = myPlayer->GetActorForwardVector();
+	else*/
+	direction = myPlayer->GetActorForwardVector();
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)
@@ -63,19 +64,22 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex,bFromSweep, SweepResult);
-	if (OtherActor != myPlayer)
+	if (!hasHit)
 	{
-		if (OtherActor->IsA(ATori::StaticClass()))
+		if (OtherActor != myPlayer)
 		{
-			// Make the target take damage
-			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
-			if (!buffed)
-				myElement->fireChi += 1;
-			hitEnemyVFX(OtherActor->GetActorLocation());
-			myPlayer->freezeFrame(0.15, false);
-			myPlayer->stopAllVelocity();
-			myElement->abilityHit = true;
-			Destroy();
+			if (OtherActor->IsA(ATori::StaticClass()))
+			{
+				// Make the target take damage
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
+				if (!buffed)
+					myElement->fireChi += 1;
+				hitEnemyVFX(OtherActor->GetActorLocation());
+				myPlayer->freezeFrame(0.15, false);
+				myPlayer->stopAllVelocity();
+				myElement->abilityHit = true;
+				hasHit = true;
+			}
 		}
 	}
 }

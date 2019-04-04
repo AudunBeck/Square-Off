@@ -120,8 +120,6 @@ void AWaterElement::ability2()
 		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
 		myOwner->currentSpeed = 0.f;
 		buffDur = ability2lifeSpan;
-		
-		
 	}
 
 }
@@ -158,7 +156,7 @@ void AWaterElement::ability2Counter_Implementation(ATori * enemy)
 	FVector ownerLocation = myOwner->GetActorLocation();
 	FVector launchDirection = myOwner->GetActorForwardVector() * -1;
 	myOwner->LaunchCharacter(launchDirection * dashDist, false, true);
-	enemy->recieveDamage(myOwner, damage, ccDur, slow, 0);
+	enemy->recieveDamage(myOwner, ability2Damage, ccDur, slow, 0);
 	myOwner->setMoveSpeed(myOwner->moveSpeed);
 	myOwner->hitAnimImmune = false;
 	Countering = false;

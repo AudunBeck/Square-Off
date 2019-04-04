@@ -60,22 +60,27 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-	if (OtherActor->IsA(ATori::StaticClass()))
-	{
-		hitPlayer = Cast<ATori>(OtherActor);
-	}
-	if (movingTime > 0 || !isTouchingGround)
+	if (!hasHit)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
 			hitPlayer = Cast<ATori>(OtherActor);
-			hitPlayer->recieveDamage(myPlayer, damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
-			movingTime = 0.f;
-			hitPlayer = nullptr;
+			hasHit = true;
 		}
-		else if(OtherActor->IsA(ABlockingVolume::StaticClass()) || OtherActor->IsA(ARockElementAbility2::StaticClass()))
+		if (movingTime > 0 || !isTouchingGround)
 		{
-			movingTime = 0.f;
+			if (OtherActor->IsA(ATori::StaticClass()))
+			{
+				hitPlayer = Cast<ATori>(OtherActor);
+				hitPlayer->recieveDamage(myPlayer, damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
+				movingTime = 0.f;
+				hitPlayer = nullptr;
+				hasHit = true;
+			}
+			else if (OtherActor->IsA(ABlockingVolume::StaticClass()) || OtherActor->IsA(ARockElementAbility2::StaticClass()))
+			{
+				movingTime = 0.f;
+			}
 		}
 	}
 }

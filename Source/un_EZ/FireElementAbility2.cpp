@@ -42,19 +42,22 @@ void AFireElementAbility2::Tick(float DeltaTime)
 void AFireElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-	if (OtherActor != myPlayer)
+	if (!hasHit)
 	{
-		if (OtherActor->IsA(ATori::StaticClass()))
+		if (OtherActor != myPlayer)
 		{
-			myPlayer->setRotationRate(myPlayer->rotationRate);
-			myPlayer->setMoveSpeed(myPlayer->moveSpeed);
-			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
-			myPlayer->stopAllVelocity();
-			myElement->fireChi = 2;
-			myPlayer->freezeFrame(0.3, true);
-			myPlayer->locked = 0;		
-			myElement->abilityHit = true;
-			Destroy();
+			if (OtherActor->IsA(ATori::StaticClass()))
+			{
+				myPlayer->setRotationRate(myPlayer->rotationRate);
+				myPlayer->setMoveSpeed(myPlayer->moveSpeed);
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
+				myPlayer->stopAllVelocity();
+				myElement->fireChi = 2;
+				myPlayer->freezeFrame(0.3, true);
+				myPlayer->locked = 0;
+				myElement->abilityHit = true;
+				hasHit = true;
+			}
 		}
 	}
 }

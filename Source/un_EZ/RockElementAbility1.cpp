@@ -43,37 +43,41 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-	if (OtherActor != myPlayer)
+	if (!hasHit)
 	{
-		if (OtherActor->IsA(ATori::StaticClass()))
+		if (OtherActor != myPlayer)
 		{
-			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
-			myPlayer->stopAllVelocity();
-			myPlayer->freezeFrame(0.15, false);
-			myPlayer->setRotationRate(myPlayer->rotationRate);
-			hitEnemyVFX(OtherActor->GetActorLocation());
-			Destroy();
-		}
-
-		if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
-		{
-
-			if (myPlayer != nullptr)
+			if (OtherActor->IsA(ATori::StaticClass()))
 			{
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
+				myPlayer->stopAllVelocity();
 				myPlayer->freezeFrame(0.15, false);
-				FRotator temp = FRotator(myPlayer->GetActorRotation());
-				Cast<ARockElementAbility2>(OtherActor)->moveWall(temp, chargedHit);
-				hitEnemyVFX(OtherActor->GetActorLocation());
 				myPlayer->setRotationRate(myPlayer->rotationRate);
-				Destroy();
+				hitEnemyVFX(OtherActor->GetActorLocation());
+				hasHit = true;
 			}
-			else
+
+			if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
 			{
-				myPlayer->freezeFrame(0.15, false);
-				UE_LOG(LogTemp, Warning, TEXT("Punch did not find myPlayer"));
-				Cast<ARockElementAbility2>(OtherActor)->moveWall(myPlayer->GetActorRotation(), chargedHit);
-				hitEnemyVFX(OtherActor->GetActorLocation());
-				myPlayer->setRotationRate(myPlayer->rotationRate);
+
+				if (myPlayer != nullptr)
+				{
+					myPlayer->freezeFrame(0.15, false);
+					FRotator temp = FRotator(myPlayer->GetActorRotation());
+					Cast<ARockElementAbility2>(OtherActor)->moveWall(temp, chargedHit);
+					hitEnemyVFX(OtherActor->GetActorLocation());
+					myPlayer->setRotationRate(myPlayer->rotationRate);
+					hasHit = true;
+				}
+				else
+				{
+					myPlayer->freezeFrame(0.15, false);
+					UE_LOG(LogTemp, Warning, TEXT("Punch did not find myPlayer"));
+					Cast<ARockElementAbility2>(OtherActor)->moveWall(myPlayer->GetActorRotation(), chargedHit);
+					hitEnemyVFX(OtherActor->GetActorLocation());
+					myPlayer->setRotationRate(myPlayer->rotationRate);
+					hasHit = true;
+				}
 			}
 		}
 	}
