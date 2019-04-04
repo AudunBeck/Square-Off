@@ -34,6 +34,7 @@ void ATori::BeginPlay()
 	hitPoints = maxHitPoints;
 	hitPointPercentage = hitPoints / maxHitPoints;
 	locked = false;
+	GetMesh()->SetMaterial(4, )
 }
 
 void ATori::Tick(float DeltaTime)
