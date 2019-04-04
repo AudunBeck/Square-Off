@@ -3,6 +3,12 @@
 #include "CameraSetUp.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/World.h"
+#include "ToriSpawner.h"
+
+
+//This actor contains a camera and follows up to 4 actors that are controlled by up to 4 player controllers,
+//getting the locations from each of them and calculating a center position
+//it then finds the furthes away actor and adjusts the length of the spring arm so all of the characters are on screen.
 
 // Sets default values
 ACameraSetUp::ACameraSetUp()
@@ -57,12 +63,12 @@ void ACameraSetUp::getPawnLocations()
 	{
 		if (playerControllers[i]->GetPawn() != nullptr)
 		{
-			pawnLocations[i] = playerControllers[i]->GetPawn()->GetActorLocation();			
-		}
-		else if(logbug) //This is only here to please the UE4 math gods, they want a UE_LOG sacrifice
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Removed player at %i"), i);
-			logbug = false;
+			AActor* player = playerControllers[i]->GetPawn();
+			pawnLocations[i] = player->GetActorLocation();
+			if (player->IsA(AToriSpawner::StaticClass()))
+			{
+				pawnLocations[i].Z -= spawnerOffset;
+			}
 		}
 	}
 }
@@ -71,7 +77,7 @@ void ACameraSetUp::calculateCenterLocation()
 {
 	furthestPawn = 0;
 	int numberOfPawns = pawnLocations.Num();
-	centerLocation = FVector();
+	centerLocation = FVector(0.f, 0.f, 0.f);
 	for (int i = 0; i < numberOfPawns; i++)
 	{
 		centerLocation.Y += pawnLocations[i].Y;

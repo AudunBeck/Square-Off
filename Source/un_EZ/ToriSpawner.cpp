@@ -1,23 +1,17 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "ToriSpawner.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Classes/Components/PrimitiveComponent.h"
 
-
-// Sets default values
 AToriSpawner::AToriSpawner()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	GetCharacterMovement()->AirControl = 1.f;
 }
 
-// Called when the game starts or when spawned
 void AToriSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	spawnPosition = FVector(0.f, 0.f, spawnHeight);
-	SetActorLocation(spawnPosition);
-	shouldSpawn = false;
+	GetCharacterMovement()->GravityScale = 0.f;
 }
 
 // Called every frame
@@ -25,10 +19,9 @@ void AToriSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// Might need to rewrite, very patchy, just testing.
-	FVector newLocation = GetActorLocation();
-	newLocation += direction * DeltaTime * directionSpeed;
-	SetActorLocation(newLocation);
+	
+	if (inAxis == 0)
+		GetCharacterMovement()->StopMovementImmediately();
 }
 
 // Called to bind functionality to input
@@ -41,18 +34,11 @@ void AToriSpawner::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AToriSpawner::moveDirection(float AxisValue)
 {
-	if (shouldSpawn == false)
-	{
-		direction = FVector(0.f, AxisValue, 0.f);
-	}
-	else
-	{
-		direction = FVector(0.f, AxisValue, -fallSpeed);
-	}
-	
+	AddMovementInput(FVector(0.f, 1, 0.f), AxisValue);
+	inAxis = AxisValue;
 }
 
 void AToriSpawner::spawnPlayer()
 {
-	shouldSpawn = true;
+	// Needs to be here to please the UE_Gods
 }

@@ -21,7 +21,7 @@ ARockElement::ARockElement()
 		maxAmmo1 = Ability1Data->MaxAmmo;
 		ammoPerCd1 = Ability1Data->AmmoPerCD;
 		ability1Range = Ability1Data->Range;
-		rockPunch = Ability1Data->MoveRange;
+		//rockPunch = Ability1Data->MoveRange;
 		ability1lifeSpan = Ability1Data->LifeSpan;
 	}
 	if (Ability2Data)
@@ -92,7 +92,7 @@ void ARockElement::ability1FireCode()
 	myOwner->currentSpeed = myOwner->moveSpeed;
 	myOwner->setRotationRate(0);
 	myOwner->damageMultiplier = 1;
-	myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch, false, true);
+	//myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch, false, true);
 	myOwner->hitAnimImmune = false;
 }
 

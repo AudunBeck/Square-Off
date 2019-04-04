@@ -49,6 +49,12 @@ void AFireElementAbility1::BeginPlay()
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	FVector forward = myPlayer->GetActorForwardVector();
+	NewLocation = myPlayer->GetActorLocation();
+	NewLocation += (forward * myElement->launchSpeed_1 * DeltaTime);
+	myPlayer->SetActorLocation(NewLocation);
+
 	this->SetActorLocation(direction * attackRange + myPlayer->GetActorLocation());
 	this->SetActorRotation(myPlayer->GetActorRotation());
 }

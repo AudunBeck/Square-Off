@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BaseElement.h"
 #include "RockElementAbility1.h"
 #include "RockElementAbility2.h"
 #include "Engine/Classes/Engine/DataTable.h"
@@ -43,6 +42,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.1f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float launchSpeed_1 = 2000.f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
 	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
 		bool charging = false;
@@ -50,8 +51,8 @@ public:
 		float maxCharge = 2;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float chargeFloat = 1;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float rockPunch;
+	/*UPROPERTY(EditAnywhere, Category = "Ability1")
+		float rockPunch;*/
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Damage;
 	UPROPERTY(EditAnywhere, Category = "Ability1")

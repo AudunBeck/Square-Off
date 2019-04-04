@@ -31,6 +31,8 @@ public:
 		float maxArmLength;
 	UPROPERTY(EditAnywhere, Category = "SpringArm")
 		FVector offsetCam;
+	UPROPERTY(EditAnywhere, Category = "SpringArm")
+		float spawnerOffset;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USpringArmComponent* SpringArm;
@@ -51,5 +53,4 @@ public:
 	void getPawnLocations();
 	void calculateCenterLocation();
 	void setCameraPosition();
-	bool logbug = true;
 };

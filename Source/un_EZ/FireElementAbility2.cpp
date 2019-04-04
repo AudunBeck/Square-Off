@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FireElementAbility2.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AFireElementAbility2::AFireElementAbility2()
 {
@@ -26,6 +27,12 @@ void AFireElementAbility2::BeginPlay()
 void AFireElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// Change speed to rather check the distance traveled, while still stopping on inpact
+	FVector forward = myPlayer->GetActorForwardVector();
+	NewLocation = myPlayer->GetActorLocation();
+	NewLocation += (forward * myElement->launchSpeed_2 * DeltaTime);
+	myPlayer->SetActorLocation(NewLocation);
 
 	// Sets the hitbox ahead of the player while flying forward
 	SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());

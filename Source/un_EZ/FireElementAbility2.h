@@ -24,9 +24,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	class AFireElement* myElement;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		USphereComponent* collider;
-
+	
+	FVector NewLocation;
 	float attackRange;
 	float damage;
 

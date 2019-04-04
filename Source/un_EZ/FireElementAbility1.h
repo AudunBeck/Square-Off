@@ -30,11 +30,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UShapeComponent* collider;
 
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+	virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+		class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 	UFUNCTION(BlueprintImplementableEvent)
 		void beginSound();
+
+	FVector NewLocation;
 
 	UPROPERTY(BlueprintReadWrite)
 		bool buffed = false;
