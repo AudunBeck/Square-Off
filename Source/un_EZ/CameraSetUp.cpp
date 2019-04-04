@@ -70,11 +70,6 @@ void ACameraSetUp::getPawnLocations()
 				pawnLocations[i].Z -= spawnerOffset;
 			}
 		}
-		else if(logbug) //If all of this is commented out the Z value of centerlocation ends up being infinite. 
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Removed player at %i"), i);
-			logbug = false;
-		}
 	}
 }
 
@@ -82,7 +77,7 @@ void ACameraSetUp::calculateCenterLocation()
 {
 	furthestPawn = 0;
 	int numberOfPawns = pawnLocations.Num();
-	centerLocation = FVector();
+	centerLocation = FVector(0.f, 0.f, 0.f);
 	for (int i = 0; i < numberOfPawns; i++)
 	{
 		centerLocation.Y += pawnLocations[i].Y;
