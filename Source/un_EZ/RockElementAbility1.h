@@ -24,6 +24,8 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+	FVector NewLocation;
+
 	float attackRange;
 	float chargedHit;
 	UPROPERTY(EditAnywhere)
@@ -33,7 +35,6 @@ public:
 	float damage;
 	FVector ownerPos;
 
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, 
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, 
+			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 };

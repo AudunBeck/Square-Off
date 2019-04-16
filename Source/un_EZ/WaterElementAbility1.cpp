@@ -19,21 +19,11 @@ void AWaterElementAbility1::BeginPlay()
 	myElement = Cast<AWaterElement>(GetOwner());
 	myPlayer = myElement->myOwner;
 	SetLifeSpan(myElement->ability1lifeSpan);
+	boltSpeed = myElement->boltSpeed;
+	ccDur = myElement->ccDur;
+	slow = myElement->slow;
+	damage = myElement->damage;
 
-	if (myElement->buffedAbility1)
-	{
-		boltSpeed = myElement->boltSpeedBuffed;
-		ccDur = myElement->ccDurBuffed;
-		slow = myElement->slowBuffed;
-		damage = myElement->damageBuffed;
-	}
-	else
-	{
-		boltSpeed = myElement->boltSpeed;
-		ccDur = myElement->ccDur;
-		slow = myElement->slow;
-		damage = myElement->damage;
-	}
 }
 
 void AWaterElementAbility1::Tick(float DeltaTime)
@@ -47,12 +37,18 @@ void AWaterElementAbility1::Tick(float DeltaTime)
 void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
 	UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-
-	if (OtherActor != myPlayer)
+	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+	if (!hasHit)
 	{
-		if (OtherActor->IsA(ATori::StaticClass()))
+		if (OtherActor != myPlayer)
 		{
-			Cast<ATori>(OtherActor)->recieveDamage(damage, ccDur, slow, 0);	// float value 0 is slow
+			if (OtherActor->IsA(ATori::StaticClass()))
+			{
+
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, ccDur, slow, 0);	// float value 0 is slow
+				hitEnemyVFX(OtherActor->GetActorLocation());
+				hasHit = true;
+			}
 		}
 	}
 }

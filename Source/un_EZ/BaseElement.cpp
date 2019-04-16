@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BaseElement.h"
+#include "Tori.h"
 
 ABaseElement::ABaseElement()
 {
@@ -75,10 +76,13 @@ void ABaseElement::ability1()
 	}
 }
 
+void ABaseElement::ability1FireCode()
+{
+}
+
 void ABaseElement::ability1End()
 {
-	//myOwner->ability1Used = false;
-	//ability1AnimEnd();
+
 }
 
 int ABaseElement::returnElementType()
@@ -90,19 +94,23 @@ void ABaseElement::ability2()
 {
 	if (ammo2 > 0)
 	{
-		//myOwner->ability2Used = true;
 		ammo2 -= 1;
 		ability2Anim();
 	}
 }
 
+void ABaseElement::ability2FireCode()
+{
+}
+
 void ABaseElement::ability2End()
 {
 	myOwner->ability2Used = false;
-	//ability2AnimEnd();
 }
 
-int ABaseElement::switchToElement()
+int ABaseElement::switchToElement(bool active)
 {
+	setActive(active);
+	isActive = active;
 	return elementType;
 }

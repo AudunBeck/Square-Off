@@ -23,20 +23,29 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
-	class AFireElement* myElement;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		USphereComponent* collider;
+	UPROPERTY(BlueprintReadOnly)
+		class AFireElement* myElement;
 
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UShapeComponent* collider;
+
+	virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+		class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
 	UFUNCTION(BlueprintImplementableEvent)
 		void beginSound();
+
+	FVector NewLocation;
 
 	UPROPERTY(BlueprintReadWrite)
 		bool buffed = false;
 	float attackRange = 100;
 	float damage;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "VFX")
+		UParticleSystem* normalPunchVFX;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+		UParticleSystem* buffedPunchVFX;
 
 };

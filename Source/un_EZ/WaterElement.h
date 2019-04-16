@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BaseElement.h"
 #include "WaterElementAbility1.h"
 #include "WaterElementAbility2.h"
 #include "GameFramework/Actor.h"
@@ -25,10 +24,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void ability1()override;
+	virtual void ability1FireCode()override;
 	virtual void ability1End()override;
 
 	virtual void ability2()override;
+	virtual void ability2FireCode()override;
 	virtual void ability2End()override;
+
 	virtual int returnElementType()override;
 
 	bool buffedAbility1;
@@ -48,8 +50,18 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterElement collision")
 		void startCollision();
 
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Water Ability 2")
+		void ability2Counter(ATori* enemy);
+
+	UPROPERTY(BlueprintReadWrite)
+		bool Countering;
 
 	// Ability 1
+	float windUpTime;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+		bool combo;
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 5.0f;
 
@@ -59,51 +71,40 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float boltSpeed = 1200.0f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float boltSpeedBuffed = 2200.0f;
 
-	bool charging;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
-	// Charge that starts when you press attack, and fires the bolt when reaching 0
-	float windUpTime;
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxWindUpTime = 0.3f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float damage = 30.f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float damageBuffed = 60.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ccDur = 0.5f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ccDurBuffed = 1.5f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float slow = 15.f;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float slowBuffed = 30.f;
 
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2lifeSpan = 2.5f;
+
 	UPROPERTY(BlueprintReadOnly)
 		float buffDur = 0;
-	float maxBuffDur;
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float dashDist = 3000;
 
-	// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage = 0.f;
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2CcDur = 0.5f;
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Slow = 30.f;
-	int counter = 0;
-
-	float tempTimer;
 
 	UDataTable* BalancingTable;
 };

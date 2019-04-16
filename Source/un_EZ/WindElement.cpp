@@ -9,6 +9,8 @@ AWindElement::AWindElement()
 void AWindElement::BeginPlay()
 {
 	Super::BeginPlay();
+	channelTime = 0;
+	distance = maxDistance;
 }
 
 void AWindElement::Tick(float DeltaTime)
@@ -16,83 +18,51 @@ void AWindElement::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Ability 1
-	if (windUpTime > 0)
-		windUpTime -= DeltaTime;
-
-	// Ability 2
-	if (buffDur > 0)
+	if (channelingAbility1 == true && channelTime <= maxChannelTime)
 	{
-		buffDur -= DeltaTime;
-		if (buffDur <= 0 && chargingAbilit2 == true)
+		channelTime += DeltaTime;
+		if (interval <= 0)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("WindElementAbility 2 buffduration is 0."));
-			myOwner->locked = 0;
-			myOwner->setMoveSpeed(myOwner->moveSpeed);
-			chargingAbilit2 = false;
+			interval = maxInterval;
+			myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3);
+
+			AWindElementAbility1* temp;
+			FActorSpawnParameters tempParam;
+			tempParam.Owner = this;
+			temp = GetWorld()->SpawnActor<AWindElementAbility1>(WindElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+				myOwner->GetActorRotation(), tempParam);
 		}
 	}
-	// To allow maxBuffTime to be 0, else the if-statement over (if(buffDur > 0)) can't be true
-	if (buffDur == 0 && chargingAbilit2 == true)
-		chargingAbilit2 = false;
+	if ((channelingAbility1 == false && channelTime > 0) || channelTime >= maxChannelTime)
+	{
+		myOwner->setMoveSpeed(myOwner->moveSpeed);
+		channelTime = 0;
+	}
 
+	ability2Damage = (MaxAbility1Damage / maxChannelTime) * channelTime;
+
+	if (interval > 0)
+		interval -= DeltaTime;
+
+	// Ability 2
 }
 
 
 void AWindElement::ability1()
 {
-	if (ammo1 > 0 && myOwner->locked <= 0.f)
-	{
-		AWindElementAbility1* temp;
-		/// Under "myOwner->GetActorLocation() + myOwner->GetActorFowardVector()," add spawnpoint to socket in the hand
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		temp = GetWorld()->SpawnActor<AWindElementAbility1>(WindElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
-			myOwner->GetActorRotation(), tempParam);
-	}
 	//Super::ability1();
 }
 
 void AWindElement::ability2()
 {
-	if (ammo2 > 0 && chargingAbilit2 == false && myOwner->locked <= 0.f)
-	{
-		chargingAbilit2 = true;
-		switch (windChi)
-		{
-		case 0:
-			maxBuffDur = 0;
-			break;
-		case 1:
-			maxBuffDur = timeTilSecond;
-			break;
-		case 2:
-			maxBuffDur = timeTilThird + timeTilSecond;
-			break;
-		}
-		buffDur = maxBuffDur;
-		myOwner->locked = myOwner->globalCooldown;
-		if(windChi != 0)
-			myOwner->setMoveSpeed(myOwner->moveSpeed * 0.3); /// Add this to UPROPERTY if we decide to keep the slow effect while ability2 is active. Remove if not.
-
-		
-		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has: %i, windChi."), windChi);
-		AWindElementAbility2* temp;
-		FActorSpawnParameters tempParam;
-		tempParam.Owner = this;
-		temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
-			myOwner->GetActorRotation(), tempParam);
-		windChi = 0;
-		//Super::ability2();
-	}
-	else if(ammo2 == 0)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 has no ammo"));
-	}
-	else if (chargingAbilit2 == true)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("WaterElement Ability 2 is already being charged"));
-	}
+	AWindElementAbility2* temp;
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
+		myOwner->GetActorRotation(), tempParam);
 }
+
+
 
 int AWindElement::returnElementType()
 {

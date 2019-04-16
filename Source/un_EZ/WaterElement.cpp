@@ -12,14 +12,13 @@ AWaterElement::AWaterElement()
 	static ConstructorHelpers::FObjectFinder<UDataTable>
 		WaterElementTable(TEXT("DataTable'/Game/DataTables/WaterElementTable.WaterElementTable'"));
 	BalancingTable = WaterElementTable.Object;
-	
+
 	//Searching and getting data
 	FWaterElementStruct* Ability1Data = BalancingTable->FindRow<FWaterElementStruct>(FName("1"), FString(""));
 	FWaterElementStruct* Ability2Data = BalancingTable->FindRow<FWaterElementStruct>(FName("2"), FString(""));
 	if (Ability1Data)
 	{
 		damage = Ability1Data->Damage;
-		damageBuffed = Ability1Data->DamageBuffed;
 		maxCharge = Ability1Data->MaxCharge;
 		maxCooldownAbility1 = Ability1Data->MaxCooldown;
 		maxAmmo1 = Ability1Data->MaxAmmo;
@@ -29,9 +28,6 @@ AWaterElement::AWaterElement()
 		slow = Ability1Data->Slow;
 		ccDur = Ability1Data->SlowDur;
 		boltSpeed = Ability1Data->BoltSpeed;
-		slowBuffed = Ability1Data->SlowBuffed;
-		ccDurBuffed = Ability1Data->SlowDurBuffed;
-		boltSpeedBuffed = Ability1Data->BoltSpeedBuffed;
 	}
 	if (Ability2Data)
 	{
@@ -49,7 +45,6 @@ AWaterElement::AWaterElement()
 void AWaterElement::BeginPlay()
 {
 	Super::BeginPlay();
-	maxBuffDur = ability2lifeSpan;
 }
 
 void AWaterElement::Tick(float DeltaTime)
@@ -57,14 +52,18 @@ void AWaterElement::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Ability 1
-	if (windUpTime > 0)
-		windUpTime -= DeltaTime;
+	//if (windUpTime > 0)
+	//	windUpTime -= DeltaTime;
 
-	if (windUpTime <= 0 && charging == true)
-	{
-		////Cast waterbolt
-		// Used to be here, moved to ability 2 end.
-	}
+	//if (windUpTime <= 0 && charging == true)
+	//{
+	//	windUpTime = maxWindUpTime;
+	//	myOwner->setRotationRate(0.f);
+	//	myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
+	//	///Go over this to fix later.
+	//	//Cast waterbolt
+
+	//}
 
 	// Ability 2
 	if (buffDur >= 0)
@@ -75,71 +74,69 @@ void AWaterElement::Tick(float DeltaTime)
 		{
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
-			
+
 			// Starts collision towards other Tori's
-			startCollision();
+			//startCollision();
 		}
 	}
 }
 
 void AWaterElement::ability1()
 {
-
-	if (ammo1 > 0 /*&& myOwner->ability1Ended == false*/ && myOwner->locked <= 0.f)
+	//if (myOwner->ability1Ended == false)
 	{
-			Super::ability1();
+		Super::ability1();
+		combo = !combo;
 	}
-	myOwner->stillFiring1 = true;
-	if (myOwner->finishedCombo1)
-		myOwner->stillFiring1 = false;
-	
 }
 
-void AWaterElement::ability1End()
+void AWaterElement::ability1FireCode()
 {
-	charging = true;
-	windUpTime = maxWindUpTime;
-	myOwner->setRotationRate(0.f);
-	myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
-	///Go over this to fix later.
+	// Does nothing
+
+	myOwner->setRotationRate(myOwner->rotationRate);
+	myOwner->setMoveSpeed(myOwner->moveSpeed);
 	//Cast waterbolt
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AWaterElementAbility1* temp;
-	/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
 	temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 
-	if (counter > 0)
-		buffedAbility1 = true;
-	else
-		buffedAbility1 = false;
-	myOwner->setRotationRate(myOwner->rotationRate);
-	myOwner->setMoveSpeed(myOwner->moveSpeed);
-	charging = false;
+
+}
+
+void AWaterElement::ability1End()
+{
+
 }
 
 void AWaterElement::ability2()
 {
-	if (ammo2 > 0 && myOwner->ability2Ended == false)
+	//if (myOwner->ability2Ended == false)
 	{
 		Super::ability2();
+		myOwner->hitAnimImmune = true;
+		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
+		myOwner->currentSpeed = 0.f;
+		buffDur = ability2lifeSpan;
 	}
+
+}
+
+void AWaterElement::ability2FireCode()
+{
+	//FActorSpawnParameters tempParam;
+	//tempParam.Owner = this;
+	//AWaterElementAbility2* temp;
+	///// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
+	//temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
+	//	myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
 }
 
 void AWaterElement::ability2End()
 {
-	myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
-	myOwner->currentSpeed = 0.f;
-	myOwner->damageMultiplier = 0.f;
-	buffDur = maxBuffDur;
-	myOwner->locked = buffDur;
-	FActorSpawnParameters tempParam;
-	tempParam.Owner = this;
-	AWaterElementAbility2* temp;
-	/// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
-	temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
-		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+
 }
 
 void AWaterElement::outputLog()
@@ -151,4 +148,16 @@ int AWaterElement::returnElementType()
 {
 	Super::returnElementType();
 	return 3;
+}
+
+void AWaterElement::ability2Counter_Implementation(ATori * enemy)
+{
+	//FVector enemyLocation = enemy->GetActorLocation();
+	FVector ownerLocation = myOwner->GetActorLocation();
+	FVector launchDirection = myOwner->GetActorForwardVector() * -1;
+	myOwner->LaunchCharacter(launchDirection * dashDist, false, true);
+	enemy->recieveDamage(myOwner, ability2Damage, ccDur, slow, 0);
+	myOwner->setMoveSpeed(myOwner->moveSpeed);
+	myOwner->hitAnimImmune = false;
+	Countering = false;
 }

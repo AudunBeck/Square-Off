@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BaseElement.h"
 #include "RockElementAbility1.h"
 #include "RockElementAbility2.h"
 #include "Engine/Classes/Engine/DataTable.h"
@@ -21,10 +20,16 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void ability1()override;
+	virtual void ability1FireCode()override;
 	virtual void ability1End()override;
 	virtual void ability2()override;
-	virtual void ability2End()override;
+	virtual void ability2FireCode()override;
 	virtual int returnElementType()override;
+
+	void BeginPlay()override;
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "VFX")
+		void attachRockGlove();
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
@@ -37,19 +42,26 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 0.1f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float launchSpeed_1 = 2000.f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
 	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
-		bool charging = true;
+		bool charging = false;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxCharge = 2;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float chargeFloat;
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float rockPunch;
+		float chargeFloat = 1;
+	/*UPROPERTY(EditAnywhere, Category = "Ability1")
+		float rockPunch;*/
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Damage;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float damageReduction;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float slowFactor = 0.3f;
 
 	// Ability 2
+	float cooldown;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
 	UPROPERTY(EditAnywhere, Category = "Ability2")

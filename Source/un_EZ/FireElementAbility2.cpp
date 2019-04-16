@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FireElementAbility2.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AFireElementAbility2::AFireElementAbility2()
 {
@@ -27,20 +28,36 @@ void AFireElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// Change speed to rather check the distance traveled, while still stopping on inpact
+	FVector forward = myPlayer->GetActorForwardVector();
+	NewLocation = myPlayer->GetActorLocation();
+	NewLocation += (forward * myElement->launchSpeed_2 * DeltaTime);
+	myPlayer->SetActorLocation(NewLocation);
+
 	// Sets the hitbox ahead of the player while flying forward
-	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
-	this->SetActorRotation(myPlayer->GetActorRotation());
+	SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
+	SetActorRotation(myPlayer->GetActorRotation());
 }
 
 void AFireElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (OtherActor != myPlayer)
+	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+	if (!hasHit)
 	{
-		if (OtherActor->IsA(ATori::StaticClass()))
+		if (OtherActor != myPlayer)
 		{
-			Cast<ATori>(OtherActor)->recieveDamage(damage);
-			myPlayer->stopAllVelocity();
-			myElement->fireChi = 2;
+			if (OtherActor->IsA(ATori::StaticClass()))
+			{
+				myPlayer->setRotationRate(myPlayer->rotationRate);
+				myPlayer->setMoveSpeed(myPlayer->moveSpeed);
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
+				myPlayer->stopAllVelocity();
+				myElement->fireChi = 2;
+				myPlayer->freezeFrame(0.3, true);
+				myPlayer->locked = 0;
+				myElement->abilityHit = true;
+				hasHit = true;
+			}
 		}
 	}
 }
