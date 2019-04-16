@@ -157,8 +157,6 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movement")
 		bool locked; // How long the control of the character is locked.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movement")
-		bool moveLocked; // How long the control of the character is locked.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 		float moveSpeed = 600;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")

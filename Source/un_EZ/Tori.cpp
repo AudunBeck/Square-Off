@@ -144,7 +144,7 @@ void ATori::move_Y(float axisValue)
 {
 	if (axisValue != 0)
 		facingDirection.Y = axisValue;
-	if (!moveLocked)
+	if (!locked)
 	{
 		AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
 		if (axisValue > 0)
