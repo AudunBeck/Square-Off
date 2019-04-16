@@ -10,8 +10,6 @@ AWaterElementAbility2::AWaterElementAbility2()
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility2::OnOverlapBegin);
 }
 
 void AWaterElementAbility2::BeginPlay()
@@ -24,8 +22,8 @@ void AWaterElementAbility2::BeginPlay()
 	damage = myElement->ability2Damage;
 
 	// Stops collision towards other Tori's - Called in Blueprint
-	stopCollision();
 	Super::BeginPlay();
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility2::OnOverlapBegin);
 }
 
 void AWaterElementAbility2::Tick(float DeltaTime)
@@ -67,7 +65,7 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 					myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 					myPlayer->hitAnimImmune = false;
 					UE_LOG(LogTemp, Warning, TEXT("Balls"));
-					this->SetLifeSpan(0.00000001f);
+					this->Destroy();
 				}
 			}
 		}

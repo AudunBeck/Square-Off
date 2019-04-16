@@ -50,9 +50,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterElement collision")
 		void startCollision();
 
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Water Ability 2")
-		void ability2Counter(ATori* enemy);
-
 	UPROPERTY(BlueprintReadWrite)
 		bool Countering;
 

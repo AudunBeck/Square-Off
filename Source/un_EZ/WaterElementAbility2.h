@@ -30,10 +30,6 @@ public:
 	float damage;
 	FVector NewLocation;
 
-	// Blueprint functions
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterAbility2 collision")
-		void stopCollision();
-
 	UFUNCTION(BlueprintCallable, Category = "Output Log WaterAbility 2")
 		void outputLog();
 

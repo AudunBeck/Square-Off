@@ -132,14 +132,3 @@ int AWaterElement::returnElementType()
 	Super::returnElementType();
 	return 3;
 }
-
-void AWaterElement::ability2Counter_Implementation(ATori * enemy)
-{
-	FVector ownerLocation = myOwner->GetActorLocation();
-	FVector launchDirection = myOwner->GetActorForwardVector() * -1;
-	myOwner->LaunchCharacter(launchDirection * dashSpeed_2, false, true);
-	enemy->recieveDamage(myOwner, ability2Damage, ccDur, slow, 0);
-	myOwner->setMoveSpeed(myOwner->moveSpeed);
-	myOwner->hitAnimImmune = false;
-	Countering = false;
-}
