@@ -38,7 +38,7 @@ AWaterElement::AWaterElement()
 		ability2lifeSpan = Ability2Data->LifeSpan;
 		ability2Slow = Ability2Data->Slow;
 		ability2CcDur = Ability2Data->SlowDur;
-		dashDist = Ability2Data->CounterDash;
+		dashSpeed_2 = Ability2Data->CounterDash;
 	}
 }
 
@@ -50,20 +50,6 @@ void AWaterElement::BeginPlay()
 void AWaterElement::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	// Ability 1
-	//if (windUpTime > 0)
-	//	windUpTime -= DeltaTime;
-
-	//if (windUpTime <= 0 && charging == true)
-	//{
-	//	windUpTime = maxWindUpTime;
-	//	myOwner->setRotationRate(0.f);
-	//	myOwner->setMoveSpeed(myOwner->moveSpeed * 0.8);
-	//	///Go over this to fix later.
-	//	//Cast waterbolt
-
-	//}
 
 	// Ability 2
 	if (buffDur >= 0)
@@ -79,6 +65,8 @@ void AWaterElement::Tick(float DeltaTime)
 			//startCollision();
 		}
 	}
+	if (dashTime >= 0)
+		dashTime -= DeltaTime;
 }
 
 void AWaterElement::ability1()
@@ -92,8 +80,6 @@ void AWaterElement::ability1()
 
 void AWaterElement::ability1FireCode()
 {
-	// Does nothing
-
 	myOwner->setRotationRate(myOwner->rotationRate);
 	myOwner->setMoveSpeed(myOwner->moveSpeed);
 	//Cast waterbolt
@@ -102,8 +88,6 @@ void AWaterElement::ability1FireCode()
 	AWaterElementAbility1* temp;
 	temp = GetWorld()->SpawnActor<AWaterElementAbility1>(WaterElementAbility1_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
-
-
 }
 
 void AWaterElement::ability1End()
@@ -113,7 +97,6 @@ void AWaterElement::ability1End()
 
 void AWaterElement::ability2()
 {
-	//if (myOwner->ability2Ended == false)
 	{
 		Super::ability2();
 		myOwner->hitAnimImmune = true;
@@ -126,17 +109,17 @@ void AWaterElement::ability2()
 
 void AWaterElement::ability2FireCode()
 {
-	//FActorSpawnParameters tempParam;
-	//tempParam.Owner = this;
-	//AWaterElementAbility2* temp;
-	///// Under "myPlayer->GetActorLocation() + myPlayer->GetActorFowardVector()," add spawnpoint to socket in the hand
-	//temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
-	//	myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability1Range, myOwner->GetActorRotation(), tempParam);
+	dashTime = maxDashTime;
+	AWaterElementAbility2* temp;
+	FActorSpawnParameters tempParam;
+	tempParam.Owner = this;
+	myOwner->stopAllVelocity();
+	temp = GetWorld()->SpawnActor<AWaterElementAbility2>(WaterElementAbility2_BP,
+		myOwner->GetActorLocation() + myOwner->GetActorForwardVector(), myOwner->GetActorRotation(), tempParam);
 }
 
 void AWaterElement::ability2End()
 {
-
 }
 
 void AWaterElement::outputLog()
@@ -152,10 +135,9 @@ int AWaterElement::returnElementType()
 
 void AWaterElement::ability2Counter_Implementation(ATori * enemy)
 {
-	//FVector enemyLocation = enemy->GetActorLocation();
 	FVector ownerLocation = myOwner->GetActorLocation();
 	FVector launchDirection = myOwner->GetActorForwardVector() * -1;
-	myOwner->LaunchCharacter(launchDirection * dashDist, false, true);
+	myOwner->LaunchCharacter(launchDirection * dashSpeed_2, false, true);
 	enemy->recieveDamage(myOwner, ability2Damage, ccDur, slow, 0);
 	myOwner->setMoveSpeed(myOwner->moveSpeed);
 	myOwner->hitAnimImmune = false;

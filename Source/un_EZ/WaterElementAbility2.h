@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BaseAbility.h"
-#include "Engine/Classes/Components/SphereComponent.h"
+#include "Engine/Classes/Components/CapsuleComponent.h"
 #include "WaterElement.h"
 #include "GameFramework/Actor.h"
 #include "WaterElementAbility2.generated.h"
@@ -25,11 +25,10 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 	float currBuffDur;
-	float dashDist;
 	float ccDur;
 	float slow;
 	float damage;
-
+	FVector NewLocation;
 
 	// Blueprint functions
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterAbility2 collision")
@@ -41,7 +40,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2", BlueprintReadWrite)
 		class AWaterElement* myElement;
 
-	USphereComponent* collider;
+	UCapsuleComponent* collider;
 
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;

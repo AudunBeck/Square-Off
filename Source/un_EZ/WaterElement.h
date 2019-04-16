@@ -89,13 +89,19 @@ public:
 
 	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2lifeSpan = 2.5f;
+		float ability2lifeSpan = 0.2f;
 
 	UPROPERTY(BlueprintReadOnly)
 		float buffDur = 0;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float dashDist = 3000;
+		float dashSpeed_2 = 3000.f;
+	
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float maxDashTime = 0.1f;
+	
+	UPROPERTY(BlueprintReadOnly)
+		float dashTime;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage = 0.f;
