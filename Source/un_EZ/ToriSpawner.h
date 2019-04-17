@@ -30,5 +30,6 @@ public:
 
 	float inAxis;
 	void moveDirection(float AxisValue);
-	void spawnPlayer();
+	UFUNCTION(BlueprintImplementableEvent)
+		void spawnPlayer();
 };
