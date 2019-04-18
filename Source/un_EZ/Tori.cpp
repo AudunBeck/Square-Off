@@ -233,16 +233,13 @@ void ATori::dodgeEnd()
 
 void ATori::jump()
 {
-	switch (JumpCurrentCount)
+	if (JumpCurrentCount == 1 || GetCharacterMovement()->IsFalling() && JumpCurrentCount == 0)
 	{
-	case 0:
-		Jump();
-		break;
-	case 1:
-		GetMovementComponent()->Velocity = facingDirection * GetCharacterMovement()->JumpZVelocity;
-		JumpCurrentCount += 1;
-		break;
+		GetMovementComponent()->Velocity = facingDirection * GetCharacterMovement()->JumpZVelocity * 0.6f;
+		JumpCurrentCount = 2;
 	}
+	else if (JumpCurrentCount == 0)
+		Jump();
 }
 void ATori::forceMove(FVector direction, float speed, float time)
 {
