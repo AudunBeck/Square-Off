@@ -235,7 +235,7 @@ void ATori::jump()
 {
 	if (!GetCharacterMovement()->IsFalling())
 		Jump();
-	else 
+	else
 	{
 		if (JumpCurrentCount == 0)
 		{
