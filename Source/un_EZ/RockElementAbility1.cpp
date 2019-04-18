@@ -25,16 +25,13 @@ void ARockElementAbility1::BeginPlay()
 	SetLifeSpan((myElement->ability1lifeSpan) * chargedHit);
 	attackRange = myElement->ability1Range;
 	damage = myElement->ability1Damage;
+	forward = myPlayer->GetActorForwardVector();
+	myPlayer->forceMove(forward, myElement->launchSpeed_1, GetLifeSpan());
 }
 
 void ARockElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	FVector forward = myPlayer->GetActorForwardVector();
-	NewLocation = myPlayer->GetActorLocation();
-	NewLocation += (forward * myElement->launchSpeed_1 * DeltaTime);
-	myPlayer->SetActorLocation(NewLocation);
 
 	this->SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
 }
@@ -50,6 +47,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
 				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
+				myPlayer->forceMove();
 				myPlayer->stopAllVelocity();
 				myPlayer->freezeFrame(0.15, false);
 				myPlayer->setRotationRate(myPlayer->rotationRate);

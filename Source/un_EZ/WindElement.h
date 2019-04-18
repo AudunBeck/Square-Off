@@ -39,27 +39,26 @@ public:
 
 		// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float MaxAbility1Damage = 5.0f;
+		float aility1DamageScalar = 5.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float maxDistance = 500.0f;
+		float distance = 500.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float channelSpeed = 2000.f;
 
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float maxChannelTime = 1.2f;
+	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
+		float maxChannelTime;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxInterval = 0.4f;
 
 	float interval;
-	float ability2Damage;
-	float distance;
+	float ability1Damage;
 	float channelTime;
 
 	// Ability 2 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability2")
 		float buffDur = 2.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")

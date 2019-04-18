@@ -28,6 +28,7 @@ public:
 		USphereComponent* collider;
 	
 	FVector NewLocation;
+	FVector forward;
 	float attackRange;
 	float damage;
 

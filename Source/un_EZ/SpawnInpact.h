@@ -40,5 +40,8 @@ public:
 		float damage = 15.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-		float inpactKnockback = 1000.f;
+		float knockbackForce = 3000.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+		float knockbackTime = 1.f;
 };

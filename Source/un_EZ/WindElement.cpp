@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "WindElement.h"
+#include "GameFramework/CharacterMovementComponent.h"
 AWindElement::AWindElement()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -10,7 +11,8 @@ void AWindElement::BeginPlay()
 {
 	Super::BeginPlay();
 	channelTime = 0;
-	distance = maxDistance;
+	maxChannelTime = maxInterval * 3;
+	ability1Damage = aility1DamageScalar;
 }
 
 void AWindElement::Tick(float DeltaTime)
@@ -31,15 +33,16 @@ void AWindElement::Tick(float DeltaTime)
 			tempParam.Owner = this;
 			temp = GetWorld()->SpawnActor<AWindElementAbility1>(WindElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
 				myOwner->GetActorRotation(), tempParam);
+			ability1Damage += aility1DamageScalar;
+			
 		}
 	}
 	if ((channelingAbility1 == false && channelTime > 0) || channelTime >= maxChannelTime)
 	{
 		myOwner->setMoveSpeed(myOwner->moveSpeed);
 		channelTime = 0;
+		ability1Damage = aility1DamageScalar;
 	}
-
-	ability2Damage = (MaxAbility1Damage / maxChannelTime) * channelTime;
 
 	if (interval > 0)
 		interval -= DeltaTime;

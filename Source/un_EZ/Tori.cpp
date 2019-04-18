@@ -85,11 +85,18 @@ void ATori::Tick(float DeltaTime)
 		isGoingDown = false;
 		isGoingUp = true;
 	}
-
 	else
 	{
 		isGoingDown = false;
 		isGoingUp = false;
+	}
+
+	if (forceTime > 0.f + DeltaTime)
+	{
+		FVector tempLocation = GetActorLocation();
+		tempLocation += (forceMoveDirection * forceSpeed * DeltaTime);
+		SetActorLocation(tempLocation);
+		forceTime -= DeltaTime;
 	}
 }
 
@@ -236,6 +243,12 @@ void ATori::jump()
 		JumpCurrentCount += 1;
 		break;
 	}
+}
+void ATori::forceMove(FVector direction, float speed, float time)
+{
+	forceMoveDirection = direction;
+	forceSpeed = speed;
+	forceTime = time;
 }
 
 void ATori::ability_1()

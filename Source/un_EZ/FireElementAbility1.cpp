@@ -37,26 +37,21 @@ void AFireElementAbility1::BeginPlay()
 	}
 	beginSound();
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
-	direction = myPlayer->facingDirection;
 	//Add this back when we want 4 directions
 	/*if (direction.Z > 0.5f)
 		direction = FVector(0.f, 0.f, 1.3f);
 	else if (direction.Z < -0.5f && myPlayer->isJumping)
 		direction = FVector(0.f, 0.f, -1.3f);
 	else*/
-	direction = myPlayer->GetActorForwardVector();
+	forward = myPlayer->GetActorForwardVector();
+	myPlayer->forceMove(forward, myElement->launchSpeed_1, GetLifeSpan());
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector forward = myPlayer->GetActorForwardVector();
-	NewLocation = myPlayer->GetActorLocation();
-	NewLocation += (forward * myElement->launchSpeed_1 * DeltaTime);
-	myPlayer->SetActorLocation(NewLocation);
-
-	this->SetActorLocation(direction * attackRange + myPlayer->GetActorLocation());
+	this->SetActorLocation(forward * attackRange + myPlayer->GetActorLocation());
 	this->SetActorRotation(myPlayer->GetActorRotation());
 }
 
@@ -79,6 +74,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				myPlayer->stopAllVelocity();
 				myElement->abilityHit = true;
 				hasHit = true;
+				myPlayer->forceMove();
 			}
 		}
 	}
