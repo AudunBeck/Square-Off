@@ -76,6 +76,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 				movingTime = 0.f;
 				hitPlayer = nullptr;
 				hasHit = true;
+				StartDestroy();
 			}
 			else if (OtherActor->IsA(ABlockingVolume::StaticClass()) || OtherActor->IsA(ARockElementAbility2::StaticClass()))
 			{

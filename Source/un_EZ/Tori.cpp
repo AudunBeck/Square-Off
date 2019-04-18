@@ -104,7 +104,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::jump);
 	//InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
@@ -226,11 +226,15 @@ void ATori::dodgeEnd()
 
 void ATori::jump()
 {
-	/// Make moving in air possible - Possible by getting current velocity, and manipulating this
-	if (!locked && !isJumping)
+	switch (JumpCurrentCount)
 	{
-		this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
-		isJumping = true;
+	case 0:
+		Jump();
+		break;
+	case 1:
+		GetMovementComponent()->Velocity = facingDirection * GetCharacterMovement()->JumpZVelocity;
+		JumpCurrentCount += 1;
+		break;
 	}
 }
 

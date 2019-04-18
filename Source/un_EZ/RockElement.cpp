@@ -40,7 +40,6 @@ ARockElement::ARockElement()
 void ARockElement::BeginPlay()
 {
 	Super::BeginPlay();
-	attachRockGlove();
 }
 
 void ARockElement::Tick(float DeltaTime)
