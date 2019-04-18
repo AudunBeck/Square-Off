@@ -2,6 +2,7 @@
 
 #include "WaterElementAbility1.h"
 #include "WaterElement.h"
+#include "RockElementAbility2.h"
 
 AWaterElementAbility1::AWaterElementAbility1()
 {
@@ -48,6 +49,12 @@ void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, ccDur, slow, 0);	// float value 0 is slow
 				hitEnemyVFX(OtherActor->GetActorLocation());
 				hasHit = true;
+			}
+			else if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
+			{
+				hasHit = true;
+				hitEnemyVFX(OtherActor->GetActorLocation());
+				Destroy();
 			}
 		}
 	}
