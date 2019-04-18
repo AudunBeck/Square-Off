@@ -25,6 +25,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	FVector NewLocation;
+	FVector forward;
 
 	float attackRange;
 	float chargedHit;

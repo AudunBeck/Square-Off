@@ -42,7 +42,7 @@ void ASpawnInpact::checkForEnemies(ATori* myPlayer)
 						enemyReference->recieveDamage(myPlayer, damage);
 						FVector knockDirection = (enemyLocation - tempLocation);
 						knockDirection.Normalize();
-						enemyReference->LaunchCharacter(knockDirection * inpactKnockback, true, true);
+						enemyReference->forceMove(knockDirection, knockbackForce, knockbackTime);
 					}
 				}
 			}

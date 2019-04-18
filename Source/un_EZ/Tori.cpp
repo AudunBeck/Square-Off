@@ -97,8 +97,6 @@ void ATori::Tick(float DeltaTime)
 		tempLocation += (forceMoveDirection * forceSpeed * DeltaTime);
 		SetActorLocation(tempLocation);
 		forceTime -= DeltaTime;
-		if (forceTime <= 0.f)
-			UE_LOG(LogTemp, Warning, TEXT("Tne"));
 	}
 }
 
