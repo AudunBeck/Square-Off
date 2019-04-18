@@ -61,9 +61,9 @@ public:
 
 	/// Add a function that reads how long the dash lasts, and constantly update the lifespan accordingly
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Lifespan = 2;
+		float ability2Lifespan = 0.3f;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float launchSpeed_2 = 3000.f;
+		float launchSpeed_2 = 2500.f;
 	//UPROPERTY(EditAnywhere, Category = "Ability2")
 	//	float fireKick = 6000;
 

@@ -44,6 +44,12 @@ public:
 	void dodgeEnd();
 	void jump();
 
+	void forceMove(FVector direction = FVector{ 0.f, 0.f, 0.f }, float speed = 0.f, float time = 0.f);
+	FVector forceMoveDirection;
+	float forceSpeed;
+	float forceTime;
+
+
 	// Check if stuck
 	float currentZ;
 	float tempZ;
@@ -157,6 +163,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movement")
 		bool locked; // How long the control of the character is locked.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Movement")
+		bool moveLocked; // How long the control of the character is locked.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 		float moveSpeed = 600;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")

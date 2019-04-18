@@ -64,4 +64,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Hitplayer")
 		ATori* hitPlayer = nullptr;
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void StartDestroy();
+
 };

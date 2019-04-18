@@ -30,12 +30,29 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterAbility2 collision")
 		void stopCollision();
 
-	// Blueprint functions
 	UFUNCTION(BlueprintCallable, Category = "WaterElement collision")
 		void startCollision();
+
 
 	UPROPERTY(BlueprintReadWrite)
 		class AWindElement* myElement;
 	UPROPERTY(BlueprintReadWrite)
 		class ATori* enemyReference;
+
+	void checkForEnemies(ATori* myPlayer);
+
+	FVector enemyLocation;
+	FVector tempLocation;
+	TArray<AActor*> foundEnemy;
+	int numberOfEnemyFound;
+	float radiusToEnemy;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+		float radius = 350.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+		float damage = 15.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+		float inpactKnockback = 3000.f;
 };

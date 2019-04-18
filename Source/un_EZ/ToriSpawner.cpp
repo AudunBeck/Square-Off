@@ -1,4 +1,5 @@
 #include "ToriSpawner.h"
+#include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Classes/Components/PrimitiveComponent.h"
 
@@ -29,16 +30,14 @@ void AToriSpawner::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	InputComponent->BindAxis("Move_Y", this, &AToriSpawner::moveDirection);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &AToriSpawner::spawnPlayer);
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &AToriSpawner::spawnPlayer);
+	InputComponent->BindAction("Ability_2", IE_Pressed, this, &AToriSpawner::spawnPlayer);
+	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &AToriSpawner::spawnPlayer);
 }
 
 void AToriSpawner::moveDirection(float AxisValue)
 {
 	AddMovementInput(FVector(0.f, 1, 0.f), AxisValue);
 	inAxis = AxisValue;
-}
-
-void AToriSpawner::spawnPlayer()
-{
-	// Needs to be here to please the UE_Gods
 }

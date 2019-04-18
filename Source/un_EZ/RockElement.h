@@ -44,7 +44,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float launchSpeed_1 = 2000.f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float ability1Range = 100.f;
+		float ability1Range = 100.f;			/// Change name (on all "ability1Range"
 	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
 		bool charging = false;
 	UPROPERTY(EditAnywhere, Category = "Ability1")

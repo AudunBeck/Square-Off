@@ -37,6 +37,7 @@ public:
 		void beginSound();
 
 	FVector NewLocation;
+	FVector forward;
 
 	UPROPERTY(BlueprintReadWrite)
 		bool buffed = false;

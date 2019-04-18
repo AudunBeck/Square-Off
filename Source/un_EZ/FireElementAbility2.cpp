@@ -22,17 +22,13 @@ void AFireElementAbility2::BeginPlay()
 	SetLifeSpan(myElement->ability2Lifespan);
 	attackRange = myElement->ability2Range;
 	damage = myElement->ability2Damage;
+	forward = myPlayer->GetActorForwardVector();
+	myPlayer->forceMove(forward, myElement->launchSpeed_2, GetLifeSpan());
 }
 
 void AFireElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	// Change speed to rather check the distance traveled, while still stopping on inpact
-	FVector forward = myPlayer->GetActorForwardVector();
-	NewLocation = myPlayer->GetActorLocation();
-	NewLocation += (forward * myElement->launchSpeed_2 * DeltaTime);
-	myPlayer->SetActorLocation(NewLocation);
 
 	// Sets the hitbox ahead of the player while flying forward
 	SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
@@ -57,6 +53,7 @@ void AFireElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 				myPlayer->locked = 0;
 				myElement->abilityHit = true;
 				hasHit = true;
+				myPlayer->forceMove();
 			}
 		}
 	}

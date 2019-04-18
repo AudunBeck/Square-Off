@@ -36,13 +36,13 @@ void ASpawnInpact::checkForEnemies(ATori* myPlayer)
 				{
 					tempLocation = GetActorLocation();
 					enemyLocation = enemyReference->GetActorLocation();
-					radiusToEnemy = sqrt(pow((enemyLocation.X - tempLocation.X), 2) + pow((enemyLocation.Y - tempLocation.Y), 2));
+					radiusToEnemy = sqrt(pow((enemyLocation.Y - tempLocation.Y), 2) + pow((enemyLocation.Z - tempLocation.Z), 2));
 					if (radiusToEnemy < inpactRadius)
 					{
 						enemyReference->recieveDamage(myPlayer, damage);
 						FVector knockDirection = (enemyLocation - tempLocation);
 						knockDirection.Normalize();
-						enemyReference->LaunchCharacter(knockDirection * inpactKnockback, true, true);
+						enemyReference->forceMove(knockDirection, knockbackForce, knockbackTime);
 					}
 				}
 			}
