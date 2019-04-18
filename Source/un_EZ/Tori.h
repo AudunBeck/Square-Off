@@ -44,6 +44,12 @@ public:
 	void dodgeEnd();
 	void jump();
 
+	void forceMove(FVector direction = FVector{ 0.f, 0.f, 0.f }, float speed = 0.f, float time = 0.f);
+	FVector forceMoveDirection;
+	float forceSpeed;
+	float forceTime;
+
+
 	// Check if stuck
 	float currentZ;
 	float tempZ;

@@ -85,11 +85,20 @@ void ATori::Tick(float DeltaTime)
 		isGoingDown = false;
 		isGoingUp = true;
 	}
-
 	else
 	{
 		isGoingDown = false;
 		isGoingUp = false;
+	}
+
+	if (forceTime > 0.f + DeltaTime)
+	{
+		FVector tempLocation = GetActorLocation();
+		tempLocation += (forceMoveDirection * forceSpeed * DeltaTime);
+		SetActorLocation(tempLocation);
+		forceTime -= DeltaTime;
+		if (forceTime <= 0.f)
+			UE_LOG(LogTemp, Warning, TEXT("Tne"));
 	}
 }
 
@@ -232,6 +241,12 @@ void ATori::jump()
 		this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
 		isJumping = true;
 	}
+}
+void ATori::forceMove(FVector direction, float speed, float time)
+{
+	forceMoveDirection = direction;
+	forceSpeed = speed;
+	forceTime = time;
 }
 
 void ATori::ability_1()
