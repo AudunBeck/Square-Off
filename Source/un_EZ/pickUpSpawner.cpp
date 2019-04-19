@@ -14,8 +14,6 @@ ApickUpSpawner::ApickUpSpawner()
 void ApickUpSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	spawnElement();
-
 }
 
 // Called every frame

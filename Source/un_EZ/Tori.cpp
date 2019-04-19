@@ -85,11 +85,18 @@ void ATori::Tick(float DeltaTime)
 		isGoingDown = false;
 		isGoingUp = true;
 	}
-
 	else
 	{
 		isGoingDown = false;
 		isGoingUp = false;
+	}
+
+	if (forceTime > 0.f + DeltaTime)
+	{
+		FVector tempLocation = GetActorLocation();
+		tempLocation += (forceMoveDirection * forceSpeed * DeltaTime);
+		SetActorLocation(tempLocation);
+		forceTime -= DeltaTime;
 	}
 }
 
@@ -104,7 +111,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
 	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
 
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::Jump);
+	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::jump);
 	//InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
 
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
@@ -119,7 +126,7 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ATori::move_X(float axisValue)
 {
 	//if (axisValue != 0)
-		facingDirection.Z = axisValue;
+	facingDirection.Z = axisValue;
 	if (axisValue < -moveXDeadZone && onSolidGround == false)
 	{
 		stopCollision();
@@ -142,9 +149,9 @@ void ATori::XButtonDown()
 
 void ATori::move_Y(float axisValue)
 {
-	if (axisValue != 0)
-		facingDirection.Y = axisValue;
-	if (!locked)
+	//if (axisValue != 0)
+	facingDirection.Y = axisValue;
+	if (!moveLocked)
 	{
 		AddMovementInput(FVector(0.f, 1, 0.f), axisValue);
 		if (axisValue > 0)
@@ -226,12 +233,28 @@ void ATori::dodgeEnd()
 
 void ATori::jump()
 {
-	/// Make moving in air possible - Possible by getting current velocity, and manipulating this
-	if (!locked && !isJumping)
+	if (!GetCharacterMovement()->IsFalling())
+		Jump();
+	else
 	{
-		this->LaunchCharacter(this->GetActorUpVector() * jumpForce, false, false);
-		isJumping = true;
+		if (JumpCurrentCount == 0)
+		{
+			if((JumpCurrentCount + 1) < JumpMaxCount)
+				GetMovementComponent()->Velocity = facingDirection.GetSafeNormal() * GetCharacterMovement()->JumpZVelocity * 0.6f;
+			JumpCurrentCount += 2;
+		}
+		else if (JumpCurrentCount < JumpMaxCount)
+		{
+			GetMovementComponent()->Velocity = facingDirection.GetSafeNormal() * GetCharacterMovement()->JumpZVelocity * 0.6f;
+			JumpCurrentCount++;
+		}
 	}
+}
+void ATori::forceMove(FVector direction, float speed, float time)
+{
+	forceMoveDirection = direction;
+	forceSpeed = speed;
+	forceTime = time;
 }
 
 void ATori::ability_1()

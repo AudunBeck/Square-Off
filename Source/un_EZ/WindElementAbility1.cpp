@@ -20,7 +20,8 @@ void AWindElementAbility1::BeginPlay()
 	myPlayer = myElement->myOwner;
 	myDistance = myElement->distance;
 	myChannelSpeed = myElement->channelSpeed;
-	damage = myElement->ability2Damage;
+	damage = myElement->ability1Damage;
+	UE_LOG(LogTemp, Warning, TEXT("Damage is: %f"), damage);
 	spawnLocation = GetActorLocation();
 }
 
