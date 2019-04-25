@@ -12,7 +12,7 @@ AFireElementAbility1::AFireElementAbility1()
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(false);
 	Cast<UShapeComponent>(collider)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility1::OnOverlapBegin);
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility1::OnOverlapBegin);//Move this to beginPlay()
 	RootComponent = collider;
 }
 

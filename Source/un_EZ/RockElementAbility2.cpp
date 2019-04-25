@@ -12,8 +12,8 @@ ARockElementAbility2::ARockElementAbility2()
 	boxCollider->SetupAttachment(RootComponent);
 
 	Cast<UShapeComponent>(boxCollider)->SetGenerateOverlapEvents(true);
-	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);
-	boxCollider->OnComponentEndOverlap.AddDynamic(this, &ARockElementAbility2::EndOnOverlap);
+	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);//Move this to beginPlay()
+	boxCollider->OnComponentEndOverlap.AddDynamic(this, &ARockElementAbility2::EndOnOverlap);//Move this to beginPlay()
 
 }
 
