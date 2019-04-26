@@ -52,6 +52,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				myPlayer->freezeFrame(0.15, false);
 				myPlayer->setRotationRate(myPlayer->rotationRate);
 				hitEnemyVFX(OtherActor->GetActorLocation());
+				myElement->ability1PunchAnim();
 				hasHit = true;
 			}
 
@@ -65,6 +66,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 					Cast<ARockElementAbility2>(OtherActor)->moveWall(temp, chargedHit);
 					hitEnemyVFX(OtherActor->GetActorLocation());
 					myPlayer->setRotationRate(myPlayer->rotationRate);
+					myElement->ability1PunchAnim();
 					hasHit = true;
 				}
 				else
@@ -74,6 +76,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 					Cast<ARockElementAbility2>(OtherActor)->moveWall(myPlayer->GetActorRotation(), chargedHit);
 					hitEnemyVFX(OtherActor->GetActorLocation());
 					myPlayer->setRotationRate(myPlayer->rotationRate);
+					myElement->ability1PunchAnim();
 					hasHit = true;
 				}
 			}

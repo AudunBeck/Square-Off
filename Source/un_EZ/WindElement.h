@@ -21,8 +21,20 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
 	virtual void ability1()override;
+	virtual void ability1FireCode()override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Ability1")
+		int combo = 0;
+
 	virtual void ability2()override;
+	virtual void ability2FireCode()override;
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ability2PullAnim();
+	bool windUsingAbility2 = false;
+
 	virtual int returnElementType()override;
 
 	// Holds the pointers for element abilities

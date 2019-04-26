@@ -30,6 +30,8 @@ public:
 	virtual void ability2()override;
 	virtual void ability2FireCode()override;
 	virtual void ability2End()override;
+	UFUNCTION(BlueprintImplementableEvent)
+		void ability2CounterAnim();
 
 	virtual int returnElementType()override;
 

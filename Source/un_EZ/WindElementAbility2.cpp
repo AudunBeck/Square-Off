@@ -21,7 +21,9 @@ void AWindElementAbility2::BeginPlay()
 	myElement = Cast<AWindElement>(GetOwner());
 	myPlayer = myElement->myOwner;
 	this->SetLifeSpan(myElement->buffDur);
-	myPlayer->locked = true;
+	//myPlayer->locked = true;
+	myElement->windUsingAbility2 = true;
+
 	myPlayer->setMoveSpeed(myPlayer->moveSpeed + myElement->bonusSpeed);
 	myPlayer->GetCharacterMovement()->GravityScale = 2.f;
 	
@@ -36,7 +38,8 @@ void AWindElementAbility2::Tick(float DeltaTime)
 
 void AWindElementAbility2::startCollision()
 {
-	myPlayer->locked = false;
+	//myPlayer->locked = false;
+	myElement->windUsingAbility2 = false;
 	myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 	myPlayer->GetCharacterMovement()->GravityScale = 4.f;
 	checkForEnemies(myPlayer);
@@ -44,6 +47,7 @@ void AWindElementAbility2::startCollision()
 
 void AWindElementAbility2::checkForEnemies(ATori * myPlayer)
 {
+	myElement->ability2PullAnim();
 	ATori* enemyReference = nullptr;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATori::StaticClass(), foundEnemy);
 	numberOfEnemyFound = foundEnemy.Num() - 1;
@@ -64,6 +68,7 @@ void AWindElementAbility2::checkForEnemies(ATori * myPlayer)
 						FVector knockDirection = (tempLocation - enemyLocation);
 						knockDirection.Normalize();
 						enemyReference->LaunchCharacter(knockDirection * inpactKnockback, true, true);
+						
 					}
 				}
 			}
