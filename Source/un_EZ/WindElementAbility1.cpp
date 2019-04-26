@@ -10,7 +10,6 @@ AWindElementAbility1::AWindElementAbility1()
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility1::OnOverlapBegin);
 }
 
 void AWindElementAbility1::BeginPlay()
@@ -23,6 +22,8 @@ void AWindElementAbility1::BeginPlay()
 	damage = myElement->ability1Damage;
 	UE_LOG(LogTemp, Warning, TEXT("Damage is: %f"), damage);
 	spawnLocation = GetActorLocation();
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility1::OnOverlapBegin);//Move this to beginPlay()
+
 }
 
 void AWindElementAbility1::Tick(float DeltaTime)
@@ -56,7 +57,7 @@ void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 
 			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, ccDur, slow, 0);
 
-			if(myElement->channelTime >= myElement->maxChannelTime - myElement->interval)
+			if(myElement->combo == 3)
 				Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * myElement->pushForce, false, true);
 
 			//Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * 300.f, false, true);

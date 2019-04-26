@@ -10,8 +10,6 @@ ARockElementAbility1::ARockElementAbility1()
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-
-	collider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility1::OnOverlapBegin);
 }
 
 void ARockElementAbility1::BeginPlay()
@@ -27,6 +25,8 @@ void ARockElementAbility1::BeginPlay()
 	damage = myElement->ability1Damage;
 	forward = myPlayer->GetActorForwardVector();
 	myPlayer->forceMove(forward, myElement->launchSpeed_1, GetLifeSpan());
+	collider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility1::OnOverlapBegin);//Move this to beginPlay()
+
 }
 
 void ARockElementAbility1::Tick(float DeltaTime)
@@ -52,6 +52,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				myPlayer->freezeFrame(0.15, false);
 				myPlayer->setRotationRate(myPlayer->rotationRate);
 				hitEnemyVFX(OtherActor->GetActorLocation());
+				myElement->ability1PunchAnim();
 				hasHit = true;
 			}
 
@@ -65,6 +66,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 					Cast<ARockElementAbility2>(OtherActor)->moveWall(temp, chargedHit);
 					hitEnemyVFX(OtherActor->GetActorLocation());
 					myPlayer->setRotationRate(myPlayer->rotationRate);
+					myElement->ability1PunchAnim();
 					hasHit = true;
 				}
 				else
@@ -74,6 +76,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 					Cast<ARockElementAbility2>(OtherActor)->moveWall(myPlayer->GetActorRotation(), chargedHit);
 					hitEnemyVFX(OtherActor->GetActorLocation());
 					myPlayer->setRotationRate(myPlayer->rotationRate);
+					myElement->ability1PunchAnim();
 					hasHit = true;
 				}
 			}

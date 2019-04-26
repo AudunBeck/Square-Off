@@ -69,11 +69,7 @@ ATori * ABaseElement::getMyOwner()
 
 void ABaseElement::ability1()
 {
-	if (ammo1 > 0)
-	{
-		ammo1 -= 1;
-		ability1Anim();
-	}
+	ability1Anim();
 }
 
 void ABaseElement::ability1FireCode()
@@ -92,11 +88,7 @@ int ABaseElement::returnElementType()
 
 void ABaseElement::ability2()
 {
-	if (ammo2 > 0)
-	{
-		ammo2 -= 1;
-		ability2Anim();
-	}
+	ability2Anim();
 }
 
 void ABaseElement::ability2FireCode()

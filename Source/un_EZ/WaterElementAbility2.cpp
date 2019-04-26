@@ -34,13 +34,13 @@ void AWaterElementAbility2::Tick(float DeltaTime)
 		myPlayer->hitAnimImmune = true;
 	}
 
-	if (myElement->dashTime > 0)
-	{
-		FVector backward = myPlayer->GetActorForwardVector() * -1.f;
-		NewLocation = myPlayer->GetActorLocation();
-		NewLocation += (backward * myElement->dashSpeed_2 * DeltaTime);
-		myPlayer->SetActorLocation(NewLocation);
-	}
+	//if (myElement->dashTime > 0)
+	//{
+	//	FVector backward = myPlayer->GetActorForwardVector() * -1.f;
+	//	NewLocation = myPlayer->GetActorLocation();
+	//	NewLocation += (backward * myElement->dashSpeed_2 * DeltaTime);
+	//	myPlayer->SetActorLocation(NewLocation);
+	//}
 }
 
 void AWaterElementAbility2::outputLog()
@@ -65,6 +65,8 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 					myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 					myPlayer->hitAnimImmune = false;
 					UE_LOG(LogTemp, Warning, TEXT("Balls"));
+					myElement->dashTime = myElement->maxDashTime;
+					myElement->ability2CounterAnim();
 					this->Destroy();
 				}
 			}

@@ -11,7 +11,6 @@ AWaterElementAbility1::AWaterElementAbility1()
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility1::OnOverlapBegin);
 }
 
 void AWaterElementAbility1::BeginPlay()
@@ -24,7 +23,7 @@ void AWaterElementAbility1::BeginPlay()
 	ccDur = myElement->ccDur;
 	slow = myElement->slow;
 	damage = myElement->damage;
-
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility1::OnOverlapBegin);//Move this to beginPlay()
 }
 
 void AWaterElementAbility1::Tick(float DeltaTime)

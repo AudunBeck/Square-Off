@@ -66,7 +66,14 @@ void AWaterElement::Tick(float DeltaTime)
 		}
 	}
 	if (dashTime >= 0)
+	{
 		dashTime -= DeltaTime;
+		FVector backward = myOwner->GetActorForwardVector() * -1.f;
+		FVector NewLocation;
+		NewLocation = myOwner->GetActorLocation();
+		NewLocation += (backward * dashSpeed_2 * DeltaTime);
+		myOwner->SetActorLocation(NewLocation);
+	}
 }
 
 void AWaterElement::ability1()
@@ -109,7 +116,7 @@ void AWaterElement::ability2()
 
 void AWaterElement::ability2FireCode()
 {
-	dashTime = maxDashTime;
+	
 	AWaterElementAbility2* temp;
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;

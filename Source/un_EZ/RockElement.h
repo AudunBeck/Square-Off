@@ -22,6 +22,8 @@ public:
 	virtual void ability1()override;
 	virtual void ability1FireCode()override;
 	virtual void ability1End()override;
+	UFUNCTION(BlueprintImplementableEvent)
+		void ability1PunchAnim();
 	virtual void ability2()override;
 	virtual void ability2FireCode()override;
 	virtual int returnElementType()override;
