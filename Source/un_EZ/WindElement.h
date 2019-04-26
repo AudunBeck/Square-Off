@@ -31,9 +31,11 @@ public:
 	virtual void ability2()override;
 	virtual void ability2FireCode()override;
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 		void ability2PullAnim();
 	bool windUsingAbility2 = false;
+	UFUNCTION(BlueprintImplementableEvent)
+		void ability2PullParticle();
 
 	virtual int returnElementType()override;
 

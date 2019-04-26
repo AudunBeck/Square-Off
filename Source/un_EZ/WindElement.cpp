@@ -75,6 +75,7 @@ void AWindElement::ability2()
 		tempParam.Owner = this;
 		temp = GetWorld()->SpawnActor<AWindElementAbility2>(WindElementAbility2_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
 			myOwner->GetActorRotation(), tempParam);
+		ability2PullParticle();
 	}
 }
 

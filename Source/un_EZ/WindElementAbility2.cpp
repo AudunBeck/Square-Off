@@ -47,7 +47,7 @@ void AWindElementAbility2::startCollision()
 
 void AWindElementAbility2::checkForEnemies(ATori * myPlayer)
 {
-	myElement->ability2PullAnim();
+	//myElement->ability2PullAnim();
 	ATori* enemyReference = nullptr;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATori::StaticClass(), foundEnemy);
 	numberOfEnemyFound = foundEnemy.Num() - 1;
