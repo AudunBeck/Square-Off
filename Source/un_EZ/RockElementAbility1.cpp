@@ -10,8 +10,6 @@ ARockElementAbility1::ARockElementAbility1()
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-
-	collider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility1::OnOverlapBegin);//Move this to beginPlay()
 }
 
 void ARockElementAbility1::BeginPlay()
@@ -27,6 +25,8 @@ void ARockElementAbility1::BeginPlay()
 	damage = myElement->ability1Damage;
 	forward = myPlayer->GetActorForwardVector();
 	myPlayer->forceMove(forward, myElement->launchSpeed_1, GetLifeSpan());
+	collider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility1::OnOverlapBegin);//Move this to beginPlay()
+
 }
 
 void ARockElementAbility1::Tick(float DeltaTime)
