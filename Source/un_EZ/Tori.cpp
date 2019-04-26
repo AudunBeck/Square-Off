@@ -239,14 +239,18 @@ void ATori::jump()
 	{
 		if (JumpCurrentCount == 0)
 		{
-			if((JumpCurrentCount + 1) < JumpMaxCount)
-				GetMovementComponent()->Velocity = facingDirection.GetSafeNormal() * GetCharacterMovement()->JumpZVelocity * 0.6f;
+			if ((JumpCurrentCount + 1) < JumpMaxCount)
+			{
+				GetMovementComponent()->Velocity = facingDirection.GetSafeNormal() * GetCharacterMovement()->JumpZVelocity * 0.8f;
+				dashAnim();
+			}
 			JumpCurrentCount += 2;
 		}
 		else if (JumpCurrentCount < JumpMaxCount)
 		{
-			GetMovementComponent()->Velocity = facingDirection.GetSafeNormal() * GetCharacterMovement()->JumpZVelocity * 0.6f;
+			GetMovementComponent()->Velocity = facingDirection.GetSafeNormal() * GetCharacterMovement()->JumpZVelocity * 0.8f;
 			JumpCurrentCount++;
+			dashAnim();
 		}
 	}
 }
