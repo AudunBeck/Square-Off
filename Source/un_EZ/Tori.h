@@ -79,7 +79,8 @@ public:
 		bool onSolidGround = false;
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Movement")
 		void stopCollision();
-
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Movement")
+		bool snapRotation = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool dodging;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animations")

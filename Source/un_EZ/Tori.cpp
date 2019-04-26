@@ -159,7 +159,7 @@ void ATori::move_Y(float axisValue)
 		if (axisValue < 0)
 			desiredRotation = FRotator(0.f, -90.f, 0.f);
 	}
-	if (ability1Used)
+	if (snapRotation)
 	{
 		if (axisValue > 0)
 			SetActorRotation(FRotator(0.f, 90.f, 0.f));

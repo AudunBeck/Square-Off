@@ -11,7 +11,6 @@ AFireElementAbility2::AFireElementAbility2()
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility2::OnOverlapBegin);
 }
 
 void AFireElementAbility2::BeginPlay()
@@ -24,6 +23,7 @@ void AFireElementAbility2::BeginPlay()
 	damage = myElement->ability2Damage;
 	forward = myPlayer->GetActorForwardVector();
 	myPlayer->forceMove(forward, myElement->launchSpeed_2, GetLifeSpan());
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility2::OnOverlapBegin);//Move this to beginPlay()
 }
 
 void AFireElementAbility2::Tick(float DeltaTime)
