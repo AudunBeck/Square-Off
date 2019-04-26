@@ -23,7 +23,7 @@ void AFireElementAbility1::BeginPlay()
 	myPlayer = myElement->myOwner;
 	SetLifeSpan(myElement->ability1lifeSpan);
 	attackRange = myElement->ability1Range;
-	if (myElement->fireChi >= 2)
+	if (myElement->fireChi >= 1)
 	{
 		buffed = true;
 		damage = myElement->ability1BuffedDamage;
