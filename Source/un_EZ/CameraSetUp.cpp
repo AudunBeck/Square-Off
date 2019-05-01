@@ -27,7 +27,6 @@ void ACameraSetUp::BeginPlay()
 {
 	Super::BeginPlay();
 
-
 }
 
 // Called every frame
@@ -38,6 +37,7 @@ void ACameraSetUp::Tick(float DeltaTime)
 	{
 		findPlayerControllers();
 		test = true;
+		
 	}
 	getPawnLocations();
 	calculateCenterLocation();
@@ -49,8 +49,15 @@ void ACameraSetUp::findPlayerControllers()
 {
 	for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
 	{
-		playerControllers.Add(Iterator->Get());
+		if (Iterator.GetIndex() < playerAmount)
+		{
+			if (GEngine)
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::FromInt(Iterator.GetIndex()));
+			playerControllers.Add(Iterator->Get());
+		}
 	}
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::FromInt(playerControllers.Num()));
 	UE_LOG(LogTemp, Warning, TEXT("Found %i players"), playerControllers.Num());
 	pawnLocations.SetNum(playerControllers.Num());
 
