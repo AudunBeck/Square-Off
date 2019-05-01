@@ -56,18 +56,21 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 	{
 		if (OtherActor != this)
 		{
-			if (myElement != nullptr)
+			if (Cast<ABaseAbility>(OtherActor)->myPlayer != myPlayer)
 			{
-				if (myPlayer != nullptr)
+				if (myElement != nullptr)
 				{
-					ATori* enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
-					enemy->recieveDamage(myPlayer, damage, ccDur, slow, 0);
-					myPlayer->setMoveSpeed(myPlayer->moveSpeed);
-					myPlayer->hitAnimImmune = false;
-					UE_LOG(LogTemp, Warning, TEXT("Balls"));
-					myElement->dashTime = myElement->maxDashTime;
-					myElement->ability2CounterAnim();
-					this->Destroy();
+					if (myPlayer != nullptr)
+					{
+						ATori* enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
+						enemy->recieveDamage(myPlayer, damage, ccDur, slow, 0);
+						myPlayer->setMoveSpeed(myPlayer->moveSpeed);
+						myPlayer->hitAnimImmune = false;
+						UE_LOG(LogTemp, Warning, TEXT("Balls"));
+						myElement->dashTime = myElement->maxDashTime;
+						myElement->ability2CounterAnim();
+						this->Destroy();
+					}
 				}
 			}
 		}

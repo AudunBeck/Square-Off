@@ -9,19 +9,19 @@
 ApickUp::ApickUp()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
-	RootComponent = collider;
-	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
-	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-	collider->OnComponentBeginOverlap.AddDynamic(this, &ApickUp::OnOverlapBegin);//Move this to beginPlay()
+	collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
+	Cast<UShapeComponent>(collider)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 
-
+	collider->SetupAttachment(RootComponent);
 }
 
 void ApickUp::BeginPlay()
 {
 	Super::BeginPlay();
 
+	collider->OnComponentBeginOverlap.AddDynamic(this, &ApickUp::OnOverlapBegin);//Move this to beginPlay()
 	collider->OnComponentEndOverlap.AddDynamic(this, &ApickUp::OnOverlapEnd);
 }
 

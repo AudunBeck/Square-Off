@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "WindElementAbility1.h"
+#include "RockElementAbility2.h"
 
 AWindElementAbility1::AWindElementAbility1()
 {
@@ -61,6 +62,12 @@ void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 				Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * myElement->pushForce, false, true);
 
 			//Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * 300.f, false, true);
+		}
+		else if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
+		{
+			hasHit = true;
+			hitEnemyVFX(OtherActor->GetActorLocation());
+			Destroy();
 		}
 	}
 }
