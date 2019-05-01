@@ -53,4 +53,7 @@ public:
 	void getPawnLocations();
 	void calculateCenterLocation();
 	void setCameraPosition();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CameraVariables")
+		int playerAmount = 0;
 };

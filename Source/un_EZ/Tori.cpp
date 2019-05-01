@@ -323,7 +323,7 @@ void ATori::recieveDamage(ATori* attacker, float damage)
 		checkIfDead();
 		if (!hitAnimImmune)
 		{
-			PlayAnimMontage(receiveDamageAnim, 1, FName("Start"));
+			takeHitAnim();
 			// So we dont lock characters forever.
 			if (element_1 != nullptr)
 			{
@@ -349,6 +349,18 @@ void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow
 			wasHit = true;
 			slowDur.Push(ccDur);
 			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
+			if (!hitAnimImmune)
+			{
+				takeHitAnim();
+				// So we dont lock characters forever.
+				if (element_1 != nullptr)
+				{
+					element_1->resetAbility1();
+					element_1->resetAbility2();
+				}
+				locked = 0;
+			}
+			freezeFrame(0.4, false);//Give this some good math for dmg becoming time frozen.
 		}
 	// Type 1 is stun
 	if (type == 1)
@@ -370,6 +382,18 @@ void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVecto
 	hitPointPercentage = hitPoints / maxHitPoints;
 	checkIfDead();
 	wasHit = true;
+	if (!hitAnimImmune)
+	{
+		takeHitAnim();
+		// So we dont lock characters forever.
+		if (element_1 != nullptr)
+		{
+			element_1->resetAbility1();
+			element_1->resetAbility2();
+		}
+		locked = 0;
+	}
+	freezeFrame(0.4, false);//Give this some good math for dmg becoming time frozen.
 }
 
 void ATori::checkIfDead()
