@@ -202,4 +202,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		FVector facingDirection;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Animations")
+		void takeHitAnim();
 };
