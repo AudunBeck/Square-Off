@@ -33,6 +33,8 @@ public:
 		FVector offsetCam;
 	UPROPERTY(EditAnywhere, Category = "SpringArm")
 		float spawnerOffset;
+	UPROPERTY(EditAnywhere, Category = "CameraMovement")
+		float maxCameraChange; 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USpringArmComponent* SpringArm;
@@ -52,7 +54,7 @@ public:
 	void findPlayerControllers();
 	void getPawnLocations();
 	void calculateCenterLocation();
-	void setCameraPosition();
+	void setCameraPosition(float DeltaTime);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CameraVariables")
 		int playerAmount = 0;

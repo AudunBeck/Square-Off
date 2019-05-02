@@ -32,16 +32,23 @@ void ACameraSetUp::BeginPlay()
 // Called every frame
 void ACameraSetUp::Tick(float DeltaTime)
 {
+
 	Super::Tick(DeltaTime);
-	if (!test)
+	if (test)
+	{
+		getPawnLocations();
+		calculateCenterLocation();
+		setCameraPosition(DeltaTime);
+	}
+	else 
 	{
 		findPlayerControllers();
 		test = true;
-		
+		getPawnLocations();
+		calculateCenterLocation();
+		SetActorLocation(centerLocation);
 	}
-	getPawnLocations();
-	calculateCenterLocation();
-	setCameraPosition();
+
 
 }
 
@@ -102,14 +109,17 @@ void ACameraSetUp::calculateCenterLocation()
 		float tempFloat = tempVector.Size();
 		if (furthestPawn < tempFloat)
 			furthestPawn = tempFloat;
-		
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("Furthest pawn %s"), furthestPawn);
 }
 
-void ACameraSetUp::setCameraPosition()
+void ACameraSetUp::setCameraPosition(float DeltaTime)
 {
-	SetActorLocation(centerLocation);
+
+	FVector newLocation = centerLocation - GetActorLocation();
+	UE_LOG(LogTemp, Warning, TEXT("newLocation %s"), *newLocation.ToString());
+	newLocation = newLocation.GetClampedToMaxSize(DeltaTime * maxCameraChange);
+	SetActorLocation(GetActorLocation() + newLocation);
 	float newArmLength = FMath::Clamp(furthestPawn, minArmLength, maxArmLength);
 	SpringArm->TargetArmLength = newArmLength;
 }
