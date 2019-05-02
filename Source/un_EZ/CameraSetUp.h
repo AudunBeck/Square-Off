@@ -35,6 +35,10 @@ public:
 		float spawnerOffset;
 	UPROPERTY(EditAnywhere, Category = "CameraMovement")
 		float maxCameraChange; 
+	UPROPERTY(EditAnywhere, Category = "CameraMovement")
+		int playerWon = 0;
+	UPROPERTY(EditAnywhere, Category = "CameraMovement")
+		bool winningCam = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USpringArmComponent* SpringArm;
@@ -55,6 +59,9 @@ public:
 	void getPawnLocations();
 	void calculateCenterLocation();
 	void setCameraPosition(float DeltaTime);
+	UFUNCTION(BlueprintCallable, Category = "CameraMovement")
+		void winningPlayer(int winner);
+	void winCamPos(float DeltaTime);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CameraVariables")
 		int playerAmount = 0;
