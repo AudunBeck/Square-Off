@@ -43,6 +43,7 @@ public:
 		bool buffed = false;
 	float attackRange = 100;
 	float damage;
+	float knockback;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "VFX")
 		UParticleSystem* normalPunchVFX;

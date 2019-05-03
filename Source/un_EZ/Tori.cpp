@@ -372,6 +372,7 @@ void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow
 }
 void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVector knockbackPoint)
 {
+	//Change up so it uses forcemove instead of launchCharacter. 
 	lastAttacker = attacker;
 	FVector delta = GetActorLocation() - knockbackPoint;
 	delta.Normalize();
