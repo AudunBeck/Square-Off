@@ -66,6 +66,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float maxInterval = 0.4f;
+	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
+		bool ability1Down;
 
 	float interval;
 	float ability1Damage;

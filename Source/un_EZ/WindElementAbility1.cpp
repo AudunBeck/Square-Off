@@ -25,7 +25,7 @@ void AWindElementAbility1::BeginPlay()
 	spawnLocation = GetActorLocation();
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility1::OnOverlapBegin);//Move this to beginPlay()
 	//Add this back when we want 4 directions
-	if (myPlayer->facingDirection.Z < -0.5f && myPlayer->isJumping)
+	if (myElement->ability1Down)
 		direction = FVector(0.f, 0.f, -1.0f);
 	else
 		direction = myPlayer->GetActorForwardVector();
