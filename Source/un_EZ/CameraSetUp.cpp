@@ -127,7 +127,7 @@ void ACameraSetUp::setCameraPosition(float DeltaTime)
 {
 
 	FVector newLocation = centerLocation - GetActorLocation();
-	UE_LOG(LogTemp, Warning, TEXT("newLocation %s"), *newLocation.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("newLocation %s"), *newLocation.ToString());
 	newLocation = newLocation.GetClampedToMaxSize(DeltaTime * maxCameraChange);
 	SetActorLocation(GetActorLocation() + newLocation);
 	float newArmLength = FMath::Clamp(furthestPawn, minArmLength, maxArmLength);

@@ -24,6 +24,12 @@ void AWindElementAbility1::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("Damage is: %f"), damage);
 	spawnLocation = GetActorLocation();
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility1::OnOverlapBegin);//Move this to beginPlay()
+	//Add this back when we want 4 directions
+	if (myPlayer->facingDirection.Z < -0.5f && myPlayer->isJumping)
+		direction = FVector(0.f, 0.f, -1.0f);
+	else
+		direction = myPlayer->GetActorForwardVector();
+	UE_LOG(LogTemp, Warning, TEXT("direction is: %s"), *direction.ToString());
 
 }
 
@@ -31,7 +37,7 @@ void AWindElementAbility1::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	FVector NewLocation = GetActorLocation();
-	NewLocation += GetActorForwardVector() * myChannelSpeed * DeltaTime;
+	NewLocation += direction * myChannelSpeed * DeltaTime;
 	SetActorLocation(NewLocation);
 	distTraveled = sqrt(pow((spawnLocation.X - NewLocation.X), 2) + pow((spawnLocation.Y - NewLocation.Y), 2));
 	if (distTraveled > myDistance)
