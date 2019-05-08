@@ -56,6 +56,7 @@ void AWindElement::ability1()
 	Super::ability1();
 }
 
+
 void AWindElement::ability1FireCode()
 {
 	AWindElementAbility1* temp;

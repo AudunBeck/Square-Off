@@ -32,6 +32,7 @@ public:
 	float distTraveled;
 	float damage;
 	FVector spawnLocation;
+	FVector direction; 
 
 	UPROPERTY(BlueprintReadWrite)
 		class AWindElement* myElement;

@@ -50,7 +50,11 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Damage;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1Knockback;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1BuffedDamage;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1BuffedKnockback;
 	bool abilityHit = false;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
@@ -76,6 +80,8 @@ public:
 		FVector boostedAbility1Scale;
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Damage;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Knockback;
 
 	UDataTable* BalancingTable;
 };

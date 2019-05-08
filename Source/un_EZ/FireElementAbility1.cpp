@@ -27,12 +27,14 @@ void AFireElementAbility1::BeginPlay()
 	{
 		buffed = true;
 		damage = myElement->ability1BuffedDamage;
+		knockback = myElement->ability1BuffedKnockback;
 		SetActorScale3D(myElement->boostedAbility1Scale);
 		myElement->fireChi = 0;
 	}
 	else
 	{
 		damage = myElement->ability1Damage;
+		knockback = myElement->ability1Knockback;
 		buffed = false;
 	}
 	beginSound();
@@ -45,7 +47,7 @@ void AFireElementAbility1::BeginPlay()
 	else*/
 	forward = myPlayer->GetActorForwardVector();
 	myPlayer->forceMove(forward, myElement->launchSpeed_1, GetLifeSpan());
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility1::OnOverlapBegin);//Move this to beginPlay()
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility1::OnOverlapBegin);
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)
@@ -67,7 +69,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
 				// Make the target take damage
-				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, knockback, myPlayer->GetActorLocation());
 				if (!buffed)
 					myElement->fireChi += 1;
 				hitEnemyVFX(OtherActor->GetActorLocation());
