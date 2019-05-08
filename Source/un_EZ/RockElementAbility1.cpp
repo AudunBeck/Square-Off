@@ -25,6 +25,7 @@ void ARockElementAbility1::BeginPlay()
 	damage = myElement->ability1Damage;
 	forward = myPlayer->GetActorForwardVector();
 	myPlayer->forceMove(forward, myElement->launchSpeed_1, GetLifeSpan());
+	knockback = myElement->ability1Knockback;
 	collider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility1::OnOverlapBegin);//Move this to beginPlay()
 
 }
@@ -46,7 +47,7 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
-				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, knockback, myPlayer->GetActorLocation());
 				myPlayer->forceMove();
 				myPlayer->stopAllVelocity();
 				myPlayer->freezeFrame(0.15, false);

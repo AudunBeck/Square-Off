@@ -61,6 +61,8 @@ public:
 		float damageReduction;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float slowFactor = 0.3f;
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1Knockback;
 
 	// Ability 2
 	float cooldown;
