@@ -99,6 +99,7 @@ void ARockElement::ability1FireCode()
 void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
 {
 	myOwner->ability1Used = false;
+	stopLoopAnim();
 }
 
 void ARockElement::ability2()

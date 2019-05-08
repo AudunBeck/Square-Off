@@ -63,6 +63,8 @@ public:
 		float slowFactor = 0.3f;
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Knockback;
+	UFUNCTION(BlueprintImplementableEvent, Category = "Ability1")
+		void stopLoopAnim();
 
 	// Ability 2
 	float cooldown;
