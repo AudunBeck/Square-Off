@@ -19,9 +19,6 @@ AFireElement::AFireElement()
 		ability1Damage = Ability1Data->Damage;
 		ability1BuffedDamage = Ability1Data->BuffedDamage;
 		maxCooldownAbility1 = Ability1Data->MaxCooldown;
-		maxAmmo1 = Ability1Data->MaxAmmo;
-		ammo1 = maxAmmo1;
-		ammoPerCd1 = Ability1Data->AmmoPerCD;
 		ability1Range = Ability1Data->Range;
 		//firePunch = Ability1Data->MoveRange;
 		ability1lifeSpan = Ability1Data->LifeSpan;
@@ -30,9 +27,6 @@ AFireElement::AFireElement()
 	{
 		ability2Damage = Ability2Data->Damage;
 		maxCooldownAbility2 = Ability2Data->MaxCooldown;
-		maxAmmo2 = Ability2Data->MaxAmmo;
-		ammo2 = maxAmmo2;
-		ammoPerCd2 = Ability2Data->AmmoPerCD;
 		ability2Range = Ability2Data->Range;
 		//fireKick = Ability2Data->MoveRange;
 		ability2Lifespan = Ability2Data->LifeSpan;
