@@ -19,21 +19,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float BuffedDamage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float MaxCooldown;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int MaxAmmo;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int AmmoPerCD;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float Range;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float MoveRange;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float Knockback;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float LifeSpan;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int FireChi;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FVector BuffedScale;
 
 
 };

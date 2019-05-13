@@ -7,15 +7,15 @@
 #include "WaterElementStruct.generated.h"
 
 USTRUCT(BlueprintType)
-struct FWaterElementStruct : public FTableRowBase
+struct FWindElementStruct : public FTableRowBase
 {
 	GENERATED_BODY()
-
 public:
-
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float Damage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float BuffedDamage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float Range;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -24,5 +24,4 @@ public:
 		float Knockback;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float LifeSpan;
-
 };

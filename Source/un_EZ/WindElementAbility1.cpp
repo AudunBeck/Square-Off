@@ -62,9 +62,10 @@ void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 			//UE_LOG(LogTemp, Warning, TEXT("Angle is: %f"), angle);
 			slow = (angle - 90) / 3;		// 3 is a covalent, which can be increased to degress the slow, and vise-versa
 
-			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
-
-			if(myElement->combo == 3)
+			if (myElement->combo == 3)
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, knockback, myPlayer->GetActorForwardVector());
+			else
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
 				Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * myElement->pushForce, false, true);
 
 			//Cast<ATori>(OtherActor)->LaunchCharacter(myPlayer->GetActorForwardVector() * 300.f, false, true);

@@ -20,18 +20,15 @@ AWaterElement::AWaterElement()
 	{
 		damage = Ability1Data->Damage;
 		ability1Range = Ability1Data->Range;
+		boltSpeed = Ability1Data->MoveRange;
 		ability1lifeSpan = Ability1Data->LifeSpan;
-		slow = Ability1Data->Slow;
-		ccDur = Ability1Data->SlowDur;
-		boltSpeed = Ability1Data->BoltSpeed;
 	}
 	if (Ability2Data)
 	{
 		ability2Damage = Ability2Data->Damage;
+		dashSpeed_2 = Ability2Data->MoveRange;
+		ability2Knockback = Ability2Data->Knockback;
 		ability2lifeSpan = Ability2Data->LifeSpan;
-		ability2Slow = Ability2Data->Slow;
-		ability2CcDur = Ability2Data->SlowDur;
-		dashSpeed_2 = Ability2Data->CounterDash;
 	}
 }
 

@@ -18,20 +18,18 @@ AFireElement::AFireElement()
 	{
 		ability1Damage = Ability1Data->Damage;
 		ability1BuffedDamage = Ability1Data->BuffedDamage;
-		maxCooldownAbility1 = Ability1Data->MaxCooldown;
 		ability1Range = Ability1Data->Range;
-		//firePunch = Ability1Data->MoveRange;
+		launchSpeed_1 = Ability1Data->MoveRange;
+		ability1Knockback = Ability1Data->Knockback;
 		ability1lifeSpan = Ability1Data->LifeSpan;
 	}
 	if (Ability2Data)
 	{
 		ability2Damage = Ability2Data->Damage;
-		maxCooldownAbility2 = Ability2Data->MaxCooldown;
+		maxFireChi = Ability2Data->BuffedDamage;
 		ability2Range = Ability2Data->Range;
-		//fireKick = Ability2Data->MoveRange;
+		launchSpeed_2 = Ability2Data->MoveRange;
 		ability2Lifespan = Ability2Data->LifeSpan;
-		maxFireChi = Ability2Data->FireChi;
-		boostedAbility1Scale = Ability2Data->BuffedScale;
 	}
 }
 
