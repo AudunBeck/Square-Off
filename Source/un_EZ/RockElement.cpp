@@ -17,9 +17,6 @@ ARockElement::ARockElement()
 	{
 		ability1Damage = Ability1Data->Damage;
 		maxCharge = Ability1Data->MaxCharge;
-		maxCooldownAbility1 = Ability1Data->MaxCooldown;
-		maxAmmo1 = Ability1Data->MaxAmmo;
-		ammoPerCd1 = Ability1Data->AmmoPerCD;
 		ability1Range = Ability1Data->Range;
 		//rockPunch = Ability1Data->MoveRange;
 		ability1lifeSpan = Ability1Data->LifeSpan;
@@ -28,8 +25,6 @@ ARockElement::ARockElement()
 	{
 		ability2Damage = Ability2Data->Damage;
 		maxCooldownAbility2 = Ability2Data->MaxCooldown;
-		maxAmmo2 = Ability2Data->MaxAmmo;
-		ammoPerCd2 = Ability2Data->AmmoPerCD;
 		ability2Range = Ability2Data->Range;
 		ability2Speed = Ability2Data->MoveRange;
 		ability2Lifespan = Ability2Data->LifeSpan;
