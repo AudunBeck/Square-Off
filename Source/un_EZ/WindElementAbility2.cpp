@@ -65,7 +65,7 @@ void AWindElementAbility2::checkForEnemies(ATori * myPlayer)
 					if (radiusToEnemy < radius)
 					{
 						enemyReference->recieveDamage(myPlayer, damage);
-						FVector knockDirection = (tempLocation - enemyLocation);
+						FVector knockDirection = (enemyLocation - tempLocation);
 						knockDirection.Normalize();
 						enemyReference->LaunchCharacter(knockDirection * inpactKnockback, true, true);
 						
