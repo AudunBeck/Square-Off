@@ -31,7 +31,6 @@ void AWindElement::BeginPlay()
 	Super::BeginPlay();
 	channelTime = 0;
 	maxChannelTime = maxInterval * 3;
-	ability1Damage = aility1DamageScalar;
 }
 
 void AWindElement::Tick(float DeltaTime)

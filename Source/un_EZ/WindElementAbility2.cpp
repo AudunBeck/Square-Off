@@ -20,7 +20,9 @@ void AWindElementAbility2::BeginPlay()
 	Super::BeginPlay();
 	myElement = Cast<AWindElement>(GetOwner());
 	myPlayer = myElement->myOwner;
-	this->SetLifeSpan(myElement->buffDur);
+	knockback = myElement->ability2KnockBack;
+	damage = myElement->ability2Damage;
+	this->SetLifeSpan(myElement->ability2Lifespan);
 	//myPlayer->locked = true;
 	myElement->windUsingAbility2 = true;
 

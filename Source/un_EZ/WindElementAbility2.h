@@ -51,8 +51,8 @@ public:
 		float radius = 350.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-		float damage = 15.f;
+		float damage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-		float knockback = 3000.f;
+		float knockback;
 };

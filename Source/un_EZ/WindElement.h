@@ -54,10 +54,10 @@ public:
 
 		// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float aility1DamageScalar = 5.0f;
+		float ability1Damage = 5.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float distance = 500.0f;
+		float ability1Range = 500.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float channelSpeed = 2000.f;
@@ -72,20 +72,23 @@ public:
 
 	float interval;
 	UPROPERTY(VisibleAnywhere, Category = "Ability1")
-		float ability1Damage;
-	UPROPERTY(VisibleAnywhere, Category = "Ability1")
 		float ability1BuffedDamage;
 	float channelTime;
 
+	UPROPERTY(EditAnywhere, Category = "Ability1")
+		float ability1KnockBack = 300.f;
+
 	// Ability 2 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability2")
-		float buffDur = 2.f;
+		float ability2Lifespan = 2.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float bonusSpeed = 600.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float pushForce = 300.f;
+		float ability2KnockBack = 300.f;
 
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Damage = 15.f;
 	UDataTable* BalancingTable;
 };
