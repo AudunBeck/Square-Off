@@ -67,4 +67,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 		void StartDestroy();
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void moveAnim();
 };
