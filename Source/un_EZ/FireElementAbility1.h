@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -30,24 +28,24 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UShapeComponent* collider;
 
-	virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-		class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
-	UFUNCTION(BlueprintImplementableEvent)
-		void beginSound();
-
-	FVector NewLocation;
-	FVector forward;
-
-	UPROPERTY(BlueprintReadWrite)
-		bool buffed = false;
-	float attackRange = 100;
-	float damage;
-	float knockback;
-
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "VFX")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
 		UParticleSystem* normalPunchVFX;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
 		UParticleSystem* buffedPunchVFX;
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void beginSound();
+
+	UPROPERTY(BlueprintReadWrite)
+		bool buffed = false;
+
+	FVector NewLocation;
+	FVector forward;
+	float attackRange;
+	float damage;
+	float knockback;
+
+	virtual void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+		class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
