@@ -44,7 +44,6 @@ public:
 		TSubclassOf<class AWindElementAbility2> WindElementAbility2_BP;
 
 	// Ability 1
-
 		// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Damage = 5.0f;
