@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -14,55 +12,66 @@ class UN_EZ_API ACameraSetUp : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ACameraSetUp();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
+public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, Category = "SpringArm")
-		float minArmLength; 
+		float minArmLength;
+
 	UPROPERTY(EditAnywhere, Category = "SpringArm")
 		float maxArmLength;
+
 	UPROPERTY(EditAnywhere, Category = "SpringArm")
 		FVector offsetCam;
+
 	UPROPERTY(EditAnywhere, Category = "SpringArm")
 		float spawnerOffset;
+
 	UPROPERTY(EditAnywhere, Category = "CameraMovement")
 		float maxCameraChange; 
+
 	UPROPERTY(EditAnywhere, Category = "CameraMovement")
 		int playerWon = 0;
+
 	UPROPERTY(EditAnywhere, Category = "CameraMovement")
 		bool winningCam = false;
 
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USpringArmComponent* SpringArm;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UCameraComponent* StageCamera;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		TArray<APlayerController*> playerControllers;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		TArray<FVector>pawnLocations;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		FVector centerLocation;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		float furthestPawn;
+
+	UFUNCTION(BlueprintCallable, Category = "CameraMovement")
+		void winningPlayer(int winner);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CameraVariables")
+		int playerAmount = 0;
 
 	bool test = false;
 	void findPlayerControllers();
 	void getPawnLocations();
 	void calculateCenterLocation();
 	void setCameraPosition(float DeltaTime);
-	UFUNCTION(BlueprintCallable, Category = "CameraMovement")
-		void winningPlayer(int winner);
 	void winCamPos(float DeltaTime);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "CameraVariables")
-		int playerAmount = 0;
+
 };
