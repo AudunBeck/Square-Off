@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "RockElement.h"
 #include "ConstructorHelpers.h"
 #include "RockElementStruct.h"
@@ -43,7 +41,6 @@ void ARockElement::Tick(float DeltaTime)
 	if (cooldown > 0)
 		cooldown -= DeltaTime;
 
-	// Hold the charge
 	if (channelingAbility1 == true)
 	{
 		if (chargeFloat < maxCharge)

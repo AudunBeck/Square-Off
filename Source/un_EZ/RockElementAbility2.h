@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -23,7 +21,23 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+	void moveWall(FRotator playerRot, float punchSpeed);
 
+	float damage;
+	FVector punchPos;
+	FVector wallPos;
+	class ARockElement* myElement;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float maxHangTime = 0.3f;
+	float hangTime;
+
+	UPROPERTY(EditAnywhere)
+		UBoxComponent* boxCollider;
+
+	UPROPERTY(BlueprintReadWrite)
+		bool isTouchingGround;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float movingTime;
 
@@ -32,39 +46,20 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float speed = 500.f;
-	float damageDivision; // here to easier fix dmg.
+	float damageDivision;
 
 	UPROPERTY(EditAnywhere)
 		float playerKnockback;
-
-	float damage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float maxHangTime = 0.3f;
-	float hangTime;
-
-	class ARockElement* myElement;
-
-	FVector punchPos;
-	FVector wallPos;
-
-	UPROPERTY(EditAnywhere)
-		UBoxComponent* boxCollider;
-
-	UPROPERTY(BlueprintReadWrite)
-		bool isTouchingGround;
-
-	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
-	UFUNCTION()
-		void EndOnOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
-	void moveWall(FRotator playerRot, float punchSpeed);
 	UPROPERTY(VisibleAnywhere, Category = "Hitplayer")
 		ATori* hitPlayer = nullptr;
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void StartDestroy();
 
+	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+		class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+	UFUNCTION()
+		void EndOnOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+			UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 };

@@ -14,23 +14,18 @@ class UN_EZ_API ARockElement : public ABaseElement
 public:
 
 	ARockElement();
-
 	virtual void Tick(float DeltaTime) override;
-
 	virtual void ability1()override;
 	virtual void ability1FireCode()override;
 	virtual void ability1End()override;
-
 	virtual void ability2()override;
 	virtual void ability2FireCode()override;
 	virtual int returnElementType()override;
-
 	void BeginPlay()override;
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "VFX")
 		void attachRockGlove();
 
-	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class ARockElementAbility1> RockElementAbility1_BP;
 
