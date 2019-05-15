@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -26,19 +24,6 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
-	// Blueprint functions
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterAbility2 collision")
-		void stopCollision();
-
-	UFUNCTION(BlueprintCallable, Category = "WaterElement collision")
-		void startCollision();
-
-
-	UPROPERTY(BlueprintReadWrite)
-		class AWindElement* myElement;
-	UPROPERTY(BlueprintReadWrite)
-		class ATori* enemyReference;
-
 	void checkForEnemies();
 
 	FVector enemyLocation;
@@ -46,6 +31,18 @@ public:
 	TArray<AActor*> foundEnemy;
 	int numberOfEnemyFound;
 	float radiusToEnemy;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterAbility2 collision")
+		void stopCollision();
+
+	UFUNCTION(BlueprintCallable, Category = "WaterElement collision")
+		void startCollision();
+
+	UPROPERTY(BlueprintReadWrite)
+		class AWindElement* myElement;
+
+	UPROPERTY(BlueprintReadWrite)
+		class ATori* enemyReference;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 		float radius = 350.f;

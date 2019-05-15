@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -22,23 +20,21 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
-
 	virtual void ability1()override;
 	virtual void ability1FireCode()override;
+	virtual void ability2()override;
+	virtual void ability2FireCode()override;
+	virtual int returnElementType()override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Ability1")
 		int combo = 0;
 
-	virtual void ability2()override;
-	virtual void ability2FireCode()override;
-
+	bool windUsingAbility2 = false;
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 		void ability2PullAnim();
-	bool windUsingAbility2 = false;
+
 	UFUNCTION(BlueprintImplementableEvent)
 		void ability2PullParticle();
-
-	virtual int returnElementType()override;
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
@@ -48,9 +44,6 @@ public:
 		TSubclassOf<class AWindElementAbility2> WindElementAbility2_BP;
 
 	// Ability 1
-		///Value not used
-	/*UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2lifeSpan = 2.5f;*/
 
 		// Damage properties
 	UPROPERTY(EditAnywhere, Category = "Ability1")
