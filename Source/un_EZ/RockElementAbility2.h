@@ -69,4 +69,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void moveAnim();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void StartDespawn();
+
+	float lifespan;
+	bool startedDestroy = false;
 };
