@@ -1,12 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "FireElementAbility2.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 AFireElementAbility2::AFireElementAbility2()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
+	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
@@ -23,14 +21,13 @@ void AFireElementAbility2::BeginPlay()
 	damage = myElement->ability2Damage;
 	forward = myPlayer->GetActorForwardVector();
 	myPlayer->forceMove(forward, myElement->launchSpeed_2, GetLifeSpan());
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility2::OnOverlapBegin);//Move this to beginPlay()
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility2::OnOverlapBegin);
 }
 
 void AFireElementAbility2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// Sets the hitbox ahead of the player while flying forward
 	SetActorLocation(myPlayer->GetActorForwardVector() * attackRange + myPlayer->GetActorLocation());
 	SetActorRotation(myPlayer->GetActorRotation());
 }

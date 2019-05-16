@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "WindElementAbility2.h"
 #include "Kismet/GameplayStatics.h"
 #include "Tori.h"
@@ -20,14 +18,14 @@ void AWindElementAbility2::BeginPlay()
 	Super::BeginPlay();
 	myElement = Cast<AWindElement>(GetOwner());
 	myPlayer = myElement->myOwner;
-	this->SetLifeSpan(myElement->buffDur);
-	//myPlayer->locked = true;
+	knockback = myElement->ability2KnockBack;
+	damage = myElement->ability2Damage;
+	this->SetLifeSpan(myElement->ability2Lifespan);
 	myElement->windUsingAbility2 = true;
 
 	myPlayer->setMoveSpeed(myPlayer->moveSpeed + myElement->bonusSpeed);
 	myPlayer->GetCharacterMovement()->GravityScale = 2.f;
 	
-	// Stops collision towards other Tori's - Called in Blueprint
 	stopCollision();
 }
 
@@ -38,7 +36,6 @@ void AWindElementAbility2::Tick(float DeltaTime)
 
 void AWindElementAbility2::startCollision()
 {
-	//myPlayer->locked = false;
 	myElement->windUsingAbility2 = false;
 	myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 	myPlayer->GetCharacterMovement()->GravityScale = 4.f;
@@ -47,7 +44,6 @@ void AWindElementAbility2::startCollision()
 
 void AWindElementAbility2::checkForEnemies()
 {
-	//myElement->ability2PullAnim();
 	ATori* enemyReference = nullptr;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATori::StaticClass(), foundEnemy);
 	numberOfEnemyFound = foundEnemy.Num() - 1;

@@ -1,12 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "WaterElementAbility2.h"
 #include "WaterElement.h"
 
 AWaterElementAbility2::AWaterElementAbility2()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
+	collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("RootComponent"));
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
@@ -21,7 +19,6 @@ void AWaterElementAbility2::BeginPlay()
 	slow = myElement->ability2Slow;
 	damage = myElement->ability2Damage;
 
-	// Stops collision towards other Tori's - Called in Blueprint
 	Super::BeginPlay();
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility2::OnOverlapBegin);
 }
@@ -33,14 +30,6 @@ void AWaterElementAbility2::Tick(float DeltaTime)
 	{
 		myPlayer->hitAnimImmune = true;
 	}
-
-	//if (myElement->dashTime > 0)
-	//{
-	//	FVector backward = myPlayer->GetActorForwardVector() * -1.f;
-	//	NewLocation = myPlayer->GetActorLocation();
-	//	NewLocation += (backward * myElement->dashSpeed_2 * DeltaTime);
-	//	myPlayer->SetActorLocation(NewLocation);
-	//}
 }
 
 void AWaterElementAbility2::outputLog()

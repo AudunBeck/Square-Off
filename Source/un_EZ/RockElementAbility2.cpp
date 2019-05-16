@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "RockElementAbility2.h"
 #include "Tori.h"
 #include "Engine/BlockingVolume.h"
@@ -12,8 +10,6 @@ ARockElementAbility2::ARockElementAbility2()
 	boxCollider->SetupAttachment(RootComponent);
 
 	Cast<UShapeComponent>(boxCollider)->SetGenerateOverlapEvents(true);
-
-
 }
 
 void ARockElementAbility2::BeginPlay()
@@ -21,14 +17,15 @@ void ARockElementAbility2::BeginPlay()
 	Super::BeginPlay();
 	myElement = Cast<ARockElement>(GetOwner());
 	myPlayer = myElement->myOwner;
-	SetLifeSpan(myElement->ability2Lifespan);
+	//SetLifeSpan(myElement->ability2Lifespan);
+	lifespan = myElement->ability2Lifespan;
 	speed = myElement->ability2Speed;
 	damageDivision = speed;
 	playerKnockback = myElement->ability2KnockbackMulti;
 	damage = myElement->ability2Damage;
 	hangTime = maxHangTime;
-	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);//Move this to beginPlay()
-	boxCollider->OnComponentEndOverlap.AddDynamic(this, &ARockElementAbility2::EndOnOverlap);//Move this to beginPlay()
+	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);
+	boxCollider->OnComponentEndOverlap.AddDynamic(this, &ARockElementAbility2::EndOnOverlap);
 }
 
 void ARockElementAbility2::Tick(float DeltaTime)
@@ -55,6 +52,16 @@ void ARockElementAbility2::Tick(float DeltaTime)
 			hitPlayer = nullptr;
 		}
 	}
+	
+	if (lifespan > 0.f)
+	{
+		lifespan -= DeltaTime;
+		if (lifespan <= 0.f && !startedDestroy)
+		{
+			StartDespawn();
+			startedDestroy = true;
+		}
+	}
 }
 
 void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
@@ -78,6 +85,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 				hitPlayer = nullptr;
 				hasHit = true;
 				StartDestroy();
+				startedDestroy = true;
 			}
 			else if (OtherActor->IsA(ABlockingVolume::StaticClass()) || OtherActor->IsA(ARockElementAbility2::StaticClass()))
 			{

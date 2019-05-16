@@ -1,12 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "RockElementAbility1.h"
 #include "RockElementAbility2.h"
 
 ARockElementAbility1::ARockElementAbility1()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
+	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
@@ -26,8 +24,7 @@ void ARockElementAbility1::BeginPlay()
 	forward = myPlayer->GetActorForwardVector();
 	myPlayer->forceMove(forward, myElement->launchSpeed_1, GetLifeSpan());
 	knockback = myElement->ability1Knockback;
-	collider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility1::OnOverlapBegin);//Move this to beginPlay()
-
+	collider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility1::OnOverlapBegin);
 }
 
 void ARockElementAbility1::Tick(float DeltaTime)
@@ -73,7 +70,6 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				else
 				{
 					myPlayer->freezeFrame(0.15, false);
-					UE_LOG(LogTemp, Warning, TEXT("Punch did not find myPlayer"));
 					Cast<ARockElementAbility2>(OtherActor)->moveWall(myPlayer->GetActorRotation(), chargedHit);
 					hitEnemyVFX(OtherActor->GetActorLocation());
 					myPlayer->setRotationRate(myPlayer->rotationRate);
@@ -83,5 +79,4 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 			}
 		}
 	}
-
 }
