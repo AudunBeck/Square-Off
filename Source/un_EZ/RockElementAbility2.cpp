@@ -17,7 +17,8 @@ void ARockElementAbility2::BeginPlay()
 	Super::BeginPlay();
 	myElement = Cast<ARockElement>(GetOwner());
 	myPlayer = myElement->myOwner;
-	SetLifeSpan(myElement->ability2Lifespan);
+	//SetLifeSpan(myElement->ability2Lifespan);
+	lifespan = myElement->ability2Lifespan;
 	speed = myElement->ability2Speed;
 	damageDivision = speed;
 	playerKnockback = myElement->ability2KnockbackMulti;
@@ -51,6 +52,16 @@ void ARockElementAbility2::Tick(float DeltaTime)
 			hitPlayer = nullptr;
 		}
 	}
+	
+	if (lifespan > 0.f)
+	{
+		lifespan -= DeltaTime;
+		if (lifespan <= 0.f && !startedDestroy)
+		{
+			StartDespawn();
+			startedDestroy = true;
+		}
+	}
 }
 
 void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor,
@@ -74,6 +85,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 				hitPlayer = nullptr;
 				hasHit = true;
 				StartDestroy();
+				startedDestroy = true;
 			}
 			else if (OtherActor->IsA(ABlockingVolume::StaticClass()) || OtherActor->IsA(ARockElementAbility2::StaticClass()))
 			{
@@ -95,4 +107,5 @@ void ARockElementAbility2::moveWall(FRotator playerRot, float punchSpeed)
 	this->SetActorRotation(temp);
 	movingTime = maxMovingTime;
 	speed *= punchSpeed;
+	moveAnim();
 }

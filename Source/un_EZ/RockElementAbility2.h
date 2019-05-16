@@ -12,7 +12,7 @@ UCLASS()
 class UN_EZ_API ARockElementAbility2 : public ABaseAbility
 {
 	GENERATED_BODY()
-	
+
 public:
 	ARockElementAbility2();
 
@@ -37,7 +37,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 		bool isTouchingGround;
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float movingTime;
 
@@ -50,7 +50,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float playerKnockback;
-	
+
 	UPROPERTY(VisibleAnywhere, Category = "Hitplayer")
 		ATori* hitPlayer = nullptr;
 
@@ -62,4 +62,12 @@ public:
 	UFUNCTION()
 		void EndOnOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+			UFUNCTION(BlueprintImplementableEvent)
+				void moveAnim();
+
+			UFUNCTION(BlueprintImplementableEvent)
+				void StartDespawn();
+
+			float lifespan;
+			bool startedDestroy = false;
 };
