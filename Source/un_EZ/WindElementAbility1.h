@@ -31,6 +31,7 @@ public:
 	float myChannelSpeed;
 	float distTraveled;
 	float damage;
+	float knockback;
 	FVector spawnLocation;
 	FVector direction; 
 

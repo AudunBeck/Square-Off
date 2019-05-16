@@ -106,6 +106,9 @@ public:
 		float ability2Damage = 0.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Knockback;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2CcDur = 0.5f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")

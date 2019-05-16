@@ -78,6 +78,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				myElement->abilityHit = true;
 				hasHit = true;
 				myPlayer->forceMove();
+				myElement->ability1HitAnim();
 			}
 		}
 	}

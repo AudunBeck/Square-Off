@@ -16,24 +16,18 @@ ARockElement::ARockElement()
 	if (Ability1Data)
 	{
 		ability1Damage = Ability1Data->Damage;
-		maxCharge = Ability1Data->MaxCharge;
-		maxCooldownAbility1 = Ability1Data->MaxCooldown;
-		maxAmmo1 = Ability1Data->MaxAmmo;
-		ammoPerCd1 = Ability1Data->AmmoPerCD;
 		ability1Range = Ability1Data->Range;
-		//rockPunch = Ability1Data->MoveRange;
+		launchSpeed_1 = Ability1Data->MoveRange;
+		ability1Knockback = Ability1Data->KnockBack;
 		ability1lifeSpan = Ability1Data->LifeSpan;
 	}
 	if (Ability2Data)
 	{
 		ability2Damage = Ability2Data->Damage;
-		maxCooldownAbility2 = Ability2Data->MaxCooldown;
-		maxAmmo2 = Ability2Data->MaxAmmo;
-		ammoPerCd2 = Ability2Data->AmmoPerCD;
 		ability2Range = Ability2Data->Range;
 		ability2Speed = Ability2Data->MoveRange;
-		ability2Lifespan = Ability2Data->LifeSpan;
 		ability2KnockbackMulti = Ability2Data->KnockBack;
+		ability2Lifespan = Ability2Data->LifeSpan;
 	}
 }
 

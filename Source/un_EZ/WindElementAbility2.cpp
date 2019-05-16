@@ -42,10 +42,10 @@ void AWindElementAbility2::startCollision()
 	myElement->windUsingAbility2 = false;
 	myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 	myPlayer->GetCharacterMovement()->GravityScale = 4.f;
-	checkForEnemies(myPlayer);
+	checkForEnemies();
 }
 
-void AWindElementAbility2::checkForEnemies(ATori * myPlayer)
+void AWindElementAbility2::checkForEnemies()
 {
 	//myElement->ability2PullAnim();
 	ATori* enemyReference = nullptr;
@@ -64,11 +64,9 @@ void AWindElementAbility2::checkForEnemies(ATori * myPlayer)
 					radiusToEnemy = sqrt(pow((enemyLocation.Y - tempLocation.Y), 2) + pow((enemyLocation.Z - tempLocation.Z), 2));
 					if (radiusToEnemy < radius)
 					{
-						enemyReference->recieveDamage(myPlayer, damage);
-						FVector knockDirection = (tempLocation - enemyLocation);
+						FVector knockDirection = (enemyLocation - tempLocation);
 						knockDirection.Normalize();
-						enemyReference->LaunchCharacter(knockDirection * inpactKnockback, true, true);
-						
+						enemyReference->recieveDamage(myPlayer, damage, knockback, myPlayer->GetActorLocation());
 					}
 				}
 			}

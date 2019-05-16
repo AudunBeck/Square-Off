@@ -6,6 +6,7 @@
 #include "WindElementAbility1.h"
 #include "WindElementAbility2.h"
 #include "GameFramework/Actor.h"
+#include "Engine/Classes/Engine/DataTable.h"
 #include "WindElement.generated.h"
 
 UCLASS()
@@ -70,7 +71,10 @@ public:
 		bool ability1Down;
 
 	float interval;
-	float ability1Damage;
+	UPROPERTY(VisibleAnywhere, Category = "Ability1")
+		float ability1Damage;
+	UPROPERTY(VisibleAnywhere, Category = "Ability1")
+		float ability1BuffedDamage;
 	float channelTime;
 
 	// Ability 2 
@@ -83,4 +87,5 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float pushForce = 300.f;
 
+	UDataTable* BalancingTable;
 };

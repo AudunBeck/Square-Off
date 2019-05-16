@@ -39,7 +39,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		class ATori* enemyReference;
 
-	void checkForEnemies(ATori* myPlayer);
+	void checkForEnemies();
 
 	FVector enemyLocation;
 	FVector tempLocation;
@@ -54,5 +54,5 @@ public:
 		float damage = 15.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-		float inpactKnockback = 3000.f;
+		float knockback = 3000.f;
 };

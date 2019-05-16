@@ -99,4 +99,5 @@ void ARockElementAbility2::moveWall(FRotator playerRot, float punchSpeed)
 	this->SetActorRotation(temp);
 	movingTime = maxMovingTime;
 	speed *= punchSpeed;
+	moveAnim();
 }
