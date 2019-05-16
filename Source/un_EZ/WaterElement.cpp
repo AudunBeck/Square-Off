@@ -1,10 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "WaterElement.h"
 #include "ConstructorHelpers.h"
 #include "WaterElementStruct.h"
 
-// Sets default values
 AWaterElement::AWaterElement()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -50,9 +47,6 @@ void AWaterElement::Tick(float DeltaTime)
 		{
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
-
-			// Starts collision towards other Tori's
-			//startCollision();
 		}
 	}
 	if (dashTime >= 0)
@@ -68,18 +62,14 @@ void AWaterElement::Tick(float DeltaTime)
 
 void AWaterElement::ability1()
 {
-	//if (myOwner->ability1Ended == false)
-	{
-		Super::ability1();
-		combo = !combo;
-	}
+	Super::ability1();
+	combo = !combo;
 }
 
 void AWaterElement::ability1FireCode()
 {
 	myOwner->setRotationRate(myOwner->rotationRate);
 	myOwner->setMoveSpeed(myOwner->moveSpeed);
-	//Cast waterbolt
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AWaterElementAbility1* temp;
@@ -94,19 +84,15 @@ void AWaterElement::ability1End()
 
 void AWaterElement::ability2()
 {
-	{
-		Super::ability2();
-		myOwner->hitAnimImmune = true;
-		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
-		myOwner->currentSpeed = 0.f;
-		buffDur = ability2lifeSpan;
-	}
-
+	Super::ability2();
+	myOwner->hitAnimImmune = true;
+	myOwner->setMoveSpeed(0.f);
+	myOwner->currentSpeed = 0.f;
+	buffDur = ability2lifeSpan;
 }
 
 void AWaterElement::ability2FireCode()
 {
-	
 	AWaterElementAbility2* temp;
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
@@ -116,8 +102,7 @@ void AWaterElement::ability2FireCode()
 }
 
 void AWaterElement::ability2End()
-{
-}
+{}
 
 void AWaterElement::outputLog()
 {

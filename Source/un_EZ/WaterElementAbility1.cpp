@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "WaterElementAbility1.h"
 #include "WaterElement.h"
 #include "RockElementAbility2.h"
@@ -7,7 +5,7 @@
 AWaterElementAbility1::AWaterElementAbility1()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent")); // Can change USphereComponent to Mesh
+	collider = CreateDefaultSubobject<USphereComponent>(TEXT("RootComponent"));
 	RootComponent = collider;
 	Cast<UShapeComponent>(RootComponent)->SetGenerateOverlapEvents(true);
 	Cast<UShapeComponent>(RootComponent)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
@@ -23,7 +21,7 @@ void AWaterElementAbility1::BeginPlay()
 	ccDur = myElement->ccDur;
 	slow = myElement->slow;
 	damage = myElement->damage;
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility1::OnOverlapBegin);//Move this to beginPlay()
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility1::OnOverlapBegin);
 }
 
 void AWaterElementAbility1::Tick(float DeltaTime)

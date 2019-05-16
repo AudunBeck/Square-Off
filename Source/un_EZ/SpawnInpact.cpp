@@ -1,21 +1,16 @@
-
 #include "SpawnInpact.h"
 #include "Kismet/GameplayStatics.h"
 
-// Sets default values
 ASpawnInpact::ASpawnInpact()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-// Called when the game starts or when spawned
 void ASpawnInpact::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-// Called every frame
 void ASpawnInpact::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -50,6 +45,3 @@ void ASpawnInpact::checkForEnemies(ATori* myPlayer)
 		this->Destroy();
 	}
 }
-
-
-

@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "FireElement.h"
 #include "ConstructorHelpers.h"
 #include "FireElementStruct.h"
@@ -10,7 +8,6 @@ AFireElement::AFireElement()
 	static ConstructorHelpers::FObjectFinder<UDataTable>
 		FireElementTable(TEXT("DataTable'/Game/DataTables/FireElementTable.FireElementTable'"));
 	BalancingTable = FireElementTable.Object;
-	//Searching and getting data
 
 	FFireElementStruct* Ability1Data = BalancingTable->FindRow<FFireElementStruct>(FName("1"), FString(""));
 	FFireElementStruct* Ability2Data = BalancingTable->FindRow<FFireElementStruct>(FName("2"), FString(""));
@@ -51,24 +48,10 @@ void AFireElement::ability1FireCode()
 	AFireElementAbility1* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility1>(FireElementAbility1_BP,
 		myOwner->GetActorLocation() + tempDir * ability1Range, myOwner->GetActorRotation(), tempParam);
-
-	//if (!abilityHit)
-	//{
-	//	if (myOwner->isJumping == true)
-	//	{
-	//		myOwner->LaunchCharacter(tempDir * firePunch * 0.7f, false, true);
-	//		UE_LOG(LogTemp, Warning, TEXT("Punching in air"));
-	//	}
-	//	else
-	//		myOwner->LaunchCharacter(tempDir * firePunch, false, true);
-	//}
-		
 }
 
 void AFireElement::ability1End()
-{
-
-}
+{}
 
 void AFireElement::ability2()
 {
@@ -81,8 +64,7 @@ void AFireElement::ability2()
 }
 
 void AFireElement::ability2FireCode()
-{	///Had to put rotationRate change here, seemed to go off after we changed it to the right value in the firelemenent hitting.
-	/// multithreading???
+{
 	myOwner->setRotationRate(0);
 	abilityHit = false;
 
@@ -91,14 +73,10 @@ void AFireElement::ability2FireCode()
 	AFireElementAbility2* temp;
 	temp = GetWorld()->SpawnActor<AFireElementAbility2>(FireElementAbility2_BP,
 		myOwner->GetActorLocation() + myOwner->GetActorForwardVector() * ability2Range, myOwner->GetActorRotation(), tempParam);
-	/*if (!abilityHit && myOwner->isJumping != true)
-		myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * fireKick, false, true);*/
 }
 
 void AFireElement::ability2End()
-{
-
-}
+{}
 
 int AFireElement::returnElementType()
 {

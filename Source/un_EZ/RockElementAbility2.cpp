@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "RockElementAbility2.h"
 #include "Tori.h"
 #include "Engine/BlockingVolume.h"
@@ -12,8 +10,6 @@ ARockElementAbility2::ARockElementAbility2()
 	boxCollider->SetupAttachment(RootComponent);
 
 	Cast<UShapeComponent>(boxCollider)->SetGenerateOverlapEvents(true);
-
-
 }
 
 void ARockElementAbility2::BeginPlay()
@@ -28,8 +24,8 @@ void ARockElementAbility2::BeginPlay()
 	playerKnockback = myElement->ability2KnockbackMulti;
 	damage = myElement->ability2Damage;
 	hangTime = maxHangTime;
-	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);//Move this to beginPlay()
-	boxCollider->OnComponentEndOverlap.AddDynamic(this, &ARockElementAbility2::EndOnOverlap);//Move this to beginPlay()
+	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);
+	boxCollider->OnComponentEndOverlap.AddDynamic(this, &ARockElementAbility2::EndOnOverlap);
 }
 
 void ARockElementAbility2::Tick(float DeltaTime)

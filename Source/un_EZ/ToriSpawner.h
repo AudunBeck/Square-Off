@@ -26,10 +26,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning Player")
 		float spawnHeight = 900.f;
 
-	FVector direction;
-
-	float inAxis;
-	void moveDirection(float AxisValue);
 	UFUNCTION(BlueprintImplementableEvent)
 		void spawnPlayer();
+
+	FVector direction;
+	float inAxis;
+	void moveDirection(float AxisValue);
+
 };

@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -26,16 +24,15 @@ public:
 	virtual void ability1()override;
 	virtual void ability1FireCode()override;
 	virtual void ability1End()override;
-
 	virtual void ability2()override;
 	virtual void ability2FireCode()override;
 	virtual void ability2End()override;
-	UFUNCTION(BlueprintImplementableEvent)
-		void ability2CounterAnim();
-
 	virtual int returnElementType()override;
 
 	bool buffedAbility1;
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void ability2CounterAnim();
 
 	// Holds the pointers for element abilities
 	UPROPERTY(EditAnywhere, Category = "Abilities")
@@ -43,7 +40,6 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class AWaterElementAbility2> WaterElementAbility2_BP;
-
 
 	// Blueprint functions
 	UFUNCTION(BlueprintCallable, Category = "Output Log WaterElement")
@@ -57,14 +53,12 @@ public:
 
 	// Ability 1
 	float windUpTime;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 		bool combo;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1lifeSpan = 5.0f;
 
-	// How far ahead of Tori the ability spawns
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 100.f;
 

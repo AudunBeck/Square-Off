@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -32,7 +30,6 @@ public:
 	float ccDur;
 	float slow;				// slow is set in %, where 25.5 = 25.5% slow
 	float damage;
-
 	USphereComponent* collider;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")

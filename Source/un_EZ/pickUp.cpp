@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "pickUp.h"
 #include "Tori.h"
 #include "Engine/Classes/Components/PrimitiveComponent.h"
@@ -21,7 +19,7 @@ void ApickUp::BeginPlay()
 {
 	Super::BeginPlay();
 
-	collider->OnComponentBeginOverlap.AddDynamic(this, &ApickUp::OnOverlapBegin);//Move this to beginPlay()
+	collider->OnComponentBeginOverlap.AddDynamic(this, &ApickUp::OnOverlapBegin);
 	collider->OnComponentEndOverlap.AddDynamic(this, &ApickUp::OnOverlapEnd);
 }
 
@@ -40,8 +38,6 @@ void ApickUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AA
 			ATori* player = Cast<ATori>(OtherActor);
 			player->currentPickUp = this;
 		}
-		else
-			UE_LOG(LogTemp, Error, TEXT("You forgot to add a element to this pickup, IDIOT!"));
 	}
 }
 

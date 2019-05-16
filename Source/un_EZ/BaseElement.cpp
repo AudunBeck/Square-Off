@@ -1,12 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "BaseElement.h"
 #include "Tori.h"
 
 ABaseElement::ABaseElement()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 void ABaseElement::BeginPlay()
@@ -50,7 +47,6 @@ void ABaseElement::Tick(float DeltaTime)
 				ammo2 = maxAmmo2;
 			cooldownAbility2 = maxCooldownAbility2;
 		}
-
 	}		
 }
 
@@ -73,13 +69,10 @@ void ABaseElement::ability1()
 }
 
 void ABaseElement::ability1FireCode()
-{
-}
+{}
 
 void ABaseElement::ability1End()
-{
-
-}
+{}
 
 int ABaseElement::returnElementType()
 {
@@ -87,13 +80,10 @@ int ABaseElement::returnElementType()
 }
 
 void ABaseElement::ability2()
-{
-	ability2Anim();
-}
+{ ability2Anim();}
 
 void ABaseElement::ability2FireCode()
-{
-}
+{}
 
 void ABaseElement::ability2End()
 {
