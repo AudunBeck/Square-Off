@@ -18,6 +18,7 @@ void AWaterElementAbility2::BeginPlay()
 	ccDur = myElement->ability2CcDur;
 	slow = myElement->ability2Slow;
 	damage = myElement->ability2Damage;
+	myPlayer->damageMultiplier = 0.f;
 
 	Super::BeginPlay();
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AWaterElementAbility2::OnOverlapBegin);
@@ -28,6 +29,7 @@ void AWaterElementAbility2::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (myPlayer)
 	{
+		myPlayer->damageMultiplier = 0.f;
 		myPlayer->hitAnimImmune = true;
 	}
 }
@@ -52,7 +54,7 @@ void AWaterElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 					if (myPlayer != nullptr)
 					{
 						ATori* enemy = Cast<ABaseAbility>(OtherActor)->getMyOwner();
-						enemy->recieveDamage(myPlayer, damage, ccDur, slow, 0);
+						enemy->recieveDamage(myPlayer, damage);
 						myPlayer->setMoveSpeed(myPlayer->moveSpeed);
 						myPlayer->hitAnimImmune = false;
 						UE_LOG(LogTemp, Warning, TEXT("Balls"));
