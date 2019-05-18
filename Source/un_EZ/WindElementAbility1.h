@@ -40,7 +40,6 @@ public:
 	FVector a;
 	FVector b;
 	FVector spawnLocation;
-	FVector direction;
 	USphereComponent* collider;
 
 	UPROPERTY(BlueprintReadWrite)
