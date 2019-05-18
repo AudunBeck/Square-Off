@@ -28,6 +28,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 		void ability1HitAnim();
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void ability2HitAnim();
+
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Particles")
 		void attachFireEmitters();
 

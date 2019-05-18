@@ -46,11 +46,12 @@ void AFireElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
 				myPlayer->stopAllVelocity();
 				myElement->fireChi = 1;
-				myPlayer->freezeFrame(0.3, true);
+				myPlayer->freezeFrame(0.3, false);
 				myPlayer->locked = 0;
 				myElement->abilityHit = true;
 				hasHit = true;
 				myPlayer->forceMove();
+				myElement->ability2HitAnim();
 			}
 		}
 	}
