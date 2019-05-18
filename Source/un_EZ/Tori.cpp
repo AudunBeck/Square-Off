@@ -287,8 +287,9 @@ void ATori::recieveDamage(ATori* attacker, float damage)
 		checkIfDead();
 		if (!hitAnimImmune)
 		{
-			takeHitAnim();
-
+			FVector delta = GetActorLocation() - attacker->GetActorLocation();
+			delta.Normalize();
+			takeHitAnim(delta);
 			// So we dont lock characters forever.
 			if (element_1 != nullptr)
 			{
@@ -316,7 +317,9 @@ void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow
 			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
 			if (!hitAnimImmune)
 			{
-				takeHitAnim();
+				FVector delta = GetActorLocation() - attacker->GetActorLocation();
+				delta.Normalize();
+				takeHitAnim(delta);
 				// So we dont lock characters forever.
 				if (element_1 != nullptr)
 				{
@@ -348,7 +351,9 @@ void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVecto
 	wasHit = true;
 	if (!hitAnimImmune)
 	{
-		takeHitAnim();
+		FVector delta = GetActorLocation() - attacker->GetActorLocation();
+		delta.Normalize();
+		takeHitAnim(delta);
 		// So we dont lock characters forever.
 		if (element_1 != nullptr)
 		{

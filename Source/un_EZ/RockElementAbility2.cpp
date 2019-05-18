@@ -47,7 +47,7 @@ void ARockElementAbility2::Tick(float DeltaTime)
 		movingTime -= DeltaTime;
 		if (hitPlayer)
 		{
-			hitPlayer->recieveDamage(myPlayer, damage), playerKnockback, GetActorLocation());
+			hitPlayer->recieveDamage(myPlayer, damage), playerKnockback, GetActorLocation();
 			movingTime = 0.f;
 			hitPlayer = nullptr;
 		}

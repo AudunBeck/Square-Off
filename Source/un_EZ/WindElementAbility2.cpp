@@ -20,12 +20,12 @@ void AWindElementAbility2::BeginPlay()
 	myPlayer = myElement->myOwner;
 	knockback = myElement->ability2KnockBack;
 	damage = myElement->ability2Damage;
+	radius = myElement->ability2Radius;
 	this->SetLifeSpan(myElement->ability2Lifespan);
 	myElement->windUsingAbility2 = true;
 
 	myPlayer->setMoveSpeed(myPlayer->moveSpeed + myElement->bonusSpeed);
-	myPlayer->GetCharacterMovement()->GravityScale = 2.f;
-	
+	myPlayer->GetCharacterMovement()->GravityScale = myElement->ability2Gravity;
 	stopCollision();
 }
 

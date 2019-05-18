@@ -17,14 +17,23 @@ void AWindElementAbility1::BeginPlay()
 	myPlayer = myElement->myOwner;
 	myDistance = myElement->ability1Range;
 	myChannelSpeed = myElement->channelSpeed;
-	damage = myElement->ability1Damage;
-	knockback = myElement->ability1KnockBack;
+	if (myElement->combo == 3)
+	{
+		damage = myElement->ability1BuffedDamage;
+		knockback = myElement->ability1BuffedKnockBack;
+	}
+	else
+	{
+		damage = myElement->ability1Damage;
+		knockback = myElement->ability1KnockBack;
+	}
 	spawnLocation = GetActorLocation();
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility1::OnOverlapBegin);
+	
 	if (myElement->ability1Down)
 		direction = FVector(0.f, 0.f, -1.0f);
 	else
 		direction = myPlayer->GetActorForwardVector();
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AWindElementAbility1::OnOverlapBegin);
 }
 
 void AWindElementAbility1::Tick(float DeltaTime)
@@ -45,20 +54,9 @@ void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
 		{
-			ccDur = 2;
-			playerLocation = myPlayer->GetActorLocation();
-			enemyLocation = OtherActor->GetActorLocation();
-			enemyForward = OtherActor->GetActorForwardVector();
+			Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, knockback, myPlayer->GetActorLocation());
+			Destroy();
 
-			a = (playerLocation - enemyLocation).GetSafeNormal();
-			b = enemyForward.GetSafeNormal();
-			float angle = FMath::RadiansToDegrees(acosf(FVector::DotProduct(a, b)));
-			slow = (angle - 90) / 3;		// 3 is a covalent, which can be increased to degress the slow, and vise-versa
-
-			if (myElement->combo == 3)
-				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, knockback, myPlayer->GetActorForwardVector());
-			else
-				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
 		}
 		else if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
 		{

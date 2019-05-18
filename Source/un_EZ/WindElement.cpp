@@ -17,18 +17,29 @@ AWindElement::AWindElement()
 	{
 		ability1Damage = Ability1Data->Damage;
 		ability1BuffedDamage = Ability1Data->BuffedDamage;
+		ability1Range = Ability1Data->Range;
+		channelSpeed = Ability1Data->MoveRange;
+		ability1KnockBack = Ability1Data->Knockback;
+		ability1BuffedKnockBack = Ability1Data->LifeSpan;
+
+
+
+
 	}
 	if (Ability2Data)
-	{
-
+	{		
+		ability2Damage = Ability2Data->Damage;
+		ability2Gravity = Ability2Data->BuffedDamage;
+		ability2Radius = Ability2Data->Range;
+		bonusSpeed = Ability2Data->MoveRange;
+		ability2KnockBack = Ability2Data->Knockback;
+		ability2Lifespan = Ability2Data->LifeSpan;
 	}
 }
 
 void AWindElement::BeginPlay()
 {
 	Super::BeginPlay();
-	channelTime = 0;
-	maxChannelTime = maxInterval * 3;
 }
 
 void AWindElement::Tick(float DeltaTime)
@@ -45,12 +56,13 @@ void AWindElement::ability1()
 
 void AWindElement::ability1FireCode()
 {
+	combo += 1;
 	AWindElementAbility1* temp;
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	temp = GetWorld()->SpawnActor<AWindElementAbility1>(WindElementAbility1_BP, myOwner->GetActorLocation() + (myOwner->GetActorForwardVector()),
 		myOwner->GetActorRotation(), tempParam);
-	combo += 1;
+
 }
 
 void AWindElement::ability2()

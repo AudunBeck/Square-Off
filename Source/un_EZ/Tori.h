@@ -218,7 +218,7 @@ public:
 		void freezeFrame(float timeFrozen, bool endAnim = false);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Animations")
-		void takeHitAnim();
+		void takeHitAnim(FVector direction);
 
 	// Element functions
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Elements")

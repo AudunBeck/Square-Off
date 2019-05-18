@@ -48,39 +48,42 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Damage = 5.0f;
 
+	UPROPERTY(VisibleAnywhere, Category = "Ability1")
+		float ability1BuffedDamage;
+
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range = 500.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float channelSpeed = 2000.f;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
-		float maxChannelTime;
-
-	UPROPERTY(EditAnywhere, Category = "Ability1")
-		float maxInterval = 0.4f;
-	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
-		bool ability1Down;
-
-	float interval;
-	UPROPERTY(VisibleAnywhere, Category = "Ability1")
-		float ability1BuffedDamage;
-	float channelTime;
-
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1KnockBack = 300.f;
 
+	UPROPERTY(VisibleAnywhere, Category = "Ability1")
+		float ability1BuffedKnockBack;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Ability1")
+		bool ability1Down;
+
 	// Ability 2 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability2")
-		float ability2Lifespan = 2.f;
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Damage = 15.f;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Gravity;
+
+	UPROPERTY(EditAnywhere, Category = "Ability2")
+		float ability2Radius;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float bonusSpeed = 600.f;
 
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2KnockBack = 300.f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability2")
+		float ability2Lifespan = 2.f;
 
-	UPROPERTY(EditAnywhere, Category = "Ability2")
-		float ability2Damage = 15.f;
 	UDataTable* BalancingTable;
 };

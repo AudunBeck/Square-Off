@@ -32,10 +32,10 @@ public:
 	int numberOfEnemyFound;
 	float radiusToEnemy;
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WaterAbility2 collision")
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "WindElement collision")
 		void stopCollision();
 
-	UFUNCTION(BlueprintCallable, Category = "WaterElement collision")
+	UFUNCTION(BlueprintCallable, Category = "WindElement collision")
 		void startCollision();
 
 	UPROPERTY(BlueprintReadWrite)
