@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UIHandler.h"
+#include "Engine/Classes/GameFramework/PlayerController.h"
 
 // Sets default values
 AUIHandler::AUIHandler()
@@ -14,13 +15,30 @@ AUIHandler::AUIHandler()
 void AUIHandler::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	playersHitPointPercent.Init(0, 4);
+	playerAmount = Camera->playerAmount;
 }
 
 // Called every frame
 void AUIHandler::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	getPlayers();
 }
 
+void AUIHandler::getPlayers()
+{
+	for (int i = 0; i < playerAmount; i++)
+	{
+		ATori* tempRef = Cast<ATori>(Camera->playerControllers[i]->GetPawn());
+		
+		if (tempRef)
+		{
+			playersHitPointPercent[i] = tempRef->hitPointPercentage;
+		}
+		else
+		{
+			playersHitPointPercent[i] = 0.f;
+		}
+	}
+}

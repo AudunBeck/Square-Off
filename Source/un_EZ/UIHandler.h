@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CameraSetUp.h"
+#include "Tori.h"
 #include "UIHandler.generated.h"
 
 UCLASS()
@@ -22,5 +24,15 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void getPlayers();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		ACameraSetUp* Camera;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		TArray<float> playersHitPointPercent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		TArray<int> playersScore;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float playerAmount;
 
 };
