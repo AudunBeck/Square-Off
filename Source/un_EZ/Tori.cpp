@@ -42,18 +42,6 @@ void ATori::Tick(float DeltaTime)
 	if (iTime > 0)
 		iTime -= DeltaTime;
 
-	if (dodgeAmmo < dodgeMaxAmmo)
-	{
-		dodgeCooldown -= DeltaTime;
-		if (dodgeCooldown <= 0)
-		{
-			dodgeAmmo += 1;
-			if (dodgeAmmo > dodgeMaxAmmo)
-				dodgeAmmo = dodgeMaxAmmo;
-
-			dodgeCooldown = dodgeMaxCooldown;
-		}
-	}
 	if (currentGlobalCooldown > 0)
 	{
 		currentGlobalCooldown -= DeltaTime;
@@ -147,6 +135,8 @@ void ATori::setRotationRate(float newRotationRate)
 	GetCharacterMovement()->RotationRate = FRotator(0.f, newRotationRate, 0.f);
 }
 
+// Avoids having multiple stacks of slow (This also ensures only the strongest slow is active)
+// Adds the weaker slow, if its duration is still above 0, when a stronger slow ends
 void ATori::slowCheck(float DeltaTime)
 {
 	for (int i = 0; i < slowDur.Num(); i++)
@@ -173,31 +163,6 @@ void ATori::slowCheck(float DeltaTime)
 	}
 }
 
-void ATori::dodge()
-{
-	if (locked == false)
-	{
-		dodging = true;
-		locked = true;
-		iTime = 0.3f;
-		FVector launchVector;
-		launchVector = GetActorForwardVector() * dodgeRange;
-		LaunchCharacter(launchVector, false, true);
-		dodgeAmmo -= 1;
-		if (element_1 != nullptr)
-		{
-			element_1->resetAbility1();
-			element_1->resetAbility2();
-		}
-		setMoveSpeed(moveSpeed);
-		setRotationRate(rotationRate);
-	}
-}
-void ATori::dodgeEnd()
-{
-	dodging = false;
-}
-
 void ATori::jump()
 {
 	if (!GetCharacterMovement()->IsFalling())
@@ -221,6 +186,8 @@ void ATori::jump()
 		}
 	}
 }
+
+// Used for some abilities that moves the user in a direction
 void ATori::forceMove(FVector direction, float speed, float time)
 {
 	forceMoveDirection = direction;
@@ -278,6 +245,7 @@ void ATori::ability2End()
 	}
 }
 
+// Standard recieveDamage function
 void ATori::recieveDamage(ATori* attacker, float damage)
 {
 	lastAttacker = attacker;
@@ -303,6 +271,7 @@ void ATori::recieveDamage(ATori* attacker, float damage)
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
 
+// recieveDamage with slow effect
 void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow, int type)
 {
 	lastAttacker = attacker;
@@ -337,6 +306,8 @@ void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
+
+// recieveDamage with knockback effect
 void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVector knockbackPoint)
 {
 	lastAttacker = attacker;
@@ -386,6 +357,7 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 		element_1 = newElement;
 		currentElementType = element_1->switchToElement(true);
 	}
+
 	// If it does not fill any empty spaces.
 	else
 	{
@@ -408,6 +380,7 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	return true;
 }
 
+// Used to pick up a new element
 void ATori::switchElement()
 {
 	if (!locked)

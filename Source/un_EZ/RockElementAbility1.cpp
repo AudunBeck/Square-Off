@@ -56,7 +56,6 @@ void ARockElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 
 			if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
 			{
-
 				if (myPlayer != nullptr)
 				{
 					myPlayer->freezeFrame(0.15, false);

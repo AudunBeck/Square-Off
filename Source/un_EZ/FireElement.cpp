@@ -9,6 +9,7 @@ AFireElement::AFireElement()
 		FireElementTable(TEXT("DataTable'/Game/DataTables/FireElementTable.FireElementTable'"));
 	BalancingTable = FireElementTable.Object;
 
+	//Searching and getting data
 	FFireElementStruct* Ability1Data = BalancingTable->FindRow<FFireElementStruct>(FName("1"), FString(""));
 	FFireElementStruct* Ability2Data = BalancingTable->FindRow<FFireElementStruct>(FName("2"), FString(""));
 	if (Ability1Data)
@@ -30,6 +31,7 @@ AFireElement::AFireElement()
 	}
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void AFireElement::ability1()
 {
 	if (myOwner->ability1Ended == false)
@@ -38,6 +40,7 @@ void AFireElement::ability1()
 	}
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void AFireElement::ability1FireCode()
 {
 	abilityHit = false;
@@ -53,6 +56,7 @@ void AFireElement::ability1FireCode()
 void AFireElement::ability1End()
 {}
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void AFireElement::ability2()
 {
 	if (myOwner->ability2Ended == false)
@@ -63,6 +67,7 @@ void AFireElement::ability2()
 	}
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void AFireElement::ability2FireCode()
 {
 	myOwner->setRotationRate(0);

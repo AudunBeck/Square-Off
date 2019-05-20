@@ -6,7 +6,6 @@
 AWindElementAbility2::AWindElementAbility2()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 AWindElementAbility2::~AWindElementAbility2()
@@ -55,6 +54,7 @@ void AWindElementAbility2::checkForEnemies()
 			{
 				if (enemyReference != myPlayer)
 				{
+					// Calculates the distance from impact point, to the enemy its checking
 					tempLocation = myPlayer->GetActorLocation();
 					enemyLocation = enemyReference->GetActorLocation();
 					radiusToEnemy = sqrt(pow((enemyLocation.Y - tempLocation.Y), 2) + pow((enemyLocation.Z - tempLocation.Z), 2));

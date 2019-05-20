@@ -7,8 +7,8 @@ ARockElement::ARockElement()
 	static ConstructorHelpers::FObjectFinder<UDataTable>
 		RockElementTable(TEXT("DataTable'/Game/DataTables/RockElementTable.RockElementTable'"));
 	BalancingTable = RockElementTable.Object;
+	
 	//Searching and getting data
-
 	FRockElementStruct* Ability1Data = BalancingTable->FindRow<FRockElementStruct>(FName("1"), FString(""));
 	FRockElementStruct* Ability2Data = BalancingTable->FindRow<FRockElementStruct>(FName("2"), FString(""));
 	if (Ability1Data)
@@ -55,6 +55,7 @@ void ARockElement::Tick(float DeltaTime)
 	}
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void ARockElement::ability1()
 {
 	myOwner->damageMultiplier = damageReduction;
@@ -66,6 +67,7 @@ void ARockElement::ability1()
 	Super::ability1();
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void ARockElement::ability1FireCode()
 {
 	ARockElementAbility1* temp;
@@ -87,6 +89,7 @@ void ARockElement::ability1End()
 	stopLoopAnim();
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void ARockElement::ability2()
 {
 	if (myOwner->ability2Ended == false && cooldown <= 0)
@@ -96,6 +99,7 @@ void ARockElement::ability2()
 	}
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void ARockElement::ability2FireCode()
 {
 	FVector forwardVec = myOwner->GetActorForwardVector();
