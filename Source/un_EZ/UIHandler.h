@@ -25,6 +25,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void getPlayers();
+	void setLength();
+	UFUNCTION(BlueprintImplementableEvent)
+		void setBarPositions();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		ACameraSetUp* Camera = nullptr;
@@ -33,6 +36,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		TArray<int> playersScore;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		float playerAmount;
+		int playerAmount;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		float fullLength = 400;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float lengthBetween;
 
 };

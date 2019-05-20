@@ -17,7 +17,10 @@ void AUIHandler::BeginPlay()
 	Super::BeginPlay();
 	playersHitPointPercent.Init(0, 4);
 	if (Camera != nullptr)
+	{
 		playerAmount = Camera->playerAmount;
+		setLength();
+	}
 }
 
 // Called every frame
@@ -42,4 +45,11 @@ void AUIHandler::getPlayers()
 			playersHitPointPercent[i] = 0.f;
 		}
 	}
+}
+
+void AUIHandler::setLength()
+{
+	float temp = fullLength / playerAmount;
+	lengthBetween = temp - (temp / playerAmount);
+	setBarPositions();
 }
