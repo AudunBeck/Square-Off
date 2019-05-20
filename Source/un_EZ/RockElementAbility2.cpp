@@ -17,7 +17,6 @@ void ARockElementAbility2::BeginPlay()
 	Super::BeginPlay();
 	myElement = Cast<ARockElement>(GetOwner());
 	myPlayer = myElement->myOwner;
-	//SetLifeSpan(myElement->ability2Lifespan);
 	lifespan = myElement->ability2Lifespan;
 	speed = myElement->ability2Speed;
 	damageDivision = speed;
@@ -33,12 +32,16 @@ void ARockElementAbility2::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if(hangTime >= 0)
 		hangTime -= DeltaTime;
+
+	// If the wall is spawned in air, make it hang in the air for hangTime, then fall down
 	if (isTouchingGround == false && hangTime < 0)
 	{
 		FVector NewLocation = GetActorLocation();
 		NewLocation += GetActorUpVector() * -1 * speed * DeltaTime;
 		SetActorLocation(NewLocation);
 	}
+
+	// If the wall is struck by Rock Ability 1, set MoveTime = MaxMoveTime to move it for the duration of MaxMoveTime
 	if (movingTime > 0)
 	{
 		FVector NewLocation = GetActorLocation();
@@ -75,6 +78,7 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 			hitPlayer = Cast<ATori>(OtherActor);
 			hasHit = true;
 		}
+
 		if (movingTime > 0 || !isTouchingGround)
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))

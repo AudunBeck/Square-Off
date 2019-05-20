@@ -21,10 +21,6 @@ AWindElement::AWindElement()
 		channelSpeed = Ability1Data->MoveRange;
 		ability1KnockBack = Ability1Data->Knockback;
 		ability1BuffedKnockBack = Ability1Data->LifeSpan;
-
-
-
-
 	}
 	if (Ability2Data)
 	{		
@@ -47,13 +43,13 @@ void AWindElement::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void AWindElement::ability1()
 {
 	Super::ability1();
 }
 
-
+// Executed through Animation (Check Animation blueprint for the element)
 void AWindElement::ability1FireCode()
 {
 	combo += 1;
@@ -65,6 +61,7 @@ void AWindElement::ability1FireCode()
 
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void AWindElement::ability2()
 {
 	if (!windUsingAbility2)
@@ -78,6 +75,7 @@ void AWindElement::ability2()
 	}
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void AWindElement::ability2FireCode()
 {}
 

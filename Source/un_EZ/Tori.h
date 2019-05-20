@@ -26,8 +26,6 @@ public:
 	float currentSpeed;
 	float maxSlow;
 	void slowCheck(float DeltaTime);
-	void dodge();
-	void dodgeEnd();
 	void jump();
 
 	// ForceMove

@@ -42,7 +42,6 @@ void AWaterElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp,
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
-
 				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, ccDur, slow, 0);	// float value 0 is slow
 				hitEnemyVFX(OtherActor->GetActorLocation());
 				hasHit = true;

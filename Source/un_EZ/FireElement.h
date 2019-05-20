@@ -40,6 +40,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 		TSubclassOf<class AFireElementAbility2> FireElementAbility2_BP;
 
+	// Ability 1
 	UPROPERTY(EditAnywhere, Category = "Ability1")
 		float ability1Range;
 
@@ -63,8 +64,10 @@ public:
 
 	bool abilityHit = false;
 
+	// Ability 2
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		float ability2Range;
+
 	UPROPERTY(EditAnywhere, Category = "Ability2")
 		int ammo1Refill = 2;
 

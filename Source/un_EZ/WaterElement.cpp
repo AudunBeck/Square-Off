@@ -60,12 +60,14 @@ void AWaterElement::Tick(float DeltaTime)
 	}
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void AWaterElement::ability1()
 {
 	Super::ability1();
 	combo = !combo;
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void AWaterElement::ability1FireCode()
 {
 	myOwner->setRotationRate(myOwner->rotationRate);
@@ -82,6 +84,7 @@ void AWaterElement::ability1End()
 
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void AWaterElement::ability2()
 {
 	Super::ability2();
@@ -91,6 +94,7 @@ void AWaterElement::ability2()
 	buffDur = ability2lifeSpan;
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void AWaterElement::ability2FireCode()
 {
 	AWaterElementAbility2* temp;

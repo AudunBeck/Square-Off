@@ -58,6 +58,7 @@ void AWindElementAbility1::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 			Destroy();
 
 		}
+
 		else if (OtherActor->IsA(ARockElementAbility2::StaticClass()))
 		{
 			hasHit = true;

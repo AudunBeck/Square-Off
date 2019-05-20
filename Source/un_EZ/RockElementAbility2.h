@@ -28,6 +28,7 @@ public:
 	FVector wallPos;
 	class ARockElement* myElement;
 
+	// How long the wall hangs in the air, before falling down (When spawned in air)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float maxHangTime = 0.3f;
 	float hangTime;
@@ -62,12 +63,12 @@ public:
 	UFUNCTION()
 		void EndOnOverlap(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-			UFUNCTION(BlueprintImplementableEvent)
-				void moveAnim();
+	UFUNCTION(BlueprintImplementableEvent)
+		void moveAnim();
 
-			UFUNCTION(BlueprintImplementableEvent)
-				void StartDespawn();
+	UFUNCTION(BlueprintImplementableEvent)
+		void StartDespawn();
 
-			float lifespan;
-			bool startedDestroy = false;
+	float lifespan;
+	bool startedDestroy = false;
 };

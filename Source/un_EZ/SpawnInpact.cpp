@@ -29,6 +29,7 @@ void ASpawnInpact::checkForEnemies(ATori* myPlayer)
 			{
 				if (enemyReference != myPlayer)
 				{
+					// Calculates the distance from impact point, to the enemy its checking
 					tempLocation = GetActorLocation();
 					enemyLocation = enemyReference->GetActorLocation();
 					radiusToEnemy = sqrt(pow((enemyLocation.Y - tempLocation.Y), 2) + pow((enemyLocation.Z - tempLocation.Z), 2));
