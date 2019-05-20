@@ -55,13 +55,9 @@ void ACameraSetUp::findPlayerControllers()
 	{
 		if (Iterator.GetIndex() < playerAmount)
 		{
-			if (GEngine)
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::FromInt(Iterator.GetIndex()));
 			playerControllers.Add(Iterator->Get());
 		}
 	}
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::FromInt(playerControllers.Num()));
 	pawnLocations.SetNum(playerControllers.Num());
 
 }

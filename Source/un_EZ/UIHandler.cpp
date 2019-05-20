@@ -16,7 +16,8 @@ void AUIHandler::BeginPlay()
 {
 	Super::BeginPlay();
 	playersHitPointPercent.Init(0, 4);
-	playerAmount = Camera->playerAmount;
+	if (Camera != nullptr)
+		playerAmount = Camera->playerAmount;
 }
 
 // Called every frame

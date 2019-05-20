@@ -27,7 +27,7 @@ public:
 	void getPlayers();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		ACameraSetUp* Camera;
+		ACameraSetUp* Camera = nullptr;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		TArray<float> playersHitPointPercent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
