@@ -1,6 +1,7 @@
 # Square Off
 
 This is the project files for a Bachelors project at Inland Norway University of Applied Sciences.
+
 Unreal Engine 4.21.2
 Microsoft Visual Studio Community 2017 Version: 15.9.12
 
