@@ -15,17 +15,14 @@ void AToriSpawner::BeginPlay()
 	GetCharacterMovement()->GravityScale = 0.f;
 }
 
-// Called every frame
 void AToriSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	
 	if (inAxis == 0)
 		GetCharacterMovement()->StopMovementImmediately();
 }
 
-// Called to bind functionality to input
 void AToriSpawner::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -31,34 +29,39 @@ public:
 	float myChannelSpeed;
 	float distTraveled;
 	float damage;
-	FVector spawnLocation;
-
-	UPROPERTY(BlueprintReadWrite)
-		class AWindElement* myElement;
-	UPROPERTY(BlueprintReadWrite)
-		class ATori* enemyReference;
-	UPROPERTY(BlueprintReadWrite)
-		float distToEnemy;
-	UPROPERTY(BlueprintReadWrite)
-		float dotValue;
-	UPROPERTY(BlueprintReadWrite)
-		float dotProduct;
-	UPROPERTY(BlueprintReadWrite)
-		float RadiusToEnemy;
-	UPROPERTY(BlueprintReadWrite)
-		FVector pushDirection;
-
-	TArray <AActor*> enemy;
+	float knockback;
+	float ccDur;
+	float slow;
 	int numOfEnemy;
+	TArray <AActor*> enemy;
 	FVector playerLocation;
 	FVector enemyLocation;
 	FVector enemyForward;
 	FVector a;
 	FVector b;
-	float ccDur;
-	float slow;
-
+	FVector spawnLocation;
 	USphereComponent* collider;
+
+	UPROPERTY(BlueprintReadWrite)
+		class AWindElement* myElement;
+
+	UPROPERTY(BlueprintReadWrite)
+		class ATori* enemyReference;
+
+	UPROPERTY(BlueprintReadWrite)
+		float distToEnemy;
+
+	UPROPERTY(BlueprintReadWrite)
+		float dotValue;
+
+	UPROPERTY(BlueprintReadWrite)
+		float dotProduct;
+
+	UPROPERTY(BlueprintReadWrite)
+		float RadiusToEnemy;
+
+	UPROPERTY(BlueprintReadWrite)
+		FVector pushDirection;
 
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;

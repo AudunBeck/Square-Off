@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "RockElementAbility2.h"
 #include "Tori.h"
 #include "Engine/BlockingVolume.h"
@@ -12,8 +10,6 @@ ARockElementAbility2::ARockElementAbility2()
 	boxCollider->SetupAttachment(RootComponent);
 
 	Cast<UShapeComponent>(boxCollider)->SetGenerateOverlapEvents(true);
-
-
 }
 
 void ARockElementAbility2::BeginPlay()
@@ -21,14 +17,14 @@ void ARockElementAbility2::BeginPlay()
 	Super::BeginPlay();
 	myElement = Cast<ARockElement>(GetOwner());
 	myPlayer = myElement->myOwner;
-	SetLifeSpan(myElement->ability2Lifespan);
+	lifespan = myElement->ability2Lifespan;
 	speed = myElement->ability2Speed;
 	damageDivision = speed;
 	playerKnockback = myElement->ability2KnockbackMulti;
 	damage = myElement->ability2Damage;
 	hangTime = maxHangTime;
-	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);//Move this to beginPlay()
-	boxCollider->OnComponentEndOverlap.AddDynamic(this, &ARockElementAbility2::EndOnOverlap);//Move this to beginPlay()
+	boxCollider->OnComponentBeginOverlap.AddDynamic(this, &ARockElementAbility2::OnOverlapBegin);
+	boxCollider->OnComponentEndOverlap.AddDynamic(this, &ARockElementAbility2::EndOnOverlap);
 }
 
 void ARockElementAbility2::Tick(float DeltaTime)
@@ -36,12 +32,16 @@ void ARockElementAbility2::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if(hangTime >= 0)
 		hangTime -= DeltaTime;
+
+	// If the wall is spawned in air, make it hang in the air for hangTime, then fall down
 	if (isTouchingGround == false && hangTime < 0)
 	{
 		FVector NewLocation = GetActorLocation();
 		NewLocation += GetActorUpVector() * -1 * speed * DeltaTime;
 		SetActorLocation(NewLocation);
 	}
+
+	// If the wall is struck by Rock Ability 1, set MoveTime = MaxMoveTime to move it for the duration of MaxMoveTime
 	if (movingTime > 0)
 	{
 		FVector NewLocation = GetActorLocation();
@@ -50,9 +50,19 @@ void ARockElementAbility2::Tick(float DeltaTime)
 		movingTime -= DeltaTime;
 		if (hitPlayer)
 		{
-			hitPlayer->recieveDamage(myPlayer, damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
+			hitPlayer->recieveDamage(myPlayer, damage), playerKnockback, GetActorLocation();
 			movingTime = 0.f;
 			hitPlayer = nullptr;
+		}
+	}
+	
+	if (lifespan > 0.f)
+	{
+		lifespan -= DeltaTime;
+		if (lifespan <= 0.f && !startedDestroy)
+		{
+			StartDespawn();
+			startedDestroy = true;
 		}
 	}
 }
@@ -68,16 +78,18 @@ void ARockElementAbility2::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, 
 			hitPlayer = Cast<ATori>(OtherActor);
 			hasHit = true;
 		}
+
 		if (movingTime > 0 || !isTouchingGround)
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
 				hitPlayer = Cast<ATori>(OtherActor);
-				hitPlayer->recieveDamage(myPlayer, damage * (speed / damageDivision), playerKnockback * speed, GetActorLocation());
+				hitPlayer->recieveDamage(myPlayer, damage, playerKnockback, GetActorLocation());
 				movingTime = 0.f;
 				hitPlayer = nullptr;
 				hasHit = true;
 				StartDestroy();
+				startedDestroy = true;
 			}
 			else if (OtherActor->IsA(ABlockingVolume::StaticClass()) || OtherActor->IsA(ARockElementAbility2::StaticClass()))
 			{
@@ -99,4 +111,5 @@ void ARockElementAbility2::moveWall(FRotator playerRot, float punchSpeed)
 	this->SetActorRotation(temp);
 	movingTime = maxMovingTime;
 	speed *= punchSpeed;
+	moveAnim();
 }

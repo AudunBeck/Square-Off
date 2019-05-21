@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "Tori.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -16,9 +14,7 @@ ATori::ATori()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
-	//GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->AirControl = 1.f;
-	//isMenuTori = false;
 	Arms = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
 	Arms->SetupAttachment(GetMesh());
 }
@@ -39,11 +35,6 @@ void ATori::BeginPlay()
 void ATori::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//if (isMenuTori)
-	//	damageMultiplier = 0;
-
-	/// Find better comment
-	// Slow stuff
 	if (slowDur.Num() > 0)
 	{
 		slowCheck(DeltaTime);
@@ -51,28 +42,9 @@ void ATori::Tick(float DeltaTime)
 	if (iTime > 0)
 		iTime -= DeltaTime;
 
-	if (dodgeAmmo < dodgeMaxAmmo)
-	{
-		dodgeCooldown -= DeltaTime;
-		if (dodgeCooldown <= 0)
-		{
-			dodgeAmmo += 1;
-			if (dodgeAmmo > dodgeMaxAmmo)
-				dodgeAmmo = dodgeMaxAmmo;
-
-			UE_LOG(LogTemp, Warning, TEXT("DodgeAmmo is %i now"), dodgeAmmo);
-
-			dodgeCooldown = dodgeMaxCooldown;
-		}
-	}
 	if (currentGlobalCooldown > 0)
 	{
 		currentGlobalCooldown -= DeltaTime;
-		if (currentGlobalCooldown <= 0)
-		{
-			/// Add another visual indicator ingame
-			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldown finished"));
-		}
 	}
 
 	// Make sure character position can't diviate from X = 0
@@ -108,24 +80,16 @@ void ATori::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	InputComponent->BindAxis("Move_X", this, &ATori::move_X);
 	InputComponent->BindAction("XButtonDown", IE_Pressed, this, &ATori::XButtonDown);
 	InputComponent->BindAction("XButtonDown", IE_Released, this, &ATori::XButtonDownEnd);
-	//InputComponent->BindAction("Dodge", IE_Pressed, this, &ATori::dodge);
-	//InputComponent->BindAction("Dodge", IE_Released, this, &ATori::dodgeEnd);
-
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ATori::jump);
-	//InputComponent->BindAction("Jump", IE_Released, this, &ATori::StopJumping);
-
 	InputComponent->BindAction("Ability_1", IE_Pressed, this, &ATori::ability_1);
 	InputComponent->BindAction("Ability_1", IE_Released, this, &ATori::ability1End);
-
 	InputComponent->BindAction("Ability_2", IE_Pressed, this, &ATori::ability_2);
 	InputComponent->BindAction("Ability_2", IE_Released, this, &ATori::ability2End);
-
 	InputComponent->BindAction("Switch_Element", IE_Pressed, this, &ATori::switchElement);
 }
 
 void ATori::move_X(float axisValue)
 {
-	//if (axisValue != 0)
 	facingDirection.Z = axisValue;
 	if (axisValue < -moveXDeadZone && onSolidGround == false)
 	{
@@ -134,22 +98,15 @@ void ATori::move_X(float axisValue)
 		if (GetVelocity().Z <= 0.f)
 			LaunchCharacter(GetActorUpVector() * -1, false, false);
 	}
-	//else if (axisValue > moveXDeadZone)
-	//{
-	//	Jump();
-	//}
 }
 
 void ATori::XButtonDown()
 {
-	//isGoingDown = true;
-	//if (GetVelocity().Z <= 0.f)
-	//	LaunchCharacter(GetActorUpVector() * -1, false, false);
+	// This is used for WindAbility1 
 }
 
 void ATori::move_Y(float axisValue)
 {
-	//if (axisValue != 0)
 	facingDirection.Y = axisValue;
 	if (!moveLocked)
 	{
@@ -170,16 +127,16 @@ void ATori::move_Y(float axisValue)
 
 void ATori::setMoveSpeed(float newMoveSpeed)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Setting movespeed to %f"), newMoveSpeed);
 	GetCharacterMovement()->MaxWalkSpeed = newMoveSpeed;
 }
 
 void ATori::setRotationRate(float newRotationRate)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Setting rotation rate to %f"), newRotationRate);
 	GetCharacterMovement()->RotationRate = FRotator(0.f, newRotationRate, 0.f);
 }
 
+// Avoids having multiple stacks of slow (This also ensures only the strongest slow is active)
+// Adds the weaker slow, if its duration is still above 0, when a stronger slow ends
 void ATori::slowCheck(float DeltaTime)
 {
 	for (int i = 0; i < slowDur.Num(); i++)
@@ -206,31 +163,6 @@ void ATori::slowCheck(float DeltaTime)
 	}
 }
 
-void ATori::dodge()
-{
-	if (locked == false)
-	{
-		dodging = true;
-		locked = true;
-		iTime = 0.3f;
-		FVector launchVector;
-		launchVector = GetActorForwardVector() * dodgeRange;
-		LaunchCharacter(launchVector, false, true);
-		dodgeAmmo -= 1;
-		if (element_1 != nullptr)
-		{
-			element_1->resetAbility1();
-			element_1->resetAbility2();
-		}
-		setMoveSpeed(moveSpeed);
-		setRotationRate(rotationRate);
-	}
-}
-void ATori::dodgeEnd()
-{
-	dodging = false;
-}
-
 void ATori::jump()
 {
 	if (!GetCharacterMovement()->IsFalling())
@@ -254,6 +186,8 @@ void ATori::jump()
 		}
 	}
 }
+
+// Used for some abilities that moves the user in a direction
 void ATori::forceMove(FVector direction, float speed, float time)
 {
 	forceMoveDirection = direction;
@@ -274,8 +208,6 @@ void ATori::ability_1()
 				element_1->channelingAbility1 = true;
 			}
 		}
-		else
-			UE_LOG(LogTemp, Warning, TEXT("GlobalCooldonw: %f"), currentGlobalCooldown);
 	}
 }
 
@@ -313,17 +245,19 @@ void ATori::ability2End()
 	}
 }
 
+// Standard recieveDamage function
 void ATori::recieveDamage(ATori* attacker, float damage)
 {
 	lastAttacker = attacker;
-	// Might be something like this.
 	if (iTime <= 0)
 	{
 		hitPoints -= damage * damageMultiplier;
 		checkIfDead();
 		if (!hitAnimImmune)
 		{
-			takeHitAnim();
+			FVector delta = GetActorLocation() - attacker->GetActorLocation();
+			delta.Normalize();
+			takeHitAnim(delta);
 			// So we dont lock characters forever.
 			if (element_1 != nullptr)
 			{
@@ -337,6 +271,7 @@ void ATori::recieveDamage(ATori* attacker, float damage)
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
 
+// recieveDamage with slow effect
 void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow, int type)
 {
 	lastAttacker = attacker;
@@ -351,7 +286,9 @@ void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow
 			slowAmount.Push(moveSpeed *((100 - slow)*0.01));
 			if (!hitAnimImmune)
 			{
-				takeHitAnim();
+				FVector delta = GetActorLocation() - attacker->GetActorLocation();
+				delta.Normalize();
+				takeHitAnim(delta);
 				// So we dont lock characters forever.
 				if (element_1 != nullptr)
 				{
@@ -362,14 +299,15 @@ void ATori::recieveDamage(ATori* attacker, float damage, float ccDur, float slow
 			}
 			freezeFrame(0.4, false);//Give this some good math for dmg becoming time frozen.
 		}
-	// Type 1 is stun
+	// Type 1 is stun (No ability ingame uses stun as of now)
 	if (type == 1)
 	{
 		hitPoints -= damage * damageMultiplier;
-		/// Insert effect of stun
 	}
 	hitPointPercentage = hitPoints / maxHitPoints;
 }
+
+// recieveDamage with knockback effect
 void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVector knockbackPoint)
 {
 	lastAttacker = attacker;
@@ -384,7 +322,9 @@ void ATori::recieveDamage(ATori* attacker, float damage, float knockback, FVecto
 	wasHit = true;
 	if (!hitAnimImmune)
 	{
-		takeHitAnim();
+		FVector delta = GetActorLocation() - attacker->GetActorLocation();
+		delta.Normalize();
+		takeHitAnim(delta);
 		// So we dont lock characters forever.
 		if (element_1 != nullptr)
 		{
@@ -412,12 +352,12 @@ void ATori::checkIfDead()
 
 bool ATori::pickUpElement(ABaseElement * newElement)
 {
-	// Checking for nullptrs are smart
 	if (element_1 == nullptr)
 	{
 		element_1 = newElement;
 		currentElementType = element_1->switchToElement(true);
 	}
+
 	// If it does not fill any empty spaces.
 	else
 	{
@@ -429,7 +369,6 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 			{
 				element_1->Destroy();
 				element_1 = newElement;
-				//element_1->setPlayer(this);
 				currentElementType = element_1->switchToElement(true);
 			}
 		}
@@ -441,6 +380,7 @@ bool ATori::pickUpElement(ABaseElement * newElement)
 	return true;
 }
 
+// Used to pick up a new element
 void ATori::switchElement()
 {
 	if (!locked)
@@ -448,41 +388,9 @@ void ATori::switchElement()
 		{
 			currentPickUp->giveElement(this);
 		}
-	//if (!locked)
-	//{
-	//	if (activeElement == 1)
-	//	{
-	//		if (element_2 != nullptr)
-	//		{
-	//			activeElement = 2;
-	//			currentElementType = element_2->switchToElement(true);
-	//			element_1->switchToElement(false);
-	//		}
-	//	}
-	//	else if (activeElement == 2)
-	//	{
-	//		if (element_1 != nullptr)
-	//		{
-	//			activeElement = 1;
-	//			currentElementType = element_1->switchToElement(true);
-	//			element_2->switchToElement(false);
-	//		}
-	//	}
-	//	switchAnimationElement();
-	//	locked = false;
-	//	setMoveSpeed(moveSpeed);
-	//	setRotationRate(rotationRate);
-	//}
 }
 
 void ATori::stopAllVelocity_Implementation()
 {
-	//no code here, just here to please the UE4 Gods!!!!
-}
-
-void ATori::clearElement()
-{
-	if (element_1 != nullptr)
-		element_1->Destroy();
-	element_1 = nullptr;
+	// No code here, just here to please the UE4 Gods!!!!
 }

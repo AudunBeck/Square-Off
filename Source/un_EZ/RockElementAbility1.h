@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -24,17 +22,17 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
-	FVector NewLocation;
-	FVector forward;
-
 	float attackRange;
 	float chargedHit;
+	float damage;
+	float knockback;
+	FVector NewLocation;
+	FVector forward;
+	FVector ownerPos;
+	USphereComponent* collider;
+
 	UPROPERTY(EditAnywhere)
 		class ARockElement* myElement;
-
-	USphereComponent* collider;
-	float damage;
-	FVector ownerPos;
 
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, 
 			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;

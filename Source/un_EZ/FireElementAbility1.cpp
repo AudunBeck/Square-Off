@@ -1,18 +1,12 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "FireElementAbility1.h"
 
 AFireElementAbility1::AFireElementAbility1()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider")); // Can change USphereComponent to Mesh
-	//RootComponent = collider;
+	collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
 	collider->SetupAttachment(RootComponent);
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(false);
 	Cast<UShapeComponent>(collider)->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-
-	
 	RootComponent = collider;
 }
 
@@ -27,25 +21,21 @@ void AFireElementAbility1::BeginPlay()
 	{
 		buffed = true;
 		damage = myElement->ability1BuffedDamage;
+		knockback = myElement->ability1BuffedKnockback;
 		SetActorScale3D(myElement->boostedAbility1Scale);
 		myElement->fireChi = 0;
 	}
 	else
 	{
 		damage = myElement->ability1Damage;
+		knockback = myElement->ability1Knockback;
 		buffed = false;
 	}
 	beginSound();
 	Cast<UShapeComponent>(collider)->SetGenerateOverlapEvents(true);
-	//Add this back when we want 4 directions
-	/*if (direction.Z > 0.5f)
-		direction = FVector(0.f, 0.f, 1.3f);
-	else if (direction.Z < -0.5f && myPlayer->isJumping)
-		direction = FVector(0.f, 0.f, -1.3f);
-	else*/
 	forward = myPlayer->GetActorForwardVector();
 	myPlayer->forceMove(forward, myElement->launchSpeed_1, GetLifeSpan());
-	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility1::OnOverlapBegin);//Move this to beginPlay()
+	collider->OnComponentBeginOverlap.AddDynamic(this, &AFireElementAbility1::OnOverlapBegin);
 }
 
 void AFireElementAbility1::Tick(float DeltaTime)
@@ -66,8 +56,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 		{
 			if (OtherActor->IsA(ATori::StaticClass()))
 			{
-				// Make the target take damage
-				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage);
+				Cast<ATori>(OtherActor)->recieveDamage(myPlayer, damage, knockback, myPlayer->GetActorLocation());
 				if (!buffed)
 					myElement->fireChi += 1;
 				hitEnemyVFX(OtherActor->GetActorLocation());
@@ -76,6 +65,7 @@ void AFireElementAbility1::OnOverlapBegin(class UPrimitiveComponent* OverlappedC
 				myElement->abilityHit = true;
 				hasHit = true;
 				myPlayer->forceMove();
+				myElement->ability1HitAnim();
 			}
 		}
 	}

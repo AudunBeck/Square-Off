@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "BaseAbility.h"
 
 ABaseAbility::ABaseAbility()
@@ -10,7 +8,6 @@ ABaseAbility::ABaseAbility()
 void ABaseAbility::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ABaseAbility::Tick(float DeltaTime)
@@ -28,9 +25,7 @@ void ABaseAbility::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor *
 	if (OtherActor != myPlayer)
 	{
 		if (OtherActor->IsA(ATori::StaticClass()))
-		{
-			
-		}
+		{}
 	}
 }
 

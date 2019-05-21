@@ -1,10 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "WaterElement.h"
 #include "ConstructorHelpers.h"
 #include "WaterElementStruct.h"
 
-// Sets default values
 AWaterElement::AWaterElement()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -19,26 +16,16 @@ AWaterElement::AWaterElement()
 	if (Ability1Data)
 	{
 		damage = Ability1Data->Damage;
-		maxCharge = Ability1Data->MaxCharge;
-		maxCooldownAbility1 = Ability1Data->MaxCooldown;
-		maxAmmo1 = Ability1Data->MaxAmmo;
-		ammoPerCd1 = Ability1Data->AmmoPerCD;
 		ability1Range = Ability1Data->Range;
+		boltSpeed = Ability1Data->MoveRange;
 		ability1lifeSpan = Ability1Data->LifeSpan;
-		slow = Ability1Data->Slow;
-		ccDur = Ability1Data->SlowDur;
-		boltSpeed = Ability1Data->BoltSpeed;
 	}
 	if (Ability2Data)
 	{
 		ability2Damage = Ability2Data->Damage;
-		maxCooldownAbility2 = Ability2Data->MaxCooldown;
-		maxAmmo2 = Ability2Data->MaxAmmo;
-		ammoPerCd2 = Ability2Data->AmmoPerCD;
+		dashSpeed_2 = Ability2Data->MoveRange;
+		ability2Knockback = Ability2Data->Knockback;
 		ability2lifeSpan = Ability2Data->LifeSpan;
-		ability2Slow = Ability2Data->Slow;
-		ability2CcDur = Ability2Data->SlowDur;
-		dashSpeed_2 = Ability2Data->CounterDash;
 	}
 }
 
@@ -60,9 +47,6 @@ void AWaterElement::Tick(float DeltaTime)
 		{
 			myOwner->setMoveSpeed(myOwner->moveSpeed);
 			myOwner->damageMultiplier = 1;
-
-			// Starts collision towards other Tori's
-			//startCollision();
 		}
 	}
 	if (dashTime >= 0)
@@ -76,20 +60,18 @@ void AWaterElement::Tick(float DeltaTime)
 	}
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void AWaterElement::ability1()
 {
-	//if (myOwner->ability1Ended == false)
-	{
-		Super::ability1();
-		combo = !combo;
-	}
+	Super::ability1();
+	combo = !combo;
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void AWaterElement::ability1FireCode()
 {
 	myOwner->setRotationRate(myOwner->rotationRate);
 	myOwner->setMoveSpeed(myOwner->moveSpeed);
-	//Cast waterbolt
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	AWaterElementAbility1* temp;
@@ -102,21 +84,19 @@ void AWaterElement::ability1End()
 
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void AWaterElement::ability2()
 {
-	{
-		Super::ability2();
-		myOwner->hitAnimImmune = true;
-		myOwner->setMoveSpeed(0.f);	/// Movementspeed isn't affected - Look into
-		myOwner->currentSpeed = 0.f;
-		buffDur = ability2lifeSpan;
-	}
-
+	Super::ability2();
+	myOwner->hitAnimImmune = true;
+	myOwner->setMoveSpeed(0.f);
+	myOwner->currentSpeed = 0.f;
+	buffDur = ability2lifeSpan;
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void AWaterElement::ability2FireCode()
 {
-	
 	AWaterElementAbility2* temp;
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
@@ -126,8 +106,7 @@ void AWaterElement::ability2FireCode()
 }
 
 void AWaterElement::ability2End()
-{
-}
+{}
 
 void AWaterElement::outputLog()
 {

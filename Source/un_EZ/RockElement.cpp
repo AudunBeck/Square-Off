@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "RockElement.h"
 #include "ConstructorHelpers.h"
 #include "RockElementStruct.h"
@@ -9,31 +7,25 @@ ARockElement::ARockElement()
 	static ConstructorHelpers::FObjectFinder<UDataTable>
 		RockElementTable(TEXT("DataTable'/Game/DataTables/RockElementTable.RockElementTable'"));
 	BalancingTable = RockElementTable.Object;
+	
 	//Searching and getting data
-
 	FRockElementStruct* Ability1Data = BalancingTable->FindRow<FRockElementStruct>(FName("1"), FString(""));
 	FRockElementStruct* Ability2Data = BalancingTable->FindRow<FRockElementStruct>(FName("2"), FString(""));
 	if (Ability1Data)
 	{
 		ability1Damage = Ability1Data->Damage;
-		maxCharge = Ability1Data->MaxCharge;
-		maxCooldownAbility1 = Ability1Data->MaxCooldown;
-		maxAmmo1 = Ability1Data->MaxAmmo;
-		ammoPerCd1 = Ability1Data->AmmoPerCD;
 		ability1Range = Ability1Data->Range;
-		//rockPunch = Ability1Data->MoveRange;
+		launchSpeed_1 = Ability1Data->MoveRange;
+		ability1Knockback = Ability1Data->KnockBack;
 		ability1lifeSpan = Ability1Data->LifeSpan;
 	}
 	if (Ability2Data)
 	{
 		ability2Damage = Ability2Data->Damage;
-		maxCooldownAbility2 = Ability2Data->MaxCooldown;
-		maxAmmo2 = Ability2Data->MaxAmmo;
-		ammoPerCd2 = Ability2Data->AmmoPerCD;
 		ability2Range = Ability2Data->Range;
 		ability2Speed = Ability2Data->MoveRange;
-		ability2Lifespan = Ability2Data->LifeSpan;
 		ability2KnockbackMulti = Ability2Data->KnockBack;
+		ability2Lifespan = Ability2Data->LifeSpan;
 	}
 }
 
@@ -49,14 +41,10 @@ void ARockElement::Tick(float DeltaTime)
 	if (cooldown > 0)
 		cooldown -= DeltaTime;
 
-	// Hold the charge
 	if (channelingAbility1 == true)
 	{
-		/// Can still use ability2 while charging - fix this with animation
-		//UE_LOG(LogTemp, Warning, TEXT("Rock ability charging"));
 		if (chargeFloat < maxCharge)
 		{
-			//chargeFloat += DeltaTime;
 			if (chargeFloat > maxCharge)
 				chargeFloat = maxCharge;
 		}
@@ -67,10 +55,9 @@ void ARockElement::Tick(float DeltaTime)
 	}
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void ARockElement::ability1()
 {
-
-	// if the character has ended all animations of the punch, you are able to start a new punch.
 	myOwner->damageMultiplier = damageReduction;
 	myOwner->setMoveSpeed(myOwner->moveSpeed * slowFactor);
 	myOwner->currentSpeed = myOwner->moveSpeed * slowFactor;
@@ -80,6 +67,7 @@ void ARockElement::ability1()
 	Super::ability1();
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void ARockElement::ability1FireCode()
 {
 	ARockElementAbility1* temp;
@@ -91,25 +79,27 @@ void ARockElement::ability1FireCode()
 	myOwner->currentSpeed = myOwner->moveSpeed;
 	myOwner->setRotationRate(0);
 	myOwner->damageMultiplier = 1;
-	//myOwner->LaunchCharacter(myOwner->GetActorForwardVector() * rockPunch, false, true);
 	myOwner->hitAnimImmune = false;
 }
 
 
-void ARockElement::ability1End() // Currently goes off after the animation, look at the blueprint of rock element for more info.
+void ARockElement::ability1End()
 {
 	myOwner->ability1Used = false;
+	stopLoopAnim();
 }
 
+// Executed on keypress event (Check ATori::SetupPlayerInputComponent() in Tori.cpp)
 void ARockElement::ability2()
 {
 	if (myOwner->ability2Ended == false && cooldown <= 0)
 	{
 		Super::ability2();
-		cooldown = ability2Lifespan; // To avoid spamming of the wall
+		cooldown = ability2Lifespan;
 	}
 }
 
+// Executed through Animation (Check Animation blueprint for the element)
 void ARockElement::ability2FireCode()
 {
 	FVector forwardVec = myOwner->GetActorForwardVector();
@@ -119,7 +109,6 @@ void ARockElement::ability2FireCode()
 	FActorSpawnParameters tempParam;
 	tempParam.Owner = this;
 	ARockElementAbility2* temp = GetWorld()->SpawnActor<ARockElementAbility2>(RockElementAbility2_BP, newVec, playerRot, tempParam);
-
 }
 
 
@@ -128,5 +117,3 @@ int ARockElement::returnElementType()
 	Super::returnElementType();
 	return 1;
 }
-
-
